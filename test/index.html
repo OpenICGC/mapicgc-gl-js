@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>MapIcgc</title>
+    <script src="../dist/mapicgc-gl.js"></script>
+    <link
+      href="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
+    <script src="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.umd.js"></script>
+    <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body,
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <nav id="filter-group" class="filter-group"></nav>
+    <div id="basemap-group" class="basemap-group"></div>
+    <div id="logos"></div>
+    <div id="basemapDiv"></div>
+
+   <script>
+      // console.info(window);
+      //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
+      const map = (window.map = new mapicgcgl.Map({
+        style: "topografic",
+      }));
+
+      map.addFullScreen();
+
+      map.addExportControl();
+
+      let optionsAtt = {
+        options: { compact: true },
+        position: "bottom-right",
+      };
+      map.addAttributionControl(optionsAtt);
+
+      let optionsPopup = {
+        coord: [2.0119, 41.489],
+        text: "<h4>Hello World!</h4>",
+      };
+      map.addPopup(optionsPopup);
+
+      let optionsMarker = {
+        coord: [2.119, 41.87],
+        text: "Hola Test",
+        textOffset: 25,
+        options: {},
+      };
+      map.addMarker(optionsMarker);
+
+      map.addNavigationControl({
+        visualizePitch: true,
+        showZoom: true,
+        showCompass: true,
+      });
+
+      let geojsonLayer = {
+        id: "geojsonTest",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: [
+              [
+                [1.3119, 41.489],
+                [1.0119, 41.489],
+                [1.0119, 42.0489],
+                [1.3119, 42.0489],
+              ],
+            ],
+          },
+        },
+        layerType: "fill",
+        layout: {},
+        paint: {
+          "fill-color": "#088",
+          "fill-opacity": 0.8,
+        },
+      };
+      map.addLayerGeoJSON(geojsonLayer);
+
+      let wmsLayer = {
+        id: "wms-test",
+        tiles:
+          "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
+      };
+      map.addLayerWMS(wmsLayer);
+
+      let logoOptions = {
+        id: "icgcColorLogo",
+        url: "https://betaserver.icgc.cat/logos/ICGC_color_norma.svg",
+        href: "https://www.icgc.cat",
+      };
+      map.addLogo(logoOptions);
+      const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
+    const urlStyles = "https://geoserveis.icgc.cat/contextmaps/";
+      let baseLayers = [
+        {
+          id: 0,
+          value: "Mapa estàndard",
+          label: "fonscarto_mapa_estandard",
+          image: `${urlImages}icgc_mapa_estandard.png`,
+          url: `${urlStyles}icgc_mapa_estandard.json`,
+        },
+        {
+          id: 1,
+          value: "Ortofotomapa híbrid",
+          label: "fonscarto_orto_hibrida",
+          image: `${urlImages}icgc_orto_hibrida.png`,
+          url: `${urlStyles}icgc_orto_hibrida.json`,
+        },
+      ];
+      map.addBasemaps(baseLayers);
+
+      let layerTree = {
+        features: {
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              properties: {
+                icon: "Rubí",
+              },
+              geometry: {
+                type: "Point",
+                coordinates: [2.0119, 41.489],
+              },
+            },
+
+            {
+              type: "Feature",
+              properties: {
+                icon: "Moià",
+              },
+              geometry: {
+                type: "Point",
+                coordinates: [2.119, 41.87],
+              },
+            },
+            {
+              type: "Feature",
+              properties: {
+                icon: "Les Borges Blanques",
+              },
+              geometry: {
+                type: "Point",
+                coordinates: [0.97319, 41.4589],
+              },
+            },
+            {
+              type: "Feature",
+              properties: {
+                icon: "Berga",
+              },
+              geometry: {
+                type: "Point",
+                coordinates: [1.83, 42.163],
+              },
+            },
+          ],
+        },
+        id: "testLayer",
+        type: "geojson",
+      };
+      map.addLayerTree(layerTree);
+
+    </script>
+  </body>
+</html>

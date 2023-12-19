@@ -1,0 +1,7 @@
+[ignore]
+.*/node_modules/unflowify/.*
+.*/node_modules/flow-coverage-report/.*
+.*/node_modules/documentation/.*
+
+[version]
+0.120.1
