@@ -849,11 +849,11 @@ h1 > a::selection {
 
 h4 {
   margin-bottom: 5px;
-  color: #ffc6c6;
+  color: #eb6262;
 }
 
 h4::selection {
-  color: #ffc6c6;
+  color: #e45252;
 }
 
 .mode {

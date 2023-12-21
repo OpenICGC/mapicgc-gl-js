@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
     <script src="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.umd.js"></script>
     <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
+    <script src="https://unpkg.com/flatgeobuf@3.26.2/dist/flatgeobuf-geojson.min.js"></script>
 
     <style>
       body {
@@ -35,9 +36,17 @@
       // console.info(window);
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
-        style: "topografic",
+        style: "ortofoto",
       }));
 
+      //indicate resolution (2 or 5m)
+      map.addTerrainICGC('2m');
+      // map.addImageLayerICGC('ortoICGC', 2009);   
+      // map.addImageLayerICGC('geologia');
+
+      //censals, salut, provincies, aquifers...
+      map.addVectorLayerICGC('censalo')
+   
       map.addFullScreen();
 
       map.addExportControl();
@@ -61,6 +70,9 @@
         options: {},
       };
       map.addMarker(optionsMarker);
+   
+
+
 
       map.addNavigationControl({
         visualizePitch: true,
@@ -98,7 +110,11 @@
         tiles:
           "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
       };
-      map.addLayerWMS(wmsLayer);
+      // map.addLayerWMS(wmsLayer);
+
+     
+     
+
 
       let logoOptions = {
         id: "icgcColorLogo",
