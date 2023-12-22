@@ -45,7 +45,7 @@
       // map.addImageLayerICGC('geologia');
 
       //censals, salut, provincies, aquifers...
-      map.addVectorLayerICGC('censalo')
+      map.addFGBLayerICGC('censalo')
    
       map.addFullScreen();
 
@@ -56,7 +56,7 @@
         position: "bottom-right",
       };
       map.addAttributionControl(optionsAtt);
-
+// map.addLimitLayerICGC('censals', '2019')
       let optionsPopup = {
         coord: [2.0119, 41.489],
         text: "<h4>Hello World!</h4>",
@@ -113,7 +113,7 @@
       // map.addLayerWMS(wmsLayer);
 
      
-     
+    //  map.add3DBuildingsICGC()
 
 
       let logoOptions = {
