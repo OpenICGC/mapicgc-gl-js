@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
-  "homepage": "https://github.com/geostarters/mapicgc-gl-js",
-  "version": "0.0.2",
+  "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
+  "version": "0.0.1",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
   "main": "dist/commonjs/index.js",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/geostarters/mapicgc-gl-js"
+    "url": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js"
   },
   "files": [
     "dist/"
