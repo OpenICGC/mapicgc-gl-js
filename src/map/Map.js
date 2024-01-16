@@ -2,9 +2,6 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import defaultOptions from "../config.js";
 
-// import { MapLibreSearchControl } from "@stadiamaps/maplibre-search-box";
-// import "@stadiamaps/maplibre-search-box/dist/style.css";
-
 /**
  * Class representing a custom map with additional functions.
  */
@@ -45,13 +42,196 @@ export default class Map {
   }
 
   /**
+   * Adds an event listener to the map.
+   * @function on
+   * @param {string} type - The type of the event.
+   * @param {Function} func - The callback function to be executed when the event occurs.
+   */
+  on(type, func) {
+    try {
+      this.map.on(type, func);
+    } catch (error) {
+      console.error(`Error adding event listener: ${error.message}`);
+    }
+  }
+
+  /**
+   * Retrieves the specified source from the map.
+   * @function getSource
+   * @param {string} source - The ID of the source to retrieve.
+   */
+  getSource(source) {
+    try {
+      this.map.getSource(source);
+    } catch (error) {
+      console.error(`Error getting source: ${error.message}`);
+    }
+  }
+  /**
+   * Adds a source to the map.
+   * @function addSource
+   * @param {string} source - The ID of the source to add.
+   */
+  addSource(source) {
+    try {
+      this.map.addSource(source);
+    } catch (error) {
+      console.error(`Error adding source: ${error.message}`);
+    }
+  }
+  /**
+   * Retrieves the layer with the specified ID from the map.
+   * @function getLayer
+   * @param {string} layerId - The ID of the layer to retrieve.
+   */
+
+  getLayer(layerId) {
+    try {
+      this.map.getLayer(layerId);
+    } catch (error) {
+      console.error(`Error getting layer: ${error.message}`);
+    }
+  }
+  /**
+   * Jumps to the specified coordinates and zoom on the map.
+   * @function jumpTo
+   * @param {Object} options - Coordinates and options to jump to: { center: [coordx, coordy], zoom: zoom, essential: true }.
+   */
+  jumpTo(options) {
+    try {
+      this.map.jumpTo(options);
+    } catch (error) {
+      console.error(`Error jumping to ${options}: ${error.message}`);
+    }
+  }
+
+  /**
+   * Sets layout property for a layer on the map.
+   * @function setLayoutProperty
+   * @param {Object} object - Object containing layer ID and property to set.
+   */
+  setLayoutProperty(object) {
+    try {
+      this.map.setLayoutProperty(object);
+    } catch (error) {
+      console.error(`Error setting layout property: ${error.message}`);
+    }
+  }
+  /**
+   * Adds a control to the map.
+   * @function addControl
+   * @param {Object} control - The control to add.
+   */
+
+  addControl(control) {
+    try {
+      this.map.addControl(control);
+    } catch (error) {
+      console.error(`Error adding control: ${error.message}`);
+    }
+  }
+
+  /**
+   * Retrieves the current zoom level of the map.
+   * @function getZoom
+   * @returns {number} - The current zoom level.
+   */
+  getZoom() {
+    try {
+      return this.map.getZoom();
+    } catch (error) {
+      console.error(`Error getting zoom level: ${error.message}`);
+    }
+  }
+
+  /**
+   * Adds a mouse coordinate control to the map.
+   * @function addMouseCoordControl
+   */
+  addMouseCoordControl() {
+    try {
+      this.map.on("mousemove", function (e) {
+        const auxLat = e.lngLat.lat;
+        const auxLon = e.lngLat.lng;
+
+        const msg =
+          "Lon/Lat (WGS 84)   Lon: " +
+          auxLon.toFixed(6) +
+          "  Lat: " +
+          auxLat.toFixed(6);
+        const divInfo = document.getElementById("divInfo");
+        const div = document.createElement("div");
+        div.className = "coordControl";
+        div.innerHTML = msg + " - ZL: " + map.getZoom().toFixed(1);
+        divInfo.appendChild(div);
+      });
+    } catch (error) {
+      console.error(`Error adding mouse coordinate control: ${error.message}`);
+    }
+  }
+  //options geolocate
+  // {
+  //   positionOptions: {
+  //       enableHighAccuracy: true
+  //   },
+  //   trackUserLocation: true
+  // }
+
+  /**
+   * Adds a geolocate control to the map.
+   * @function addGeolocateControl
+   * @param {Object} options - Options for the geolocate control.
+   */
+  addGeolocateControl(options) {
+    try {
+      if (options === undefined) {
+        this.map.addControl(
+          new maplibregl.GeolocateControl({
+            positionOptions: {
+              enableHighAccuracy: true,
+            },
+            trackUserLocation: true,
+          })
+        );
+      } else {
+        this.map.addControl(new maplibregl.GeolocateControl(options));
+      }
+    } catch (error) {
+      console.error(`Error adding geolocate control: ${error.message}`);
+    }
+  }
+  /**
+   * Retrieves the bounds of the map.
+   * @function getBounds
+   */
+  getBounds() {
+    try {
+      return this.map.getBounds();
+      //  this.map.getZoom();
+    } catch (error) {
+      console.error(`Error getting bounds: ${error.message}`);
+    }
+  }
+  /**
+   * Retrieves the canvas of the map.
+   * @function getCanvas
+   */
+  getCanvas() {
+    try {
+      return this.map.getCanvas();
+    } catch (error) {
+      console.error(`Error getting canvas: ${error.message}`);
+    }
+  }
+
+  /**
    * Sets the center of the map to the provided coordinates.
    * @function setCenter
    * @param {Array} coordinates - Coordinates to center the map: [1.3119, 41.489]
    */
   setCenter(coordinates) {
     try {
-      this.map.setCenter(coordinates);
+      return this.map.setCenter(coordinates);
     } catch (error) {
       console.error(`Error setting center: ${error.message}`);
     }
@@ -153,7 +333,18 @@ export default class Map {
       console.error(`Error removing layer: ${error.message}`);
     }
   }
-
+  /**
+   * Removes a source from the map.
+   * @function removeSource
+   * @param {string} layerId - Identifier of the source to remove.
+   */
+  removeSource(sourceId) {
+    try {
+      this.map.removeSource(sourceId);
+    } catch (error) {
+      console.error(`Error removing source: ${error.message}`);
+    }
+  }
   /**
    * Adds a logo to the map.
    * @function addLogo

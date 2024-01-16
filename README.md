@@ -3,7 +3,7 @@
 Biblioteca de mapes ICGC. Envoltori de MaplibreGL
 
 <br>
-Versió 0.0.2
+Versió 0.0.5
 
 <br>
 ### Documentació:
@@ -23,10 +23,9 @@ Versió 0.0.2
 2. Afegir les següents línies de codi JS i CSS a l'encapçalament del teu HTML:
 
     ```html
-    <script src="https://geostarters.github.io/mapicgc-gl-js/dist/mapicgc-gl.js"></script>
+   
     <script src="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.umd.js"></script>
 
-    <link rel="stylesheet" href="https://geostarters.github.io/mapicgc-gl-js/dist/mapicgc-gl.css" />
     <link href="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.css" rel="stylesheet" />
     ```
 
@@ -44,7 +43,6 @@ Versió 0.0.2
 - Fons de mapes: Topogràfic, Orto, Híbrid, Gris, Fosc
 
 - Afegir capes GeoJson i WMS
-- Cercador
 
 - Markers
 

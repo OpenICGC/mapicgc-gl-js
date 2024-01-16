@@ -31,6 +31,7 @@
     <div id="basemap-group" class="basemap-group"></div>
     <div id="logos"></div>
     <div id="basemapDiv"></div>
+    <div id="divInfo"></div>
 
    <script>
       // console.info(window);
@@ -72,8 +73,21 @@
       map.addMarker(optionsMarker);
    
 
+      map.jumpTo(
+        { center: [1.3119, 41.489], zoom: 16, essential: true }
+      )
+      // map.addControl(new maplibregl.GeolocateControl({
+      //     positionOptions: {
+      //         enableHighAccuracy: true
+      //     },
+      //     trackUserLocation: true
+      // }))
+      map.on("load", function (){
+              map.addMouseCoordControl()
+      })
 
-
+      map.getZoom()
+      map.addGeolocateControl()
       map.addNavigationControl({
         visualizePitch: true,
         showZoom: true,

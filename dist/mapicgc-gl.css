@@ -924,3 +924,25 @@ h4::selection {
     margin-top: 15vh;
   }
 }
+
+.coordControl {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 17px;
+  margin: 0 auto;
+  padding: 2px;
+  padding-bottom: 1.5px;
+  left: 45%;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  color: #222;
+  background: hsla(0, 0%, 100%, 0.849);
+}
+@media (max-width: 700px) {
+  .coordControl{
+    display: none;
+  }
+}
