@@ -79,6 +79,28 @@ export default class Map {
       console.error(`Error adding source: ${error.message}`);
     }
   }
+/**
+ * Sets the style of the map.
+ * @function setStyle
+ * @param {string} style - Name of the map style.
+ * @param {Object} [options] - Options for setting the style.
+ */
+
+setStyle(style, options){
+  try {
+    if (options !== undefined){
+      this.map.setStyle(style, options)
+    }else{
+    this.map.setStyle(style);
+    }
+  } catch (error) {
+    console.error(`Error setting style: ${error.message}`);
+  }
+
+}
+
+
+
   /**
    * Retrieves the layer with the specified ID from the map.
    * @function getLayer
@@ -117,15 +139,19 @@ export default class Map {
       console.error(`Error setting layout property: ${error.message}`);
     }
   }
-  /**
-   * Adds a control to the map.
-   * @function addControl
-   * @param {Object} control - The control to add.
-   */
+/**
+ * Adds a control to the map with the specified position.
+ * @function addControl
+ * @param {Object} control - The control to add.
+ * @param {string} [position='top-right'] - Position to add the control on the map.
+ */
 
-  addControl(control) {
+  addControl(control, position) {
     try {
-      this.map.addControl(control);
+      if (position === undefined){
+        position = 'top-right'
+       }
+      this.map.addControl(control, position);
     } catch (error) {
       console.error(`Error adding control: ${error.message}`);
     }
@@ -181,9 +207,13 @@ export default class Map {
    * Adds a geolocate control to the map.
    * @function addGeolocateControl
    * @param {Object} options - Options for the geolocate control.
+   * @param {string} [position='top-right'] - Position to add the control on the map.
    */
-  addGeolocateControl(options) {
+  addGeolocateControl(options, position) {
     try {
+      if (position === undefined){
+        position = 'top-right'
+       }
       if (options === undefined) {
         this.map.addControl(
           new maplibregl.GeolocateControl({
@@ -191,10 +221,10 @@ export default class Map {
               enableHighAccuracy: true,
             },
             trackUserLocation: true,
-          })
+          }), position
         );
       } else {
-        this.map.addControl(new maplibregl.GeolocateControl(options));
+        this.map.addControl(new maplibregl.GeolocateControl(options), position);
       }
     } catch (error) {
       console.error(`Error adding geolocate control: ${error.message}`);
@@ -415,8 +445,11 @@ export default class Map {
    * Adds an export control to the map.
    * @function addExportControl
    */
-  addExportControl() {
+  addExportControl(position) {
     try {
+      if (position === undefined){
+        position = 'top-right'
+       }
       this.map.addControl(
         new MaplibreExportControl.MaplibreExportControl({
           PageSize: MaplibreExportControl.Size.A4,
@@ -427,7 +460,7 @@ export default class Map {
           PrintableArea: true,
           Local: "en",
         }),
-        "top-right"
+        position
       );
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
@@ -503,9 +536,12 @@ export default class Map {
    * Adds a fullscreen control to the map.
    * @function addFullScreen
    */
-  addFullScreen() {
+  addFullScreen(position) {
     try {
-      this.map.addControl(new maplibregl.FullscreenControl());
+      if (position === undefined){
+        position = 'top-right'
+       }
+      this.map.addControl(new maplibregl.FullscreenControl(), position);
     } catch (error) {
       console.error(`Error adding fullscreen control: ${error.message}`);
     }
@@ -592,11 +628,15 @@ export default class Map {
    * Creates a navigation control with the provided options.
    * @function createNavigationControl
    * @param {Object} options - Options for the navigation control.
+   * @param {string} [position='top-right'] - Position to add the control on the map.
    * @returns {Object} - Instance of the created navigation control.
    */
-  createNavigationControl(options) {
+  createNavigationControl(options, position) {
     try {
-      return new maplibregl.NavigationControl(options);
+      if (position === undefined){
+        position = 'top-right'
+       }
+      this.map.addControl(new maplibregl.NavigationControl(options), position);
     } catch (error) {
       console.error(`Error creating navigation control: ${error.message}`);
       return null;
@@ -607,13 +647,15 @@ export default class Map {
    * Adds a navigation control to the map with the provided options.
    * @function addNavigationControl
    * @param {Object} options - Options for the navigation control.
+    * @param {string} [position='top-right'] - Position to add the control on the map.
    */
-  addNavigationControl(options) {
+  addNavigationControl(options, position) {
     try {
-      const navigationControl = this.createNavigationControl(options);
-      if (navigationControl) {
-        this.map.addControl(navigationControl);
-      }
+        if (position === undefined){
+          position = 'top-right'
+         }
+      this.map.addControl(new maplibregl.NavigationControl(options), position);
+    
     } catch (error) {
       console.error(`Error adding navigation control: ${error.message}`);
     }
@@ -799,8 +841,9 @@ export default class Map {
    * Adds 3D terrain to the map using hillshade.
    * @function addTerrain
    * @param {string} resolution - resolution of the terrain data: 2m or 5m.
+    * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
-  addTerrainICGC(resolution) {
+  addTerrainICGC(resolution, positionButton) {
     this.map.on("load", () => {
       try {
         let op = defaultOptions.urlTerrainICGC.find(
@@ -826,11 +869,15 @@ export default class Map {
           source: "terrainICGC-src",
           exaggeration: 1.5,
         });
+
+         if (positionButton === undefined){
+          positionButton = 'top-right'
+         }
         this.map.addControl(
           new maplibregl.TerrainControl({
             source: "terrainICGC-src",
             exaggeration: 1.5,
-          })
+          }), positionButton
         );
       } catch (error) {
         console.error(`Error adding 3D terrain: ${error.message}`);

@@ -48,9 +48,9 @@
       //censals, salut, provincies, aquifers...
       map.addFGBLayerICGC('censalo')
    
-      map.addFullScreen();
+      // map.addFullScreen('bottom-right');
 
-      map.addExportControl();
+      // map.addExportControl('bottom-right');
 
       let optionsAtt = {
         options: { compact: true },
@@ -81,18 +81,24 @@
       //         enableHighAccuracy: true
       //     },
       //     trackUserLocation: true
-      // }))
+      // }), "bottom-right")
       map.on("load", function (){
               map.addMouseCoordControl()
       })
 
       map.getZoom()
-      map.addGeolocateControl()
-      map.addNavigationControl({
-        visualizePitch: true,
-        showZoom: true,
-        showCompass: true,
-      });
+
+      // map.addGeolocateControl({
+      //     positionOptions: {
+      //         enableHighAccuracy: true
+      //     },
+      //     trackUserLocation: true
+      // },"bottom-right")
+      // map.addNavigationControl({
+      //   visualizePitch: true,
+      //   showZoom: true,
+      //   showCompass: true,
+      // }, "bottom-right");
 
       let geojsonLayer = {
         id: "geojsonTest",

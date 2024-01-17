@@ -3,7 +3,7 @@
 Biblioteca de mapes ICGC. Envoltori de MaplibreGL
 
 <br>
-Versió 0.0.5
+Versió 0.0.6
 
 <br>
 ### Documentació:
@@ -32,7 +32,9 @@ Versió 0.0.5
 3. En el script del cos del document, declarar el mapa de la següent manera:
 
     ```javascript
-    const map = (window.map = new mapicgcgl.Map({
+    import { Map } from 'mapicgc-gl-js'; 
+
+    const map = (window.map = new Map({
       style: "topografic",
     }));
     ```
@@ -55,3 +57,8 @@ Versió 0.0.5
 - Control print
 
 - Popups
+
+### Publicar npm
+
+npm login (user, password)
+npm publish --access public
