@@ -41,7 +41,7 @@
       }));
 
       //indicate resolution (2 or 5m)
-      map.addTerrainICGC('2m');
+      map.addTerrainICGC('2m', 'bottom-right');
       // map.addImageLayerICGC('ortoICGC', 2009);   
       // map.addImageLayerICGC('geologia');
 
@@ -50,7 +50,7 @@
    
       // map.addFullScreen('bottom-right');
 
-      // map.addExportControl('bottom-right');
+      map.addExportControl('bottom-right');
 
       let optionsAtt = {
         options: { compact: true },

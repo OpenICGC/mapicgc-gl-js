@@ -3,7 +3,7 @@
 Biblioteca de mapes ICGC. Envoltori de MaplibreGL
 
 <br>
-Versió 0.0.6
+Versió 0.0.8
 
 <br>
 ### Documentació:
@@ -58,7 +58,3 @@ Versió 0.0.6
 
 - Popups
 
-### Publicar npm
-
-npm login (user, password)
-npm publish --access public

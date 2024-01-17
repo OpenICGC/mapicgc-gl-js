@@ -1,5 +1,6 @@
 import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
+import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
 
 /**
@@ -351,6 +352,18 @@ setStyle(style, options){
     }
   }
 
+    /**
+   * Removes a control from the map.
+   * @function removeControl
+  * @param {Object} control - The control to remove.
+   */
+removeControl(control){
+  try {
+    this.map.removeControl(control);
+  } catch (error) {
+    console.error(`Error removing control: ${error.message}`);
+  }
+}
   /**
    * Removes a layer from the map.
    * @function removeLayer
@@ -445,23 +458,26 @@ setStyle(style, options){
    * Adds an export control to the map.
    * @function addExportControl
    */
-  addExportControl(position) {
+  addExportControl(options, position) {
     try {
-      if (position === undefined){
-        position = 'top-right'
-       }
+      if (typeof options === "string"){
+        position=options
+        options = undefined
+      }
+      if (options === undefined){
+            options= {
+              PageSize: MaplibreExportControl.Size.A4,
+              PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
+              Format: MaplibreExportControl.Format.PNG,
+              DPI: MaplibreExportControl.DPI[300],
+              Crosshair: true,
+              PrintableArea: true
+            };
+            position = 'top-right'
+          }
+ 
       this.map.addControl(
-        new MaplibreExportControl.MaplibreExportControl({
-          PageSize: MaplibreExportControl.Size.A4,
-          PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
-          Format: MaplibreExportControl.Format.PNG,
-          DPI: MaplibreExportControl.DPI[300],
-          Crosshair: true,
-          PrintableArea: true,
-          Local: "en",
-        }),
-        position
-      );
+        new MaplibreExportControl.MaplibreExportControl(options), position);
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
     }
@@ -873,15 +889,25 @@ setStyle(style, options){
          if (positionButton === undefined){
           positionButton = 'top-right'
          }
+        // this.map.addControl(
+        //   new maplibregl.TerrainControl({
+        //     source: "terrainICGC-src",
+        //     exaggeration: 1.5,
+        //   }), positionButton
+        // );
         this.map.addControl(
-          new maplibregl.TerrainControl({
-            source: "terrainICGC-src",
-            exaggeration: 1.5,
-          }), positionButton
+          new Pitch3DToggleControl({
+            pitch: 90,
+            bearing: null,
+            minpitchzoom: null,
+          }),
+          positionButton
         );
       } catch (error) {
         console.error(`Error adding 3D terrain: ${error.message}`);
       }
     }); //'load end
   }
-}
+};
+
+
