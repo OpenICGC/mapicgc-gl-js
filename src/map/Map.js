@@ -2,6 +2,7 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
+import CompareMaps from "../functions/maplibre-gl-compare.js";
 
 /**
  * Class representing a custom map with additional functions.
@@ -42,6 +43,29 @@ export default class Map {
     this.map = new maplibregl.Map(options);
   }
 
+/**
+ * Compares two maps and displays the result in a specified container.
+ * @function Compare
+ * @param {Object} map - The primary map for comparison.
+ * @param {Object} mapCompare - The secondary map for comparison.
+ * @param {string} container - The container to display the comparison result.
+ */
+  Compare(map,mapCompare,container) {
+    try {
+      // console.log('mapCpmpra, ', CompareMaps)
+      
+      CompareMaps(map, mapCompare, container);
+      
+      // console.log('mapCpmpra, 55',)
+    } catch (error) {
+      // console.log('catch, ', map, mapCompare)
+      console.error(`Error comparing map: ${error.message}`);
+    }
+  }
+
+
+
+
   /**
    * Adds an event listener to the map.
    * @function on
@@ -72,10 +96,12 @@ export default class Map {
    * Adds a source to the map.
    * @function addSource
    * @param {string} source - The ID of the source to add.
+   * @param {object} options - The source options.
    */
-  addSource(source) {
+  addSource(source, options) {
     try {
-      this.map.addSource(source);
+      
+      this.map.addSource(source, options);
     } catch (error) {
       console.error(`Error adding source: ${error.message}`);
     }
@@ -243,6 +269,36 @@ setStyle(style, options){
       console.error(`Error getting bounds: ${error.message}`);
     }
   }
+/**
+ * Retrieves the center coordinates of the map.
+ * @function getCenter
+ * @returns {LngLat} - The center coordinates of the map.
+ */
+  getCenter() {
+    try {
+      return this.map.getCenter();
+      //  this.map.getZoom();
+    } catch (error) {
+      console.error(`Error getting center: ${error.message}`);
+    }
+  }
+/**
+ * Sets terrain options for the map.
+ * @function setTerrain
+ * @param {Object} options - Options for the terrain.
+ * @returns {Object} - Result of setting the terrain options.
+ */
+  setTerrain(options) {
+    try {
+      return this.map.setTerrain(options);
+      //  this.map.getZoom();
+    } catch (error) {
+      console.error(`Error setting terrain: ${error.message}`);
+    }
+  }
+
+
+
   /**
    * Retrieves the canvas of the map.
    * @function getCanvas
@@ -493,16 +549,7 @@ removeControl(control){
    * @param {Object} options.textOffset - Text offset for the marker popup.
    * @returns {Object} - Instance of the added marker.
    */
-  /**
-   * Adds a marker to the map.
-   * @function addMarker
-   * @param {Object} options - Options for the marker to add.
-   * @param {string} options.text - Text content for the marker popup.
-   * @param {Object} options.options - Marker options.
-   * @param {LngLatLike} options.coord - Coordinates for placing the marker.
-   * @param {Object} options.textOffset - Text offset for the marker popup.
-   * @returns {Object} - Instance of the added marker.
-   */
+
   addMarker(options) {
     try {
       let marker;
@@ -796,7 +843,7 @@ removeControl(control){
 
   /**
    * Adds an ICGC vector layer to the map based on the specified name and year.
-   * @function addVectorLayerICGC
+   * @function addFGBLayerICGC
    * @param {string} name - The name of the vector layer.
    * @param {string} year - The year associated with the vector layer (optional).
    */

@@ -3,7 +3,7 @@
 Biblioteca de mapes ICGC. Envoltori de MaplibreGL
 
 <br>
-Versió 0.0.8
+Versió 0.0.15b
 
 <br>
 ### Documentació:

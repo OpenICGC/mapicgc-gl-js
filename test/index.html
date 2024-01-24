@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
     <script src="https://unpkg.com/flatgeobuf@3.26.2/dist/flatgeobuf-geojson.min.js"></script>
 
+    <script src="../src/functions/maplibre-gl-compare.js"></script>
+    <link rel="stylesheet" href="../src/functions/maplibre-gl-compare.css" type="text/css" />
+
     <style>
       body {
         margin: 0;
@@ -26,13 +29,18 @@
     </style>
   </head>
   <body>
+   
     <div id="map"></div>
     <nav id="filter-group" class="filter-group"></nav>
     <div id="basemap-group" class="basemap-group"></div>
     <div id="logos"></div>
     <div id="basemapDiv"></div>
     <div id="divInfo"></div>
-
+ <div id="mapCompare" class="map">
+  <div id="comparison-container">
+    <div id="before" class="map"></div>
+    <div id="after" class="map"></div>
+  </div>
    <script>
       // console.info(window);
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
@@ -40,15 +48,24 @@
         style: "ortofoto",
       }));
 
+      const compareMap = new mapicgcgl.Map({
+        style: "fosc",
+      });
+
+      let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
+// const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
       map.addTerrainICGC('2m', 'bottom-right');
       // map.addImageLayerICGC('ortoICGC', 2009);   
       // map.addImageLayerICGC('geologia');
 
       //censals, salut, provincies, aquifers...
-      map.addFGBLayerICGC('censalo')
+      // map.addFGBLayerICGC('censalo')
    
       // map.addFullScreen('bottom-right');
+
+
+
 
       map.addExportControl('bottom-right');
 
