@@ -9,6 +9,7 @@ Versió 0.0.17
 ### Documentació:
 
 - [Documentació de les funcions del Mapa (docu_Map.md)](docu_Map.md)
+- [Documentació del plugin CompareMaps (docu_CompareMaps.md)](docu_CompareMaps.md)
 
 <br>
 
