@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.15b",
+  "version": "0.0.17",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
   "main": "dist/mapicgc.js",
@@ -115,7 +115,6 @@
   "dependencies": {
     "@maplibre/maplibre-gl-compare": "^0.5.0",
     "flatgeobuf": "^3.27.1",
-    "maplibre-gl": "^3.5.2",
-    "simple-svelte-autocomplete": "^2.5.2"
+    "maplibre-gl": "^3.5.2"
   }
 }

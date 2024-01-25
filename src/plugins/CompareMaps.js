@@ -1,17 +1,21 @@
 import maplibregl from "maplibre-gl";
 import Compare from "@maplibre/maplibre-gl-compare";
 
- // import "maplibre-gl/dist/maplibre-gl.css";
 /**
- * Class representing a custom map with additional functions.
+ * Class for comparing two maps.
+ * @class CompareMaps
  */
 export default class CompareMaps {
 
 
-    /**
-   * Constructor for the Map class.
-   * @param {Object} options - Options to initialize the map.
-   */
+  /**
+ * Constructor for the map comparison class.
+ * @class MapComparison
+ * @param {Object} map1 - The first map object to compare.
+ * @param {Object} map2 - The second map object to compare.
+ * @param {string} container - The HTML container element ID for displaying the comparison.
+ * @param {Object} options - Additional options for map comparison (if needed).
+ */
 
   constructor(map1,map2, container,options) {
 
