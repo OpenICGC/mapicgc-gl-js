@@ -15,7 +15,6 @@ export default class CompareMaps {
 
   constructor(map1,map2, container,options) {
 
-    
 
     this.mapCompare=new Compare(map1.map,map2.map, container,{});
     //console.info( this.mapCompare);
