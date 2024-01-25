@@ -44,25 +44,6 @@ export default class Map {
     this.map.options=options;
   }
 
-/**
- * Compares two maps and displays the result in a specified container.
- * @function Compare
- * @param {Object} map - The primary map for comparison.
- * @param {Object} mapCompare - The secondary map for comparison.
- * @param {string} container - The container to display the comparison result.
- */
-  Compare(map,mapCompare,container) {
-    try {
-      // console.log('mapCpmpra, ', CompareMaps)
-      
-      //CompareMaps(map, mapCompare, container);
-      
-      // console.log('mapCpmpra, 55',)
-    } catch (error) {
-      // console.log('catch, ', map, mapCompare)
-      console.error(`Error comparing map: ${error.message}`);
-    }
-  }
 
   /**
  * Retrieves the current style of the map.
