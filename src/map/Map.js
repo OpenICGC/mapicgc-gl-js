@@ -2,7 +2,7 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
-import CompareMaps from "../functions/maplibre-gl-compare.js";
+//import CompareMaps from "../functions/maplibre-gl-compare.js";
 
 /**
  * Class representing a custom map with additional functions.
@@ -41,6 +41,7 @@ export default class Map {
     options.attributionControl = false;
 
     this.map = new maplibregl.Map(options);
+    this.map.options=options;
   }
 
 /**
@@ -54,7 +55,7 @@ export default class Map {
     try {
       // console.log('mapCpmpra, ', CompareMaps)
       
-      CompareMaps(map, mapCompare, container);
+      //CompareMaps(map, mapCompare, container);
       
       // console.log('mapCpmpra, 55',)
     } catch (error) {
@@ -63,7 +64,18 @@ export default class Map {
     }
   }
 
-
+  /**
+ * Retrieves the current style of the map.
+ * @function getStyle
+ * @returns {Object} - The current style of the map.
+ */
+  getStyle(){
+    try {
+      this.map.getStyle()
+    } catch (error) {
+      console.error(`Error getting style: ${error.message}`);
+    }
+  }
 
 
   /**
@@ -115,6 +127,12 @@ export default class Map {
 
 setStyle(style, options){
   try {
+
+    for (const styl of defaultOptions.baseStyles) {
+        if (styl.name === style) {
+          style =  styl.url;
+        }
+      }
     if (options !== undefined){
       this.map.setStyle(style, options)
     }else{
@@ -222,13 +240,6 @@ setStyle(style, options){
       console.error(`Error adding mouse coordinate control: ${error.message}`);
     }
   }
-  //options geolocate
-  // {
-  //   positionOptions: {
-  //       enableHighAccuracy: true
-  //   },
-  //   trackUserLocation: true
-  // }
 
   /**
    * Adds a geolocate control to the map.
@@ -444,14 +455,7 @@ removeControl(control){
       console.error(`Error removing source: ${error.message}`);
     }
   }
-  /**
-   * Adds a logo to the map.
-   * @function addLogo
-   * @param {Object} options - Options for the logo to add.
-   * @param {string} options.id - Unique identifier for the logo.
-   * @param {string} options.url - URL of the logo image.
-   * @param {string} options.href - URL to navigate to when the logo is clicked.
-   */
+
   /**
    * Adds a logo to the map.
    * @function addLogo
@@ -510,10 +514,12 @@ removeControl(control){
     }
   }
 
-  /**
-   * Adds an export control to the map.
-   * @function addExportControl
-   */
+/**
+ * Adds an export control to the map with the provided options and position.
+ * @function addExportControl
+ * @param {Object|string} options - Options for the export control or position if provided as a string.
+ * @param {string} [position] - Position to place the export control (e.g., 'top-right').
+ */
   addExportControl(options, position) {
     try {
       if (typeof options === "string"){
@@ -681,12 +687,7 @@ removeControl(control){
     }
   }
 
-  /**
-   * Creates a navigation control with the provided options.
-   * @function createNavigationControl
-   * @param {Object} options - Options for the navigation control.
-   * @returns {Object} - Instance of the created navigation control.
-   */
+
   /**
    * Creates a navigation control with the provided options.
    * @function createNavigationControl

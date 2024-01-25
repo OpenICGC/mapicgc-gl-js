@@ -1,0 +1,142 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Exemple llibreria mapicgc-gl-js</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="../dist/mapicgc-gl.js"></script>
+    <link href="../dist/mapicgc-gl.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%
+      }
+
+        #menu {
+            position: absolute;
+            z-index: 1000;
+            background: #fff;
+            padding: 10px;
+            font-family: 'Open Sans', sans-serif;
+            top: 5px;
+            left: 5px;
+            border-radius: 7px;
+            -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
+            box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
+        }
+
+        #div_pitch {
+            position: absolute;
+            right: 10px;
+            top: 142px;
+            width: 30px;
+            z-index: 100;
+        }
+
+        .sliderClass {
+            position: absolute;
+            left: 10px;
+            top: 79px;
+            width: 130px;
+            z-index: 100;
+            display: none;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='menu'>
+        <input id='topografic' type='radio' name='rtoggle' value='topografic' checked='checked'>
+        <label for='topografic'>Mapa estàndard</label><br>
+
+        <input id='ortofoto' type='radio' name='rtoggle' value='ortofoto'>
+        <label for='ortofoto'>Ortofoto</label><br>
+
+        <input id='limits' type='radio' name='rtoggle' value='limits'>
+        <label for='limits'>Limits</label><br>
+
+        <input id='fosc' type='radio' name='rtoggle' value='fosc'>
+        <label for='fosc'>fosc</label>
+    </div>
+   
+    <div id="comparison-container">
+        <div id="before" class="map"></div>
+        <div id="after" class="map"></div>
+      </div>
+    <script>
+console.info(window);
+        const map1 = new mapicgcgl.Map({
+            container: 'before',
+            style: 'ortofoto',
+            center: [1.1464, 41.706],
+            zoom: 7.4,
+            maxZoom: 14,
+            hash: true,
+            pitch: 0,
+            attributionControl: false
+        });
+
+        const map2 = new mapicgcgl.Map({
+            container: 'after',
+            style: 'topografic',
+            center: [1.1464, 41.706],
+            zoom: 7.4,
+            maxZoom: 14,
+            hash: true,
+            pitch: 0,
+            attributionControl: false
+        });
+
+
+        //var container =document.getElementById('comparison-container');
+
+        var container = "#comparison-container";
+       
+/*
+        var mapAll = new mapicgcgl.CompareMaps(map2, map1, container, {
+        // Set this to enable comparing two maps by mouse movement:
+        // m ousemove: true
+      });
+      */
+
+      var map =  new mapicgcgl.CompareMaps(map1, map2, container, {
+        // Set this to enable comparing two maps by mouse movement:
+        // m ousemove: true
+      });
+
+
+      
+
+
+
+
+
+       
+    </script>
+</body>
+
+</html>
