@@ -2,7 +2,7 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
-import CompareMaps from "../functions/maplibre-gl-compare.js";
+//import CompareMaps from "../functions/maplibre-gl-compare.js";
 
 /**
  * Class representing a custom map with additional functions.
@@ -41,6 +41,7 @@ export default class Map {
     options.attributionControl = false;
 
     this.map = new maplibregl.Map(options);
+    this.map.options=options;
   }
 
 /**
@@ -54,7 +55,7 @@ export default class Map {
     try {
       // console.log('mapCpmpra, ', CompareMaps)
       
-      CompareMaps(map, mapCompare, container);
+      //CompareMaps(map, mapCompare, container);
       
       // console.log('mapCpmpra, 55',)
     } catch (error) {

@@ -2,7 +2,7 @@
 
 
 import Map from "./map/Map";
-import CompareMaps from "./functions/Compare";
+import CompareMaps from "./plugins/CompareMaps";
 
 export {
 	Map, 
