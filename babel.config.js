@@ -1,4 +1,4 @@
-// @flow
+
 module.exports = {
 	presets: [
 		[
@@ -10,5 +10,5 @@ module.exports = {
 			},
 		],
 	],
-	"plugins": ["@babel/transform-flow-strip-types", "@babel/plugin-proposal-class-properties"]
+	"plugins": ["@babel/plugin-proposal-class-properties"]
 };
