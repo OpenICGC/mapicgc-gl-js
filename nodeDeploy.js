@@ -1,8 +1,30 @@
 const SftpClient = require("ssh2-sftp-client");
 const dotenv = require("dotenv");
+const fs = require('fs');
 //import SftpClient from "ssh2-sftp-client";
 //import dotenv from "dotenv";
 dotenv.config();
+
+const inFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS_UMD}`;
+const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
+
+ function rename(){
+  fs.copyFile(inFilePath, renamedFilePath, (err) => {
+    if (err) {
+      console.error('Error copying file:', err);
+    } else {
+      console.log('File copied and renamed successfully.');
+      deploy()
+    }
+  });
+
+}
+
+
+
+
+
+
 async function deploy() {
   const sftp = new SftpClient();
   sftp.client.setMaxListeners(10);
@@ -15,7 +37,7 @@ async function deploy() {
   try {
     await sftp.connect(config);
     await sftp.fastPut(
-      `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`,
+      renamedFilePath,
       `${process.env.FTP_REMOTE_PATH}${process.env.FILE_JS}`,
       {
         overwrite: true,
@@ -36,4 +58,4 @@ async function deploy() {
     sftp.end();
   }
 }
-deploy();
+rename();
