@@ -2,7 +2,9 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
-//import CompareMaps from "../functions/maplibre-gl-compare.js";
+
+
+
 
 /**
  * Class representing a custom map with additional functions.
@@ -57,6 +59,170 @@ export default class Map {
       console.error(`Error getting style: ${error.message}`);
     }
   }
+
+
+/**
+ * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
+ * @param {string} url - The URL to fetch GeoJSON data from.
+ * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
+ * @param {string} name - The geometry name (e.g., 'buildings').
+ * @param {Object} options - Additional options for configuring the layer.
+ */
+
+async fetchData(url, type, name, options){
+try {
+  const response = await fetch(url)
+  const geojson = await response.json();
+  // console.log('geojson', geojson)
+
+  if (type.includes("ine")){ //line
+
+    map.addLayer({
+      id: name,
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        visibility: "visible"
+      },
+      // paint: {
+      //   'line-color': element.color,
+      //   'line-width': element.width,
+      //   'line-opacity': element.opacity
+  
+      // },
+    });
+  }
+  if (type.includes('olygon')){ //polygon
+
+    map.addLayer({
+      id: name,
+      type: 'fill',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        visibility: "visible"
+      },
+      // paint: {
+      //   'line-color': element.color,
+      //   'line-width': element.width,
+      //   'line-opacity': element.opacity
+  
+      // },
+    });
+  }
+  if (type.includes('oint')){ //point
+    // console.log('geojson', geojson)
+    map.addLayer({
+      id: name,
+      type: 'circle',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        visibility: "visible"
+      },
+      paint: {
+        'circle-color': 'yellow',
+        'circle-opacity': 0.5
+  
+      },
+    });
+  }
+  geojsonStore  = geojson
+
+
+
+} catch (error) {
+  console.error(`Error fetching data: ${error.message}`);
+}
+}
+
+
+async geocodeAddress(){
+  try {
+    var inputElement = document.getElementById('addressInput');
+    var address = inputElement.value;
+    const response = await fetch(url)
+    const geojson = await response.json();
+    var resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+console.log('ge', geojson)
+    function geocode(address) {
+      var result = turf.filter(geojson, 'address', address);
+      return result.features.slice(0, 5);
+    }
+
+    var results = geocode(address);
+
+    if (results.length > 0) {
+      results.forEach(function (feature) {
+        var coordinates = feature.geometry.coordinates;
+        var address = feature.properties.address;
+
+        var resultItem = document.createElement('div');
+        resultItem.innerHTML = '<strong>' + address + '</strong><br>Coordenadas: ' + coordinates.join(', ');
+
+        resultsContainer.appendChild(resultItem);
+      });
+    } else {
+      resultsContainer.innerHTML = 'No se encontraron resultados para la dirección: ' + address;
+    }
+  } catch (error) {
+    
+  }
+}
+/**
+ * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
+ * @param {string} url - The URL to fetch GeoJSON data from.
+ * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
+ * @param {string} name - The geometry name (e.g., 'buildings').
+ * @param {Object} options - Additional options for configuring the layer.
+ */
+
+async fetchDataWithSearchbox(url, type, name, optionsGeo, options){
+  try {
+    const response = await fetch(url)
+    const geojson = await response.json();
+    // console.log('geojson', geojson)
+  
+    function geocode(address) {
+    var result = turf.filter(geojson, 'address', address);
+    return result.features.slice(0, 5);
+  }
+
+ 
+
+
+
+
+  
+  } catch (error) {
+    console.error(`Error fetching data: ${error.message}`);
+  }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /**
@@ -494,6 +660,247 @@ removeControl(control){
       console.error(`Error adding basemaps: ${error.message}`);
     }
   }
+/**
+ * Adds a scale control to the map.
+ * @param {Object} options - Options for configuring the scale control.
+ * @param {string} position - The position on the map to place the scale control (e.g., 'top-left', 'bottom-right').
+ */
+
+addScaleControl(options, position){
+
+  try {
+    var scale = new maplibregl.ScaleControl(options);
+
+    this.map.addControl(scale, position);
+  } catch (error) {
+    console.error(`Error adding scale: ${error.message}`);
+  }
+}
+/**
+ * Removes the measure control from the map.
+  * @function removeMeasureControl
+ */
+removeMeasureControl(){
+  try {
+    const removeMeasure = document.getElementById('xButton')
+    const distanceContainer = document.getElementById('distance');
+    distanceContainer.innerHTML = '';
+    // console.log(this.map.getStyle().layers)
+let layers = this.map.getStyle().layers
+
+
+for (let i = 0; i < layers.length; i++) {
+  if (layers[i].id.includes('measure')) {
+    this.map.removeLayer(layers[i].id)
+    
+  }
+}
+
+
+
+  } catch (error) {
+    console.error(`Error removing measure control: ${error.message}`);
+  }
+}
+
+/**
+ * Adds a measure control to the map.
+  * @function addMeasureControl
+ */
+addMeasureControl(){
+  try {
+    const distanceContainer = document.getElementById('distance');
+    const distanceContainerT = document.getElementById('distanceTotal');
+let endMeasure = false
+var clickTimer;
+    // GeoJSON object to hold our measurement features
+    const geojson = {
+        'type': 'FeatureCollection',
+        'features': []
+    };
+
+    // Used to draw a line between points
+    const linestring = {
+        'type': 'Feature',
+        'geometry': {
+            'type': 'LineString',
+            'coordinates': []
+        }
+    };
+    // console.log('endMesa', endMeasure)
+   
+    this.map.on('load', () => {
+      this.map.addSource('geojson', {
+          'type': 'geojson',
+          'data': geojson
+      });
+
+      // Add styles to the map
+      this.map.addLayer({
+          id: 'measure-points',
+          type: 'circle',
+          source: 'geojson',
+          paint: {
+              'circle-radius': 5,
+              'circle-color': '#000'
+          },
+          filter: ['in', '$type', 'Point']
+      });
+      this.map.addLayer({
+          id: 'measure-lines',
+          type: 'line',
+          source: 'geojson',
+          layout: {
+              'line-cap': 'round',
+              'line-join': 'round'
+          },
+          paint: {
+              'line-color': '#000',
+              'line-width': 2.5
+          },
+          filter: ['in', '$type', 'LineString']
+      });
+
+
+  });
+
+    
+  this.map.on('click', (e) => {
+    clearTimeout(clickTimer);
+    if (!endMeasure){
+
+    
+    clickTimer = setTimeout(() => {
+        handleSingleClick(e, this.map);
+    }, 50); // Ajusta el tiempo según tus necesidades
+  }
+});
+
+this.map.on('dblclick', (e) => {
+    clearTimeout(clickTimer);
+    handleDoubleClick(e, this.map);
+});
+
+this.map.on('mousemove', (e) => {
+
+  if (!endMeasure){
+    const features = this.map.queryRenderedFeatures(e.point, {
+        layers: ['measure-points']
+    });
+    // UI indicator for clicking/hovering a point on the map
+
+
+
+    this.map.getCanvas().style.cursor = features.length ?
+        'pointer' :
+        'crosshair';
+  }else{
+    this.map.getCanvas().style.cursor = "grab"
+  }
+});
+
+
+function handleSingleClick(e, map) {
+  // console.log('single')
+const features = map.queryRenderedFeatures(e.point, {
+    layers: ['measure-points']
+});
+
+// Remove the linestring from the group
+// So we can redraw it based on the points collection
+if (geojson.features.length > 1) geojson.features.pop();
+
+// Clear the Distance container to populate it with a new value
+distanceContainerT.innerHTML = '';
+
+// If a feature was clicked, remove it from the map
+if (features.length) {
+    const id = features[0].properties.id;
+    geojson.features = geojson.features.filter((point) => {
+        return point.properties.id !== id;
+    });
+} else {
+    const point = {
+        'type': 'Feature',
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [e.lngLat.lng, e.lngLat.lat]
+        },
+        'properties': {
+            'id': String(new Date().getTime())
+        }
+    };
+
+    geojson.features.push(point);
+}
+
+if (geojson.features.length > 1) {
+    linestring.geometry.coordinates = geojson.features.map(
+        (point) => {
+            return point.geometry.coordinates;
+        }
+    );
+
+    geojson.features.push(linestring);
+
+    // Populate the distanceContainer with total distance
+    const value = document.createElement('pre');
+    value.textContent =
+        `Distància total: ${
+            turf.length(linestring).toLocaleString()
+        }km`;
+    distanceContainerT.appendChild(value);
+
+
+
+    const xButton = document.createElement('div');
+    xButton.id = 'xButton';
+    xButton.textContent = 'X';
+    xButton.onclick = () => {
+      try {
+        const removeMeasure = document.getElementById('xButton')
+        const distanceContainer = document.getElementById('distance');
+        distanceContainer.innerHTML = '';
+        // console.log(this.map.getStyle().layers)
+    let layers = map.getStyle().layers
+    
+    
+    for (let i = 0; i < layers.length; i++) {
+      if (layers[i].id.includes('measure')) {
+        map.removeLayer(layers[i].id)
+        
+      }
+    }
+    
+    
+    
+      } catch (error) {
+        console.error(`Error adding measure control: ${error.message}`);
+      }
+    };
+    distanceContainerT.appendChild(xButton);
+
+
+}
+
+map.getSource('geojson').setData(geojson);
+}
+
+function handleDoubleClick(e, map) {
+// Aquí puedes poner la lógica que desees para manejar el doble clic
+// console.log('Doble clic en', e.lngLat);
+map.getCanvas().style.cursor = 'grab' 
+endMeasure = true
+
+// Por ejemplo, puedes detener la medición de distancias aquí
+}
+
+
+  } catch (error) {
+    
+  }
+}
+
 
 /**
  * Adds an export control to the map with the provided options and position.
@@ -746,7 +1153,7 @@ removeControl(control){
    * Adds an ICGC image layer to the map based on the specified name and year.
    * @function addImageLayerICGC
    * @param {string} name - The name of the layer. Mandatory. options: 'orto', 'geo', 'slope', 'dem', 'relleu', etc.
-   * @param {string} year - The year of the image layer (optional, applicable only for certain layers like 'orto').
+   * @param {integer} year - The year of the image layer (optional, applicable only for certain layers like 'orto').
    */
   addImageLayerICGC(name, year) {
     try {
@@ -759,6 +1166,7 @@ removeControl(control){
         name.includes("relleu")
       ) {
         if (name.includes("orto")) {
+          name = 'ortoICGC'
           if (year !== undefined) {
             finalName = name + year;
 

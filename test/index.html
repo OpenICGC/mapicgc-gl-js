@@ -12,9 +12,9 @@
     <script src="https://www.unpkg.com/@watergis/maplibre-gl-export@3.0.1/dist/maplibre-gl-export.umd.js"></script>
     <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
     <script src="https://unpkg.com/flatgeobuf@3.26.2/dist/flatgeobuf-geojson.min.js"></script>
+    <script src="https://unpkg.com/@turf/turf"></script>
 
-    <script src="../src/functions/maplibre-gl-compare.js"></script>
-    <link rel="stylesheet" href="../src/functions/maplibre-gl-compare.css" type="text/css" />
+
 
     <style>
       body {
@@ -26,6 +26,16 @@
       #map {
         height: 100%;
       }
+      #geocoder-container {
+      margin: 20px;
+      position: absolute;
+      top: 50px;
+      right: 20px;
+    }
+
+    #results {
+      margin-top: 10px;
+    }
     </style>
   </head>
   <body>
@@ -36,27 +46,46 @@
     <div id="logos"></div>
     <div id="basemapDiv"></div>
     <div id="divInfo"></div>
- <div id="mapCompare" class="map">
+    <div id="distance" class="distance-containerDiv">
+      <div id="distanceTotal" class="distance-container">
+       
+      </div>
+         
+    </div>
+ 
+<!-- <div id="geocoder-container">
+  <label for="addressInput">Direcció:</label>
+  <input type="text" id="addressInput" placeholder="Afegeix una direcció">
+  <button onclick="map.geocodeAddress()">Buscar</button>
+
+  <div id="results"></div>
+</div> -->
+
+ <!-- <div id="mapCompare" class="map">
   <div id="comparison-container">
     <div id="before" class="map"></div>
     <div id="after" class="map"></div>
-  </div>
+  </div> -->
    <script>
       // console.info(window);
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
-        style: "ortofoto",
+        container: "map",
+              style: "topografic",
+            
+              zoom: 7.4,
+      
       }));
 
-      const compareMap = new mapicgcgl.Map({
-        style: "fosc",
-      });
+      // const compareMap = new mapicgcgl.Map({
+      //   style: "fosc",
+      // });
 
-      let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
+      // let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
       map.addTerrainICGC('2m', 'bottom-right');
-      // map.addImageLayerICGC('ortoICGC', 2009);   
+      // map.addImageLayerICGC('orto');   
       // map.addImageLayerICGC('geologia');
 
       //censals, salut, provincies, aquifers...
@@ -66,6 +95,7 @@
 
 
 
+      map.addMeasureControl()
 
       map.addExportControl('bottom-right');
 
@@ -88,11 +118,14 @@
         options: {},
       };
       map.addMarker(optionsMarker);
-   
-
-      map.jumpTo(
-        { center: [1.3119, 41.489], zoom: 16, essential: true }
-      )
+   let optionsScale = {
+      maxWidth: 100,
+      unit: "metric",
+    }
+map.addScaleControl(optionsScale,"bottom-right")
+      // map.jumpTo(
+      //   { center: [1.3119, 41.489], zoom: 16, essential: true }
+      // )
       // map.addControl(new maplibregl.GeolocateControl({
       //     positionOptions: {
       //         enableHighAccuracy: true
@@ -140,7 +173,30 @@
           "fill-opacity": 0.8,
         },
       };
-      map.addLayerGeoJSON(geojsonLayer);
+      // map.addLayerGeoJSON(geojsonLayer);
+
+
+      // map.fetchData(
+      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
+      //   'point', 
+      //   'centres')
+
+      let optionsGeo= {
+          // required
+            forwardGeocode: async (config) => { /* definition here */ },
+            
+            // optional
+            reverseGeocode: async (config) => { /* definition here */ }, // reverse geocoding API
+            getSuggestions: async (config) => { /* definition here */ }, // suggestion API
+            searchByPlaceId: async (config) => { /* definition here */ } // search by Place ID API
+      }
+        map.fetchDataWithSearchbox(
+        'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
+        'point', 
+        'centres',
+        optionsGeo)
+      
+
 
       let wmsLayer = {
         id: "wms-test",

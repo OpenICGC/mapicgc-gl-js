@@ -23,12 +23,12 @@
         }
 
         .map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%
-      }
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
 
         #menu {
             position: absolute;
@@ -70,10 +70,10 @@
 
 <body>
     <div id='menu'>
-        <input id='topografic' type='radio' name='rtoggle' value='topografic' checked='checked'>
+        <input id='topografic' type='radio' name='rtoggle' value='topografic' >
         <label for='topografic'>Mapa estàndard</label><br>
 
-        <input id='ortofoto' type='radio' name='rtoggle' value='ortofoto'>
+        <input id='ortofoto' type='radio' name='rtoggle' checked='checked' value='ortofoto'>
         <label for='ortofoto'>Ortofoto</label><br>
 
         <input id='limits' type='radio' name='rtoggle' value='limits'>
@@ -82,13 +82,13 @@
         <input id='fosc' type='radio' name='rtoggle' value='fosc'>
         <label for='fosc'>fosc</label>
     </div>
-   
+
     <div id="comparison-container">
         <div id="before" class="map"></div>
         <div id="after" class="map"></div>
-      </div>
+    </div>
     <script>
-console.info(window);
+        console.info(window);
         const map1 = new mapicgcgl.Map({
             container: 'before',
             style: 'ortofoto',
@@ -115,27 +115,28 @@ console.info(window);
         //var container =document.getElementById('comparison-container');
 
         var container = "#comparison-container";
-       
-/*
-        var mapAll = new mapicgcgl.CompareMaps(map2, map1, container, {
-        // Set this to enable comparing two maps by mouse movement:
-        // m ousemove: true
-      });
-      */
 
-      var map =  new mapicgcgl.CompareMaps(map1, map2, container, {
-        // Set this to enable comparing two maps by mouse movement:
-        // m ousemove: true
-      });
-
-
-      
+        var map = new mapicgcgl.CompareMaps(map1, map2, container, {
+            // Set this to enable comparing two maps by mouse movement:
+            // m ousemove: true
+        });
 
 
 
+        const layerList = document.getElementById('menu');
+        const inputs = layerList.getElementsByTagName('input');
+
+        function switchLayer(layer) {
+            const layerId = layer.target.id;
+            map1.setStyle(layerId);
+        }
+
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].onclick = switchLayer;
+        }
 
 
-       
+
     </script>
 </body>
 
