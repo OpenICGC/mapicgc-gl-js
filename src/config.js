@@ -9,19 +9,20 @@ const defaultOptions = {
     pitch: 0,
     hash: false,
     style:
-      "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
+      "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json.json",
     maxZoom: 18,
     maxPitch: 85,
   },
   baseStyles: [
     { name: "topografic", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json", },
-    { name: "ortofoto", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json" },
+    { name: "ortofoto", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" },
     { name: "limits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" },
     { name: "fosc", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" },
+    { name: "gris", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json" },
 
-    { name: "ombra", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra.json" },
-    { name: "hipsometria", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra_hipsometria.json" },
-    { name: "protegits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_espais_protegits_hidrografia.json" },
+    // { name: "ombra", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra.json" },
+    // { name: "hipsometria", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra_hipsometria.json" },
+    // { name: "protegits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_espais_protegits_hidrografia.json" },
     { name: "geologia", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json" },
 
 
