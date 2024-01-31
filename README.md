@@ -5,13 +5,11 @@
   <img src="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/images/JS-logo.svg" width="20px">
   <img src="https://betaserver.icgc.cat//cdn/mapicgc-gl-js/images/TS-logo.svg" width="20px">
   <img src="https://img.shields.io/npm/v/@unitatgeostart/mapicgc-gl-js"></img>
-  <img src="https://img.shields.io/twitter/follow/icgcat?style=social"></img>
+  <a href="https://twitter.com/icgcat" target="_blank"><img src="https://img.shields.io/twitter/follow/icgcat?style=social"></img></a>
 </p>
 
 <br>
-Version 0.0.23
-
-
+Version 0.0.25
 
 # What and why?
 The MapICGC GL JS library builds upon the MapLibre GL JS framework, exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.

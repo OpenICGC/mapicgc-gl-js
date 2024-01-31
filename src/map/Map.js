@@ -73,7 +73,7 @@ async fetchData(url, type, name, options){
 try {
   const response = await fetch(url)
   const geojson = await response.json();
-  // console.log('geojson', geojson)
+  // console.log('geojsonName:',name, geojson)
 
   if (type.includes("ine")){ //line
 
@@ -87,12 +87,7 @@ try {
       layout: {
         visibility: "visible"
       },
-      // paint: {
-      //   'line-color': element.color,
-      //   'line-width': element.width,
-      //   'line-opacity': element.opacity
-  
-      // },
+      paint: options,
     });
   }
   if (type.includes('olygon')){ //polygon
@@ -134,8 +129,6 @@ try {
       },
     });
   }
-  geojsonStore  = geojson
-
 
 
 } catch (error) {
@@ -143,6 +136,83 @@ try {
 }
 }
 
+/**
+ * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
+ * @param {string} url - The URL to fetch GeoJSON data from.
+ * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
+ * @param {string} name - The geometry name (e.g., 'buildings').
+ * @param {Object} options - Additional options for configuring the layer.
+ */
+
+async fetchDataAndMenu(url, type, name, options){
+  try {
+    const response = await fetch(url)
+    const geojson = await response.json();
+    // console.log('fetchDataAndMenu:',name, geojson)
+  
+    if (type.includes("ine")){ //line
+  
+      map.addLayer({
+        id: name,
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: geojson,
+        },
+        layout: {
+          visibility: "visible"
+        },
+        paint: options,
+      });
+    }
+    if (type.includes('olygon')){ //polygon
+  
+      map.addLayer({
+        id: name,
+        type: 'fill',
+        source: {
+          type: 'geojson',
+          data: geojson,
+        },
+        layout: {
+          visibility: "visible"
+        },
+        // paint: {
+        //   'line-color': element.color,
+        //   'line-width': element.width,
+        //   'line-opacity': element.opacity
+    
+        // },
+      });
+    }
+    if (type.includes('oint')){ //point
+      // console.log('geojson', geojson)
+      map.addLayer({
+        id: name,
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: geojson,
+        },
+        layout: {
+          visibility: "visible"
+        },
+        paint: {
+          'circle-color': 'yellow',
+          'circle-opacity': 0.5
+    
+        },
+      });
+    }
+    // geojsonStore  = geojson
+    // map.addLayerTree(geojson);
+    map.addMenuItem(name)
+  
+  } catch (error) {
+    console.error(`Error fetching data: ${error.message}`);
+  }
+  }
+  
 
 async geocodeAddress(){
   try {
@@ -152,7 +222,7 @@ async geocodeAddress(){
     const geojson = await response.json();
     var resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-console.log('ge', geojson)
+// console.log('ge', geojson)
     function geocode(address) {
       var result = turf.filter(geojson, 'address', address);
       return result.features.slice(0, 5);
@@ -1004,6 +1074,49 @@ endMeasure = true
     }
   }
 
+
+  /**
+  * Adds a menu item with a checkbox for controlling the visibility of a layer on the map.
+   * @function addMenuItem
+* @param {string} name - The name of the layer corresponding to the menu item.
+ */
+  addMenuItem(name) {
+    try {
+      const menuGroup = document.getElementById("menu-group");
+
+        const input = document.createElement("input");
+      
+        input.type = "checkbox";
+        input.id = name;
+        input.checked = true;
+      
+        menuGroup.appendChild(input);
+
+        const label = document.createElement("label");
+        label.setAttribute("for", name);
+        label.textContent = name;
+        menuGroup.appendChild(label);
+
+        input.addEventListener("change", (e) => {
+
+          this.map.setLayoutProperty(
+            name,
+            "visibility",
+            e.target.checked ? "visible" : "none"
+          );
+        }); 
+
+       
+  
+    } catch (error) {
+      console.error(`Error adding menu item: ${error.message}`);
+    }
+  }
+
+
+
+
+
   /**
    * Adds a layer tree to the map.
    * @function addLayerTree
@@ -1014,6 +1127,7 @@ endMeasure = true
    */
   addLayerTree(options) {
     try {
+      console.log('op', options)
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
