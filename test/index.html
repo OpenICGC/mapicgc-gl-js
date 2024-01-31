@@ -41,7 +41,8 @@
   <body>
    
     <div id="map"></div>
-    <nav id="filter-group" class="filter-group"></nav>
+    <nav id="menu-group" class="filter-group"></nav>
+    <!-- <nav id="filter-group" class="filter-group"></nav> -->
     <div id="basemap-group" class="basemap-group"></div>
     <div id="logos"></div>
     <div id="basemapDiv"></div>
@@ -71,8 +72,7 @@
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
-              style: "topografic",
-            
+              style: "orto",
               zoom: 7.4,
       
       }));
@@ -95,7 +95,7 @@
 
 
 
-      map.addMeasureControl()
+      // map.addMeasureControl()
 
       map.addExportControl('bottom-right');
 
@@ -103,13 +103,13 @@
         options: { compact: true },
         position: "bottom-right",
       };
-      map.addAttributionControl(optionsAtt);
+      // map.addAttributionControl(optionsAtt);
 // map.addLimitLayerICGC('censals', '2019')
       let optionsPopup = {
         coord: [2.0119, 41.489],
         text: "<h4>Hello World!</h4>",
       };
-      map.addPopup(optionsPopup);
+      // map.addPopup(optionsPopup);
 
       let optionsMarker = {
         coord: [2.119, 41.87],
@@ -117,12 +117,12 @@
         textOffset: 25,
         options: {},
       };
-      map.addMarker(optionsMarker);
+      // map.addMarker(optionsMarker);
    let optionsScale = {
       maxWidth: 100,
       unit: "metric",
     }
-map.addScaleControl(optionsScale,"bottom-right")
+// map.addScaleControl(optionsScale,"bottom-right")
       // map.jumpTo(
       //   { center: [1.3119, 41.489], zoom: 16, essential: true }
       // )
@@ -176,25 +176,35 @@ map.addScaleControl(optionsScale,"bottom-right")
       // map.addLayerGeoJSON(geojsonLayer);
 
 
-      // map.fetchData(
-      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
-      //   'point', 
-      //   'centres')
-
-      let optionsGeo= {
-          // required
-            forwardGeocode: async (config) => { /* definition here */ },
-            
-            // optional
-            reverseGeocode: async (config) => { /* definition here */ }, // reverse geocoding API
-            getSuggestions: async (config) => { /* definition here */ }, // suggestion API
-            searchByPlaceId: async (config) => { /* definition here */ } // search by Place ID API
-      }
-        map.fetchDataWithSearchbox(
+      map.fetchDataAndMenu(
         'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
         'point', 
-        'centres',
-        optionsGeo)
+        'centres')
+        let paintOptions = {
+          'line-color': 'red',
+          'line-width': 2,
+          'line-opacity': 0.5
+        }
+        map.fetchData(
+        'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson', 
+        'line', 
+        'RutesMontserrat',
+        paintOptions)
+
+      // let optionsGeo= {
+      //     // required
+      //       forwardGeocode: async (config) => { /* definition here */ },
+            
+      //       // optional
+      //       reverseGeocode: async (config) => { /* definition here */ }, // reverse geocoding API
+      //       getSuggestions: async (config) => { /* definition here */ }, // suggestion API
+      //       searchByPlaceId: async (config) => { /* definition here */ } // search by Place ID API
+      // }
+      //   map.fetchDataWithSearchbox(
+      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
+      //   'point', 
+      //   'centres',
+      //   optionsGeo)
       
 
 
@@ -232,6 +242,7 @@ map.addScaleControl(optionsScale,"bottom-right")
           image: `${urlImages}icgc_orto_hibrida.png`,
           url: `${urlStyles}icgc_orto_hibrida.json`,
         },
+    
       ];
       map.addBasemaps(baseLayers);
 
@@ -285,7 +296,7 @@ map.addScaleControl(optionsScale,"bottom-right")
         id: "testLayer",
         type: "geojson",
       };
-      map.addLayerTree(layerTree);
+      // map.addLayerTree(layerTree);
 
     </script>
   </body>
