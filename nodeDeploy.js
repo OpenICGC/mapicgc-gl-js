@@ -20,11 +20,6 @@ const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
 
 }
 
-
-
-
-
-
 async function deploy() {
   const sftp = new SftpClient();
   sftp.client.setMaxListeners(10);
