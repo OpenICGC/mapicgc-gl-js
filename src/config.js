@@ -14,22 +14,18 @@ const defaultOptions = {
     maxPitch: 85,
   },
   baseStyles: [
-    { name: "topografic", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json", },
-    { name: "ortofoto", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" },
-    { name: "limits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" },
-    { name: "fosc", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" },
-    { name: "gris", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json" },
-
-    // { name: "ombra", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra.json" },
-    // { name: "hipsometria", url: "https://geoserveis.icgc.cat/contextmaps/icgc_ombra_hipsometria.json" },
-    // { name: "protegits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_espais_protegits_hidrografia.json" },
-    { name: "geologia", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json" },
+    { name: "Style.Topografic", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json", },
+    { name: "Style.Ortofoto", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" },
+    { name: "Style.Limits", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" },
+    { name: "Style.Fosc", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" },
+    { name: "Style.Gris", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json" },
+    { name: "Style.Geologia", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json" },
 
 
 
   ],
   urlTerrainICGC:[
-    {name: "5m", url: "https://geoserveis.icgc.cat/servei/catalunya/contextmaps-terreny-5m-rgb/wmts/{z}/{x}/{y}.png"},
+    {name: "5m", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png"},
     {name: "2m", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png"}
   ],
   ortoLayersICGC: [

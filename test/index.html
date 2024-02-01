@@ -68,11 +68,12 @@
     <div id="after" class="map"></div>
   </div> -->
    <script>
+    
       // console.info(window);
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
-              style: "orto",
+              style: "Style.Topografic",
               zoom: 7.4,
       
       }));
@@ -84,112 +85,110 @@
       // let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
-      map.addTerrainICGC('2m', 'bottom-right');
-      // map.addImageLayerICGC('orto');   
-      // map.addImageLayerICGC('geologia');
+//       map.addTerrainICGC('5m', 'bottom-right');
+//       // map.addImageLayerICGC('orto');   
+//       // map.addImageLayerICGC('geologia');
 
-      //censals, salut, provincies, aquifers...
-      // map.addFGBLayerICGC('censalo')
+//       //censals, salut, provincies, aquifers...
+//       // map.addFGBLayerICGC('censal')
    
-      // map.addFullScreen('bottom-right');
+//       // map.addFullScreen('bottom-right');
 
 
 
-      // map.addMeasureControl()
+//       // map.addMeasureControl()
 
-      map.addExportControl('bottom-right');
+//       map.addExportControl('bottom-right');
 
-      let optionsAtt = {
-        options: { compact: true },
-        position: "bottom-right",
-      };
-      // map.addAttributionControl(optionsAtt);
-// map.addLimitLayerICGC('censals', '2019')
-      let optionsPopup = {
-        coord: [2.0119, 41.489],
-        text: "<h4>Hello World!</h4>",
-      };
-      // map.addPopup(optionsPopup);
+//       let optionsAtt = {
+//         options: { compact: true },
+//         position: "bottom-right",
+//       };
+//       // map.addAttributionControl(optionsAtt);
+// // map.addLimitLayerICGC('censals', '2019')
+//       let optionsPopup = {
+//         coord: [2.0119, 41.489],
+//         text: "<h4>Hello World!</h4>",
+//       };
+//       // map.addPopup(optionsPopup);
 
-      let optionsMarker = {
-        coord: [2.119, 41.87],
-        text: "Hola Test",
-        textOffset: 25,
-        options: {},
-      };
-      // map.addMarker(optionsMarker);
-   let optionsScale = {
-      maxWidth: 100,
-      unit: "metric",
-    }
-// map.addScaleControl(optionsScale,"bottom-right")
-      // map.jumpTo(
-      //   { center: [1.3119, 41.489], zoom: 16, essential: true }
-      // )
-      // map.addControl(new maplibregl.GeolocateControl({
-      //     positionOptions: {
-      //         enableHighAccuracy: true
-      //     },
-      //     trackUserLocation: true
-      // }), "bottom-right")
-      map.on("load", function (){
-              map.addMouseCoordControl()
-      })
+//       let optionsMarker = {
+//         coord: [2.119, 41.87],
+//         text: "Hola Test",
+//         textOffset: 25,
+//         options: {},
+//       };
+//       // map.addMarker(optionsMarker);
+//    let optionsScale = {
+//       maxWidth: 100,
+//       unit: "metric",
+//     }
+// // map.addScaleControl(optionsScale,"bottom-right")
+//       // map.jumpTo(
+//       //   { center: [1.3119, 41.489], zoom: 16, essential: true }
+//       // )
+//       // map.addControl(new maplibregl.GeolocateControl({
+//       //     positionOptions: {
+//       //         enableHighAccuracy: true
+//       //     },
+//       //     trackUserLocation: true
+//       // }), "bottom-right")
+//       map.on("load", function (){
+//               map.addMouseCoordControl()
+//       })
 
-      map.getZoom()
+//       map.getZoom()
 
-      // map.addGeolocateControl({
-      //     positionOptions: {
-      //         enableHighAccuracy: true
-      //     },
-      //     trackUserLocation: true
-      // },"bottom-right")
-      // map.addNavigationControl({
-      //   visualizePitch: true,
-      //   showZoom: true,
-      //   showCompass: true,
-      // }, "bottom-right");
+//       // map.addGeolocateControl({
+//       //     positionOptions: {
+//       //         enableHighAccuracy: true
+//       //     },
+//       //     trackUserLocation: true
+//       // },"bottom-right")
+//       // map.addNavigationControl({
+//       //   visualizePitch: true,
+//       //   showZoom: true,
+//       //   showCompass: true,
+//       // }, "bottom-right");
 
-      let geojsonLayer = {
-        id: "geojsonTest",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: [
-              [
-                [1.3119, 41.489],
-                [1.0119, 41.489],
-                [1.0119, 42.0489],
-                [1.3119, 42.0489],
-              ],
-            ],
-          },
-        },
-        layerType: "fill",
-        layout: {},
-        paint: {
-          "fill-color": "#088",
-          "fill-opacity": 0.8,
-        },
-      };
-      // map.addLayerGeoJSON(geojsonLayer);
+//       let geojsonLayer = {
+//         id: "geojsonTest",
+//         data: {
+//           type: "Feature",
+//           geometry: {
+//             type: "Polygon",
+//             coordinates: [
+//               [
+//                 [1.3119, 41.489],
+//                 [1.0119, 41.489],
+//                 [1.0119, 42.0489],
+//                 [1.3119, 42.0489],
+//               ],
+//             ],
+//           },
+//         },
+//         layerType: "fill",
+//         layout: {},
+//         paint: {
+//           "fill-color": "#088",
+//           "fill-opacity": 0.8,
+//         },
+//       };
+//       // map.addLayerGeoJSON(geojsonLayer);
+// console.log('vL',map.getConfigVectorLayers())
 
-
-      map.fetchDataAndMenu(
-        'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson', 
-        'point', 
-        'centres')
-        let paintOptions = {
-          'line-color': 'red',
-          'line-width': 2,
-          'line-opacity': 0.5
-        }
-        map.fetchData(
-        'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson', 
-        'line', 
-        'RutesMontserrat',
-        paintOptions)
+      // map.fetchDataAndMenu(
+      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson',
+      //   'centres')
+      //   let paintOptions = {
+      //     'line-color': 'red',
+      //     'line-width': 2,
+      //     'line-opacity': 0.5
+      //   }
+      //   map.fetchData(
+      //   'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson',
+      //   'RutesMontserrat',
+      //   paintOptions)
 
       // let optionsGeo= {
       //     // required
@@ -208,94 +207,94 @@
       
 
 
-      let wmsLayer = {
-        id: "wms-test",
-        tiles:
-          "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
-      };
-      // map.addLayerWMS(wmsLayer);
+//       let wmsLayer = {
+//         id: "wms-test",
+//         tiles:
+//           "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
+//       };
+//       // map.addLayerWMS(wmsLayer);
 
      
-    //  map.add3DBuildingsICGC()
+//     //  map.add3DBuildingsICGC()
 
 
-      let logoOptions = {
-        id: "icgcColorLogo",
-        url: "https://betaserver.icgc.cat/logos/ICGC_color_norma.svg",
-        href: "https://www.icgc.cat",
-      };
-      map.addLogo(logoOptions);
-      const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
-    const urlStyles = "https://geoserveis.icgc.cat/contextmaps/";
-      let baseLayers = [
-        {
-          id: 0,
-          value: "Mapa estàndard",
-          label: "fonscarto_mapa_estandard",
-          image: `${urlImages}icgc_mapa_estandard.png`,
-          url: `${urlStyles}icgc_mapa_estandard.json`,
-        },
-        {
-          id: 1,
-          value: "Ortofotomapa híbrid",
-          label: "fonscarto_orto_hibrida",
-          image: `${urlImages}icgc_orto_hibrida.png`,
-          url: `${urlStyles}icgc_orto_hibrida.json`,
-        },
+//       let logoOptions = {
+//         id: "icgcColorLogo",
+//         url: "https://betaserver.icgc.cat/logos/ICGC_color_norma.svg",
+//         href: "https://www.icgc.cat",
+//       };
+//       map.addLogo(logoOptions);
+//       const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
+//     const urlStyles = "https://geoserveis.icgc.cat/contextmaps/";
+//       let baseLayers = [
+//         {
+//           id: 0,
+//           value: "Mapa estàndard",
+//           label: "fonscarto_mapa_estandard",
+//           image: `${urlImages}icgc_mapa_estandard.png`,
+//           url: `${urlStyles}icgc_mapa_estandard.json`,
+//         },
+//         {
+//           id: 1,
+//           value: "Ortofotomapa híbrid",
+//           label: "fonscarto_orto_hibrida",
+//           image: `${urlImages}icgc_orto_hibrida.png`,
+//           url: `${urlStyles}icgc_orto_hibrida.json`,
+//         },
     
-      ];
-      map.addBasemaps(baseLayers);
+//       ];
+//       map.addBasemaps(baseLayers);
 
-      let layerTree = {
-        features: {
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: {
-                icon: "Rubí",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [2.0119, 41.489],
-              },
-            },
+//       let layerTree = {
+//         features: {
+//           type: "FeatureCollection",
+//           features: [
+//             {
+//               type: "Feature",
+//               properties: {
+//                 icon: "Rubí",
+//               },
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [2.0119, 41.489],
+//               },
+//             },
 
-            {
-              type: "Feature",
-              properties: {
-                icon: "Moià",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [2.119, 41.87],
-              },
-            },
-            {
-              type: "Feature",
-              properties: {
-                icon: "Les Borges Blanques",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [0.97319, 41.4589],
-              },
-            },
-            {
-              type: "Feature",
-              properties: {
-                icon: "Berga",
-              },
-              geometry: {
-                type: "Point",
-                coordinates: [1.83, 42.163],
-              },
-            },
-          ],
-        },
-        id: "testLayer",
-        type: "geojson",
-      };
+//             {
+//               type: "Feature",
+//               properties: {
+//                 icon: "Moià",
+//               },
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [2.119, 41.87],
+//               },
+//             },
+//             {
+//               type: "Feature",
+//               properties: {
+//                 icon: "Les Borges Blanques",
+//               },
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [0.97319, 41.4589],
+//               },
+//             },
+//             {
+//               type: "Feature",
+//               properties: {
+//                 icon: "Berga",
+//               },
+//               geometry: {
+//                 type: "Point",
+//                 coordinates: [1.83, 42.163],
+//               },
+//             },
+//           ],
+//         },
+//         id: "testLayer",
+//         type: "geojson",
+//       };
       // map.addLayerTree(layerTree);
 
     </script>
