@@ -60,20 +60,71 @@ export default class Map {
     }
   }
 
+/**
+ * Retrieves the available base styles from default options.
+ * @function getConfigStyles
+ * @returns {Array} - Array containing the names of available base styles.
+ */
+getConfigStyles(){
+  try {
+    let stylesArray=[]
+    for (const style of defaultOptions.baseStyles) {
+      stylesArray.push(style.name)
+    }
+    return stylesArray
+  } catch (error) {
+    console.error(`Error retrieving base styles: ${error.message}`);
+  }
+}
+/**
+ * Retrieves the available image layers from default options.
+ * @function getConfigImageLayers
+ * @returns {Array} - Array containing the keys of available image layers.
+ */
+getConfigImageLayers(){
+  try {
+let imageArray=[]
+    for (const layer of defaultOptions.ortoLayersICGC) {
+  imageArray.push(layer.key)
+    }
+    return imageArray
+  } catch (error) {
+    console.error(`Error retrieving image layers: ${error.message}`)
+  }
+}
+/**
+ * Retrieves the available vector layers from default options.
+ * @function getConfigVectorLayers
+ * @returns {Array} - Array containing the keys of available vector layers.
+ */
+getConfigVectorLayers(){
+  try {
+    let vectorArray=[]
+    for (const layer of defaultOptions.vectorLayersICGC) {
+      vectorArray.push(layer.key)
+    }
+ 
+    return vectorArray
+  } catch (error) {
+    console.error(`Error retrieving vector layers: ${error.message}`);
+  }
+}
 
 /**
  * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
  * @param {string} url - The URL to fetch GeoJSON data from.
- * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
  * @param {string} name - The geometry name (e.g., 'buildings').
  * @param {Object} options - Additional options for configuring the layer.
  */
 
-async fetchData(url, type, name, options){
+async fetchData(url, name, options){
 try {
   const response = await fetch(url)
   const geojson = await response.json();
   // console.log('geojsonName:',name, geojson)
+let type = geojson.features[0].geometry.type
+
+
 
   if (type.includes("ine")){ //line
 
@@ -139,17 +190,16 @@ try {
 /**
  * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
  * @param {string} url - The URL to fetch GeoJSON data from.
- * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
  * @param {string} name - The geometry name (e.g., 'buildings').
  * @param {Object} options - Additional options for configuring the layer.
  */
 
-async fetchDataAndMenu(url, type, name, options){
+async fetchDataAndMenu(url, name, options){
   try {
     const response = await fetch(url)
     const geojson = await response.json();
     // console.log('fetchDataAndMenu:',name, geojson)
-  
+    let type = geojson.features[0].geometry.type
     if (type.includes("ine")){ //line
   
       map.addLayer({
