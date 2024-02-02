@@ -31,7 +31,7 @@ export default class Map {
     } else {
       for (const key in defaultOptions.mapOptions) {
         if (!options.hasOwnProperty(key)) {
-          // console.log('key', key)
+          
           options[key] = defaultOptions.mapOptions[key];
         }
       }
@@ -121,7 +121,7 @@ async fetchData(url, name, options){
 try {
   const response = await fetch(url)
   const geojson = await response.json();
-  // console.log('geojsonName:',name, geojson)
+  
 let type = geojson.features[0].geometry.type
 
 
@@ -162,7 +162,7 @@ let type = geojson.features[0].geometry.type
     });
   }
   if (type.includes('oint')){ //point
-    // console.log('geojson', geojson)
+ 
     map.addLayer({
       id: name,
       type: 'circle',
@@ -198,7 +198,7 @@ async fetchDataAndMenu(url, name, options){
   try {
     const response = await fetch(url)
     const geojson = await response.json();
-    // console.log('fetchDataAndMenu:',name, geojson)
+   
     let type = geojson.features[0].geometry.type
     if (type.includes("ine")){ //line
   
@@ -236,7 +236,7 @@ async fetchDataAndMenu(url, name, options){
       });
     }
     if (type.includes('oint')){ //point
-      // console.log('geojson', geojson)
+      
       map.addLayer({
         id: name,
         type: 'circle',
@@ -272,7 +272,7 @@ async geocodeAddress(){
     const geojson = await response.json();
     var resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-// console.log('ge', geojson)
+
     function geocode(address) {
       var result = turf.filter(geojson, 'address', address);
       return result.features.slice(0, 5);
@@ -309,7 +309,7 @@ async fetchDataWithSearchbox(url, type, name, optionsGeo, options){
   try {
     const response = await fetch(url)
     const geojson = await response.json();
-    // console.log('geojson', geojson)
+   
   
     function geocode(address) {
     var result = turf.filter(geojson, 'address', address);
@@ -805,7 +805,7 @@ removeMeasureControl(){
     const removeMeasure = document.getElementById('xButton')
     const distanceContainer = document.getElementById('distance');
     distanceContainer.innerHTML = '';
-    // console.log(this.map.getStyle().layers)
+    
 let layers = this.map.getStyle().layers
 
 
@@ -847,7 +847,7 @@ var clickTimer;
             'coordinates': []
         }
     };
-    // console.log('endMesa', endMeasure)
+
    
     this.map.on('load', () => {
       this.map.addSource('geojson', {
@@ -921,7 +921,7 @@ this.map.on('mousemove', (e) => {
 
 
 function handleSingleClick(e, map) {
-  // console.log('single')
+  
 const features = map.queryRenderedFeatures(e.point, {
     layers: ['measure-points']
 });
@@ -981,7 +981,7 @@ if (geojson.features.length > 1) {
         const removeMeasure = document.getElementById('xButton')
         const distanceContainer = document.getElementById('distance');
         distanceContainer.innerHTML = '';
-        // console.log(this.map.getStyle().layers)
+      
     let layers = map.getStyle().layers
     
     
@@ -1007,12 +1007,11 @@ map.getSource('geojson').setData(geojson);
 }
 
 function handleDoubleClick(e, map) {
-// Aquí puedes poner la lógica que desees para manejar el doble clic
-// console.log('Doble clic en', e.lngLat);
+
+
 map.getCanvas().style.cursor = 'grab' 
 endMeasure = true
 
-// Por ejemplo, puedes detener la medición de distancias aquí
 }
 
 
@@ -1177,7 +1176,7 @@ endMeasure = true
    */
   addLayerTree(options) {
     try {
-      console.log('op', options)
+    
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
@@ -1397,11 +1396,11 @@ endMeasure = true
 
   /**
    * Adds an ICGC vector layer to the map based on the specified name and year.
-   * @function addFGBLayerICGC
+   * @function addVectorLayerICGC
    * @param {string} name - The name of the vector layer.
    * @param {string} year - The year associated with the vector layer (optional).
    */
-  async addFGBLayerICGC(name, year) {
+  async addVectorLayerICGC(name, year) {
     try {
       let op = defaultOptions.vectorLayersICGC.find((objeto) =>
         objeto.key.includes(name)
@@ -1456,7 +1455,7 @@ endMeasure = true
 
   /**
    * Adds 3D terrain to the map using hillshade.
-   * @function addTerrain
+   * @function addTerrainICGC
    * @param {string} resolution - resolution of the terrain data: 2m or 5m.
     * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
