@@ -52,18 +52,18 @@ const defaultOptions = {
   vectorLayersICGC: [
     {
       name: "agrupacionsCensalsVigent",
-      key: "agrupacions-censals-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/agrupacions-censals-vigent.fgb"
+      key: "agrupacions_censals_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/agrupacions_censals_vigent.fgb"
     },
     {
       name: "areesBasiquesSalutVigent",
-      key: "arees-basiques-salut-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/arees-basiques-salut-vigent.fgb"
+      key: "arees_basiques_salut_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/arees_basiques_salut_vigent.fgb"
     },
     {
       name: "areesHidrogeologiquesAquifersVigent",
-      key: "arees-hidrogeologiques-aquifers-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/arees-hidrogeologiques-aquifers-vigent.fgb"
+      key: "arees_hidrogeologiques_aquifers_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/arees_hidrogeologiques_aquifers_vigent.fgb"
     },
     {
       name: "cobertesSolVigent",
@@ -72,48 +72,34 @@ const defaultOptions = {
     },
     {
       name: "comarquesVigent",
-      key: "comarques-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/comarques-vigent.fgb"
+      key: "comarques_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/comarques_vigent.fgb"
     },
     {
       name: "municipisVigent",
-      key: "municipis-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/municipis-vigent.fgb"
+      key: "municipis_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/municipis_vigent.fgb"
     },
     {
       name: "provinciesVigent",
-      key: "provincies-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/provincies-vigent.fgb"
-    },
-    {
-      name: "quadriculaUTM1kmSocVigent",
-      key: "quadricula-utm-1km-soc-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/quadricula-utm-1km-soc-vigent.fgb"
+      key: "provincies_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/provincies_vigent.fgb"
     },
     {
       name: "regionsSanitariesVigent",
-      key: "regions-sanitaries-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/regions-sanitaries-vigent.fgb"
+      key: "regions_sanitaries_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/regions_sanitaries_vigent.fgb"
     },
     {
       name: "seccionsCensalsVigent",
-      key: "seccions-censals-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/seccions-censals-vigent.fgb"
+      key: "seccions_censals_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/seccions_censals_vigent.fgb"
     },
-    {
-      name: "tall5mEtrs89Vigent",
-      key: "tall-5m-etrs89-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/tall-5m-etrs89-vigent.fgb"
-    },
-    {
-      name: "unitatsGeologiques50mVigent",
-      key: "unitats-geologiques-50m-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/unitats-geologiques-50m-vigent.fgb"
-    },
+
     {
       name: "vegueriesVigent",
-      key: "vegueries-vigent",
-      url: "https://betaserver2.icgc.cat/fgb/vegueries-vigent.fgb"
+      key: "vegueries_vigent",
+      url: "https://betaserver2.icgc.cat/fgb/vegueries_vigent.fgb"
     }
 
 
