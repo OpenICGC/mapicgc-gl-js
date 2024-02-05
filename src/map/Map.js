@@ -3,9 +3,6 @@ import maplibregl from "maplibre-gl";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import defaultOptions from "../config.js";
 
-
-
-
 /**
  * Class representing a custom map with additional functions.
  */
@@ -31,7 +28,6 @@ export default class Map {
     } else {
       for (const key in defaultOptions.mapOptions) {
         if (!options.hasOwnProperty(key)) {
-          
           options[key] = defaultOptions.mapOptions[key];
         }
       }
@@ -43,307 +39,281 @@ export default class Map {
     options.attributionControl = false;
 
     this.map = new maplibregl.Map(options);
-    this.map.options=options;
+    this.map.options = options;
   }
 
-
   /**
- * Retrieves the current style of the map.
- * @function getStyle
- * @returns {Object} - The current style of the map.
- */
-  getStyle(){
+   * Retrieves the current style of the map.
+   * @function getStyle
+   * @returns {Object} - The current style of the map.
+   */
+  getStyle() {
     try {
-      this.map.getStyle()
+      this.map.getStyle();
     } catch (error) {
       console.error(`Error getting style: ${error.message}`);
     }
   }
 
-/**
- * Retrieves the available base styles from default options.
- * @function getConfigStyles
- * @returns {Array} - Array containing the names of available base styles.
- */
-getConfigStyles(){
-  try {
-    let stylesArray=[]
-    for (const style of defaultOptions.baseStyles) {
-      stylesArray.push(style.name)
+  /**
+   * Retrieves the available base styles from default options.
+   * @function getConfigStyles
+   * @returns {Array} - Array containing the names of available base styles.
+   */
+  getConfigStyles() {
+    try {
+      let stylesArray = [];
+      for (const style of defaultOptions.baseStyles) {
+        stylesArray.push(style.name);
+      }
+      return stylesArray;
+    } catch (error) {
+      console.error(`Error retrieving base styles: ${error.message}`);
     }
-    return stylesArray
-  } catch (error) {
-    console.error(`Error retrieving base styles: ${error.message}`);
   }
-}
-/**
- * Retrieves the available image layers from default options.
- * @function getConfigImageLayers
- * @returns {Array} - Array containing the keys of available image layers.
- */
-getConfigImageLayers(){
-  try {
-let imageArray=[]
-    for (const layer of defaultOptions.ortoLayersICGC) {
-  imageArray.push(layer.key)
+  /**
+   * Retrieves the available image layers from default options.
+   * @function getConfigImageLayers
+   * @returns {Array} - Array containing the keys of available image layers.
+   */
+  getConfigImageLayers() {
+    try {
+      let imageArray = [];
+      for (const layer of defaultOptions.ortoLayersICGC) {
+        imageArray.push(layer.key);
+      }
+      return imageArray;
+    } catch (error) {
+      console.error(`Error retrieving image layers: ${error.message}`);
     }
-    return imageArray
-  } catch (error) {
-    console.error(`Error retrieving image layers: ${error.message}`)
   }
-}
-/**
- * Retrieves the available vector layers from default options.
- * @function getConfigVectorLayers
- * @returns {Array} - Array containing the keys of available vector layers.
- */
-getConfigVectorLayers(){
-  try {
-    let vectorArray=[]
-    for (const layer of defaultOptions.vectorLayersICGC) {
-      vectorArray.push(layer.key)
+  /**
+   * Retrieves the available vector layers from default options.
+   * @function getConfigVectorLayers
+   * @returns {Array} - Array containing the keys of available vector layers.
+   */
+  getConfigVectorLayers() {
+    try {
+      let vectorArray = [];
+      for (const layer of defaultOptions.vectorLayersICGC) {
+        vectorArray.push(layer.key);
+      }
+
+      return vectorArray;
+    } catch (error) {
+      console.error(`Error retrieving vector layers: ${error.message}`);
     }
- 
-    return vectorArray
-  } catch (error) {
-    console.error(`Error retrieving vector layers: ${error.message}`);
-  }
-}
-
-/**
- * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
- * @param {string} url - The URL to fetch GeoJSON data from.
- * @param {string} name - The geometry name (e.g., 'buildings').
- * @param {Object} options - Additional options for configuring the layer.
- */
-
-async fetchData(url, name, options){
-try {
-  const response = await fetch(url)
-  const geojson = await response.json();
-  
-let type = geojson.features[0].geometry.type
-
-
-
-  if (type.includes("ine")){ //line
-
-    map.addLayer({
-      id: name,
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: geojson,
-      },
-      layout: {
-        visibility: "visible"
-      },
-      paint: options,
-    });
-  }
-  if (type.includes('olygon')){ //polygon
-
-    map.addLayer({
-      id: name,
-      type: 'fill',
-      source: {
-        type: 'geojson',
-        data: geojson,
-      },
-      layout: {
-        visibility: "visible"
-      },
-      // paint: {
-      //   'line-color': element.color,
-      //   'line-width': element.width,
-      //   'line-opacity': element.opacity
-  
-      // },
-    });
-  }
-  if (type.includes('oint')){ //point
- 
-    map.addLayer({
-      id: name,
-      type: 'circle',
-      source: {
-        type: 'geojson',
-        data: geojson,
-      },
-      layout: {
-        visibility: "visible"
-      },
-      paint: {
-        'circle-color': 'yellow',
-        'circle-opacity': 0.5
-  
-      },
-    });
   }
 
+  /**
+   * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
+   * @param {string} url - The URL to fetch GeoJSON data from.
+   * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {Object} options - Additional options for configuring the layer.
+   */
 
-} catch (error) {
-  console.error(`Error fetching data: ${error.message}`);
-}
-}
+  async fetchData(url, name, options) {
+    try {
+      const response = await fetch(url);
+      const geojson = await response.json();
 
-/**
- * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
- * @param {string} url - The URL to fetch GeoJSON data from.
- * @param {string} name - The geometry name (e.g., 'buildings').
- * @param {Object} options - Additional options for configuring the layer.
- */
+      let type = geojson.features[0].geometry.type;
 
-async fetchDataAndMenu(url, name, options){
-  try {
-    const response = await fetch(url)
-    const geojson = await response.json();
-   
-    let type = geojson.features[0].geometry.type
-    if (type.includes("ine")){ //line
-  
-      map.addLayer({
-        id: name,
-        type: 'line',
-        source: {
-          type: 'geojson',
-          data: geojson,
-        },
-        layout: {
-          visibility: "visible"
-        },
-        paint: options,
-      });
+      if (type.includes("ine")) {
+        //line
+
+        map.addLayer({
+          id: name,
+          type: "line",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: options,
+        });
+      }
+      if (type.includes("olygon")) {
+        //polygon
+
+        map.addLayer({
+          id: name,
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          // paint: {
+          //   'line-color': element.color,
+          //   'line-width': element.width,
+          //   'line-opacity': element.opacity
+
+          // },
+        });
+      }
+      if (type.includes("oint")) {
+        //point
+
+        map.addLayer({
+          id: name,
+          type: "circle",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: {
+            "circle-color": "yellow",
+            "circle-opacity": 0.5,
+          },
+        });
+      }
+    } catch (error) {
+      console.error(`Error fetching data: ${error.message}`);
     }
-    if (type.includes('olygon')){ //polygon
-  
-      map.addLayer({
-        id: name,
-        type: 'fill',
-        source: {
-          type: 'geojson',
-          data: geojson,
-        },
-        layout: {
-          visibility: "visible"
-        },
-        // paint: {
-        //   'line-color': element.color,
-        //   'line-width': element.width,
-        //   'line-opacity': element.opacity
-    
-        // },
-      });
+  }
+
+  /**
+   * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
+   * @param {string} url - The URL to fetch GeoJSON data from.
+   * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {Object} options - Additional options for configuring the layer.
+   */
+
+  async fetchDataAndMenu(url, name, options) {
+    try {
+      const response = await fetch(url);
+      const geojson = await response.json();
+
+      let type = geojson.features[0].geometry.type;
+      if (type.includes("ine")) {
+        //line
+
+        map.addLayer({
+          id: name,
+          type: "line",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: options,
+        });
+      }
+      if (type.includes("olygon")) {
+        //polygon
+
+        map.addLayer({
+          id: name,
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          // paint: {
+          //   'line-color': element.color,
+          //   'line-width': element.width,
+          //   'line-opacity': element.opacity
+
+          // },
+        });
+      }
+      if (type.includes("oint")) {
+        //point
+
+        map.addLayer({
+          id: name,
+          type: "circle",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: {
+            "circle-color": "yellow",
+            "circle-opacity": 0.5,
+          },
+        });
+      }
+      // geojsonStore  = geojson
+      // map.addLayerTree(geojson);
+      map.addMenuItem(name);
+    } catch (error) {
+      console.error(`Error fetching data: ${error.message}`);
     }
-    if (type.includes('oint')){ //point
-      
-      map.addLayer({
-        id: name,
-        type: 'circle',
-        source: {
-          type: 'geojson',
-          data: geojson,
-        },
-        layout: {
-          visibility: "visible"
-        },
-        paint: {
-          'circle-color': 'yellow',
-          'circle-opacity': 0.5
-    
-        },
-      });
+  }
+
+  async geocodeAddress() {
+    try {
+      var inputElement = document.getElementById("addressInput");
+      var address = inputElement.value;
+      const response = await fetch(url);
+      const geojson = await response.json();
+      var resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
+
+      function geocode(address) {
+        var result = turf.filter(geojson, "address", address);
+        return result.features.slice(0, 5);
+      }
+
+      var results = geocode(address);
+
+      if (results.length > 0) {
+        results.forEach(function (feature) {
+          var coordinates = feature.geometry.coordinates;
+          var address = feature.properties.address;
+
+          var resultItem = document.createElement("div");
+          resultItem.innerHTML =
+            "<strong>" +
+            address +
+            "</strong><br>Coordenadas: " +
+            coordinates.join(", ");
+
+          resultsContainer.appendChild(resultItem);
+        });
+      } else {
+        resultsContainer.innerHTML =
+          "No se encontraron resultados para la dirección: " + address;
+      }
+    } catch (error) {}
+  }
+  /**
+   * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
+   * @param {string} url - The URL to fetch GeoJSON data from.
+   * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
+   * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {Object} options - Additional options for configuring the layer.
+   */
+
+  async fetchDataWithSearchbox(url, type, name, optionsGeo, options) {
+    try {
+      const response = await fetch(url);
+      const geojson = await response.json();
+
+      function geocode(address) {
+        var result = turf.filter(geojson, "address", address);
+        return result.features.slice(0, 5);
+      }
+    } catch (error) {
+      console.error(`Error fetching data: ${error.message}`);
     }
-    // geojsonStore  = geojson
-    // map.addLayerTree(geojson);
-    map.addMenuItem(name)
-  
-  } catch (error) {
-    console.error(`Error fetching data: ${error.message}`);
   }
-  }
-  
-
-async geocodeAddress(){
-  try {
-    var inputElement = document.getElementById('addressInput');
-    var address = inputElement.value;
-    const response = await fetch(url)
-    const geojson = await response.json();
-    var resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-
-    function geocode(address) {
-      var result = turf.filter(geojson, 'address', address);
-      return result.features.slice(0, 5);
-    }
-
-    var results = geocode(address);
-
-    if (results.length > 0) {
-      results.forEach(function (feature) {
-        var coordinates = feature.geometry.coordinates;
-        var address = feature.properties.address;
-
-        var resultItem = document.createElement('div');
-        resultItem.innerHTML = '<strong>' + address + '</strong><br>Coordenadas: ' + coordinates.join(', ');
-
-        resultsContainer.appendChild(resultItem);
-      });
-    } else {
-      resultsContainer.innerHTML = 'No se encontraron resultados para la dirección: ' + address;
-    }
-  } catch (error) {
-    
-  }
-}
-/**
- * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
- * @param {string} url - The URL to fetch GeoJSON data from.
- * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
- * @param {string} name - The geometry name (e.g., 'buildings').
- * @param {Object} options - Additional options for configuring the layer.
- */
-
-async fetchDataWithSearchbox(url, type, name, optionsGeo, options){
-  try {
-    const response = await fetch(url)
-    const geojson = await response.json();
-   
-  
-    function geocode(address) {
-    var result = turf.filter(geojson, 'address', address);
-    return result.features.slice(0, 5);
-  }
-
- 
-
-
-
-
-  
-  } catch (error) {
-    console.error(`Error fetching data: ${error.message}`);
-  }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /**
    * Adds an event listener to the map.
@@ -379,39 +349,34 @@ async fetchDataWithSearchbox(url, type, name, optionsGeo, options){
    */
   addSource(source, options) {
     try {
-      
       this.map.addSource(source, options);
     } catch (error) {
       console.error(`Error adding source: ${error.message}`);
     }
   }
-/**
- * Sets the style of the map.
- * @function setStyle
- * @param {string} style - Name of the map style.
- * @param {Object} [options] - Options for setting the style.
- */
+  /**
+   * Sets the style of the map.
+   * @function setStyle
+   * @param {string} style - Name of the map style.
+   * @param {Object} [options] - Options for setting the style.
+   */
 
-setStyle(style, options){
-  try {
-
-    for (const styl of defaultOptions.baseStyles) {
+  setStyle(style, options) {
+    try {
+      for (const styl of defaultOptions.baseStyles) {
         if (styl.name === style) {
-          style =  styl.url;
+          style = styl.url;
         }
       }
-    if (options !== undefined){
-      this.map.setStyle(style, options)
-    }else{
-    this.map.setStyle(style);
+      if (options !== undefined) {
+        this.map.setStyle(style, options);
+      } else {
+        this.map.setStyle(style);
+      }
+    } catch (error) {
+      console.error(`Error setting style: ${error.message}`);
     }
-  } catch (error) {
-    console.error(`Error setting style: ${error.message}`);
   }
-
-}
-
-
 
   /**
    * Retrieves the layer with the specified ID from the map.
@@ -451,18 +416,18 @@ setStyle(style, options){
       console.error(`Error setting layout property: ${error.message}`);
     }
   }
-/**
- * Adds a control to the map with the specified position.
- * @function addControl
- * @param {Object} control - The control to add.
- * @param {string} [position='top-right'] - Position to add the control on the map.
- */
+  /**
+   * Adds a control to the map with the specified position.
+   * @function addControl
+   * @param {Object} control - The control to add.
+   * @param {string} [position='top-right'] - Position to add the control on the map.
+   */
 
   addControl(control, position) {
     try {
-      if (position === undefined){
-        position = 'top-right'
-       }
+      if (position === undefined) {
+        position = "top-right";
+      }
       this.map.addControl(control, position);
     } catch (error) {
       console.error(`Error adding control: ${error.message}`);
@@ -516,9 +481,9 @@ setStyle(style, options){
    */
   addGeolocateControl(options, position) {
     try {
-      if (position === undefined){
-        position = 'top-right'
-       }
+      if (position === undefined) {
+        position = "top-right";
+      }
       if (options === undefined) {
         this.map.addControl(
           new maplibregl.GeolocateControl({
@@ -526,7 +491,8 @@ setStyle(style, options){
               enableHighAccuracy: true,
             },
             trackUserLocation: true,
-          }), position
+          }),
+          position
         );
       } else {
         this.map.addControl(new maplibregl.GeolocateControl(options), position);
@@ -547,11 +513,11 @@ setStyle(style, options){
       console.error(`Error getting bounds: ${error.message}`);
     }
   }
-/**
- * Retrieves the center coordinates of the map.
- * @function getCenter
- * @returns {LngLat} - The center coordinates of the map.
- */
+  /**
+   * Retrieves the center coordinates of the map.
+   * @function getCenter
+   * @returns {LngLat} - The center coordinates of the map.
+   */
   getCenter() {
     try {
       return this.map.getCenter();
@@ -560,12 +526,12 @@ setStyle(style, options){
       console.error(`Error getting center: ${error.message}`);
     }
   }
-/**
- * Sets terrain options for the map.
- * @function setTerrain
- * @param {Object} options - Options for the terrain.
- * @returns {Object} - Result of setting the terrain options.
- */
+  /**
+   * Sets terrain options for the map.
+   * @function setTerrain
+   * @param {Object} options - Options for the terrain.
+   * @returns {Object} - Result of setting the terrain options.
+   */
   setTerrain(options) {
     try {
       return this.map.setTerrain(options);
@@ -574,8 +540,6 @@ setStyle(style, options){
       console.error(`Error setting terrain: ${error.message}`);
     }
   }
-
-
 
   /**
    * Retrieves the canvas of the map.
@@ -686,18 +650,18 @@ setStyle(style, options){
     }
   }
 
-    /**
+  /**
    * Removes a control from the map.
    * @function removeControl
-  * @param {Object} control - The control to remove.
+   * @param {Object} control - The control to remove.
    */
-removeControl(control){
-  try {
-    this.map.removeControl(control);
-  } catch (error) {
-    console.error(`Error removing control: ${error.message}`);
+  removeControl(control) {
+    try {
+      this.map.removeControl(control);
+    } catch (error) {
+      console.error(`Error removing control: ${error.message}`);
+    }
   }
-}
   /**
    * Removes a layer from the map.
    * @function removeLayer
@@ -780,273 +744,238 @@ removeControl(control){
       console.error(`Error adding basemaps: ${error.message}`);
     }
   }
-/**
- * Adds a scale control to the map.
- * @param {Object} options - Options for configuring the scale control.
- * @param {string} position - The position on the map to place the scale control (e.g., 'top-left', 'bottom-right').
- */
+  /**
+   * Adds a scale control to the map.
+   * @param {Object} options - Options for configuring the scale control.
+   * @param {string} position - The position on the map to place the scale control (e.g., 'top-left', 'bottom-right').
+   */
 
-addScaleControl(options, position){
+  addScaleControl(options, position) {
+    try {
+      var scale = new maplibregl.ScaleControl(options);
 
-  try {
-    var scale = new maplibregl.ScaleControl(options);
-
-    this.map.addControl(scale, position);
-  } catch (error) {
-    console.error(`Error adding scale: ${error.message}`);
-  }
-}
-/**
- * Removes the measure control from the map.
-  * @function removeMeasureControl
- */
-removeMeasureControl(){
-  try {
-    const removeMeasure = document.getElementById('xButton')
-    const distanceContainer = document.getElementById('distance');
-    distanceContainer.innerHTML = '';
-    
-let layers = this.map.getStyle().layers
-
-
-for (let i = 0; i < layers.length; i++) {
-  if (layers[i].id.includes('measure')) {
-    this.map.removeLayer(layers[i].id)
-    
-  }
-}
-
-
-
-  } catch (error) {
-    console.error(`Error removing measure control: ${error.message}`);
-  }
-}
-
-/**
- * Adds a measure control to the map.
-  * @function addMeasureControl
- */
-addMeasureControl(){
-  try {
-    const distanceContainer = document.getElementById('distance');
-    const distanceContainerT = document.getElementById('distanceTotal');
-let endMeasure = false
-var clickTimer;
-    // GeoJSON object to hold our measurement features
-    const geojson = {
-        'type': 'FeatureCollection',
-        'features': []
-    };
-
-    // Used to draw a line between points
-    const linestring = {
-        'type': 'Feature',
-        'geometry': {
-            'type': 'LineString',
-            'coordinates': []
-        }
-    };
-
-   
-    this.map.on('load', () => {
-      this.map.addSource('geojson', {
-          'type': 'geojson',
-          'data': geojson
-      });
-
-      // Add styles to the map
-      this.map.addLayer({
-          id: 'measure-points',
-          type: 'circle',
-          source: 'geojson',
-          paint: {
-              'circle-radius': 5,
-              'circle-color': '#000'
-          },
-          filter: ['in', '$type', 'Point']
-      });
-      this.map.addLayer({
-          id: 'measure-lines',
-          type: 'line',
-          source: 'geojson',
-          layout: {
-              'line-cap': 'round',
-              'line-join': 'round'
-          },
-          paint: {
-              'line-color': '#000',
-              'line-width': 2.5
-          },
-          filter: ['in', '$type', 'LineString']
-      });
-
-
-  });
-
-    
-  this.map.on('click', (e) => {
-    clearTimeout(clickTimer);
-    if (!endMeasure){
-
-    
-    clickTimer = setTimeout(() => {
-        handleSingleClick(e, this.map);
-    }, 50); // Ajusta el tiempo según tus necesidades
-  }
-});
-
-this.map.on('dblclick', (e) => {
-    clearTimeout(clickTimer);
-    handleDoubleClick(e, this.map);
-});
-
-this.map.on('mousemove', (e) => {
-
-  if (!endMeasure){
-    const features = this.map.queryRenderedFeatures(e.point, {
-        layers: ['measure-points']
-    });
-    // UI indicator for clicking/hovering a point on the map
-
-
-
-    this.map.getCanvas().style.cursor = features.length ?
-        'pointer' :
-        'crosshair';
-  }else{
-    this.map.getCanvas().style.cursor = "grab"
-  }
-});
-
-
-function handleSingleClick(e, map) {
-  
-const features = map.queryRenderedFeatures(e.point, {
-    layers: ['measure-points']
-});
-
-// Remove the linestring from the group
-// So we can redraw it based on the points collection
-if (geojson.features.length > 1) geojson.features.pop();
-
-// Clear the Distance container to populate it with a new value
-distanceContainerT.innerHTML = '';
-
-// If a feature was clicked, remove it from the map
-if (features.length) {
-    const id = features[0].properties.id;
-    geojson.features = geojson.features.filter((point) => {
-        return point.properties.id !== id;
-    });
-} else {
-    const point = {
-        'type': 'Feature',
-        'geometry': {
-            'type': 'Point',
-            'coordinates': [e.lngLat.lng, e.lngLat.lat]
-        },
-        'properties': {
-            'id': String(new Date().getTime())
-        }
-    };
-
-    geojson.features.push(point);
-}
-
-if (geojson.features.length > 1) {
-    linestring.geometry.coordinates = geojson.features.map(
-        (point) => {
-            return point.geometry.coordinates;
-        }
-    );
-
-    geojson.features.push(linestring);
-
-    // Populate the distanceContainer with total distance
-    const value = document.createElement('pre');
-    value.textContent =
-        `Distància total: ${
-            turf.length(linestring).toLocaleString()
-        }km`;
-    distanceContainerT.appendChild(value);
-
-
-
-    const xButton = document.createElement('div');
-    xButton.id = 'xButton';
-    xButton.textContent = 'X';
-    xButton.onclick = () => {
-      try {
-        const removeMeasure = document.getElementById('xButton')
-        const distanceContainer = document.getElementById('distance');
-        distanceContainer.innerHTML = '';
-      
-    let layers = map.getStyle().layers
-    
-    
-    for (let i = 0; i < layers.length; i++) {
-      if (layers[i].id.includes('measure')) {
-        map.removeLayer(layers[i].id)
-        
-      }
+      this.map.addControl(scale, position);
+    } catch (error) {
+      console.error(`Error adding scale: ${error.message}`);
     }
-    
-    
-    
-      } catch (error) {
-        console.error(`Error adding measure control: ${error.message}`);
-      }
-    };
-    distanceContainerT.appendChild(xButton);
-
-
-}
-
-map.getSource('geojson').setData(geojson);
-}
-
-function handleDoubleClick(e, map) {
-
-
-map.getCanvas().style.cursor = 'grab' 
-endMeasure = true
-
-}
-
-
-  } catch (error) {
-    
   }
-}
+  /**
+   * Removes the measure control from the map.
+   * @function removeMeasureControl
+   */
+  removeMeasureControl() {
+    try {
+      const removeMeasure = document.getElementById("xButton");
+      const distanceContainer = document.getElementById("distance");
+      distanceContainer.innerHTML = "";
 
+      let layers = this.map.getStyle().layers;
 
-/**
- * Adds an export control to the map with the provided options and position.
- * @function addExportControl
- * @param {Object|string} options - Options for the export control or position if provided as a string.
- * @param {string} [position] - Position to place the export control (e.g., 'top-right').
- */
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].id.includes("measure")) {
+          this.map.removeLayer(layers[i].id);
+        }
+      }
+    } catch (error) {
+      console.error(`Error removing measure control: ${error.message}`);
+    }
+  }
+
+  /**
+   * Adds a measure control to the map.
+   * @function addMeasureControl
+   */
+  addMeasureControl() {
+    try {
+      const distanceContainer = document.getElementById("distance");
+      const distanceContainerT = document.getElementById("distanceTotal");
+      let endMeasure = false;
+      var clickTimer;
+      // GeoJSON object to hold our measurement features
+      const geojson = {
+        type: "FeatureCollection",
+        features: [],
+      };
+
+      // Used to draw a line between points
+      const linestring = {
+        type: "Feature",
+        geometry: {
+          type: "LineString",
+          coordinates: [],
+        },
+      };
+
+      this.map.on("load", () => {
+        this.map.addSource("geojson", {
+          type: "geojson",
+          data: geojson,
+        });
+
+        // Add styles to the map
+        this.map.addLayer({
+          id: "measure-points",
+          type: "circle",
+          source: "geojson",
+          paint: {
+            "circle-radius": 5,
+            "circle-color": "#000",
+          },
+          filter: ["in", "$type", "Point"],
+        });
+        this.map.addLayer({
+          id: "measure-lines",
+          type: "line",
+          source: "geojson",
+          layout: {
+            "line-cap": "round",
+            "line-join": "round",
+          },
+          paint: {
+            "line-color": "#000",
+            "line-width": 2.5,
+          },
+          filter: ["in", "$type", "LineString"],
+        });
+      });
+
+      this.map.on("click", (e) => {
+        clearTimeout(clickTimer);
+        if (!endMeasure) {
+          clickTimer = setTimeout(() => {
+            handleSingleClick(e, this.map);
+          }, 50); // Ajusta el tiempo según tus necesidades
+        }
+      });
+
+      this.map.on("dblclick", (e) => {
+        clearTimeout(clickTimer);
+        handleDoubleClick(e, this.map);
+      });
+
+      this.map.on("mousemove", (e) => {
+        if (!endMeasure) {
+          const features = this.map.queryRenderedFeatures(e.point, {
+            layers: ["measure-points"],
+          });
+          // UI indicator for clicking/hovering a point on the map
+
+          this.map.getCanvas().style.cursor = features.length
+            ? "pointer"
+            : "crosshair";
+        } else {
+          this.map.getCanvas().style.cursor = "grab";
+        }
+      });
+
+      function handleSingleClick(e, map) {
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: ["measure-points"],
+        });
+
+        // Remove the linestring from the group
+        // So we can redraw it based on the points collection
+        if (geojson.features.length > 1) geojson.features.pop();
+
+        // Clear the Distance container to populate it with a new value
+        distanceContainerT.innerHTML = "";
+
+        // If a feature was clicked, remove it from the map
+        if (features.length) {
+          const id = features[0].properties.id;
+          geojson.features = geojson.features.filter((point) => {
+            return point.properties.id !== id;
+          });
+        } else {
+          const point = {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [e.lngLat.lng, e.lngLat.lat],
+            },
+            properties: {
+              id: String(new Date().getTime()),
+            },
+          };
+
+          geojson.features.push(point);
+        }
+
+        if (geojson.features.length > 1) {
+          linestring.geometry.coordinates = geojson.features.map((point) => {
+            return point.geometry.coordinates;
+          });
+
+          geojson.features.push(linestring);
+
+          // Populate the distanceContainer with total distance
+          const value = document.createElement("pre");
+          value.textContent = `Distància total: ${turf
+            .length(linestring)
+            .toLocaleString()}km`;
+          distanceContainerT.appendChild(value);
+
+          const xButton = document.createElement("div");
+          xButton.id = "xButton";
+          xButton.textContent = "X";
+          xButton.onclick = () => {
+            try {
+              const removeMeasure = document.getElementById("xButton");
+              const distanceContainer = document.getElementById("distance");
+              distanceContainer.innerHTML = "";
+
+              let layers = map.getStyle().layers;
+
+              for (let i = 0; i < layers.length; i++) {
+                if (layers[i].id.includes("measure")) {
+                  map.removeLayer(layers[i].id);
+                }
+              }
+            } catch (error) {
+              console.error(`Error adding measure control: ${error.message}`);
+            }
+          };
+          distanceContainerT.appendChild(xButton);
+        }
+
+        map.getSource("geojson").setData(geojson);
+      }
+
+      function handleDoubleClick(e, map) {
+        map.getCanvas().style.cursor = "grab";
+        endMeasure = true;
+      }
+    } catch (error) {}
+  }
+
+  /**
+   * Adds an export control to the map with the provided options and position.
+   * @function addExportControl
+   * @param {Object|string} options - Options for the export control or position if provided as a string.
+   * @param {string} [position] - Position to place the export control (e.g., 'top-right').
+   */
   addExportControl(options, position) {
     try {
-      if (typeof options === "string"){
-        position=options
-        options = undefined
+      if (typeof options === "string") {
+        position = options;
+        options = undefined;
       }
-      if (options === undefined){
-            options= {
-              PageSize: MaplibreExportControl.Size.A4,
-              PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
-              Format: MaplibreExportControl.Format.PNG,
-              DPI: MaplibreExportControl.DPI[300],
-              Crosshair: true,
-              PrintableArea: true
-            };
-            position = 'top-right'
-          }
- 
+      if (options === undefined) {
+        options = {
+          PageSize: MaplibreExportControl.Size.A4,
+          PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
+          Format: MaplibreExportControl.Format.PNG,
+          DPI: MaplibreExportControl.DPI[300],
+          Crosshair: true,
+          PrintableArea: true,
+        };
+        position = "top-right";
+      }
+
       this.map.addControl(
-        new MaplibreExportControl.MaplibreExportControl(options), position);
+        new MaplibreExportControl.MaplibreExportControl(options),
+        position
+      );
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
     }
@@ -1114,57 +1043,48 @@ endMeasure = true
    */
   addFullScreen(position) {
     try {
-      if (position === undefined){
-        position = 'top-right'
-       }
+      if (position === undefined) {
+        position = "top-right";
+      }
       this.map.addControl(new maplibregl.FullscreenControl(), position);
     } catch (error) {
       console.error(`Error adding fullscreen control: ${error.message}`);
     }
   }
 
-
   /**
-  * Adds a menu item with a checkbox for controlling the visibility of a layer on the map.
+   * Adds a menu item with a checkbox for controlling the visibility of a layer on the map.
    * @function addMenuItem
-* @param {string} name - The name of the layer corresponding to the menu item.
- */
+   * @param {string} name - The name of the layer corresponding to the menu item.
+   */
   addMenuItem(name) {
     try {
       const menuGroup = document.getElementById("menu-group");
 
-        const input = document.createElement("input");
-      
-        input.type = "checkbox";
-        input.id = name;
-        input.checked = true;
-      
-        menuGroup.appendChild(input);
+      const input = document.createElement("input");
 
-        const label = document.createElement("label");
-        label.setAttribute("for", name);
-        label.textContent = name;
-        menuGroup.appendChild(label);
+      input.type = "checkbox";
+      input.id = name;
+      input.checked = true;
 
-        input.addEventListener("change", (e) => {
+      menuGroup.appendChild(input);
 
-          this.map.setLayoutProperty(
-            name,
-            "visibility",
-            e.target.checked ? "visible" : "none"
-          );
-        }); 
+      const label = document.createElement("label");
+      label.setAttribute("for", name);
+      label.textContent = name;
+      menuGroup.appendChild(label);
 
-       
-  
+      input.addEventListener("change", (e) => {
+        this.map.setLayoutProperty(
+          name,
+          "visibility",
+          e.target.checked ? "visible" : "none"
+        );
+      });
     } catch (error) {
       console.error(`Error adding menu item: ${error.message}`);
     }
   }
-
-
-
-
 
   /**
    * Adds a layer tree to the map.
@@ -1176,7 +1096,6 @@ endMeasure = true
    */
   addLayerTree(options) {
     try {
-    
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
@@ -1238,7 +1157,6 @@ endMeasure = true
     }
   }
 
-
   /**
    * Creates a navigation control with the provided options.
    * @function createNavigationControl
@@ -1248,9 +1166,9 @@ endMeasure = true
    */
   createNavigationControl(options, position) {
     try {
-      if (position === undefined){
-        position = 'top-right'
-       }
+      if (position === undefined) {
+        position = "top-right";
+      }
       this.map.addControl(new maplibregl.NavigationControl(options), position);
     } catch (error) {
       console.error(`Error creating navigation control: ${error.message}`);
@@ -1262,15 +1180,14 @@ endMeasure = true
    * Adds a navigation control to the map with the provided options.
    * @function addNavigationControl
    * @param {Object} options - Options for the navigation control.
-    * @param {string} [position='top-right'] - Position to add the control on the map.
+   * @param {string} [position='top-right'] - Position to add the control on the map.
    */
   addNavigationControl(options, position) {
     try {
-        if (position === undefined){
-          position = 'top-right'
-         }
+      if (position === undefined) {
+        position = "top-right";
+      }
       this.map.addControl(new maplibregl.NavigationControl(options), position);
-    
     } catch (error) {
       console.error(`Error adding navigation control: ${error.message}`);
     }
@@ -1300,12 +1217,16 @@ endMeasure = true
    */
   _dealStyleMaps(name) {
     try {
-      for (const style of defaultOptions.baseStyles) {
-        if (style.name === name) {
-          return style.url;
+      if (name && name.indexOf("icgc.cat") != -1) {
+        for (const style of defaultOptions.baseStyles) {
+          if (style.url === name) {
+            return style.url;
+          }
         }
+        return defaultOptions.baseStyles[0].url;
+      } else {
+        return name;
       }
-      return defaultOptions.baseStyles[0].url;
     } catch (error) {
       console.error(`Error dealing with map styles: ${error.message}`);
       return null;
@@ -1329,7 +1250,7 @@ endMeasure = true
         name.includes("relleu")
       ) {
         if (name.includes("orto")) {
-          name = 'ortoICGC'
+          name = "ortoICGC";
           if (year !== undefined) {
             finalName = name + year;
 
@@ -1457,7 +1378,7 @@ endMeasure = true
    * Adds 3D terrain to the map using hillshade.
    * @function addTerrainICGC
    * @param {string} resolution - resolution of the terrain data: 2m or 5m.
-    * @param {string} [positionButton='top-right'] - Position to add the button on the map.
+   * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
   addTerrainICGC(resolution, positionButton) {
     this.map.on("load", () => {
@@ -1486,9 +1407,9 @@ endMeasure = true
           exaggeration: 1.5,
         });
 
-         if (positionButton === undefined){
-          positionButton = 'top-right'
-         }
+        if (positionButton === undefined) {
+          positionButton = "top-right";
+        }
         // this.map.addControl(
         //   new maplibregl.TerrainControl({
         //     source: "terrainICGC-src",
@@ -1508,6 +1429,4 @@ endMeasure = true
       }
     }); //'load end
   }
-};
-
-
+}

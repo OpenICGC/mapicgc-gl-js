@@ -4,7 +4,7 @@
     <meta charset='utf-8' />
     <title>Exemple llibreria mapicgc-gl-js</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="../dist/mapicgc-gl.js"></script>
+    <script src="../dist/mapicgc-gl.umd.js"></script>
     <link href="../dist/mapicgc-gl.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -89,9 +89,13 @@
     </div>
     <script>
         console.info(window);
+
+
+        console.info(mapicgcgl.Layers);
+
         const map1 = new mapicgcgl.Map({
             container: 'before',
-            style: 'ortofoto',
+            style: mapicgcgl.Styles.TOPO,
             center: [1.1464, 41.706],
             zoom: 7.4,
             maxZoom: 14,
@@ -102,7 +106,7 @@
 
         const map2 = new mapicgcgl.Map({
             container: 'after',
-            style: 'topografic',
+            style: mapicgcgl.Styles.ORTO,
             center: [1.1464, 41.706],
             zoom: 7.4,
             maxZoom: 14,
