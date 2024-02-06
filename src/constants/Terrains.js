@@ -1,8 +1,7 @@
-import defaultOptions from "../config";
 
 const Terrains = {
-    ICGC5M: defaultOptions.urlTerrainICGC[0].url,
-    WORLD3M: defaultOptions.urlTerrainICGC[1].url  
-  };
+ICGC5M: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
+WORLD3M: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png",
+};
 
 export default Terrains;

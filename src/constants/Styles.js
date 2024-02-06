@@ -1,12 +1,11 @@
-import defaultOptions from "../config";
 
 const Styles = {
-  TOPO: defaultOptions.baseStyles[0].url,
-  ORTO: defaultOptions.baseStyles[1].url,
-  ADMIN: defaultOptions.baseStyles[2].url,
-  DARK: defaultOptions.baseStyles[3].url,
-  LIGHT: defaultOptions.baseStyles[4].url,
-  GEOLOGY: defaultOptions.baseStyles[5].url,
+TOPO: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
+ORTO: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+ADMIN: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
+DARK: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
+LIGHT: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
+GEOLOGY: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json",
 };
 
-export default Terrains;
+export default Styles;
