@@ -6,7 +6,8 @@ const parseString = require('xml2js').parseString;
 // import defaultOptions from "../config";
 const path = require('path');
 const configFilePath = path.join('./src', 'config.js');
-const defaultOptions = require('./src/config.js');
+const configNodeFilePath = path.join('./src', 'configNode.js');
+const defaultOptions = require('./src/configNode.js');
 const stylePath = path.join('./src/constants/', 'Styles.js');
 const terrainPath = path.join('./src/constants/', 'Terrains.js');
 const layersPath = path.join('./src/constants/', 'Layers.js');
@@ -41,6 +42,11 @@ getStyles()
 getTerrain()
 
 
+function camelize(str) {
+  return str.replace(/[-_\s]+(.)?/g, function(match, char) {
+    return char ? char.toUpperCase() : '';
+  });
+}
 
 async function getVectorLimitsLayers() {
     try {
@@ -53,7 +59,7 @@ async function getVectorLimitsLayers() {
           const vectorLayerIds = tileJson.vector_layers.map((layer) => layer.id);
 
           vectorLimitsLayersOptions = vectorLayerIds.map((id) => ({
-            name: id,
+            name: camelize(id),
             key: id.toLowerCase().replace(/ /g, '_'),
             url: `https://betaserver2.icgc.cat/fgb/${id.toLowerCase().replace(/ /g, '_')}.fgb`,
           }));
@@ -83,13 +89,13 @@ async function getVectorLimitsLayers() {
               console.error('Error parsing XML:', err);
               return;
             }
-        
+        console.log('result', result)
             // Extract layer names from the parsed result
             const layers = result?.WMS_Capabilities?.Capability[0]?.Layer[0]?.Layer;
-        
+        console.log('layers',layers)
             if (layers) {
               const vectorArray = layers.map(layer => ({
-                name: layer.Name[0],
+                name: camelize(layer.Name[0]),
                 key: layer.Name[0],
                 url: `https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=${layer.Name[0]}`,
               }));
@@ -114,19 +120,12 @@ async function getVectorLimitsLayers() {
   async function getWMSLayers() {
     try {
          
-          let layerRelleu = 'relleu'
-          let layerGeologia = 'geologia'
-          let layerOsm = 'osm_suau'
-          let layerCims = '0'
-          let layerCobertesSol = 'cobertes_2009'
+
 
           let test= [
-            { key: 'relleu', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerRelleu}/CAT3857/{z}/{x}/{y}.png`},
-            { key: 'geologia', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerGeologia}/MON3857NW/{z}/{x}/{y}.png`},
-            { key: 'osm', layer:"", url:`https://tilemaps.icgc.cat/mapfactory/wmts/${layerOsm}/CAT3857_15/{z}/{x}/{y}.png`},
-            { key:"cims", layer:"", url:`"https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
-            { key: 'cobertesSol', layer:"", url: `http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=${layerCobertesSol}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836`},
-          ]
+            { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
+            { key: 'toponimia',layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf"},
+             ]
           wmsLayersOptions = test
           console.info('Dades WMS Layers actualitzats' );
       } catch (error) {
@@ -138,12 +137,18 @@ async function getVectorLimitsLayers() {
 
   async function getVectorLayers() {
     try {
-
+            let layerRelleu = 'relleu'
+            let layerGeologia = 'geologia'
+            let layerOsm = 'osm_suau'
+            let layerCims = '0'
+            let layerCobertesSol = 'cobertes_2009'
           let test= [
-            { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
-            { key: 'toponimia',layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf"},
-            { key: 'osm', layer:"",url: "https://tilemaps.icgc.cat/mapfactory/wmts/osm_suau/CAT3857_15/{z}/{x}/{y}.png"},
-          ]
+            { key: 'relleu', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerRelleu}/CAT3857/{z}/{x}/{y}.png`},
+            { key: 'geologia', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerGeologia}/MON3857NW/{z}/{x}/{y}.png`},
+            { key: 'osm', layer:"", url:`https://tilemaps.icgc.cat/mapfactory/wmts/${layerOsm}/CAT3857_15/{z}/{x}/{y}.png`},
+            { key:"cims", layer:"", url:`"https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
+            { key: 'cobertesSol', layer:"", url: `http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=${layerCobertesSol}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836`},
+         ]
           vectorLayersOptions = test
           console.info('Dades vector Layers actualitzats' );
 
@@ -159,12 +164,12 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json", },
-            { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" },
-            { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" },
-            { key: "DARK", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" },
-            { key: "LIGHT", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json" },
-            { key: "GEOLOGY", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json" },
+            { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
+            { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
+            { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
+            { key: "DARK", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
+            { key: "LIGHT", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
+            { key: "GEOLOGY", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png" },
                 
           ]
           stylesOptions = test
@@ -210,8 +215,9 @@ function replace(){
   function stringifyWithoutQuotes(obj, indent = 0) {
     const padding = ' '.repeat(indent);
     let result = '';
-    for (const key in obj) {
+    for (let key in obj) {
         const value = obj[key];
+        key = camelize(key)
         const formattedValue = typeof value === 'object'
             ? stringifyWithoutQuotes(value, indent + 2)
             : JSON.stringify(value);
@@ -221,15 +227,25 @@ function replace(){
 }
 
 // Convierte el objeto defaultOptions a una cadena JSON
-const updatedConfig = `
+const updatedConfigNode = `
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
 \nmodule.exports = defaultOptions;
 `;
+const updatedConfig = `
+const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
+const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
+const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
+\nexport default defaultOptions;
+`;
 
 // Escribe el contenido actualizado en el archivo config.js
-fs.writeFileSync(configFilePath, updatedConfig);
+fs.writeFileSync(configNodeFilePath, updatedConfigNode);
+
+fs.writeFileSync(configFilePath, updatedConfig)
+
+
 
 setTimeout(() => {
   replaceConstants()
@@ -240,11 +256,16 @@ console.log('Variables actualitzades correctament a config.js');
 
 function replaceConstants(){
 console.log('replaceeee')
+
 function stringifyWithoutQuotes(obj, indent = 0) {
   const padding = ' '.repeat(indent);
   let result = '';
-  for (const key in obj) {
-      const value = obj[key];
+  for (let key in obj) {
+      let value = obj[key];
+//start camelize 
+key = camelize(key)
+// console.log('v', key)
+//end camelize
       const formattedValue = typeof value === 'object'
           ? stringifyWithoutQuotes(value, indent + 2)
           : JSON.stringify(value);
