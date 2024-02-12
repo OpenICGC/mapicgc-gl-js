@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/images/logo2.png" width="400px">
+  <img src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/logo2.png" width="400px">
 </p>
 <p align="center">
-  <img src="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/images/JS-logo.svg" width="20px">
-  <img src="https://betaserver.icgc.cat//cdn/mapicgc-gl-js/images/TS-logo.svg" width="20px">
+  <img src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/JS-logo.svg" width="20px">
+  <img src="https://tilemaps.icgc.cat//cdn/mapicgc-gl-js/images/TS-logo.svg" width="20px">
   <img src="https://badge.fury.io/js/mapicgc-gl-js.svg"></img>
   <a href="https://twitter.com/icgcat" target="_blank"><img src="https://img.shields.io/twitter/follow/icgcat?style=social"></img></a>
 </p>
@@ -36,8 +36,8 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 - CDN
 
    ```html
-   <script src="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.js"></script>
-   <link href="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" rel="stylesheet" />
+   <script src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.js"></script>
+   <link href="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" rel="stylesheet" />
    ```
 
 2. In the document body script, declare the map as follows:
@@ -56,7 +56,7 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
     </script>
    ```
    <div align="center">
-    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://betaserver.icgc.cat/cdn/mapicgc-gl-js/images/map1.png"></img></a></div>
+    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/map1.png"></img></a></div>
 <br>
 
 # Documentation
