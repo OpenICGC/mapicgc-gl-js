@@ -73,8 +73,8 @@
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
-              style: "Style.Topografic",
-              zoom: 7.4,
+              style: mapicgcgl.Styles.ORTO,
+              zoom: 8.4,
       
       }));
 
@@ -85,12 +85,17 @@
       // let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
-//       map.addTerrainICGC('5m', 'bottom-right');
-//       // map.addImageLayerICGC('orto');   
-//       // map.addImageLayerICGC('geologia');
+      // map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
+      console.log(mapicgcgl.Layers)
+      // map.addImageLayerICGC(mapicgcgl.Layers.WMS.geologia);   
+
+
+
+      // map.addImageLayerICGC('geologia');
 
 //       //censals, salut, provincies, aquifers...
-      map.addVectorLayerICGC('municipis')
+      map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensals2020)
+      // map.getConfigImageLayers()
    
 //       // map.addFullScreen('bottom-right');
 
@@ -224,27 +229,29 @@
 //         href: "https://www.icgc.cat",
 //       };
 //       map.addLogo(logoOptions);
-//       const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
-//     const urlStyles = "https://geoserveis.icgc.cat/contextmaps/";
-//       let baseLayers = [
-//         {
-//           id: 0,
-//           value: "Mapa estàndard",
-//           label: "fonscarto_mapa_estandard",
-//           image: `${urlImages}icgc_mapa_estandard.png`,
-//           url: `${urlStyles}icgc_mapa_estandard.json`,
-//         },
-//         {
-//           id: 1,
-//           value: "Ortofotomapa híbrid",
-//           label: "fonscarto_orto_hibrida",
-//           image: `${urlImages}icgc_orto_hibrida.png`,
-//           url: `${urlStyles}icgc_orto_hibrida.json`,
-//         },
+      const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
+    const urlStyles = "https://geoserveis.icgc.cat/contextmaps/";
+      let baseLayers = [
+        {
+          id: 0,
+          value: "Mapa estàndard",
+          label: "fonscarto_mapa_estandard",
+          image: `${urlImages}icgc_mapa_estandard.png`,
+          url: `${urlStyles}icgc_mapa_estandard.json`,
+        },
+        {
+          id: 1,
+          value: "Ortofotomapa híbrid",
+          label: "fonscarto_orto_hibrida",
+          image: `${urlImages}icgc_orto_hibrida.png`,
+          url: `${urlStyles}icgc_orto_hibrida.json`,
+        },
     
-//       ];
-//       map.addBasemaps(baseLayers);
+      ];
+      // map.addBasemaps(baseLayers);
+let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO]
 
+// map.addBasemapsICGC(basemapsicgc)
 //       let layerTree = {
 //         features: {
 //           type: "FeatureCollection",

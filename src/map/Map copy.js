@@ -1,7 +1,7 @@
 import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
-
+// import defaultOptions from "../config.js";
 
 import  Terrains  from "../constants/Terrains.js";
 import  Styles  from "../constants/Styles.js";
@@ -9,7 +9,7 @@ import  Layers  from "../constants/Layers.js";
 import defaultOptions from "../config.js";
 
 /**
- * Class representing a custom map with additional functions.FVec
+ * Class representing a custom map with additional functions.
  */
 export default class Map {
   /**
@@ -20,28 +20,24 @@ export default class Map {
   constructor(options) {
     let arrayUserOptions = Object.getOwnPropertyNames(options);
     if (arrayUserOptions) {
-      // console.log('d44eeee', arrayUserOptions)
-      // arrayUserOptions.forEach((el) => {
-      //   if (el === "style") {
-      //     options[el] = this._dealStyleMaps(options[el]);
-      //   } else {
-      //     options[el] = options[el];
-      //   }
-      // });
+      arrayUserOptions.forEach((el) => {
+        if (el === "style") {
+          options[el] = this._dealStyleMaps(options[el]);
+        } else {
+          options[el] = options[el];
+        }
+      });
     }
     if (!options) {
       options = defaultOptions.mapOptions;
     } else {
       for (const key in defaultOptions.mapOptions) {
-
-        let center = [defaultOptions.mapOptions.center[0], defaultOptions.mapOptions.center[1]]
-        defaultOptions.mapOptions.center = center
         if (!options.hasOwnProperty(key)) {
           options[key] = defaultOptions.mapOptions[key];
         }
       }
     }
-    // console.log('dseeee', options)
+
     options.maxZoom = 18;
     options.maxPitch = 85;
     options.maplibreLogo = false;
@@ -50,7 +46,7 @@ export default class Map {
     this.map = new maplibregl.Map(options);
     this.map.options = options;
 
-    // console.log('deeee', options)
+    // console.log('deeee', defaultOptions)
   }
 
   /**
@@ -77,50 +73,28 @@ export default class Map {
       for (const style of Styles) {
         stylesArray.push(style.name);
       }
-      // console.log(stylesArray)
+      console.log(stylesArray)
       return stylesArray;
     } catch (error) {
       console.error(`Error retrieving base styles: ${error.message}`);
     }
   }
   /**
-   * Retrieves the available WMS image layers from default options.
-   * @function getConfigWMSLayers
-   * @returns {Array} - Array containing the keys of available WMS image layers.
-   */
-  getConfigWMSLayers() {
-    try {
-      let imageArray = [];
-      for (const key in Layers.WMS) {
-        if (Layers.WMS.hasOwnProperty(key)) {
-          imageArray.push(key);
-        }
-      }
-      // console.log('arrayLayers', imageArray)
-      return imageArray;
-    } catch (error) {
-      console.error(`Error retrieving WMS layers: ${error.message}`);
-    }
-  }
-    /**
-   * Retrieves the available orto image layers from default options.
-   * @function getConfigOrtoLayers
+   * Retrieves the available image layers from default options.
+   * @function getConfigImageLayers
    * @returns {Array} - Array containing the keys of available image layers.
    */
-    getConfigOrtoLayers() {
-      try {
-        let imageArray = [];
-        for (const key in Layers.Orto) {
-          if (Layers.Orto.hasOwnProperty(key)) {
-            imageArray.push(key);
-          }
-        }
-        // console.log('arrayLayers', imageArray)
-        return imageArray;
-      } catch (error) {
-        console.error(`Error retrieving orto image layers: ${error.message}`);
+  getConfigImageLayers() {
+    try {
+      let imageArray = [];
+      for (const layer of defaultOptions.ortoLayersICGC) {
+        imageArray.push(layer.key);
       }
+      return imageArray;
+    } catch (error) {
+      console.error(`Error retrieving image layers: ${error.message}`);
     }
+  }
   /**
    * Retrieves the available vector layers from default options.
    * @function getConfigVectorLayers
@@ -129,38 +103,16 @@ export default class Map {
   getConfigVectorLayers() {
     try {
       let vectorArray = [];
-      for (const key in Layers.Vector) {
-        if (Layers.Vector.hasOwnProperty(key)) {
-          vectorArray.push(key);
-        }
+      for (const layer of defaultOptions.vectorLayersICGC) {
+        vectorArray.push(layer.key);
       }
- 
 
       return vectorArray;
     } catch (error) {
       console.error(`Error retrieving vector layers: ${error.message}`);
     }
   }
- /**
-   * Retrieves the available vector layers from default options.
-   * @function getConfigVectorAdminLayers
-   * @returns {Array} - Array containing the keys of available vectorAdmin layers.
-   */
- getConfigVectorAdminLayers() {
-  try {
-    let vectorArray = [];
-    for (const key in Layers.VectorAdmin) {
-      if (Layers.VectorAdmin.hasOwnProperty(key)) {
-        vectorArray.push(key);
-      }
-    }
 
-
-    return vectorArray;
-  } catch (error) {
-    console.error(`Error retrieving vectorAdmin layers: ${error.message}`);
-  }
-}
   /**
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
    * @param {string} url - The URL to fetch GeoJSON data from.
@@ -419,20 +371,15 @@ export default class Map {
 
   setStyle(style, options) {
     try {
-console.log('kk', style)
-      for (const key of Styles) {
-
-        if (Styles.hasOwnProperty(key)) {
-          const styl = Styles[key];
+      for (const key in defaultOptions.baseStyles) {
+        if (defaultOptions.baseStyles.hasOwnProperty(key)) {
+          const styl = defaultOptions.baseStyles[key];
           if (styl.key === style) {
             style = styl.url;
             // break; //
           }
         }
       }
-console.log('base', style)
-
-
       if (options !== undefined) {
         this.map.setStyle(style, options);
       } else {
@@ -687,7 +634,6 @@ console.log('base', style)
   addLayerWMS(layer) {
     try {
       this.map.on("load", () => {
-        console.log('holaaddlayerwms', layer)
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "raster",
           tiles: [layer.tiles],
@@ -769,51 +715,7 @@ console.log('base', style)
       console.error(`Error adding logo: ${error.message}`);
     }
   }
-  /**
-   * Adds base layers to the map.
-   * @function addBasemapsICGC
-   * @param {Object[]} baseLayers - Array of base layer objects.
-   */
-  addBasemapsICGC(basesArray) {
-    try {
-// console.log('bases', basesArray)
-      const handleClick = (base) => {
-        // console.log('baseCLIK', base)
-        this.map.setStyle(base);
-      };
 
-      const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => 
-      {
-           for (const url of basesArray) {
-         
-
-
-            for (const key of Object.keys(defaultOptions.baseStyles)) {
-                           const item = defaultOptions.baseStyles[key];
-                           if (url === item.url){
-            
-              const div = document.createElement("div");
-              div.className = "basemap-item";
-              div.title = item.key;
-              div.style.backgroundImage = `url('${item.image}')`;
-              basemapGroup.appendChild(div);
-              div.addEventListener("click", () => handleClick(item.url));
-              }
-            }
-
-            
-
-          }
-
-
-
-        
-      });
-    } catch (error) {
-      console.error(`Error adding basemaps: ${error.message}`);
-    }
-  }
   /**
    * Adds base layers to the map.
    * @function addBasemaps
@@ -825,7 +727,6 @@ console.log('base', style)
   addBasemaps(baseLayers) {
     try {
       const handleClick = (base) => {
-        console.log('base', base)
         this.map.setStyle(base.url);
       };
 
@@ -1345,11 +1246,35 @@ console.log('base', style)
   addImageLayerICGC(name) {
     try {
       console.log('name', name)
-
+      
+function buscarClauperUrl(url, vector) {
+  for (const [key, value] of Object.entries(vector)) {
+    if (value === url) {
+      return key;
+    }
+  }
+  return null; // Si no se encuentra la URL, devolver null
+}
+      // let finalName;
+      // let yearUrl;
+      // let layer;
+      // if (
+      //   name.includes("orto") ||
+      //   name.includes("geol") ||
+      //   name.includes("relleu")
+      // ) {
+        // if (name.includes("orto")) {
+          // name = "ortoICGC";
+          // if (year !== undefined) {
+            // finalName = name + year;
+            let imageType 
+            let op
             let idName = null
             function findImageType(url, var1, var2, var3, var4) {
               console.log('hola', name)
-                         const vectors = [var1, var2, var3, var4];
+              // Verificar si la clave existe en var1
+
+              const vectors = [var1, var2, var3, var4];
               for (const vector of vectors) {
                 for (const [key, value] of Object.entries(vector)) {
                   if (value === url) {
@@ -1357,11 +1282,66 @@ console.log('base', style)
                   }
                 }
               }
-              return null; // 
+              return null; // Si no se encuentra la URL, devolver null
 
+
+
+
+              // const idName = buscarClauperUrl(clave, var1)
+
+
+
+
+
+              // if (Object.values(var1).includes(clave)) {
+              //   imageType="Orto"
+              //   op = Layers.Orto.find(
+              //     (objeto) => {
+              //       console.log('ob', objeto)
+              //     objeto === name;
+              //     idName = objeto.key
+              //     }
+              //   );
+              //   // return true;
+              // }
+              
+              // // Verificar si la clave existe en var2
+              // if (Object.values(var2).includes(clave)) {
+              //   imageType="VectorAdmin"
+              //   op = Layers.VectorAdmin.find(
+              //     (objeto) => objeto.key === name
+              //   );
+              //   // return true;
+              // }
+              
+              // // Verificar si la clave existe en var3
+              // if (Object.values(var3).includes(clave)) {
+              //   imageType="WMS"
+              //   op = Layers.WMS.find(
+              //     (objeto) => objeto.key === name
+              //   );
+              //   // return true;
+              // }
+              // if (Object.values(var4).includes(clave)) {
+              //   imageType="Vector"
+              //   op = Layers.Vector.find(
+              //     (objeto) => objeto.key === name
+              //   );
+              //   // return true;
+              // }
+              // // Si la clave no se encuentra en ninguna variable, devolver false
+              // imageType=null
             }
 
             idName = findImageType(name, Layers.Orto, Layers.VectorAdmin, Layers.WMS,Layers.Vector)
+
+
+            // let op = Orto.find(
+            //   (objeto) => objeto.key === name
+            // );
+
+
+
 
             console.log('op', idName)
             if (!idName) {
@@ -1373,7 +1353,8 @@ console.log('base', style)
                 "font-weight: bold; font-style: italic;"
               );
             }
-         
+            // yearUrl = op.text;
+            // layer = "ortofoto_color_" + yearUrl;
 
             let sourceWMS = {
               id: idName,
@@ -1428,32 +1409,15 @@ console.log('base', style)
   /**
    * Adds an ICGC vector layer to the map based on the specified name and year.
    * @function addVectorLayerICGC
-   * @param {string} url - The url of the vector layer.
+   * @param {string} name - The name of the vector layer.
    * @param {string} year - The year associated with the vector layer (optional).
    */
-  async addVectorLayerICGC(layerUrl,name, year) {
+  async addVectorLayerICGC(name, year) {
     try {
-      function getKeyByUrl(url) {
-        for (const key in Layers.VectorAdmin) {
-          // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
-          if (Layers.VectorAdmin.hasOwnProperty(key) && Layers.VectorAdmin[key] === url) {
-            // console.log('entro', key)
-            return key; // Retorna la clave si encuentra la URL
-          }
-        }
-        return null; // Retorna null si no se encuentra la URL en el objeto
-      }
-
-
-let name = getKeyByUrl(layerUrl);
-// console.log('name', name)
-
-if (name === null) {
-
-      // let op = Layers.VectorAdmin.find((objeto) =>
-      //   objeto.key.includes(name)
-      // );
-      // if (!op) {
+      let op = defaultOptions.vectorLayersICGC.find((objeto) =>
+        objeto.key.includes(name)
+      );
+      if (!op) {
         // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1462,8 +1426,8 @@ if (name === null) {
           name,
           "font-weight: bold; font-style: italic;"
         );
-      }else{
-      // layerUrl = op.url;
+      }
+      let layerUrl = op.url;
 
       const response = await fetch(layerUrl);
       this.map.on("load", async () => {
@@ -1496,7 +1460,6 @@ if (name === null) {
           },
         });
       });
-    }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
     }

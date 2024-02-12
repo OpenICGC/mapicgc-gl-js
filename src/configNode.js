@@ -783,4 +783,4 @@ wmsLayers: {
 },
 };
 
-export default defaultOptions;
+module.exports = defaultOptions;
