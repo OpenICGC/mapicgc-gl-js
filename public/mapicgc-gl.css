@@ -1160,3 +1160,20 @@ h4::selection {
 #xButton:hover{
   background-color: rgb(126, 12, 12);
 }
+#rulerButton {
+  width: 50px;
+  height: 50px;
+  z-index: 1;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 30px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3616/3616051.png');
+  background-color: rgb(255 89 122);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: initial;
+  background-size: 75%;
+  background-position: center;
+}

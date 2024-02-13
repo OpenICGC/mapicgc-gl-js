@@ -73,7 +73,7 @@
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
-              style: mapicgcgl.Styles.ORTO,
+              style: mapicgcgl.Styles.TOPO,
               zoom: 8.4,
       
       }));
@@ -85,7 +85,7 @@
       // let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
-      // map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
+      map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
       console.log(mapicgcgl.Layers)
       // map.addImageLayerICGC(mapicgcgl.Layers.WMS.geologia);   
 
@@ -94,14 +94,14 @@
       // map.addImageLayerICGC('geologia');
 
 //       //censals, salut, provincies, aquifers...
-      map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensals2020)
+      // map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.areesBasiquesServeisSocialsVigent)
       // map.getConfigImageLayers()
    
 //       // map.addFullScreen('bottom-right');
 
 
 
-//       // map.addMeasureControl()
+      // map.addMeasureControl()
 
 //       map.addExportControl('bottom-right');
 

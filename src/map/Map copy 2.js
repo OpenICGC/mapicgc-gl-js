@@ -599,9 +599,7 @@ console.log('base', style)
    */
   setTerrain(options) {
     try {
-      this.map.on("load", () => {
       return this.map.setTerrain(options);
-      })
       //  this.map.getZoom();
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
@@ -889,8 +887,80 @@ console.log('base', style)
    */
   addMeasureControl() {
     
+    // if (position !== null){
+    //   position = "top-right"
+    // }
+  // if (options !== null){
+  //   options = {
+  //     lang: {
+  //         areaMeasurementButtonTitle: 'Measure area',
+  //         lengthMeasurementButtonTitle: 'Measure length',
+  //         clearMeasurementsButtonTitle:  'Clear measurements',
+  //     },
+  //     units: 'imperial', //or metric, the default
+  //     unitsGroupingSeparator: ' ', // optional. use a space instead of ',' for separating thousands (3 digits group). Do not send this to use the browser default
+  //     style: {
+  //         text: {
+  //             radialOffset:  0.9,
+  //             letterSpacing: 0.05,
+  //             color: '#D20C0C',
+  //             haloColor: '#fff',
+  //             haloWidth: 0,
+  //             font: 'Klokantech Noto Sans Bold',
+  //             textSize: [
+  //               "interpolate",
+  //               ["linear"],
+  //               ["zoom"],
+  //               5,
+  //               10,
+  //               10,
+  //               12.0,
+  //               13,
+  //               14.0,
+  //               14,
+  //               16.0,
+  //               18,
+  //               18.0, // Change 15.0 to 10.0 or lower
+  //             ],
+              
+  //         },
+  //         common: {
+  //             midPointRadius: 3,
+  //             midPointColor: '#D20C0C',
+  //             midPointHaloRadius: 5,
+  //             midPointHaloColor: '#FFF',
+  //         },
+  //         areaMeasurement: {
+  //             fillColor: '#D20C0C',
+  //             fillOutlineColor: '#D20C0C',
+  //             fillOpacity: 0.21,
+  //             lineWidth: 2,
+  //         },
+  //         lengthMeasurement: {
+  //             lineWidth: 2,
+  //             lineColor: "#D20C0C",
+  //         },
+  //         textSize: [
+  //           "interpolate",
+  //           ["linear"],
+  //           ["zoom"],
+  //           5,
+  //           10,
+  //           10,
+  //           12.0,
+  //           13,
+  //           14.0,
+  //           14,
+  //           16.0,
+  //           18,
+  //           18.0, // Change 15.0 to 10.0 or lower
+  //         ],
+  //     }
+  // };
+  // }
     try {
-   
+      // this.map.addControl(new MeasuresControl(options), position);
+
       const distanceContainer = document.getElementById("distance");
       const distanceContainerT = document.getElementById("distanceTotal");
       let endMeasure = false;
@@ -901,21 +971,23 @@ console.log('base', style)
 
       const rulerButton = document.createElement("div");
       rulerButton.id = "rulerButton";
-
+      // console.log('hola button rulssser')
+      // rulerButton.textContent = "X";
       rulerButton.onclick = () => {
         try {
      
-       
+        //  console.log('hola button ruler')
          if (!measureOn){
-       
+          // console.log('hola button ruler ON')
+          // var el= rulerButton.style.backgroundColor;
           document.getElementById("rulerButton").style.backgroundColor= "#41b883"
          }else{
-       
+          // console.log('hola button ruler OFF')
           document.getElementById("rulerButton").style.backgroundColor="#ff597a"
           
          }
          measureOn = !measureOn
-        
+        //  measureOn = true
         } catch (error) {
           console.error(`Error adding measure control: ${error.message}`);
         }
@@ -975,7 +1047,7 @@ console.log('base', style)
         if (!endMeasure&&measureOn) {
           clickTimer = setTimeout(() => {
             handleSingleClick(e, this.map);
-          }, 50); 
+          }, 50); // Ajusta el tiempo según tus necesidades
         }
       });
 
@@ -1070,6 +1142,53 @@ console.log('base', style)
             }
           };
           distanceContainerT.appendChild(xButton);
+
+//restart
+// const restartButton = document.createElement("div");
+// restartButton.id = "restartButton";
+// restartButton.textContent = "↺";
+// restartButton.onclick = () => {
+//   try {
+//     const removeMeasure = document.getElementById("restartButton");
+//     const distanceContainer = document.getElementById("distance");
+//     distanceContainer.innerHTML = "";
+
+//     let layers = map.getStyle().layers;
+
+//     for (let i = 0; i < layers.length; i++) {
+//       if (layers[i].id.includes("measure")) {
+
+//         // posar km a 0
+        
+//         geojson.features=[]
+
+//         // map.removeLayer(layers[i].id);
+//       }
+//     }
+//   } catch (error) {
+//     console.error(`Error adding measure control: ${error.message}`);
+//   }
+// };
+// distanceContainerT.appendChild(restartButton);
+
+
+
+
+
+
+        // }else{
+          // const rulerButton = document.createElement("div");
+          // rulerButton.id = "rulerButton";
+          // // rulerButton.textContent = "X";
+          // rulerButton.onclick = () => {
+          //   try {
+          //    console.log('hola button ruler')
+          //   } catch (error) {
+          //     console.error(`Error adding measure control: ${error.message}`);
+          //   }
+          // };
+          // distanceContainerT.appendChild(rulerButton);
+        // }
 
         map.getSource("geojson").setData(geojson);
       }
@@ -1549,13 +1668,9 @@ if (name === null) {
         // );
         let op;
         for (const key in Terrains) {
-      
           if (Terrains.hasOwnProperty(key)) {
-            
             const objeto = Terrains[key];
-         
-            if (objeto === resolution) {
-      
+            if (objeto.name === resolution) {
               op = objeto;
                // Si encontramos el objeto, podemos salir del bucle
             }
