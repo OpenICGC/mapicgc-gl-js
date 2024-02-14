@@ -33,9 +33,11 @@ export default class Map {
       options = defaultOptions.mapOptions;
     } else {
       for (const key in defaultOptions.mapOptions) {
-
-        let center = [defaultOptions.mapOptions.center[0], defaultOptions.mapOptions.center[1]]
-        defaultOptions.mapOptions.center = center
+        let center = [
+          defaultOptions.mapOptions.center[0],
+          defaultOptions.mapOptions.center[1],
+        ];
+        defaultOptions.mapOptions.center = center;
         if (!options.hasOwnProperty(key)) {
           options[key] = defaultOptions.mapOptions[key];
         }
@@ -102,25 +104,25 @@ export default class Map {
       console.error(`Error retrieving WMS layers: ${error.message}`);
     }
   }
-    /**
+  /**
    * Retrieves the available orto image layers from default options.
    * @function getConfigOrtoLayers
    * @returns {Array} - Array containing the keys of available image layers.
    */
-    getConfigOrtoLayers() {
-      try {
-        let imageArray = [];
-        for (const key in Layers.Orto) {
-          if (Layers.Orto.hasOwnProperty(key)) {
-            imageArray.push(key);
-          }
+  getConfigOrtoLayers() {
+    try {
+      let imageArray = [];
+      for (const key in Layers.Orto) {
+        if (Layers.Orto.hasOwnProperty(key)) {
+          imageArray.push(key);
         }
-        // console.log('arrayLayers', imageArray)
-        return imageArray;
-      } catch (error) {
-        console.error(`Error retrieving orto image layers: ${error.message}`);
       }
+      // console.log('arrayLayers', imageArray)
+      return imageArray;
+    } catch (error) {
+      console.error(`Error retrieving orto image layers: ${error.message}`);
     }
+  }
   /**
    * Retrieves the available vector layers from default options.
    * @function getConfigVectorLayers
@@ -134,33 +136,31 @@ export default class Map {
           vectorArray.push(key);
         }
       }
- 
 
       return vectorArray;
     } catch (error) {
       console.error(`Error retrieving vector layers: ${error.message}`);
     }
   }
- /**
+  /**
    * Retrieves the available vector layers from default options.
    * @function getConfigVectorAdminLayers
    * @returns {Array} - Array containing the keys of available vectorAdmin layers.
    */
- getConfigVectorAdminLayers() {
-  try {
-    let vectorArray = [];
-    for (const key in Layers.VectorAdmin) {
-      if (Layers.VectorAdmin.hasOwnProperty(key)) {
-        vectorArray.push(key);
+  getConfigVectorAdminLayers() {
+    try {
+      let vectorArray = [];
+      for (const key in Layers.VectorAdmin) {
+        if (Layers.VectorAdmin.hasOwnProperty(key)) {
+          vectorArray.push(key);
+        }
       }
+
+      return vectorArray;
+    } catch (error) {
+      console.error(`Error retrieving vectorAdmin layers: ${error.message}`);
     }
-
-
-    return vectorArray;
-  } catch (error) {
-    console.error(`Error retrieving vectorAdmin layers: ${error.message}`);
   }
-}
   /**
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
    * @param {string} url - The URL to fetch GeoJSON data from.
@@ -231,6 +231,7 @@ export default class Map {
           },
         });
       }
+      // map.addFeatureQuery(name)
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -308,6 +309,8 @@ export default class Map {
       // geojsonStore  = geojson
       // map.addLayerTree(geojson);
       map.addMenuItem(name);
+      //add feature queries
+      map.addFeatureQuery(name);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -419,9 +422,8 @@ export default class Map {
 
   setStyle(style, options) {
     try {
-console.log('kk', style)
+      console.log("kk", style);
       for (const key of Styles) {
-
         if (Styles.hasOwnProperty(key)) {
           const styl = Styles[key];
           if (styl.key === style) {
@@ -430,8 +432,7 @@ console.log('kk', style)
           }
         }
       }
-console.log('base', style)
-
+      console.log("base", style);
 
       if (options !== undefined) {
         this.map.setStyle(style, options);
@@ -600,8 +601,8 @@ console.log('base', style)
   setTerrain(options) {
     try {
       this.map.on("load", () => {
-      return this.map.setTerrain(options);
-      })
+        return this.map.setTerrain(options);
+      });
       //  this.map.getZoom();
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
@@ -689,7 +690,7 @@ console.log('base', style)
   addLayerWMS(layer) {
     try {
       this.map.on("load", () => {
-        console.log('holaaddlayerwms', layer)
+        console.log("holaaddlayerwms", layer);
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "raster",
           tiles: [layer.tiles],
@@ -778,39 +779,27 @@ console.log('base', style)
    */
   addBasemapsICGC(basesArray) {
     try {
-// console.log('bases', basesArray)
+      // console.log('bases', basesArray)
       const handleClick = (base) => {
         // console.log('baseCLIK', base)
         this.map.setStyle(base);
       };
 
       const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => 
-      {
-           for (const url of basesArray) {
-         
-
-
-            for (const key of Object.keys(defaultOptions.baseStyles)) {
-                           const item = defaultOptions.baseStyles[key];
-                           if (url === item.url){
-            
+      this.map.on("load", () => {
+        for (const url of basesArray) {
+          for (const key of Object.keys(defaultOptions.baseStyles)) {
+            const item = defaultOptions.baseStyles[key];
+            if (url === item.url) {
               const div = document.createElement("div");
               div.className = "basemap-item";
               div.title = item.key;
               div.style.backgroundImage = `url('${item.image}')`;
               basemapGroup.appendChild(div);
               div.addEventListener("click", () => handleClick(item.url));
-              }
             }
-
-            
-
           }
-
-
-
-        
+        }
       });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
@@ -827,7 +816,7 @@ console.log('base', style)
   addBasemaps(baseLayers) {
     try {
       const handleClick = (base) => {
-        console.log('base', base)
+        console.log("base", base);
         this.map.setStyle(base.url);
       };
 
@@ -847,7 +836,55 @@ console.log('base', style)
     }
   }
   /**
+   * Adds feature query function to a layer.
+   * @function addFeatureQuery
+   * @param {string} layerName - name of the layer
+   * @param {objetc} options - optional indications for the popup
+   */
+
+  addFeatureQuery(layerName, options) {
+    try {
+      let description;
+      this.map.on("load", () => {
+        this.map.on("mouseenter", layerName, () => {
+          this.map.getCanvas().style.cursor = "pointer";
+        });
+
+        this.map.on("mouseleave", layerName, () => {
+          this.map.getCanvas().style.cursor = "";
+        });
+        this.map.on("click", (e) => {
+          let features = this.map.queryRenderedFeatures(e.point);
+          if (features && features[0].source === layerName) {
+            let coordinates = [e.lngLat.lng, e.lngLat.lat];
+   
+            if (options !== undefined) {
+              if (options !== null) {
+           
+                let text = "";
+                options.forEach((prop) => {
+                  let pr = features[0].properties[prop];
+         
+                  text = text + `<h4>${pr}</h4>`;
+         
+                });
+                description = text;
+                map.addPopup(coordinates, description);
+              }
+
+            } 
+      
+          }
+        });
+      });
+    } catch (error) {
+      console.error(`Error adding feature query: ${error.message}`);
+    }
+  }
+
+  /**
    * Adds a scale control to the map.
+   *  * @function addScaleControl
    * @param {Object} options - Options for configuring the scale control.
    * @param {string} position - The position on the map to place the scale control (e.g., 'top-left', 'bottom-right').
    */
@@ -888,34 +925,26 @@ console.log('base', style)
    * @function addMeasureControl
    */
   addMeasureControl() {
-    
     try {
-   
       const distanceContainer = document.getElementById("distance");
       const distanceContainerT = document.getElementById("distanceTotal");
       let endMeasure = false;
-      let measureOn = false
+      let measureOn = false;
       var clickTimer;
-
-
 
       const rulerButton = document.createElement("div");
       rulerButton.id = "rulerButton";
 
       rulerButton.onclick = () => {
         try {
-     
-       
-         if (!measureOn){
-       
-          document.getElementById("rulerButton").style.backgroundColor= "#41b883"
-         }else{
-       
-          document.getElementById("rulerButton").style.backgroundColor="#ff597a"
-          
-         }
-         measureOn = !measureOn
-        
+          if (!measureOn) {
+            document.getElementById("rulerButton").style.backgroundColor =
+              "#41b883";
+          } else {
+            document.getElementById("rulerButton").style.backgroundColor =
+              "#ff597a";
+          }
+          measureOn = !measureOn;
         } catch (error) {
           console.error(`Error adding measure control: ${error.message}`);
         }
@@ -972,22 +1001,22 @@ console.log('base', style)
 
       this.map.on("click", (e) => {
         clearTimeout(clickTimer);
-        if (!endMeasure&&measureOn) {
+        if (!endMeasure && measureOn) {
           clickTimer = setTimeout(() => {
             handleSingleClick(e, this.map);
-          }, 50); 
+          }, 50);
         }
       });
 
       this.map.on("dblclick", (e) => {
-        if(measureOn){
-        clearTimeout(clickTimer);
-        handleDoubleClick(e, this.map);
+        if (measureOn) {
+          clearTimeout(clickTimer);
+          handleDoubleClick(e, this.map);
         }
       });
 
       this.map.on("mousemove", (e) => {
-        if (!endMeasure&&measureOn) {
+        if (!endMeasure && measureOn) {
           const features = this.map.queryRenderedFeatures(e.point, {
             layers: ["measure-points"],
           });
@@ -1035,41 +1064,41 @@ console.log('base', style)
         }
 
         // if (geojson.features.length > 0) {
-          linestring.geometry.coordinates = geojson.features.map((point) => {
-            return point.geometry.coordinates;
-          });
+        linestring.geometry.coordinates = geojson.features.map((point) => {
+          return point.geometry.coordinates;
+        });
 
-          geojson.features.push(linestring);
+        geojson.features.push(linestring);
 
-          // Populate the distanceContainer with total distance
-          const value = document.createElement("pre");
-          // console.log('kk', linestring.geometry.coordinates)
-          value.textContent = `Distància total: ${turf
-            .length(linestring)
-            .toLocaleString()}km`;
-          distanceContainerT.appendChild(value);
+        // Populate the distanceContainer with total distance
+        const value = document.createElement("pre");
+        // console.log('kk', linestring.geometry.coordinates)
+        value.textContent = `Distància total: ${turf
+          .length(linestring)
+          .toLocaleString()}km`;
+        distanceContainerT.appendChild(value);
 
-          const xButton = document.createElement("div");
-          xButton.id = "xButton";
-          xButton.textContent = "X";
-          xButton.onclick = () => {
-            try {
-              const removeMeasure = document.getElementById("xButton");
-              const distanceContainer = document.getElementById("distance");
-              distanceContainer.innerHTML = "";
+        const xButton = document.createElement("div");
+        xButton.id = "xButton";
+        xButton.textContent = "X";
+        xButton.onclick = () => {
+          try {
+            const removeMeasure = document.getElementById("xButton");
+            const distanceContainer = document.getElementById("distance");
+            distanceContainer.innerHTML = "";
 
-              let layers = map.getStyle().layers;
+            let layers = map.getStyle().layers;
 
-              for (let i = 0; i < layers.length; i++) {
-                if (layers[i].id.includes("measure")) {
-                  map.removeLayer(layers[i].id);
-                }
+            for (let i = 0; i < layers.length; i++) {
+              if (layers[i].id.includes("measure")) {
+                map.removeLayer(layers[i].id);
               }
-            } catch (error) {
-              console.error(`Error adding measure control: ${error.message}`);
             }
-          };
-          distanceContainerT.appendChild(xButton);
+          } catch (error) {
+            console.error(`Error adding measure control: ${error.message}`);
+          }
+        };
+        distanceContainerT.appendChild(xButton);
 
         map.getSource("geojson").setData(geojson);
       }
@@ -1113,6 +1142,22 @@ console.log('base', style)
       console.error(`Error adding export control: ${error.message}`);
     }
   }
+  /**
+   * Adds a popup to the map.
+   * @function addPopup
+   * @param {array} coordinates - Coordinates of the popup .
+   * @param {string} text - Text content for the popup.
+   */
+  addPopup(coordinates, text) {
+    try {
+      this.map.on("load", () => {
+        new maplibregl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(text)
+          .addTo(this.map);
+      });
+    } catch (error) {}
+  }
 
   /**
    * Adds a marker to the map.
@@ -1153,15 +1198,15 @@ console.log('base', style)
    * Adds a popup to the map.
    * @function addPopup
    * @param {Object} options - Options for the popup to add.
-   * @param {LngLatLike} options.coord - Coordinates for placing the popup.
-   * @param {string} options.text - HTML content for the popup.
+   * @param {LngLatLike} coord - Coordinates for placing the popup.
+   * @param {string} text - HTML content for the popup.
    * @returns {Object} - Instance of the added popup.
    */
-  addPopup(options) {
+  addPopup(coord, text) {
     try {
       let popup = new maplibregl.Popup()
-        .setLngLat(options.coord)
-        .setHTML(options.text)
+        .setLngLat(coord)
+        .setHTML(text)
         .addTo(this.map);
       return popup;
     } catch (error) {
@@ -1377,72 +1422,74 @@ console.log('base', style)
    */
   addImageLayerICGC(name) {
     try {
-      console.log('name', name)
+      console.log("name", name);
 
-            let idName = null
-            function findImageType(url, var1, var2, var3, var4) {
-              console.log('hola', name)
-                         const vectors = [var1, var2, var3, var4];
-              for (const vector of vectors) {
-                for (const [key, value] of Object.entries(vector)) {
-                  if (value === url) {
-                    return key;
-                  }
-                }
-              }
-              return null; // 
-
+      let idName = null;
+      function findImageType(url, var1, var2, var3, var4) {
+        console.log("hola", name);
+        const vectors = [var1, var2, var3, var4];
+        for (const vector of vectors) {
+          for (const [key, value] of Object.entries(vector)) {
+            if (value === url) {
+              return key;
             }
+          }
+        }
+        return null; //
+      }
 
-            idName = findImageType(name, Layers.Orto, Layers.VectorAdmin, Layers.WMS,Layers.Vector)
+      idName = findImageType(
+        name,
+        Layers.Orto,
+        Layers.VectorAdmin,
+        Layers.WMS,
+        Layers.Vector
+      );
 
-            console.log('op', idName)
-            if (!idName) {
-              console.log(
-                "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-                "font-weight: bold; font-style: italic;",
-                "font-weight: normal; font-style: normal; color: red;",
-                name,
-                "font-weight: bold; font-style: italic;"
-              );
-            }
-         
+      console.log("op", idName);
+      if (!idName) {
+        console.log(
+          "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
+          "font-weight: bold; font-style: italic;",
+          "font-weight: normal; font-style: normal; color: red;",
+          name,
+          "font-weight: bold; font-style: italic;"
+        );
+      }
 
-            let sourceWMS = {
-              id: idName,
-              tiles: name,
-            };
-            console.log('source', sourceWMS)
-            this.addLayerWMS(sourceWMS);
-          // } else {
-          //   let sourceWMS = {
-          //     id: name + "Actual",
-          //     tiles:
-          //       "https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png",
-          //   };
-          //   this.addLayerWMS(sourceWMS);
-          // }
-        // }
-//if not orto
+      let sourceWMS = {
+        id: idName,
+        tiles: name,
+      };
+      console.log("source", sourceWMS);
+      this.addLayerWMS(sourceWMS);
+      // } else {
+      //   let sourceWMS = {
+      //     id: name + "Actual",
+      //     tiles:
+      //       "https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png",
+      //   };
+      //   this.addLayerWMS(sourceWMS);
+      // }
+      // }
+      //if not orto
 
-
-
-        // if (name.includes("relleu")) {
-        //   let sourceWMS = {
-        //     id: name + "Actual",
-        //     tiles:
-        //       "https://tilemaps.icgc.cat/mapfactory/wmts/relleu/CAT3857/{z}/{x}/{y}.png",
-        //   };
-        //   this.addLayerWMS(sourceWMS);
-        // }
-        // if (name.includes("geol")) {
-        //   let sourceWMS = {
-        //     id: name + "Actual",
-        //     tiles:
-        //       "https://tilemaps.icgc.cat/mapfactory/wmts/geologia/MON3857NW/{z}/{x}/{y}.png",
-        //   };
-        //   this.addLayerWMS(sourceWMS);
-        // }
+      // if (name.includes("relleu")) {
+      //   let sourceWMS = {
+      //     id: name + "Actual",
+      //     tiles:
+      //       "https://tilemaps.icgc.cat/mapfactory/wmts/relleu/CAT3857/{z}/{x}/{y}.png",
+      //   };
+      //   this.addLayerWMS(sourceWMS);
+      // }
+      // if (name.includes("geol")) {
+      //   let sourceWMS = {
+      //     id: name + "Actual",
+      //     tiles:
+      //       "https://tilemaps.icgc.cat/mapfactory/wmts/geologia/MON3857NW/{z}/{x}/{y}.png",
+      //   };
+      //   this.addLayerWMS(sourceWMS);
+      // }
       // } else {
       //   //if not includes geol, orto, relleu...
       //   console.log(
@@ -1464,12 +1511,15 @@ console.log('base', style)
    * @param {string} url - The url of the vector layer.
    * @param {string} year - The year associated with the vector layer (optional).
    */
-  async addVectorLayerICGC(layerUrl,name, year) {
+  async addVectorLayerICGC(layerUrl, name, year) {
     try {
       function getKeyByUrl(url) {
         for (const key in Layers.VectorAdmin) {
           // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
-          if (Layers.VectorAdmin.hasOwnProperty(key) && Layers.VectorAdmin[key] === url) {
+          if (
+            Layers.VectorAdmin.hasOwnProperty(key) &&
+            Layers.VectorAdmin[key] === url
+          ) {
             // console.log('entro', key)
             return key; // Retorna la clave si encuentra la URL
           }
@@ -1477,16 +1527,14 @@ console.log('base', style)
         return null; // Retorna null si no se encuentra la URL en el objeto
       }
 
+      let name = getKeyByUrl(layerUrl);
+      // console.log('name', name)
 
-let name = getKeyByUrl(layerUrl);
-// console.log('name', name)
-
-if (name === null) {
-
-      // let op = Layers.VectorAdmin.find((objeto) =>
-      //   objeto.key.includes(name)
-      // );
-      // if (!op) {
+      if (name === null) {
+        // let op = Layers.VectorAdmin.find((objeto) =>
+        //   objeto.key.includes(name)
+        // );
+        // if (!op) {
         // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1495,41 +1543,41 @@ if (name === null) {
           name,
           "font-weight: bold; font-style: italic;"
         );
-      }else{
-      // layerUrl = op.url;
+      } else {
+        // layerUrl = op.url;
 
-      const response = await fetch(layerUrl);
-      this.map.on("load", async () => {
-        const fc = { type: "FeatureCollection", features: [] };
-        for await (const f of flatgeobuf.deserialize(response.body))
-          fc.features.push(f);
-        let src = op.name + "-source";
+        const response = await fetch(layerUrl);
+        this.map.on("load", async () => {
+          const fc = { type: "FeatureCollection", features: [] };
+          for await (const f of flatgeobuf.deserialize(response.body))
+            fc.features.push(f);
+          let src = op.name + "-source";
 
-        this.map.addSource(src, {
-          type: "geojson",
-          data: fc,
+          this.map.addSource(src, {
+            type: "geojson",
+            data: fc,
+          });
+          this.map.addLayer({
+            id: op.name + "-fill",
+            type: "fill",
+            source: src,
+            paint: {
+              "fill-color": "#0000FF",
+              "fill-opacity": 0,
+            },
+          });
+          this.map.addLayer({
+            id: op.name + "-line",
+            type: "line",
+            source: src,
+            paint: {
+              "line-color": "#FFFFFF",
+              "line-opacity": 0.49,
+              "line-width": 1,
+            },
+          });
         });
-        this.map.addLayer({
-          id: op.name + "-fill",
-          type: "fill",
-          source: src,
-          paint: {
-            "fill-color": "#0000FF",
-            "fill-opacity": 0,
-          },
-        });
-        this.map.addLayer({
-          id: op.name + "-line",
-          type: "line",
-          source: src,
-          paint: {
-            "line-color": "#FFFFFF",
-            "line-opacity": 0.49,
-            "line-width": 1,
-          },
-        });
-      });
-    }
+      }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
     }
@@ -1549,15 +1597,12 @@ if (name === null) {
         // );
         let op;
         for (const key in Terrains) {
-      
           if (Terrains.hasOwnProperty(key)) {
-            
             const objeto = Terrains[key];
-         
+
             if (objeto === resolution) {
-      
               op = objeto;
-               // Si encontramos el objeto, podemos salir del bucle
+              // Si encontramos el objeto, podemos salir del bucle
             }
           }
         }

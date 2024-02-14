@@ -85,7 +85,7 @@
       // let compar = new mapicgcgl.CompareMaps(map, compareMap, "#comparison-container");
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
-      map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
+      // map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
       console.log(mapicgcgl.Layers)
       // map.addImageLayerICGC(mapicgcgl.Layers.WMS.geologia);   
 
@@ -111,11 +111,11 @@
 //       };
 //       // map.addAttributionControl(optionsAtt);
 // // map.addLimitLayerICGC('censals', '2019')
-//       let optionsPopup = {
-//         coord: [2.0119, 41.489],
-//         text: "<h4>Hello World!</h4>",
-//       };
-//       // map.addPopup(optionsPopup);
+// 
+//       let  coord: [2.0119, 41.489],
+//        let text: "<h4>Hello World!</h4>",
+//  
+//       // map.addPopup(coord, text);
 
 //       let optionsMarker = {
 //         coord: [2.119, 41.87],
@@ -182,20 +182,24 @@
 //       // map.addLayerGeoJSON(geojsonLayer);
 // console.log('vL',map.getConfigVectorLayers())
 
-      // map.fetchDataAndMenu(
-      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson',
-      //   'centres')
-      //   let paintOptions = {
-      //     'line-color': 'red',
-      //     'line-width': 2,
-      //     'line-opacity': 0.5
-      //   }
-      //   map.fetchData(
-      //   'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson',
-      //   'RutesMontserrat',
-      //   paintOptions)
+      map.fetchDataAndMenu(
+        'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson',
+        'centres')
+        
+        let paintOptions = {
+          'line-color': 'red',
+          'line-width': 2,
+          'line-opacity': 0.5
+        }
+        map.fetchData(
+        'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson',
+        'RutesMontserrat',
+        paintOptions)
 
-      // let optionsGeo= {
+        let optionsText=['alies', 'comarca']
+        map.addFeatureQuery('centres',optionsText)
+      
+        // let optionsGeo= {
       //     // required
       //       forwardGeocode: async (config) => { /* definition here */ },
             
@@ -251,7 +255,7 @@
       // map.addBasemaps(baseLayers);
 let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO]
 
-// map.addBasemapsICGC(basemapsicgc)
+map.addBasemapsICGC(basemapsicgc)
 //       let layerTree = {
 //         features: {
 //           type: "FeatureCollection",
