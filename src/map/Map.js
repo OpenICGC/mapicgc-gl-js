@@ -2,10 +2,17 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 // import MeasuresControl from 'maplibre-gl-measures';
-
-import  Terrains  from "../constants/Terrains.js";
-import  Styles  from "../constants/Styles.js";
-import  Layers  from "../constants/Layers.js";
+import {
+  MaplibreExportControl,
+  Size,
+  PageOrientation,
+  Format,
+  DPI,
+} from "@watergis/maplibre-gl-export";
+import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
+import Terrains from "../constants/Terrains.js";
+import Styles from "../constants/Styles.js";
+import Layers from "../constants/Layers.js";
 import defaultOptions from "../config.js";
 
 /**
@@ -52,6 +59,11 @@ export default class Map {
     this.map = new maplibregl.Map(options);
     this.map.options = options;
 
+    this.map.addControl(
+      new maplibregl.AttributionControl({
+        compact: true,
+      })
+    );
     // console.log('deeee', options)
   }
 
@@ -310,7 +322,7 @@ export default class Map {
       // map.addLayerTree(geojson);
       map.addMenuItem(name);
       //add feature queries
-      map.addFeatureQuery(name);
+      // map.addFeatureQuery(name);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -845,7 +857,9 @@ export default class Map {
   addFeatureQuery(layerName, options) {
     try {
       let description;
+
       this.map.on("load", () => {
+        // console.log('layer', layerName, options)
         this.map.on("mouseenter", layerName, () => {
           this.map.getCanvas().style.cursor = "pointer";
         });
@@ -857,23 +871,36 @@ export default class Map {
           let features = this.map.queryRenderedFeatures(e.point);
           if (features && features[0].source === layerName) {
             let coordinates = [e.lngLat.lng, e.lngLat.lat];
-   
-            if (options !== undefined) {
+
+            if (options !== undefined && options.length > 0) {
               if (options !== null) {
-           
                 let text = "";
                 options.forEach((prop) => {
                   let pr = features[0].properties[prop];
-         
+
                   text = text + `<h4>${pr}</h4>`;
-         
                 });
                 description = text;
                 map.addPopup(coordinates, description);
               }
+            } else {
+              // console.log('hello')
+              let text = "";
+              for (const key in features[0].properties) {
+                //  console.log('key', key)
 
-            } 
-      
+                text +=
+                  "<b>" + key + "</b>:" + features[0].properties[key] + "<br>";
+              }
+
+              description = text;
+              map.addPopup(coordinates, description);
+              // popup.setLngLat(e.lngLat)
+              //   .setHTML(text)
+              //   .addTo(map);
+
+              // });
+            }
           }
         });
       });
@@ -1124,20 +1151,17 @@ export default class Map {
       }
       if (options === undefined) {
         options = {
-          PageSize: MaplibreExportControl.Size.A4,
-          PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
-          Format: MaplibreExportControl.Format.PNG,
-          DPI: MaplibreExportControl.DPI[300],
+          PageSize: Size.A4,
+          PageOrientation: PageOrientation.Landscape,
+          Format: Format.PNG,
+          DPI: DPI[300],
           Crosshair: true,
           PrintableArea: true,
         };
         position = "top-right";
       }
 
-      this.map.addControl(
-        new MaplibreExportControl.MaplibreExportControl(options),
-        position
-      );
+      map.addControl(new MaplibreExportControl(options), position);
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
     }

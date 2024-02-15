@@ -546,6 +546,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   padding: 15px 10px;
   pointer-events: auto;
   position: relative;
+  word-wrap: break-word !important
 }
 .maplibregl-popup-anchor-top-left .maplibregl-popup-content {
   border-top-left-radius: 0;
@@ -1176,4 +1177,7 @@ h4::selection {
   background-position: initial;
   background-size: 75%;
   background-position: center;
+}
+.maplibregl-export-list{
+  display: none;
 }
