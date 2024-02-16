@@ -10,6 +10,7 @@ import {
   DPI,
 } from "@watergis/maplibre-gl-export";
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
+import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
@@ -64,8 +65,72 @@ export default class Map {
         compact: true,
       })
     );
-    // console.log('deeee', options)
   }
+
+  /**
+   * Add geocoder.
+   * @function addGeocoderICGC
+   * @returns {Object} - The current position of the search result.
+   */
+
+  addGeocoderICGC() {
+    try {
+      console.log("hello geocoder");
+      const urlSearchPelias =
+        "https://eines.icgc.cat/geocodificador/autocompletar?text=";
+      const geocoderApi = {
+        forwardGeocode: async (config) => {
+          const features = [];
+          try {
+            const requesst = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
+
+            const request =
+              urlSearchPelias +
+              encodeURIComponent(config.query) +
+              "&layers=topo1%2Ctopo2%2Caddress&size=5";
+            const response = await fetch(request);
+            const geojson = await response.json();
+
+            // console.log('geoj', geojson)
+            for (const feature of geojson.features) {
+              const center = feature.geometry.coordinates;
+              const point = {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: center,
+                },
+                place_name: feature.properties.label,
+                properties: feature.properties,
+                text: feature.properties.label,
+                place_type: ["place"],
+                center,
+              };
+              features.push(point);
+            }
+          } catch (e) {
+            console.error(`Failed to forwardGeocode with error: ${e}`);
+          }
+
+          return {
+            features,
+          };
+        },
+      };
+
+      // Pass in or define a geocoding API that matches the above
+      this.map.addControl(new MaplibreGeocoder(geocoderApi, { maplibregl }));
+      let inputsearch = document.getElementsByClassName(
+        "maplibregl-ctrl-geocoder--input"
+      );
+      // console.log('in', inputsearch)
+      inputsearch[0].attributes[2].nodeValue = "Cerca...";
+    } catch (error) {
+      console.error(`Error adding ICGC geocoder: ${error.message}`);
+    }
+  }
+
+  //geocoder ends
 
   /**
    * Retrieves the current style of the map.

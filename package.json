@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
   "main": "dist/mapicgc-gl.js",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@maplibre/maplibre-gl-compare": "^0.5.0",
+    "@maplibre/maplibre-gl-geocoder": "^1.5.0",
     "@turf/turf": "^6.5.0",
     "@watergis/maplibre-gl-export": "^3.1.0",
     "axios": "^1.6.7",
