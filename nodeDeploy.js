@@ -20,11 +20,11 @@ const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
 
 }
 
-async function deploy() {
+async function deploy(hostFTP) {
   const sftp = new SftpClient();
   sftp.client.setMaxListeners(10);
   const config = {
-    host: process.env.FTP_HOST,
+    host: hostFTP,
     port: 22,
     username: process.env.FTP_USER,
     password: process.env.FTP_PASSWORD,
