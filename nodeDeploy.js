@@ -14,13 +14,7 @@ const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
       console.error('Error copying file:', err);
     } else {
       console.log('File copied and renamed successfully.');
-<<<<<<< HEAD
       deploy()
-=======
-
-      // deploy()
-
->>>>>>> 0a5e06b6b5540bb2404a5c9581db8f8c649f2707
     }
   });
 
