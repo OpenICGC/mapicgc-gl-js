@@ -2,6 +2,10 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 // import MeasuresControl from 'maplibre-gl-measures';
+import { MapboxLayer } from "@deck.gl/mapbox";
+import { Tile3DLayer } from "@deck.gl/geo-layers";
+import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
+import { AmbientLight, LightingEffect } from "@deck.gl/core";
 import {
   MaplibreExportControl,
   Size,
@@ -66,6 +70,89 @@ export default class Map {
         compact: true,
       })
     );
+
+    this.map.on("load", () => {
+      if (window.document.querySelector(".maplibregl-compact-show")) {
+        var element = window.document.querySelector(".maplibregl-compact-show");
+        element.classList.remove("maplibregl-compact-show");
+      }
+
+      console.info("loaded");
+      console.info(this.map.getStyle().name);
+
+      //init test3d
+      if (this.map.getStyle().name == "orto3d") {
+
+        
+        const ambientLight = new AmbientLight({
+          intensity: 4,
+        });
+
+        const lightingEffect = new LightingEffect({
+          ambientLight,
+        });
+
+       
+       const edificisMapboxLayer=this._getLayer3d();
+       
+       this.map.setTerrain({
+          source: defaultOptions.map3dOptions.terrainSource,
+          exaggeration: 1,
+        });
+
+        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.addLayer(edificisMapboxLayer,defaultOptions.map3dOptions.layerIdOrder );
+          this.map.setLayerZoomRange(defaultOptions.map3dOptions.layerId3d, 15.5, 22);
+
+          edificisMapboxLayer.deck.setProps({
+            effects: [lightingEffect],
+          });
+        }
+        
+      }
+      //end test 3d
+    });
+  }
+
+
+  _getLayer3d(){
+
+    
+    try{
+    const edificisMapboxLayer = new MapboxLayer({
+      id: defaultOptions.map3dOptions.layerId3d,
+      type: Tile3DLayer,
+      data: defaultOptions.map3dOptions.urlTilesetCities,
+      loader: Tiles3DLoader,
+      loadOptions: {
+        tileset: {
+          viewDistanceScale: 1,
+          updateTransforms: false,
+          maximumScreenSpaceError: defaultOptions.map3dOptions.spaceErrorFactor,
+        },
+      },
+
+      onTilesetLoad: (tileset3d) => {
+        tileset3d.options.maximumScreenSpaceError = defaultOptions.map3dOptions.spaceErrorFactor;
+      },
+      onTileLoad: (tileHeader) => {
+        tileHeader.content.cartographicOrigin.z -= defaultOptions.map3dOptions.zfactor;
+      },
+      operation: "terrain+draw",
+    
+    });
+
+    return edificisMapboxLayer;
+
+  }catch(err){
+
+    console.info(err);
+
+    return null;
+
+  }
+
+
   }
 
   /**
@@ -81,25 +168,21 @@ export default class Map {
       const urlSearchPelias =
         "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 
-        let options={
-          collapsed : true, 
-          marker: true,
-          popup: true,
-          showResultMarkers: true,
-          maplibregl: maplibregl,
-          showResultsWhileTyping: true,
-          minLength: 2,
-        };
+      let options = {
+        collapsed: true,
+        marker: true,
+        popup: true,
+        showResultMarkers: true,
+        maplibregl: maplibregl,
+        showResultsWhileTyping: true,
+        minLength: 2,
+      };
 
       const geocoderApi = {
-    
         forwardGeocode: async (config) => {
-      
           const features = [];
           try {
             const requesst = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
-      
-
 
             const request =
               urlSearchPelias +
@@ -133,7 +216,6 @@ export default class Map {
             features,
           };
         },
-        
       };
 
       // Pass in or define a geocoding API that matches the above
@@ -143,16 +225,13 @@ export default class Map {
       );
       // console.log('in', inputsearch)
       inputsearch[0].attributes[2].nodeValue = "Cerca...";
-inputsearch[0].addEventListener('input', function(event) {
-
-  let word = event.target.value
-  if (word.length > 3){
-    // console.log('més de 3:', word)
-  }
-  // Puedes realizar cualquier acción que desees aquí
-})
-
-
+      inputsearch[0].addEventListener("input", function (event) {
+        let word = event.target.value;
+        if (word.length > 3) {
+          // console.log('més de 3:', word)
+        }
+        // Puedes realizar cualquier acción que desees aquí
+      });
     } catch (error) {
       console.error(`Error adding ICGC geocoder: ${error.message}`);
     }
@@ -582,15 +661,13 @@ inputsearch[0].addEventListener('input', function(event) {
    * @param {Object} property - Object containing property to set.
    * @param {Object} value - Object containing value.
    */
-  setLayoutProperty(object,property,value) {
+  setLayoutProperty(object, property, value) {
     try {
-      this.map.setLayoutProperty(object,property,value);
+      this.map.setLayoutProperty(object, property, value);
     } catch (error) {
       console.error(`Error setting layout property: ${error.message}`);
     }
   }
-
-
 
   /**
    * Sets layout property for a layer on the map.
@@ -599,9 +676,9 @@ inputsearch[0].addEventListener('input', function(event) {
    * @param {Object} property - Object containing property to set.
    * @param {Object} value - Object containing value.
    */
-  setPaintProperty(object,property,value) {
+  setPaintProperty(object, property, value) {
     try {
-      this.map.setPaintProperty(object,property,value);
+      this.map.setPaintProperty(object, property, value);
     } catch (error) {
       console.error(`Error setting paint property: ${error.message}`);
     }
@@ -726,20 +803,19 @@ inputsearch[0].addEventListener('input', function(event) {
   setTerrain(options) {
     try {
       //this.map.on("load", () => {
-        return this.map.setTerrain(options);
+      return this.map.setTerrain(options);
       //});
       //  this.map.getZoom();
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
   }
-  setLayerZoomRange(layerId,nimZoom,maxZoom){
+  setLayerZoomRange(layerId, nimZoom, maxZoom) {
     try {
-        return this.map.setLayerZoomRange(layerId,nimZoom,maxZoom);
+      return this.map.setLayerZoomRange(layerId, nimZoom, maxZoom);
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
-
   }
 
   /**
@@ -773,9 +849,9 @@ inputsearch[0].addEventListener('input', function(event) {
    * @param {Object} layer - Options for the layer to add.
    * @param {string} layerIdOrder - Optional layer Id draw position.
    */
-  addLayer(layer,layerIdOrder) {
+  addLayer(layer, layerIdOrder) {
     try {
-      this.map.addLayer(layer,layerIdOrder);
+      this.map.addLayer(layer, layerIdOrder);
     } catch (error) {
       console.error(`Error adding layer: ${error.message}`);
     }
