@@ -74,10 +74,12 @@ export default class Map {
    * @returns {Object} - The current position of the search result.
    */
 
-  addGeocoderICGC() {
+  addGeocoderICGC(position) {
     try {
       // console.log("hello geocoder");
-
+if (position === undefined ){
+  position = 'top-right'
+}
       const urlSearchPelias =
         "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 
@@ -137,7 +139,7 @@ export default class Map {
       };
 
       // Pass in or define a geocoding API that matches the above
-      this.map.addControl(new MaplibreGeocoder(geocoderApi, options));
+      this.map.addControl(new MaplibreGeocoder(geocoderApi, options), position);
       let inputsearch = document.getElementsByClassName(
         "maplibregl-ctrl-geocoder--input"
       );
@@ -279,26 +281,43 @@ inputsearch[0].addEventListener('input', function(event) {
       const geojson = await response.json();
 
       let type = geojson.features[0].geometry.type;
-
       if (type.includes("ine")) {
         //line
-
-        map.addLayer({
-          id: name,
-          type: "line",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options,
-        });
+          if (options !== undefined){
+            map.addLayer({
+              id: name,
+              type: "line",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: options,
+            });
+          }else{
+              map.addLayer({
+                id: name,
+                type: "line",
+                source: {
+                  type: "geojson",
+                  data: geojson,
+                },
+                layout: {
+                  visibility: "visible",
+                },
+                paint: {
+                  'line-color': 'black',
+                  'line-width': 2,
+                  'line-opacity': 1
+                }
+              });
+            }
       }
       if (type.includes("olygon")) {
         //polygon
-
+        if (options !== undefined){
         map.addLayer({
           id: name,
           type: "fill",
@@ -309,17 +328,42 @@ inputsearch[0].addEventListener('input', function(event) {
           layout: {
             visibility: "visible",
           },
-          // paint: {
-          //   'line-color': element.color,
-          //   'line-width': element.width,
-          //   'line-opacity': element.opacity
-
-          // },
+          paint: options
         });
+      }else{
+        map.addLayer({
+          id: name,
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: {
+            'fill-color': 'blue',
+            'fill-opacity': 0.6
+          }
+        });
+      }
       }
       if (type.includes("oint")) {
         //point
-
+        if (options !== undefined){
+        map.addLayer({
+          id: name,
+          type: "circle",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: options,
+        });
+      }else{
         map.addLayer({
           id: name,
           type: "circle",
@@ -331,10 +375,12 @@ inputsearch[0].addEventListener('input', function(event) {
             visibility: "visible",
           },
           paint: {
-            "circle-color": "yellow",
-            "circle-opacity": 0.5,
+            "circle-color": "red",
+            "circle-opacity": 0.85,
           },
         });
+
+      }
       }
       // map.addFeatureQuery(name)
     } catch (error) {
@@ -346,34 +392,56 @@ inputsearch[0].addEventListener('input', function(event) {
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
    * @param {string} url - The URL to fetch GeoJSON data from.
    * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {string} featureTree - Import all features as unique or group based on a field ('all', 'field').
    * @param {Object} options - Additional options for configuring the layer.
    */
 
-  async fetchDataAndMenu(url, name, options) {
+  async fetchDataAndMenu(url, name, featureTree, options) {
     try {
       const response = await fetch(url);
       const geojson = await response.json();
 
       let type = geojson.features[0].geometry.type;
+
+if ( featureTree  === 'all'){
+
       if (type.includes("ine")) {
         //line
-
-        map.addLayer({
-          id: name,
-          type: "line",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options,
-        });
+          if (options !== undefined){
+            map.addLayer({
+              id: name,
+              type: "line",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: options,
+            });
+          }else{
+              map.addLayer({
+                id: name,
+                type: "line",
+                source: {
+                  type: "geojson",
+                  data: geojson,
+                },
+                layout: {
+                  visibility: "visible",
+                },
+                paint: {
+                  'line-color': 'black',
+                  'line-width': 2,
+                  'line-opacity': 1
+                }
+              });
+            }
       }
       if (type.includes("olygon")) {
         //polygon
-
+        if (options !== undefined){
         map.addLayer({
           id: name,
           type: "fill",
@@ -384,17 +452,42 @@ inputsearch[0].addEventListener('input', function(event) {
           layout: {
             visibility: "visible",
           },
-          // paint: {
-          //   'line-color': element.color,
-          //   'line-width': element.width,
-          //   'line-opacity': element.opacity
-
-          // },
+          paint: options
         });
+      }else{
+        map.addLayer({
+          id: name,
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: {
+            'fill-color': 'blue',
+            'fill-opacity': 0.6
+          }
+        });
+      }
       }
       if (type.includes("oint")) {
         //point
-
+        if (options !== undefined){
+        map.addLayer({
+          id: name,
+          type: "circle",
+          source: {
+            type: "geojson",
+            data: geojson,
+          },
+          layout: {
+            visibility: "visible",
+          },
+          paint: options,
+        });
+      }else{
         map.addLayer({
           id: name,
           type: "circle",
@@ -406,14 +499,156 @@ inputsearch[0].addEventListener('input', function(event) {
             visibility: "visible",
           },
           paint: {
-            "circle-color": "yellow",
-            "circle-opacity": 0.5,
+            "circle-color": "red",
+            "circle-opacity": 0.85,
           },
         });
+
+      }
       }
       // geojsonStore  = geojson
       // map.addLayerTree(geojson);
       map.addMenuItem(name);
+
+    }else{
+
+let field= featureTree
+// console.log('field', field, geojson.features)
+
+// let lll = geojson.features
+const layers = {};
+geojson.features.forEach(feature => {
+    const fieldMarker = feature.properties[field];
+    
+    // Verificar si la capa ya existe
+    if (!layers[fieldMarker]) {
+        // Si no existe, crear la capa
+        if (type.includes("ine")) {
+          //line
+            if (options !== undefined){
+              map.addLayer({
+                id: fieldMarker,
+                type: "line",
+                source: {
+                  type: "geojson",
+                  data: geojson,
+                },
+                layout: {
+                  visibility: "visible",
+                },
+                filter: ['==', `${field}`, fieldMarker] ,
+                paint: options,
+              });
+            }else{
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "line",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  filter: ['==', `${field}`, fieldMarker] ,
+                  paint: {
+                    'line-color': 'black',
+                    'line-width': 2,
+                    'line-opacity': 1
+                  }
+                });
+              }
+        }
+        if (type.includes("olygon")) {
+          //polygon
+          if (options !== undefined){
+          map.addLayer({
+            id: fieldMarker,
+            type: "fill",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            filter: ['==', `${field}`, fieldMarker] ,
+            paint: options
+          });
+        }else{
+          map.addLayer({
+            id: fieldMarker,
+            type: "fill",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            filter: ['==', `${field}`, fieldMarker] ,
+            paint: {
+              'fill-color': 'blue',
+              'fill-opacity': 0.6
+            }
+          });
+        }
+        }
+        if (type.includes("oint")) {
+          //point
+          if (options !== undefined){
+          map.addLayer({
+            id: fieldMarker,
+            type: "circle",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            filter: ['==', `${field}`, fieldMarker] ,
+            paint: options,
+          });
+        }else{
+          map.addLayer({
+            id: fieldMarker,
+            type: "circle",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            
+            filter: ['==', `${field}`, fieldMarker] ,
+            paint: {
+              "circle-color": "red",
+              "circle-opacity": 0.85,
+            },
+          });
+  
+        }
+        }
+
+        // Agregar la nueva capa al objeto de capas
+        layers[fieldMarker] = true;
+        map.addMenuItem(fieldMarker);
+    }
+});
+
+
+    }
+
+    
+
+
+
+
+
+
+
       //add feature queries
       // map.addFeatureQuery(name);
     } catch (error) {
@@ -1354,6 +1589,7 @@ inputsearch[0].addEventListener('input', function(event) {
    */
   addMenuItem(name) {
     try {
+      if (name.length > 0){
       const menuGroup = document.getElementById("menu-group");
 
       const input = document.createElement("input");
@@ -1376,6 +1612,7 @@ inputsearch[0].addEventListener('input', function(event) {
           e.target.checked ? "visible" : "none"
         );
       });
+    }
     } catch (error) {
       console.error(`Error adding menu item: ${error.message}`);
     }
