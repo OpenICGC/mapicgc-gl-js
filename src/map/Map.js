@@ -15,6 +15,7 @@ import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
 import defaultOptions from "../config.js";
+// import "../plugins/maplibre-gl-geocoder.js";
 
 /**
  * Class representing a custom map with additional functions.FVec
@@ -75,14 +76,30 @@ export default class Map {
 
   addGeocoderICGC() {
     try {
-      console.log("hello geocoder");
+      // console.log("hello geocoder");
+
       const urlSearchPelias =
         "https://eines.icgc.cat/geocodificador/autocompletar?text=";
+
+        let options={
+          collapsed : true, 
+          marker: true,
+          popup: true,
+          showResultMarkers: true,
+          maplibregl: maplibregl,
+          showResultsWhileTyping: true,
+          minLength: 2,
+        };
+
       const geocoderApi = {
+    
         forwardGeocode: async (config) => {
+      
           const features = [];
           try {
             const requesst = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
+      
+
 
             const request =
               urlSearchPelias +
@@ -116,15 +133,26 @@ export default class Map {
             features,
           };
         },
+        
       };
 
       // Pass in or define a geocoding API that matches the above
-      this.map.addControl(new MaplibreGeocoder(geocoderApi, { maplibregl }));
+      this.map.addControl(new MaplibreGeocoder(geocoderApi, options));
       let inputsearch = document.getElementsByClassName(
         "maplibregl-ctrl-geocoder--input"
       );
       // console.log('in', inputsearch)
       inputsearch[0].attributes[2].nodeValue = "Cerca...";
+inputsearch[0].addEventListener('input', function(event) {
+
+  let word = event.target.value
+  if (word.length > 3){
+    // console.log('més de 3:', word)
+  }
+  // Puedes realizar cualquier acción que desees aquí
+})
+
+
     } catch (error) {
       console.error(`Error adding ICGC geocoder: ${error.message}`);
     }
