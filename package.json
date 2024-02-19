@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.30",
+  "version": "0.0.35",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
   "main": "dist/mapicgc-gl.js",
@@ -37,13 +37,17 @@
   },
   "dependencies": {
     "@maplibre/maplibre-gl-compare": "^0.5.0",
+    "@maplibre/maplibre-gl-geocoder": "^1.5.0",
     "@turf/turf": "^6.5.0",
+    "@watergis/maplibre-gl-export": "^3.1.0",
     "axios": "^1.6.7",
     "flatgeobuf": "^3.27.2",
     "maplibre-gl": "^3.6.2",
+    "maplibre-gl-measures": "^0.0.14",
     "path": "^0.12.7",
     "wms-capabilities": "^0.6.0",
     "xml2js": "^0.6.2",
-    "xmldom": "^0.6.0"
+    "xmldom": "^0.6.0",
+    "yarn": "^1.22.21"
   }
 }

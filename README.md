@@ -11,13 +11,13 @@
 
 <br>
 
-Version 0.0.30
+Version 0.0.35
 
 
 
 The MapICGC GL JS library builds upon the MapLibre GL JS framework, exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.
 
- Our goal is to simplify the development process for MapICGC developers! With MapICGC GL JS, you won't need to load external plugins for basic functionalities, deal with complex data source URLs, or search for syntax to enable 3D terrain every time you embark on a project. All these features are either built-in, loaded dynamically when necessary, or accessible through straightforward functions. While the SDK is opinionated, being closely tied to MapICGC Cloud data, its MapLibre core ensures 100% compatibility with other data sources..  
+ Our goal is to simplify the development process for MapICGC developers! With MapICGC GL JS, you won't need to load external plugins for basic functionalities, deal with complex data source URLs, or search for syntax to enable 3D terrain every time you embark on a project. All these features are either built-in, loaded dynamically when necessary, or accessible through straightforward functions.
 
 Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper functions for MapICGC Cloud API services, including geocoding, static maps, geolocation, and a coordinate reference system search engine for transforming coordinates between different CRSs.
 
@@ -49,7 +49,7 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 
       const map = Map({
         container: 'map',
-        style: "Style.Topografic", // style from mapicgc library
+        style:  mapicgcgl.Styles.LIGHT, // style from mapicgc library
         center: [2.1464, 41.306], // starting position [lng, lat]
         zoom: 7.4, //starting zoom 
       });

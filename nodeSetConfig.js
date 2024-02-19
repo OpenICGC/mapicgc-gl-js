@@ -61,7 +61,7 @@ async function getVectorLimitsLayers() {
           vectorLimitsLayersOptions = vectorLayerIds.map((id) => ({
             name: camelize(id),
             key: id.toLowerCase().replace(/ /g, '_'),
-            url: `https://betaserver2.icgc.cat/fgb/${id.toLowerCase().replace(/ /g, '_')}.fgb`,
+            url: `https://tilemaps.icgc.cat/vector/fgb/${id.toLowerCase().replace(/ /g, '_')}.fgb`,
           }));
      
           console.log('Dades Limits vector actualitzats' );

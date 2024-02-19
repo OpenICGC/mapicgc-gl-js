@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Demo - maplibre-gl-measures</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+    <script src="../dist/maplibre-gl-measures.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: {
+                version: 8,
+                sources: {
+                    osm: {
+                        type: "raster",
+                        tiles: ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                        tileSize: 256,
+                        attribution: "&copy; OpenStreetMap Contributors",
+                        maxzoom: 19,
+                    },
+                },
+                glyphs: "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+                // or 
+                //glyphs: "glyphs/{fontstack}/{range}.pbf",
+                layers: [
+                    {
+                        id: "osm",
+                        type: "raster",
+                        source: "osm", // This must match the source key above
+                    },
+                ],
+            },
+            center: [-73.981318, 40.759373], // starting position [lng, lat]
+            zoom: 13 // starting zoom
+        });
+        map.addControl(new maplibreGLMeasures.default({
+            lang: {
+                areaMeasurementButtonTitle: 'Measure area',
+                lengthMeasurementButtonTitle: 'Measure length',
+                clearMeasurementsButtonTitle:  'Clear measurements',
+            },
+            units: 'imperial',
+            unitsGroupingSeparator: ' ',
+            style: {
+                text: {
+                    radialOffset:  0.9,
+                    letterSpacing: 0.05,
+                    color: '#D20C0C',
+                    haloColor: '#fff',
+                    haloWidth: 0,
+                    font: 'Klokantech Noto Sans Bold',
+                },
+                common: {
+                    midPointRadius: 3,
+                    midPointColor: '#D20C0C',
+                    midPointHaloRadius: 5,
+                    midPointHaloColor: '#FFF',
+                },
+                areaMeasurement: {
+                    fillColor: '#D20C0C',
+                    fillOutlineColor: '#D20C0C',
+                    fillOpacity: 0.01,
+                    lineWidth: 2,
+                },
+                lengthMeasurement: {
+                    lineWidth: 2,
+                    lineColor: "#D20C0C",
+                },
+            }
+        }), 'top-left');
+    </script>
+</body>
+
+</html>
