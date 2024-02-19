@@ -578,15 +578,35 @@ inputsearch[0].addEventListener('input', function(event) {
   /**
    * Sets layout property for a layer on the map.
    * @function setLayoutProperty
-   * @param {Object} object - Object containing layer ID and property to set.
+   * @param {Object} object - Object containing layer ID.
+   * @param {Object} property - Object containing property to set.
+   * @param {Object} value - Object containing value.
    */
-  setLayoutProperty(object) {
+  setLayoutProperty(object,property,value) {
     try {
-      this.map.setLayoutProperty(object);
+      this.map.setLayoutProperty(object,property,value);
     } catch (error) {
       console.error(`Error setting layout property: ${error.message}`);
     }
   }
+
+
+
+  /**
+   * Sets layout property for a layer on the map.
+   * @function setPaintProperty
+   * @param {Object} object - Object containing layer ID.
+   * @param {Object} property - Object containing property to set.
+   * @param {Object} value - Object containing value.
+   */
+  setPaintProperty(object,property,value) {
+    try {
+      this.map.setPaintProperty(object,property,value);
+    } catch (error) {
+      console.error(`Error setting paint property: ${error.message}`);
+    }
+  }
+
   /**
    * Adds a control to the map with the specified position.
    * @function addControl
@@ -705,13 +725,21 @@ inputsearch[0].addEventListener('input', function(event) {
    */
   setTerrain(options) {
     try {
-      this.map.on("load", () => {
+      //this.map.on("load", () => {
         return this.map.setTerrain(options);
-      });
+      //});
       //  this.map.getZoom();
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
+  }
+  setLayerZoomRange(layerId,nimZoom,maxZoom){
+    try {
+        return this.map.setLayerZoomRange(layerId,nimZoom,maxZoom);
+    } catch (error) {
+      console.error(`Error setting terrain: ${error.message}`);
+    }
+
   }
 
   /**
@@ -743,10 +771,11 @@ inputsearch[0].addEventListener('input', function(event) {
    * Adds a layer to the map.
    * @function addLayer
    * @param {Object} layer - Options for the layer to add.
+   * @param {string} layerIdOrder - Optional layer Id draw position.
    */
-  addLayer(layer) {
+  addLayer(layer,layerIdOrder) {
     try {
-      this.map.addLayer(layer);
+      this.map.addLayer(layer,layerIdOrder);
     } catch (error) {
       console.error(`Error adding layer: ${error.message}`);
     }
