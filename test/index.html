@@ -69,10 +69,26 @@
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
               style: mapicgcgl.Styles.TOPO,
+              // style: 'https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris_simplificat.json',
               zoom: 8.4,
       
       }));
 
+
+      let pointOptions={
+            "circle-color": "black",
+            "circle-opacity": 0.8,
+      }
+      map.fetchDataAndMenu(
+        'Proposa_DAC_min.geojson',
+        'Proposa_DAC_min', 
+        'all',pointOptions)
+
+      let optionsText=['DOMEmarker', 'id', 'Xarxa']
+      map.addFeatureQuery('Proposa_DAC_min')
+
+
+      
       // const compareMap = new mapicgcgl.Map({
       //   style: "fosc",
       // });
@@ -175,12 +191,18 @@ map.addGeocoderICGC()
 //         },
 //       };
 //       // map.addLayerGeoJSON(geojsonLayer);
-// console.log('vL',map.getConfigVectorLayers())
+//      console.log('vL',map.getConfigVectorLayers())
+    //  let pointOptions={
+    //         "circle-color": "black",
+    //         "circle-opacity": 0.8,
+    //   }
+    //   map.fetchDataAndMenu(
+    //     'Proposa_DAC_min.geojson',
+    //     'Proposa_DAC_min', pointOptions)
 
-      // map.fetchDataAndMenu(
-      //   'https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson',
-      //   'centres')
-        
+    //   let optionsText=['DOMEmarker', 'id', 'Xarxa']
+    //   map.addFeatureQuery('Proposa_DAC_min')
+   
       //   let paintOptions = {
       //     'line-color': 'red',
       //     'line-width': 2,
@@ -193,7 +215,7 @@ map.addGeocoderICGC()
 
       //   let optionsText=['alies', 'comarca']
       //   map.addFeatureQuery('centres', optionsText)
-      //   map.addFeatureQuery('RutesMontserrat')
+       
       
       //   map.addGeocoderICGC()
 

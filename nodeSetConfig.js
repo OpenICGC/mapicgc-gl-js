@@ -11,8 +11,6 @@ const defaultOptions = require('./src/configNode.js');
 const stylePath = path.join('./src/constants/', 'Styles.js');
 const terrainPath = path.join('./src/constants/', 'Terrains.js');
 const layersPath = path.join('./src/constants/', 'Layers.js');
-const xmldom = require('xmldom');; // 'xmldom' doesn't 'export' the DOMParser
-const WMSCapabilities = require("wms-capabilities");
 
 const https = require('https');
 
