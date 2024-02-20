@@ -145,7 +145,8 @@ async function getVectorLimitsLayers() {
           let test= [
             { key: 'relleu', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerRelleu}/CAT3857/{z}/{x}/{y}.png`},
             { key: 'geologia', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerGeologia}/MON3857NW/{z}/{x}/{y}.png`},
-            { key: 'osm', layer:"", url:`https://tilemaps.icgc.cat/mapfactory/wmts/${layerOsm}/CAT3857_15/{z}/{x}/{y}.png`},
+            { key: 'administratiu', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png`},
+            { key: 'simplificat', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png`},
             { key:"cims", layer:"", url:`"https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
             { key: 'cobertesSol', layer:"", url: `http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=${layerCobertesSol}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836`},
          ]
@@ -187,7 +188,7 @@ async function getVectorLimitsLayers() {
        
           let test= [
             {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png"},
-            {name: "WORLD3M", url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"}
+            {name: "WORLD3M", "encoding": "terrarium", url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"}
  
           ]
           terrainOptions = test

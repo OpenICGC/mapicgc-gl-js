@@ -94,7 +94,7 @@ export default class Map {
 
         this.map.setTerrain({
           source: defaultOptions.map3dOptions.terrainSource,
-          exaggeration: 1.2,
+          exaggeration: 1,
         });
 
         const citiesMapboxLayer = this._createCitiesMapboxLayer();
@@ -641,8 +641,6 @@ export default class Map {
           element.classList.remove("maplibregl-compact-show");
         }
 
-        console.info("styledata");
-        console.info(this.map.getStyle().name);
         this._dealOrto3dStyle(this.map.getStyle().name);
         //init test3d
 
