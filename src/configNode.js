@@ -1,6 +1,7 @@
 
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
+const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = {
 mapOptions: {
   container: "map",
@@ -16,6 +17,17 @@ mapOptions: {
   maxZoom: 18,
   maxPitch: 85,
 },
+map3dOptions: {
+  spaceErrorFactor: 2,
+  zfactor: 25,
+  minZoomRange: 15.5,
+  maxZoomRange: 22,
+  urlTilesetCities: "http://imtilemapsdev.icgc.local/terrenys/Ciutats/tilesetV1.0.json",
+  layerIdOrder: "place-isolated",
+  layerId3d: "edificisMapboxLayer",
+  terrainSource: "ICGC5M",
+  style3dName: "orto3d",
+},
 baseStyles: {
   0: {
     key: "TOPO",
@@ -24,25 +36,30 @@ baseStyles: {
   },
   1: {
     key: "ORTO",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+    url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
   },
   2: {
+    key: "ORTO3D",
+    url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
+    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
+  },
+  3: {
     key: "ADMIN",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png",
   },
-  3: {
+  4: {
     key: "DARK",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png",
   },
-  4: {
+  5: {
     key: "LIGHT",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png",
   },
-  5: {
+  6: {
     key: "GEOLOGY",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png",
@@ -51,11 +68,12 @@ baseStyles: {
 urlTerrainICGC: {
   0: {
     name: "ICGC5M",
-    url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
+    url: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
   },
   1: {
-    name: "WORLD3M",
-    url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png",
+    name: "WORLD30M",
+    url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+    encoding: "terrarium",
   },
 },
 ortoLayersICGC: {
@@ -332,9 +350,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent.fgb",
   },
   8: {
-    name: "agrupacionsCensalsVigentCentroid",
-    key: "agrupacions_censals_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent_centroid.fgb",
+    name: "agrupacionsCensalsVigentText",
+    key: "agrupacions_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent_text.fgb",
   },
   9: {
     name: "areesBasiquesPolicials2019",
@@ -357,9 +375,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent.fgb",
   },
   13: {
-    name: "areesBasiquesPolicialsVigentCentroid",
-    key: "arees_basiques_policials_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent_centroid.fgb",
+    name: "areesBasiquesPolicialsVigentText",
+    key: "arees_basiques_policials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent_text.fgb",
   },
   14: {
     name: "areesBasiquesSalutVigent",
@@ -372,9 +390,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent.fgb",
   },
   16: {
-    name: "areesBasiquesServeisSocialsVigentCentroid",
-    key: "arees_basiques_serveis_socials_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent_centroid.fgb",
+    name: "areesBasiquesServeisSocialsVigentText",
+    key: "arees_basiques_serveis_socials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent_text.fgb",
   },
   17: {
     name: "areesGestioAssistencialVigent",
@@ -392,9 +410,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent.fgb",
   },
   20: {
-    name: "catalunyaVigentCentroid",
-    key: "catalunya_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent_centroid.fgb",
+    name: "catalunyaVigentText",
+    key: "catalunya_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent_text.fgb",
   },
   21: {
     name: "comarques2022",
@@ -407,9 +425,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent.fgb",
   },
   23: {
-    name: "comarquesVigentCentroid",
-    key: "comarques_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent_centroid.fgb",
+    name: "comarquesVigentText",
+    key: "comarques_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent_text.fgb",
   },
   24: {
     name: "districtesCensals2002",
@@ -522,9 +540,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent.fgb",
   },
   46: {
-    name: "districtesCensalsVigentCentroid",
-    key: "districtes_censals_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent_centroid.fgb",
+    name: "districtesCensalsVigentText",
+    key: "districtes_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent_text.fgb",
   },
   47: {
     name: "incendisForestalsVigent",
@@ -532,9 +550,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent.fgb",
   },
   48: {
-    name: "incendisForestalsVigentCentroid",
-    key: "incendis_forestals_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent_centroid.fgb",
+    name: "incendisForestalsVigentText",
+    key: "incendis_forestals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent_text.fgb",
   },
   49: {
     name: "municipis2022",
@@ -542,9 +560,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/municipis_2022.fgb",
   },
   50: {
-    name: "municipis2022Centroid",
-    key: "municipis_2022_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_2022_centroid.fgb",
+    name: "municipis2022Text",
+    key: "municipis_2022_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_2022_text.fgb",
   },
   51: {
     name: "municipisVigent",
@@ -552,9 +570,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent.fgb",
   },
   52: {
-    name: "municipisVigentCentroid",
-    key: "municipis_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent_centroid.fgb",
+    name: "municipisVigentText",
+    key: "municipis_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent_text.fgb",
   },
   53: {
     name: "partitsJudicialsVigent",
@@ -562,9 +580,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent.fgb",
   },
   54: {
-    name: "partitsJudicialsVigentCentroid",
-    key: "partits_judicials_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent_centroid.fgb",
+    name: "partitsJudicialsVigentText",
+    key: "partits_judicials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent_text.fgb",
   },
   55: {
     name: "plaTerritorial2015",
@@ -577,9 +595,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent.fgb",
   },
   57: {
-    name: "plaTerritorialVigentCentroid",
-    key: "pla_territorial_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent_centroid.fgb",
+    name: "plaTerritorialVigentText",
+    key: "pla_territorial_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent_text.fgb",
   },
   58: {
     name: "provinciesVigent",
@@ -587,9 +605,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent.fgb",
   },
   59: {
-    name: "provinciesVigentCentroid",
-    key: "provincies_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent_centroid.fgb",
+    name: "provinciesVigentText",
+    key: "provincies_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent_text.fgb",
   },
   60: {
     name: "regionsPolicialsVigent",
@@ -597,9 +615,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent.fgb",
   },
   61: {
-    name: "regionsPolicialsVigentCentroid",
-    key: "regions_policials_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent_centroid.fgb",
+    name: "regionsPolicialsVigentText",
+    key: "regions_policials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent_text.fgb",
   },
   62: {
     name: "regionsSanitariesVigent",
@@ -607,9 +625,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent.fgb",
   },
   63: {
-    name: "regionsSanitariesVigentCentroid",
-    key: "regions_sanitaries_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent_centroid.fgb",
+    name: "regionsSanitariesVigentText",
+    key: "regions_sanitaries_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent_text.fgb",
   },
   64: {
     name: "seccionsCensals2002",
@@ -722,9 +740,9 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent.fgb",
   },
   86: {
-    name: "seccionsCensalsVigentCentroid",
-    key: "seccions_censals_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent_centroid.fgb",
+    name: "seccionsCensalsVigentText",
+    key: "seccions_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent_text.fgb",
   },
   87: {
     name: "sectorsSanitarisVigent",
@@ -737,12 +755,24 @@ vectorLayersICGC: {
     url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent.fgb",
   },
   89: {
-    name: "vegueriesVigentCentroid",
-    key: "vegueries_vigent_centroid",
-    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_centroid.fgb",
+    name: "vegueriesVigentText",
+    key: "vegueries_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_text.fgb",
   },
 },
 vectorLayers: {
+  0: {
+    key: "altimetria",
+    layer: "",
+    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf",
+  },
+  1: {
+    key: "toponimia",
+    layer: "",
+    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf",
+  },
+},
+wmsLayers: {
   0: {
     key: "relleu",
     layer: "",
@@ -754,31 +784,24 @@ vectorLayers: {
     url: "https://tilemaps.icgc.cat/mapfactory/wmts/geologia/MON3857NW/{z}/{x}/{y}.png",
   },
   2: {
-    key: "osm",
+    key: "administratiu",
     layer: "",
-    url: "https://tilemaps.icgc.cat/mapfactory/wmts/osm_suau/CAT3857_15/{z}/{x}/{y}.png",
+    url: "http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png",
   },
   3: {
-    key: "cims",
+    key: "simplificat",
     layer: "",
-    url: "\"https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=0&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455",
+    url: "http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png",
   },
   4: {
+    key: "cims",
+    layer: "",
+    url: "https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=0&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455",
+  },
+  5: {
     key: "cobertesSol",
     layer: "",
     url: "http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=cobertes_2009&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836",
-  },
-},
-wmsLayers: {
-  0: {
-    key: "altimetria",
-    layer: "",
-    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf",
-  },
-  1: {
-    key: "toponimia",
-    layer: "",
-    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf",
   },
 },
 };

@@ -1,0 +1,3599 @@
+{
+    "crs": {
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        },
+        "type": "name"
+    },
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.603,
+                    42.049
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TUDE",
+                "Lat": "42.049",
+                "Lon": "-1.603",
+                "Xarxa": "RGAN",
+                "Xgc": "4741784.013",
+                "Ygc": "-132734.487",
+                "Zgc": "4249840.532",
+                "eh": "342.057",
+                "field_10": "",
+                "id": "129",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.681,
+                    37.975
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TORR",
+                "Lat": "37.975",
+                "Lon": "-0.681",
+                "Xarxa": "ERVA",
+                "Xgc": "5033805.382",
+                "Ygc": "-59823.084",
+                "Zgc": "3903319.52",
+                "eh": "57.109",
+                "field_10": "",
+                "id": "29",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.882,
+                    41.633
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ZARA",
+                "Lat": "41.633",
+                "Lon": "-0.882",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4773803.543",
+                "Ygc": "-73506.519",
+                "Zgc": "4215453.698",
+                "eh": "296.111",
+                "field_10": "",
+                "id": "90",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.882,
+                    42.689
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PERP",
+                "Lat": "42.689",
+                "Lon": "2.882",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4689566.311",
+                "Ygc": "236092.087",
+                "Zgc": "4302248.511",
+                "eh": "95.959",
+                "field_10": "",
+                "id": "68",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    4.14,
+                    39.934
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALOR",
+                "Lat": "39.934",
+                "Lon": "4.14",
+                "Xarxa": "XGAIB",
+                "Xgc": "4884754.332",
+                "Ygc": "353584.316",
+                "Zgc": "4072521.186",
+                "eh": "189.557",
+                "field_10": "",
+                "id": "131",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.163,
+                    41.793
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SRNA",
+                "Lat": "41.793",
+                "Lon": "-0.163",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4762586.64",
+                "Ygc": "-13525.5",
+                "Zgc": "4228739.347",
+                "eh": "355.097",
+                "field_10": "",
+                "id": "20",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.332,
+                    42.754
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALDA",
+                "Lat": "42.754",
+                "Lon": "-2.332",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4687280.539",
+                "Ygc": "-190877.097",
+                "Zgc": "4308106.573",
+                "eh": "881.84",
+                "field_10": "",
+                "id": "32",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.581,
+                    43.65
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AUCH",
+                "Lat": "43.65",
+                "Lon": "0.581",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4622373.428",
+                "Ygc": "46848.799",
+                "Zgc": "4380155.604",
+                "eh": "232.046",
+                "field_10": "",
+                "id": "49",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.34,
+                    43.551
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PAYR",
+                "Lat": "43.551",
+                "Lon": "2.34",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4626375.768",
+                "Ygc": "189029.269",
+                "Zgc": "4372370.052",
+                "eh": "384.772",
+                "field_10": "",
+                "id": "67",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.129,
+                    37.807
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AIRM",
+                "Lat": "37.807",
+                "Lon": "-1.129",
+                "Xarxa": "REGAM",
+                "Xgc": "5044843.8",
+                "Ygc": "-99386",
+                "Zgc": "3888654.9",
+                "eh": "253.99",
+                "field_10": "",
+                "id": "106",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.326,
+                    38.502
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "JUMI",
+                "Lat": "38.502",
+                "Lon": "-1.326",
+                "Xarxa": "REGAM",
+                "Xgc": "4997066.06",
+                "Ygc": "-115637.443",
+                "Zgc": "3949588.973",
+                "eh": "610.156",
+                "field_10": "",
+                "id": "111",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.124,
+                    40.35
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TERU",
+                "Lat": "40.35",
+                "Lon": "-1.124",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4867391.684",
+                "Ygc": "-95523.894",
+                "Zgc": "4108341.277",
+                "eh": "956.188",
+                "field_10": "",
+                "id": "88",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.636,
+                    42.806
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PAMP",
+                "Lat": "42.806",
+                "Lon": "-1.636",
+                "Xarxa": "RGAN",
+                "Xgc": "4685099.636",
+                "Ygc": "-133832.688",
+                "Zgc": "4312070.176",
+                "eh": "524.496",
+                "field_10": "",
+                "id": "124",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.618,
+                    42.515
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ELCI",
+                "Lat": "42.515",
+                "Lon": "-2.618",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4704010.552",
+                "Ygc": "-215109.192",
+                "Zgc": "4288289.37",
+                "eh": "525.725",
+                "field_10": "",
+                "id": "35",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.677,
+                    42.521
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TAFA",
+                "Lat": "42.521",
+                "Lon": "-1.677",
+                "Xarxa": "RGAN",
+                "Xgc": "4706422.555",
+                "Ygc": "-137769.891",
+                "Zgc": "4288744.6",
+                "eh": "473.866",
+                "field_10": "",
+                "id": "128",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.195,
+                    42.568
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LOSA",
+                "Lat": "42.568",
+                "Lon": "-2.195",
+                "Xarxa": "RGAN",
+                "Xgc": "4701481.012",
+                "Ygc": "-180216.809",
+                "Zgc": "4292617.332",
+                "eh": "510.281",
+                "field_10": "",
+                "id": "122",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.104,
+                    38.835
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "DENI",
+                "Lat": "38.835",
+                "Lon": "0.104",
+                "Xarxa": "ERVA",
+                "Xgc": "4974895.886",
+                "Ygc": "9000.765",
+                "Zgc": "3978089.685",
+                "eh": "69.67",
+                "field_10": "",
+                "id": "28",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.673,
+                    42.84
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VITO",
+                "Lat": "42.84",
+                "Lon": "-2.673",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4679398.076",
+                "Ygc": "-218437.033",
+                "Zgc": "4314897.965",
+                "eh": "600.487",
+                "field_10": "",
+                "id": "42",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.612,
+                    44.173
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AGEN",
+                "Lat": "44.173",
+                "Lon": "0.612",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4581960.511",
+                "Ygc": "48907.235",
+                "Zgc": "4421939.607",
+                "eh": "113.752",
+                "field_10": "",
+                "id": "46",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.474,
+                    43.313
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AGDS",
+                "Lat": "43.313",
+                "Lon": "3.474",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4639701.988",
+                "Ygc": "281689.035",
+                "Zgc": "4352886.605",
+                "eh": "68.164",
+                "field_10": "",
+                "id": "45",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.892,
+                    39.818
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TRAM",
+                "Lat": "39.818",
+                "Lon": "2.892",
+                "Xarxa": "XGAIB",
+                "Xgc": "4899860.129",
+                "Ygc": "247496.965",
+                "Zgc": "4062910.278",
+                "eh": "606.122",
+                "field_10": "",
+                "id": "138",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.054,
+                    38.175
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ABAN",
+                "Lat": "38.175",
+                "Lon": "-1.054",
+                "Xarxa": "REGAM",
+                "Xgc": "5019757.198",
+                "Ygc": "-92324.479",
+                "Zgc": "3920866.2",
+                "eh": "207.776",
+                "field_10": "",
+                "id": "105",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.79,
+                    41.866
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ZUER",
+                "Lat": "41.866",
+                "Lon": "-0.79",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4756718.909",
+                "Ygc": "-65624.81",
+                "Zgc": "4234787.009",
+                "eh": "339.164",
+                "field_10": "",
+                "id": "23",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.367,
+                    43.128
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CRAL",
+                "Lat": "43.128",
+                "Lon": "0.367",
+                "Xarxa": "CNRS",
+                "Xgc": "4662593.453",
+                "Ygc": "29882.505",
+                "Zgc": "4338371.791",
+                "eh": "654",
+                "field_10": "",
+                "id": "56",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.144,
+                    41.057
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALCA",
+                "Lat": "41.057",
+                "Lon": "-0.144",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4816722.085",
+                "Ygc": "-12101.949",
+                "Zgc": "4167451.933",
+                "eh": "393.842",
+                "field_10": "",
+                "id": "4",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.137,
+                    42.515
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BEA2",
+                "Lat": "42.515",
+                "Lon": "3.137",
+                "Xarxa": "CETMEF",
+                "Xgc": "4701531.998",
+                "Ygc": "257646.236",
+                "Zgc": "4288042.399",
+                "eh": "108.167",
+                "field_10": "",
+                "id": "51",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.64,
+                    41.353
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CATY",
+                "Lat": "41.353",
+                "Lon": "-1.64",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4793284.375",
+                "Ygc": "-137217.092",
+                "Zgc": "4192304.286",
+                "eh": "597.76",
+                "field_10": "",
+                "id": "9",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.362,
+                    42.515
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SABI",
+                "Lat": "42.515",
+                "Lon": "-0.362",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4709044.842",
+                "Ygc": "-29761.036",
+                "Zgc": "4288538.06",
+                "eh": "850.456",
+                "field_10": "",
+                "id": "18",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.449,
+                    38.041
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MULA",
+                "Lat": "38.041",
+                "Lon": "-1.449",
+                "Xarxa": "REGAM",
+                "Xgc": "5028272.167",
+                "Ygc": "-127177.636",
+                "Zgc": "3909243.427",
+                "eh": "332.107",
+                "field_10": "",
+                "id": "115",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.486,
+                    43.137
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ELGE",
+                "Lat": "43.137",
+                "Lon": "-2.486",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4657557.753",
+                "Ygc": "-202242.006",
+                "Zgc": "4338991.485",
+                "eh": "535.739",
+                "field_10": "",
+                "id": "36",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.812,
+                    40.14
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SARR",
+                "Lat": "40.14",
+                "Lon": "-0.812",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4882976.61",
+                "Ygc": "-69206.683",
+                "Zgc": "4090588.736",
+                "eh": "1041.572",
+                "field_10": "",
+                "id": "19",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.344,
+                    39.436
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VCIA",
+                "Lat": "39.436",
+                "Lon": "-0.344",
+                "Xarxa": "ERVA",
+                "Xgc": "4932702.944",
+                "Ygc": "-29607.783",
+                "Zgc": "4029833.039",
+                "eh": "62.951",
+                "field_10": "",
+                "id": "31",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.519,
+                    42.505
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "RULL",
+                "Lat": "42.505",
+                "Lon": "1.519",
+                "Xarxa": "ANDORRA",
+                "Xgc": "4708426.922",
+                "Ygc": "124896.501",
+                "Zgc": "4287844.198",
+                "eh": "1077.667",
+                "field_10": "",
+                "id": "1",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.22,
+                    46.16
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LROC",
+                "Lat": "46.16",
+                "Lon": "-1.22",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "57.9",
+                "field_10": "",
+                "id": "91",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.041,
+                    43.306
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "IGEL",
+                "Lat": "43.306",
+                "Lon": "-2.041",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4645951.753",
+                "Ygc": "-165575.03",
+                "Zgc": "4352549.984",
+                "eh": "314.653",
+                "field_10": "",
+                "id": "37",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.999,
+                    38.248
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MORA",
+                "Lat": "38.248",
+                "Lon": "-1.999",
+                "Xarxa": "REGAM",
+                "Xgc": "5013378.95",
+                "Ygc": "-174968.176",
+                "Zgc": "3927817.853",
+                "eh": "1227.436",
+                "field_10": "",
+                "id": "114",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.24,
+                    43.182
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CORZ",
+                "Lat": "43.182",
+                "Lon": "-0.24",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4658309",
+                "Ygc": "-19496",
+                "Zgc": "4342517.6",
+                "eh": "324.039",
+                "field_10": "",
+                "id": "55",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.973,
+                    43.198
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "NARB",
+                "Lat": "43.198",
+                "Lon": "2.973",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4650690.091",
+                "Ygc": "241500.76",
+                "Zgc": "4343635.011",
+                "eh": "72.764",
+                "field_10": "",
+                "id": "65",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.728,
+                    43.681
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LACA",
+                "Lat": "43.681",
+                "Lon": "2.728",
+                "Xarxa": "CNRS",
+                "Xgc": "4615743.804",
+                "Ygc": "219899.767",
+                "Zgc": "4383434.607",
+                "eh": "1315.556",
+                "field_10": "",
+                "id": "59",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.165,
+                    41.341
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PORT_BCN",
+                "Lat": "41.341",
+                "Lon": "2.165",
+                "Xarxa": "PORT",
+                "Xgc": "4792331.767",
+                "Ygc": "181135.904",
+                "Zgc": "4190976.192",
+                "eh": "100.058",
+                "field_10": "",
+                "id": "2",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.409,
+                    40.526
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "IEJA",
+                "Lat": "40.526",
+                "Lon": "-0.409",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4855887.531",
+                "Ygc": "-34649.469",
+                "Zgc": "4123414.85",
+                "eh": "1358.153",
+                "field_10": "",
+                "id": "14",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.299,
+                    40.921
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CALA",
+                "Lat": "40.921",
+                "Lon": "-1.299",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4825782.653",
+                "Ygc": "-109395.437",
+                "Zgc": "4156451.686",
+                "eh": "942.169",
+                "field_10": "",
+                "id": "8",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.143,
+                    42.936
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PIMI",
+                "Lat": "42.936",
+                "Lon": "0.143",
+                "Xarxa": "CNRS",
+                "Xgc": "4678892.332",
+                "Ygc": "11648.774",
+                "Zgc": "4324325.724",
+                "eh": "2923.353",
+                "field_10": "",
+                "id": "70",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.537,
+                    43.472
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BIAZ",
+                "Lat": "43.472",
+                "Lon": "-1.537",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4634456",
+                "Ygc": "-124345",
+                "Zgc": "4365785",
+                "eh": "121.042",
+                "field_10": "",
+                "id": "52",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.407,
+                    38.951
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "EIVI",
+                "Lat": "38.951",
+                "Lon": "1.407",
+                "Xarxa": "XGAIB",
+                "Xgc": "4965341.134",
+                "Ygc": "121946.105",
+                "Zgc": "3988187.601",
+                "eh": "132.165",
+                "field_10": "",
+                "id": "133",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.485,
+                    43.883
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MTDM",
+                "Lat": "43.883",
+                "Lon": "-0.485",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4604447.896",
+                "Ygc": "-38966.409",
+                "Zgc": "4398804.142",
+                "eh": "133.9",
+                "field_10": "",
+                "id": "63",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -3.004,
+                    43.056
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AMUR",
+                "Lat": "43.056",
+                "Lon": "-3.004",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4661499.86",
+                "Ygc": "-244591.681",
+                "Zgc": "4332269.465",
+                "eh": "299.284",
+                "field_10": "",
+                "id": "33",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.679,
+                    43.317
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "GERN",
+                "Lat": "43.317",
+                "Lon": "-2.679",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4642811.684",
+                "Ygc": "-217223.457",
+                "Zgc": "4353278.492",
+                "eh": "78.96",
+                "field_10": "",
+                "id": "38",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.014,
+                    43.334
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AICI",
+                "Lat": "43.334",
+                "Lon": "-1.014",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4645961.624",
+                "Ygc": "-82264.491",
+                "Zgc": "4354613.326",
+                "eh": "121.414",
+                "field_10": "",
+                "id": "47",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.059,
+                    39.061
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AYOR",
+                "Lat": "39.061",
+                "Lon": "-1.059",
+                "Xarxa": "ERVA",
+                "Xgc": "4958705.675",
+                "Ygc": "-91680.765",
+                "Zgc": "3998023.621",
+                "eh": "661.82",
+                "field_10": "",
+                "id": "25",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.287,
+                    42.58
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SANG",
+                "Lat": "42.58",
+                "Lon": "-1.287",
+                "Xarxa": "RGAN",
+                "Xgc": "4702835.303",
+                "Ygc": "-105651.511",
+                "Zgc": "4293534.409",
+                "eh": "459.216",
+                "field_10": "",
+                "id": "127",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.123,
+                    37.99
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MURC",
+                "Lat": "37.99",
+                "Lon": "-1.123",
+                "Xarxa": "REGAM",
+                "Xgc": "5032231.834",
+                "Ygc": "-98602.532",
+                "Zgc": "3904658.279",
+                "eh": "121.913",
+                "field_10": "",
+                "id": "116",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.296,
+                    41.848
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BINE",
+                "Lat": "41.848",
+                "Lon": "0.296",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4758462.264",
+                "Ygc": "24577.13",
+                "Zgc": "4233287.098",
+                "eh": "346.898",
+                "field_10": "",
+                "id": "6",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.268,
+                    43.92
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SLTV",
+                "Lat": "43.92",
+                "Lon": "3.268",
+                "Xarxa": "CNRS",
+                "Xgc": "4594761.497",
+                "Ygc": "262378.142",
+                "Zgc": "4402240.319",
+                "eh": "811.829",
+                "field_10": "",
+                "id": "73",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.698,
+                    37.631
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CABO",
+                "Lat": "37.631",
+                "Lon": "-0.698",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5057218.939",
+                "Ygc": "-61647.777",
+                "Zgc": "3873111.176",
+                "eh": "56.495",
+                "field_10": "",
+                "id": "98",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.876,
+                    41.652
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ZGZA",
+                "Lat": "41.652",
+                "Lon": "-0.876",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4772401.317",
+                "Ygc": "-72989.824",
+                "Zgc": "4217010.318",
+                "eh": "276.776",
+                "field_10": "",
+                "id": "22",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.526,
+                    41.835
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BRJA",
+                "Lat": "41.835",
+                "Lon": "-1.526",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4757928.828",
+                "Ygc": "-126764.765",
+                "Zgc": "4232288.048",
+                "eh": "493.605",
+                "field_10": "",
+                "id": "7",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -3.09,
+                    40.52
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "YEBE",
+                "Lat": "40.52",
+                "Lon": "-3.09",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "973",
+                "field_10": "",
+                "id": "97",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.216,
+                    43.631
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PEYR",
+                "Lat": "43.631",
+                "Lon": "0.216",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4624016.252",
+                "Ygc": "17406.684",
+                "Zgc": "4378738.461",
+                "eh": "294.823",
+                "field_10": "",
+                "id": "69",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -3.95,
+                    40.44
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VILL",
+                "Lat": "40.44",
+                "Lon": "-3.95",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "647.5",
+                "field_10": "",
+                "id": "96",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.795,
+                    43.048
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "FJCP",
+                "Lat": "43.048",
+                "Lon": "2.795",
+                "Xarxa": "CNRS",
+                "Xgc": "4662985",
+                "Ygc": "227641",
+                "Zgc": "4331633",
+                "eh": "322.143",
+                "field_10": "",
+                "id": "58",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.015,
+                    39.646
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SINE",
+                "Lat": "39.646",
+                "Lon": "3.015",
+                "Xarxa": "XGAIB",
+                "Xgc": "4911221.918",
+                "Ygc": "258705.254",
+                "Zgc": "4047909.892",
+                "eh": "188.084",
+                "field_10": "",
+                "id": "137",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.359,
+                    40.396
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PENI",
+                "Lat": "40.396",
+                "Lon": "0.359",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4864338.078",
+                "Ygc": "30472.496",
+                "Zgc": "4111614.229",
+                "eh": "108.591",
+                "field_10": "",
+                "id": "86",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.486,
+                    42.512
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CSOS",
+                "Lat": "42.512",
+                "Lon": "0.486",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4709302.44",
+                "Ygc": "39916.608",
+                "Zgc": "4288333.995",
+                "eh": "957.81",
+                "field_10": "",
+                "id": "11",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.341,
+                    42.191
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "GRAU",
+                "Lat": "42.191",
+                "Lon": "0.341",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4733035.043",
+                "Ygc": "28146.986",
+                "Zgc": "4261728.13",
+                "eh": "509.779",
+                "field_10": "",
+                "id": "13",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.979,
+                    37.607
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CRTG",
+                "Lat": "37.607",
+                "Lon": "-0.979",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5058509.652",
+                "Ygc": "-86467.386",
+                "Zgc": "3870990.679",
+                "eh": "72.204",
+                "field_10": "",
+                "id": "99",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -6.85,
+                    34.0
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "RABT",
+                "Lat": "34",
+                "Lon": "-6.85",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "90.1",
+                "field_10": "",
+                "id": "94",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.861,
+                    37.731
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALCA",
+                "Lat": "37.731",
+                "Lon": "-0.861",
+                "Xarxa": "REGAM",
+                "Xgc": "5050255.291",
+                "Ygc": "-75879.934",
+                "Zgc": "3881893.563",
+                "eh": "67.368",
+                "field_10": "",
+                "id": "107",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.625,
+                    39.553
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MALL",
+                "Lat": "39.553",
+                "Lon": "2.625",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4919369.704",
+                "Ygc": "225499.577",
+                "Zgc": "4039849.606",
+                "eh": "62.063",
+                "field_10": "",
+                "id": "85",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.474,
+                    38.698
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALCO",
+                "Lat": "38.698",
+                "Lon": "-0.474",
+                "Xarxa": "ERVA",
+                "Xgc": "4984687.426",
+                "Ygc": "-41199.154",
+                "Zgc": "3966605.952",
+                "eh": "640.09",
+                "field_10": "",
+                "id": "24",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.392,
+                    39.614
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BONA",
+                "Lat": "39.614",
+                "Lon": "3.392",
+                "Xarxa": "XGAIB",
+                "Xgc": "4911590.178",
+                "Ygc": "291137.409",
+                "Zgc": "4045072.257",
+                "eh": "57.367",
+                "field_10": "",
+                "id": "132",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.13,
+                    42.126
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "EJEA",
+                "Lat": "42.126",
+                "Lon": "-1.13",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4736994.017",
+                "Ygc": "-93430.595",
+                "Zgc": "4256243.972",
+                "eh": "384.541",
+                "field_10": "",
+                "id": "12",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.481,
+                    43.561
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TLIA",
+                "Lat": "43.561",
+                "Lon": "1.481",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4627797.127",
+                "Ygc": "119611.55",
+                "Zgc": "4373054.784",
+                "eh": "209.224",
+                "field_10": "",
+                "id": "75",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.955,
+                    42.81
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "RONC",
+                "Lat": "42.81",
+                "Lon": "-0.955",
+                "Xarxa": "RGAN",
+                "Xgc": "4686230.432",
+                "Ygc": "-78093.982",
+                "Zgc": "4312557.411",
+                "eh": "760.468",
+                "field_10": "",
+                "id": "125",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.682,
+                    43.395
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SCOA",
+                "Lat": "43.395",
+                "Lon": "-1.682",
+                "Xarxa": "EUREF",
+                "Xgc": "4639941.9",
+                "Ygc": "-136225.5",
+                "Zgc": "4359552",
+                "eh": "60.195",
+                "field_10": "",
+                "id": "72",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.779,
+                    37.835
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SALI",
+                "Lat": "37.835",
+                "Lon": "-0.779",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5043277.945",
+                "Ygc": "-68531.927",
+                "Zgc": "3891028.805",
+                "eh": "67.279",
+                "field_10": "",
+                "id": "104",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.672,
+                    43.036
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BARY",
+                "Lat": "43.036",
+                "Lon": "0.672",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4669389.521",
+                "Ygc": "54761.738",
+                "Zgc": "4330833.856",
+                "eh": "633.526",
+                "field_10": "",
+                "id": "50",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.327,
+                    38.471
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "JUMI",
+                "Lat": "38.471",
+                "Lon": "-1.327",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "4999149.222",
+                "Ygc": "-115817.541",
+                "Zgc": "3946872.633",
+                "eh": "553.118",
+                "field_10": "",
+                "id": "101",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.609,
+                    43.139
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ORON",
+                "Lat": "43.139",
+                "Lon": "-1.609",
+                "Xarxa": "RGAN",
+                "Xgc": "4659696.166",
+                "Ygc": "-130865.271",
+                "Zgc": "4338948.494",
+                "eh": "204.867",
+                "field_10": "",
+                "id": "123",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.99,
+                    36.88
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "NOT1",
+                "Lat": "36.88",
+                "Lon": "14.99",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "126.2",
+                "field_10": "",
+                "id": "93",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.968,
+                    38.046
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CARA",
+                "Lat": "38.046",
+                "Lon": "-1.968",
+                "Xarxa": "REGAM",
+                "Xgc": "5027037.189",
+                "Ygc": "-172709.077",
+                "Zgc": "3910011.889",
+                "eh": "902.454",
+                "field_10": "",
+                "id": "109",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.497,
+                    41.426
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "QNTO",
+                "Lat": "41.426",
+                "Lon": "-0.497",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4789431.371",
+                "Ygc": "-41540.213",
+                "Zgc": "4198123.644",
+                "eh": "216.631",
+                "field_10": "",
+                "id": "17",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.379,
+                    44.297
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LGAR",
+                "Lat": "44.297",
+                "Lon": "0.379",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4572456.098",
+                "Ygc": "30235.469",
+                "Zgc": "4431898.752",
+                "eh": "136.121",
+                "field_10": "",
+                "id": "60",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.125,
+                    37.992
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MURC",
+                "Lat": "37.992",
+                "Lon": "-1.125",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5032093.855",
+                "Ygc": "-98790.014",
+                "Zgc": "3904835.464",
+                "eh": "125.154",
+                "field_10": "",
+                "id": "103",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.426,
+                    42.464
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "RIO1",
+                "Lat": "42.464",
+                "Lon": "-2.426",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4708477.196",
+                "Ygc": "-199490.814",
+                "Zgc": "4284089.342",
+                "eh": "472.503",
+                "field_10": "",
+                "id": "87",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.703,
+                    40.671
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALIA",
+                "Lat": "40.671",
+                "Lon": "-0.703",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4845013.923",
+                "Ygc": "-59465.713",
+                "Zgc": "4135530.25",
+                "eh": "1169.253",
+                "field_10": "",
+                "id": "5",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.338,
+                    39.481
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VALE",
+                "Lat": "39.481",
+                "Lon": "-0.338",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4929534.046",
+                "Ygc": "-29050.676",
+                "Zgc": "4033709.925",
+                "eh": "77.592",
+                "field_10": "",
+                "id": "89",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.981,
+                    42.715
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LANT",
+                "Lat": "42.715",
+                "Lon": "-2.981",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4687496.37",
+                "Ygc": "-244091.408",
+                "Zgc": "4304688.954",
+                "eh": "532.497",
+                "field_10": "",
+                "id": "39",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.855,
+                    42.042
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "GIRO",
+                "Lat": "42.042",
+                "Lon": "2.855",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4738101.831",
+                "Ygc": "236301.889",
+                "Zgc": "4249110.831",
+                "eh": "112.718",
+                "field_10": "",
+                "id": "82",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.939,
+                    42.34
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SANA",
+                "Lat": "42.34",
+                "Lon": "-1.939",
+                "Xarxa": "RGAN",
+                "Xgc": "4719234.873",
+                "Ygc": "-159786.061",
+                "Zgc": "4273808.746",
+                "eh": "361.525",
+                "field_10": "",
+                "id": "126",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.304,
+                    41.379
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MEQU",
+                "Lat": "41.379",
+                "Lon": "0.304",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4792937.769",
+                "Ygc": "25394.094",
+                "Zgc": "4194156.725",
+                "eh": "138.591",
+                "field_10": "",
+                "id": "15",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.429,
+                    38.705
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "FORM",
+                "Lat": "38.705",
+                "Lon": "1.429",
+                "Xarxa": "XGAIB",
+                "Xgc": "4982380.105",
+                "Ygc": "124271.548",
+                "Zgc": "3966899.862",
+                "eh": "99.628",
+                "field_10": "",
+                "id": "134",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.224,
+                    44.199
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MZAN",
+                "Lat": "44.199",
+                "Lon": "-1.224",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4579136.205",
+                "Ygc": "-97851.996",
+                "Zgc": "4423987.19",
+                "eh": "78.078",
+                "field_10": "",
+                "id": "64",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.567,
+                    43.776
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "STSV",
+                "Lat": "43.776",
+                "Lon": "-0.567",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4612550.03",
+                "Ygc": "-45658.89",
+                "Zgc": "4390241.798",
+                "eh": "93.335",
+                "field_10": "",
+                "id": "74",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.187,
+                    43.035
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LAZK",
+                "Lat": "43.035",
+                "Lon": "-2.187",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4666098.722",
+                "Ygc": "-178186.72",
+                "Zgc": "4330463.285",
+                "eh": "226.484",
+                "field_10": "",
+                "id": "40",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.156,
+                    40.873
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VROB",
+                "Lat": "40.873",
+                "Lon": "0.156",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4830265.011",
+                "Ygc": "13139.478",
+                "Zgc": "4152094.718",
+                "eh": "554.19",
+                "field_10": "",
+                "id": "21",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.447,
+                    37.804
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALHA",
+                "Lat": "37.804",
+                "Lon": "-1.447",
+                "Xarxa": "REGAM",
+                "Xgc": "5044368.631",
+                "Ygc": "-127398.381",
+                "Zgc": "3888453.22",
+                "eh": "252.395",
+                "field_10": "",
+                "id": "108",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.431,
+                    43.1
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ARUF",
+                "Lat": "43.1",
+                "Lon": "-0.431",
+                "Xarxa": "CNRS",
+                "Xgc": "4664624.069",
+                "Ygc": "-35100.749",
+                "Zgc": "4335912.462",
+                "eh": "482.01",
+                "field_10": "",
+                "id": "48",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.831,
+                    40.001
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MENC",
+                "Lat": "40.001",
+                "Lon": "3.831",
+                "Xarxa": "XGAIB",
+                "Xgc": "4881780.55",
+                "Ygc": "326920.339",
+                "Zgc": "4078080.694",
+                "eh": "66.669",
+                "field_10": "",
+                "id": "136",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.326,
+                    43.322
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "UNME",
+                "Lat": "43.322",
+                "Lon": "-0.326",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4647641",
+                "Ygc": "-26416",
+                "Zgc": "4353755",
+                "eh": "278.951",
+                "field_10": "",
+                "id": "78",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.257,
+                    44.295
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CAPT",
+                "Lat": "44.295",
+                "Lon": "-0.257",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4572697.356",
+                "Ygc": "-20484.767",
+                "Zgc": "4431741.245",
+                "eh": "160.092",
+                "field_10": "",
+                "id": "53",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.164,
+                    42.892
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALSA",
+                "Lat": "42.892",
+                "Lon": "-2.164",
+                "Xarxa": "RGAN",
+                "Xgc": "4677251.22",
+                "Ygc": "-176770.925",
+                "Zgc": "4319079.479",
+                "eh": "584.227",
+                "field_10": "",
+                "id": "117",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    11.65,
+                    44.52
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MEDI",
+                "Lat": "44.52",
+                "Lon": "11.65",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "50",
+                "field_10": "",
+                "id": "92",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.807,
+                    41.03
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MUNI",
+                "Lat": "41.03",
+                "Lon": "-0.807",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4818549.714",
+                "Ygc": "-67907.338",
+                "Zgc": "4165522.835",
+                "eh": "854.958",
+                "field_10": "",
+                "id": "16",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.485,
+                    43.55
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TLSG",
+                "Lat": "43.55",
+                "Lon": "1.485",
+                "Xarxa": "CNES",
+                "Xgc": "4628685.106",
+                "Ygc": "119996.725",
+                "Zgc": "4372110.023",
+                "eh": "208.761",
+                "field_10": "",
+                "id": "77",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.262,
+                    42.935
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ARIB",
+                "Lat": "42.935",
+                "Lon": "-1.262",
+                "Xarxa": "RGAN",
+                "Xgc": "4676495.716",
+                "Ygc": "-103033.293",
+                "Zgc": "4322928.82",
+                "eh": "1037.461",
+                "field_10": "",
+                "id": "118",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.466,
+                    43.296
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "AGDE",
+                "Lat": "43.296",
+                "Lon": "3.466",
+                "Xarxa": "CNRS",
+                "Xgc": "4640976.542",
+                "Ygc": "281124.423",
+                "Zgc": "4351569.571",
+                "eh": "65.786",
+                "field_10": "",
+                "id": "44",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.998,
+                    39.315
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "JORD",
+                "Lat": "39.315",
+                "Lon": "2.998",
+                "Xarxa": "XGAIB",
+                "Xgc": "4934530.113",
+                "Ygc": "258449.636",
+                "Zgc": "4019464.99",
+                "eh": "57.529",
+                "field_10": "",
+                "id": "135",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -3.154,
+                    43.277
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SOPU",
+                "Lat": "43.277",
+                "Lon": "-3.154",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4643998.284",
+                "Ygc": "-255914.437",
+                "Zgc": "4350062.753",
+                "eh": "168.937",
+                "field_10": "",
+                "id": "41",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.441,
+                    42.378
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CARC",
+                "Lat": "42.378",
+                "Lon": "-1.441",
+                "Xarxa": "RGAN",
+                "Xgc": "4717608.723",
+                "Ygc": "-118658.146",
+                "Zgc": "4277009.067",
+                "eh": "420.401",
+                "field_10": "",
+                "id": "119",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.481,
+                    38.339
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALAC",
+                "Lat": "38.339",
+                "Lon": "-0.481",
+                "Xarxa": "ERGNSS",
+                "Xgc": "5009051.399",
+                "Ygc": "-42072.472",
+                "Zgc": "3935057.504",
+                "eh": "60.356",
+                "field_10": "",
+                "id": "79",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.413,
+                    43.448
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PZNA",
+                "Lat": "43.448",
+                "Lon": "3.413",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4629717.387",
+                "Ygc": "276137.981",
+                "Zgc": "4363803.522",
+                "eh": "80.117",
+                "field_10": "",
+                "id": "71",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.004,
+                    41.405
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BCLN",
+                "Lat": "41.405",
+                "Lon": "2.004",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4788065.156",
+                "Ygc": "167551.187",
+                "Zgc": "4196355.018",
+                "eh": "84.825",
+                "field_10": "",
+                "id": "80",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.727,
+                    42.567
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "JACA",
+                "Lat": "42.567",
+                "Lon": "-0.727",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4704765.679",
+                "Ygc": "-59661.047",
+                "Zgc": "4292726.536",
+                "eh": "738.94",
+                "field_10": "",
+                "id": "84",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.31,
+                    37.593
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MAZA",
+                "Lat": "37.593",
+                "Lon": "-1.31",
+                "Xarxa": "REGAM",
+                "Xgc": "5058844.452",
+                "Ygc": "-115728.341",
+                "Zgc": "3869850.757",
+                "eh": "105.111",
+                "field_10": "",
+                "id": "113",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.083,
+                    39.905
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BORR",
+                "Lat": "39.905",
+                "Lon": "-0.083",
+                "Xarxa": "ERVA",
+                "Xgc": "4899519.299",
+                "Ygc": "-7115.817",
+                "Zgc": "4069961.408",
+                "eh": "72.902",
+                "field_10": "",
+                "id": "27",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.823,
+                    43.431
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PARD",
+                "Lat": "43.431",
+                "Lon": "2.823",
+                "Xarxa": "CNRS",
+                "Xgc": "4633957.825",
+                "Ygc": "228541.062",
+                "Zgc": "4362855.718",
+                "eh": "622.799",
+                "field_10": "",
+                "id": "66",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.48,
+                    43.56
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TLSE",
+                "Lat": "43.56",
+                "Lon": "1.48",
+                "Xarxa": "IGS",
+                "Xgc": "-",
+                "Ygc": "-",
+                "Zgc": "-",
+                "eh": "207.2",
+                "field_10": "",
+                "id": "95",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.615,
+                    44.182
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CAUS",
+                "Lat": "44.182",
+                "Lon": "1.615",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4579782.717",
+                "Ygc": "129128.039",
+                "Zgc": "4422738.887",
+                "eh": "226.98",
+                "field_10": "",
+                "id": "54",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.914,
+                    43.082
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LEIT",
+                "Lat": "43.082",
+                "Lon": "-1.914",
+                "Xarxa": "RGAN",
+                "Xgc": "4663521.332",
+                "Ygc": "-155859.24",
+                "Zgc": "4334519.496",
+                "eh": "530.107",
+                "field_10": "",
+                "id": "121",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.209,
+                    39.569
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "UTIE",
+                "Lat": "39.569",
+                "Lon": "-1.209",
+                "Xarxa": "ERVA",
+                "Xgc": "4922873.249",
+                "Ygc": "-103857.731",
+                "Zgc": "4041693.728",
+                "eh": "799.697",
+                "field_10": "",
+                "id": "30",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    3.864,
+                    43.639
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MTP2",
+                "Lat": "43.639",
+                "Lon": "3.864",
+                "Xarxa": "CNRS",
+                "Xgc": "4612850.038",
+                "Ygc": "311569.799",
+                "Zgc": "4379220.994",
+                "eh": "129.403",
+                "field_10": "",
+                "id": "62",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.449,
+                    38.911
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "IBIZ",
+                "Lat": "38.911",
+                "Lon": "1.449",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4967979.702",
+                "Ygc": "125662.831",
+                "Zgc": "3984692.565",
+                "eh": "59.885",
+                "field_10": "",
+                "id": "83",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.636,
+                    42.801
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "UPNA",
+                "Lat": "42.801",
+                "Lon": "-1.636",
+                "Xarxa": "RGAN",
+                "Xgc": "4685467.185",
+                "Ygc": "-133789.471",
+                "Zgc": "4311640.143",
+                "eh": "500.947",
+                "field_10": "",
+                "id": "130",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.5,
+                    43.528
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CSTN",
+                "Lat": "43.528",
+                "Lon": "1.5",
+                "Xarxa": "SAT-INFO",
+                "Xgc": "4630329.278",
+                "Ygc": "121261.138",
+                "Zgc": "4370351.738",
+                "eh": "212.919",
+                "field_10": "",
+                "id": "57",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.381,
+                    38.233
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CIEZ",
+                "Lat": "38.233",
+                "Lon": "-1.381",
+                "Xarxa": "REGAM",
+                "Xgc": "5015196.024",
+                "Ygc": "-120892.997",
+                "Zgc": "3925961.298",
+                "eh": "252.395",
+                "field_10": "",
+                "id": "110",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -0.097,
+                    40.612
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BERG",
+                "Lat": "40.612",
+                "Lon": "-0.097",
+                "Xarxa": "ERVA",
+                "Xgc": "4849454.353",
+                "Ygc": "-8239.26",
+                "Zgc": "4130349.58",
+                "eh": "892.805",
+                "field_10": "",
+                "id": "26",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.711,
+                    43.066
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "BRZR",
+                "Lat": "43.066",
+                "Lon": "-2.711",
+                "Xarxa": "EUSKADI",
+                "Xgc": "4662221.369",
+                "Ygc": "-220770.431",
+                "Zgc": "4333309.049",
+                "eh": "667.983",
+                "field_10": "",
+                "id": "34",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.629,
+                    42.88
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MSGT",
+                "Lat": "42.88",
+                "Lon": "1.629",
+                "Xarxa": "EXAGONE",
+                "Xgc": "4679574",
+                "Ygc": "133118",
+                "Zgc": "4318084",
+                "eh": "549.026",
+                "field_10": "",
+                "id": "61",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.869,
+                    38.115
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CRVC",
+                "Lat": "38.115",
+                "Lon": "-1.869",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5022498.005",
+                "Ygc": "-163861.85",
+                "Zgc": "3915914.365",
+                "eh": "738.781",
+                "field_10": "",
+                "id": "100",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.024,
+                    42.651
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ESTE",
+                "Lat": "42.651",
+                "Lon": "-2.024",
+                "Xarxa": "RGAN",
+                "Xgc": "4695724.125",
+                "Ygc": "-165983.138",
+                "Zgc": "4299460.742",
+                "eh": "523.509",
+                "field_10": "",
+                "id": "120",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.437,
+                    40.409
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ACIN",
+                "Lat": "40.409",
+                "Lon": "-1.437",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4862768.378",
+                "Ygc": "-121966.425",
+                "Zgc": "4113424.263",
+                "eh": "1178.333",
+                "field_10": "",
+                "id": "3",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.687,
+                    37.654
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LORC",
+                "Lat": "37.654",
+                "Lon": "-1.687",
+                "Xarxa": "MERISTEMUM",
+                "Xgc": "5054087.343",
+                "Ygc": "-148834.125",
+                "Zgc": "3875323.812",
+                "eh": "365.485",
+                "field_10": "",
+                "id": "102",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.714,
+                    37.657
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "LORC",
+                "Lat": "37.657",
+                "Lon": "-1.714",
+                "Xarxa": "REGAM",
+                "Xgc": "5053868.228",
+                "Ygc": "-151203.446",
+                "Zgc": "3875589.264",
+                "eh": "409.91",
+                "field_10": "",
+                "id": "112",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.222,
+                    41.336
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CRNA",
+                "Lat": "41.336",
+                "Lon": "-1.222",
+                "Xarxa": "ARAGEA",
+                "Xgc": "4795404.74",
+                "Ygc": "-102253.972",
+                "Zgc": "4190965.561",
+                "eh": "649.446",
+                "field_10": "",
+                "id": "10",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.375,
+                    43.575
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "TLMF",
+                "Lat": "43.575",
+                "Lon": "1.375",
+                "Xarxa": "EUREF",
+                "Xgc": "4627010.056",
+                "Ygc": "111069.213",
+                "Zgc": "4374122.859",
+                "eh": "221.032",
+                "field_10": "",
+                "id": "76",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -1.932,
+                    43.322
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PASA",
+                "Lat": "43.322",
+                "Lon": "-1.932",
+                "Xarxa": "GIPUZKOA",
+                "Xgc": "4644909.435",
+                "Ygc": "-156645.61",
+                "Zgc": "4353622.673",
+                "eh": "67.383",
+                "field_10": "",
+                "id": "43",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    0.324,
+                    41.509
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "FRAG",
+                "Lat": "41.509",
+                "Lon": "0.324",
+                "Xarxa": "ERGNSS",
+                "Xgc": "4783341.511",
+                "Ygc": "27062.611",
+                "Zgc": "4205079.467",
+                "eh": "181.803",
+                "field_10": "",
+                "id": "81",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.459,
+                    36.852
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ALME",
+                "Lat": "36.852534924",
+                "Lon": "-2.459445605",
+                "Xarxa": "EUREF",
+                "Xgc": "5105220.040",
+                "Ygc": "-219278.429",
+                "Zgc": "3804387.190",
+                "eh": "127.481",
+                "field_10": "",
+                "id": "153",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -3.798,
+                    43.471
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CANT",
+                "Lat": "43.471980849",
+                "Lon": "-3.798062182",
+                "Xarxa": "EUREF",
+                "Xgc": "4625924.410",
+                "Ygc": "-307096.415",
+                "Zgc": "4365771.444",
+                "eh": "99.253",
+                "field_10": "",
+                "id": "154",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -9.418,
+                    38.693
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "CASC",
+                "Lat": "38.693415886",
+                "Lon": "-9.418519840",
+                "Xarxa": "EUREF",
+                "Xgc": "4917536.907",
+                "Ygc": "-815726.112",
+                "Zgc": "3965857.450",
+                "eh": "76.022",
+                "field_10": "",
+                "id": "155",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    2.051,
+                    45.403
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "EGLT",
+                "Lat": "45.403353869",
+                "Lon": "2.051996417",
+                "Xarxa": "EUREF",
+                "Xgc": "4483373.564",
+                "Ygc": "160636.647",
+                "Zgc": "4519409.029",
+                "eh": "667.022",
+                "field_10": "",
+                "id": "156",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    8.921,
+                    44.419
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "GENO",
+                "Lat": "44.419388338",
+                "Lon": "8.921144429",
+                "Xarxa": "EUREF",
+                "Xgc": "4507892.244",
+                "Ygc": "707621.572",
+                "Zgc": "4441603.565",
+                "eh": "155.520",
+                "field_10": "",
+                "id": "157",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    6.920,
+                    43.754
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "GRAS",
+                "Lat": "43.754738537",
+                "Lon": "6.920574498",
+                "Xarxa": "EUREF",
+                "Xgc": "4581690.830",
+                "Ygc": "556114.930",
+                "Zgc": "4389360.851",
+                "eh": "1319.309",
+                "field_10": "",
+                "id": "158",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    5.353,
+                    43.278
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MARS",
+                "Lat": "43.278770547",
+                "Lon": "5.353788537",
+                "Xarxa": "EUREF",
+                "Xgc": "4630532.692",
+                "Ygc": "433946.407",
+                "Zgc": "4350142.782",
+                "eh": "61.804",
+                "field_10": "",
+                "id": "159",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    16.704,
+                    40.649
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MATE",
+                "Lat": "40.649132528",
+                "Lon": "16.704460800",
+                "Xarxa": "EUREF",
+                "Xgc": "4641949.459",
+                "Ygc": "1393045.519",
+                "Zgc": "4133287.532",
+                "eh": "535.645",
+                "field_10": "",
+                "id": "160",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -2.951,
+                    35.281
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "MELI",
+                "Lat": "35.281188957",
+                "Lon": "-2.951651690",
+                "Xarxa": "EUREF",
+                "Xgc": "5205628.158",
+                "Ygc": "-268410.837",
+                "Zgc": "3663428.453",
+                "eh": "88.811",
+                "field_10": "",
+                "id": "160",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    12.493,
+                    41.893
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "M0SE",
+                "Lat": "41.893114281",
+                "Lon": "12.493259711",
+                "Xarxa": "EUREF",
+                "Xgc": "4642432.402",
+                "Ygc": "1028629.521",
+                "Zgc": "4236854.297",
+                "eh": "120.568",
+                "field_10": "",
+                "id": "161",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    11.099,
+                    43.885
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "PRAT",
+                "Lat": "43.885563394",
+                "Lon": "11.099128306",
+                "Xarxa": "EUREF",
+                "Xgc": "4518264.046",
+                "Ygc": "886376.776",
+                "Zgc": "4399019.405",
+                "eh": "119.937",
+                "field_10": "",
+                "id": "162",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -5.495,
+                    40.945
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SALA",
+                "Lat": "40.945084739",
+                "Lon": "-5.495859646",
+                "Xarxa": "EUREF",
+                "Xgc": "4803054.573",
+                "Ygc": "-462131.255",
+                "Zgc": "4158378.960",
+                "eh": "854.970",
+                "field_10": "",
+                "id": "163",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -6.205,
+                    36.464
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SFER",
+                "Lat": "36.464346379",
+                "Lon": "-6.205644760",
+                "Xarxa": "EUREF",
+                "Xgc": "5105518.947",
+                "Ygc": "-555145.783",
+                "Zgc": "3769803.443",
+                "eh": "84.155",
+                "field_10": "",
+                "id": "164",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    4.676,
+                    45.879
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "SJDV",
+                "Lat": "45.879085208",
+                "Lon": "4.676576736",
+                "Xarxa": "EUREF",
+                "Xgc": "4433469.783",
+                "Ygc": "362672.916",
+                "Zgc": "4556211.764",
+                "eh": "432.411",
+                "field_10": "",
+                "id": "165",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -4.708,
+                    41.702
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VALA",
+                "Lat": "41.702509921",
+                "Lon": "-4.708316717",
+                "Xarxa": "EUREF",
+                "Xgc": "4753521.423",
+                "Ygc": "-391505.266",
+                "Zgc": "4221500.816",
+                "eh": "765.881",
+                "field_10": "",
+                "id": "166",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    1.719,
+                    47.294
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VFCH",
+                "Lat": "47.294195724",
+                "Lon": "1.719675191",
+                "Xarxa": "EUREF",
+                "Xgc": "4331862.330",
+                "Ygc": "130055.546",
+                "Zgc": "4664121.892",
+                "eh": "153.242",
+                "field_10": "",
+                "id": "167",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    -8.813,
+                    42.183
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "VIGO",
+                "Lat": "42.183980921",
+                "Lon": "-8.813067781",
+                "Xarxa": "EUREF",
+                "Xgc": "4677480.848",
+                "Ygc": "-725204.718",
+                "Zgc": "4260827.478",
+                "eh": "87.776",
+                "field_10": "",
+                "id": "168",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    7.465,
+                    46.877
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "DOMEmarker": "ZIMM",
+                "Lat": "46.877098249",
+                "Lon": "7.465278064",
+                "Xarxa": "EUREF",
+                "Xgc": "4331296.995",
+                "Ygc": "567555.967",
+                "Zgc": "4633133.992",
+                "eh": "956.336",
+                "field_10": "",
+                "id": "169",
+                "tipus": "downloaded"
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}

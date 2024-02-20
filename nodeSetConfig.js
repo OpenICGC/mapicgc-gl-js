@@ -117,7 +117,7 @@ async function getVectorLimitsLayers() {
   }
   
 
-  async function getWMSLayers() {
+  async function getVectorLayers() {
     try {
          
 
@@ -126,16 +126,18 @@ async function getVectorLimitsLayers() {
             { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
             { key: 'toponimia',layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf"},
              ]
-          wmsLayersOptions = test
-          console.info('Dades WMS Layers actualitzats' );
+             vectorLayersOptions = test
+             console.info('Dades vector Layers actualitzats' )
+
       } catch (error) {
-        console.error('Error fetching wms-layers:', error.message);
+   
+        console.error('Error fetching vector-layers:', error.message);
       }
     
   }
 
 
-  async function getVectorLayers() {
+  async function getWMSLayers() {
     try {
             let layerRelleu = 'relleu'
             let layerGeologia = 'geologia'
@@ -147,15 +149,15 @@ async function getVectorLimitsLayers() {
             { key: 'geologia', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerGeologia}/MON3857NW/{z}/{x}/{y}.png`},
             { key: 'administratiu', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png`},
             { key: 'simplificat', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png`},
-            { key:"cims", layer:"", url:`"https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
+            { key:"cims", layer:"", url:`https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
             { key: 'cobertesSol', layer:"", url: `http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=${layerCobertesSol}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836`},
          ]
-          vectorLayersOptions = test
-          console.info('Dades vector Layers actualitzats' );
-
+       ;
+         wmsLayersOptions = test
+          console.info('Dades WMS Layers actualitzats' );
 
       } catch (error) {
-        console.error('Error fetching vector-layers:', error.message);
+        console.error('Error fetching wms-layers:', error.message);
       }
     
   }
@@ -167,6 +169,7 @@ async function getVectorLimitsLayers() {
           let test= [
             { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
             { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
+            { key: "ORTO3D", url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
             { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
             { key: "DARK", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
             { key: "LIGHT", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
@@ -187,8 +190,8 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png"},
-            {name: "WORLD3M", "encoding": "terrarium", url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"}
+            {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png"},
+            {name: "WORLD30M",  url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png", encoding: "terrarium",}
  
           ]
           terrainOptions = test
@@ -231,12 +234,14 @@ function replace(){
 const updatedConfigNode = `
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
+const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
 \nmodule.exports = defaultOptions;
 `;
 const updatedConfig = `
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
+const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
 \nexport default defaultOptions;
 `;
@@ -351,8 +356,8 @@ for (const key in originalWmsLayers) {
 const layersConfig = `
 const Orto = ${stringifyWithoutQuotes(convertedOrtoLayers, null, 2)};
 const VectorAdmin = ${stringifyWithoutQuotes(convertedVectorICGCLayers, null, 2)};
-const WMS = ${stringifyWithoutQuotes(convertedVectorLayers, null, 2)};
-const Vector = ${stringifyWithoutQuotes(convertedWmsLayers, null, 2)};
+const Vector = ${stringifyWithoutQuotes(convertedVectorLayers, null, 2)};
+const WMS = ${stringifyWithoutQuotes(convertedWmsLayers, null, 2)};
 \nexport default {Orto,VectorAdmin, WMS, Vector};
 `;
 

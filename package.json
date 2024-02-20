@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.35",
+  "version": "0.0.39",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
   "main": "dist/mapicgc-gl.js",
@@ -51,6 +51,7 @@
     "axios": "^1.6.7",
     "flatgeobuf": "^3.27.2",
     "maplibre-gl": "^3.6.2",
-    "maplibre-gl-measures": "^0.0.14"
+    "maplibre-gl-measures": "^0.0.14",
+    "xmldom": "^0.6.0"
   }
 }
