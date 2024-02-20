@@ -56,8 +56,8 @@ export default class Map {
         }
       }
     }
-    // console.log('dseeee', options)
-    options.maxZoom = 18;
+
+    // options.maxZoom = 18;
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
@@ -77,13 +77,13 @@ export default class Map {
         element.classList.remove("maplibregl-compact-show");
       }
 
-      console.info("loaded");
-      console.info(this.map.getStyle().name);
+      this._dealOrto3dStyle(this.map.getStyle().name);
+    });
+  }
 
-      //init test3d
-      if (this.map.getStyle().name == "orto3d") {
-
-        
+  _dealOrto3dStyle(name) {
+    try {
+      if (name == "orto3d") {
         const ambientLight = new AmbientLight({
           intensity: 4,
         });
@@ -92,67 +92,74 @@ export default class Map {
           ambientLight,
         });
 
-       
-       const edificisMapboxLayer=this._getLayer3d();
-       
-       this.map.setTerrain({
+        this.map.setTerrain({
           source: defaultOptions.map3dOptions.terrainSource,
-          exaggeration: 1,
+          exaggeration: 1.2,
         });
 
-        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.addLayer(edificisMapboxLayer,defaultOptions.map3dOptions.layerIdOrder );
-          this.map.setLayerZoomRange(defaultOptions.map3dOptions.layerId3d, 15.5, 22);
+        const citiesMapboxLayer = this._createCitiesMapboxLayer();
 
-          edificisMapboxLayer.deck.setProps({
+        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.addLayer(
+            citiesMapboxLayer,
+            defaultOptions.map3dOptions.layerIdOrder
+          );
+          this.map.setLayerZoomRange(
+            defaultOptions.map3dOptions.layerId3d,
+            defaultOptions.map3dOptions.minZoomRange,
+            defaultOptions.map3dOptions.maxZoomRange
+          );
+
+          citiesMapboxLayer.deck.setProps({
             effects: [lightingEffect],
           });
         }
-        
+      } else {
+        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
+
+          this.map.setTerrain(null);
+        }
       }
-      //end test 3d
-    });
+    } catch (error) {
+      console.error(`Error dealing orto 3D: ${error.message}`);
+      return null;
+    }
   }
 
+  _createCitiesMapboxLayer() {
+    try {
+      const citiesMapboxLayer = new MapboxLayer({
+        id: defaultOptions.map3dOptions.layerId3d,
+        type: Tile3DLayer,
+        data: defaultOptions.map3dOptions.urlTilesetCities,
+        loader: Tiles3DLoader,
 
-  _getLayer3d(){
-
-    
-    try{
-    const edificisMapboxLayer = new MapboxLayer({
-      id: defaultOptions.map3dOptions.layerId3d,
-      type: Tile3DLayer,
-      data: defaultOptions.map3dOptions.urlTilesetCities,
-      loader: Tiles3DLoader,
-      loadOptions: {
-        tileset: {
-          viewDistanceScale: 1,
-          updateTransforms: false,
-          maximumScreenSpaceError: defaultOptions.map3dOptions.spaceErrorFactor,
+        loadOptions: {
+          tileset: {
+            viewDistanceScale: 1,
+            updateTransforms: false,
+            maximumScreenSpaceError:
+              defaultOptions.map3dOptions.spaceErrorFactor,
+          },
         },
-      },
 
-      onTilesetLoad: (tileset3d) => {
-        tileset3d.options.maximumScreenSpaceError = defaultOptions.map3dOptions.spaceErrorFactor;
-      },
-      onTileLoad: (tileHeader) => {
-        tileHeader.content.cartographicOrigin.z -= defaultOptions.map3dOptions.zfactor;
-      },
-      operation: "terrain+draw",
-    
-    });
+        onTilesetLoad: (tileset3d) => {
+          tileset3d.options.maximumScreenSpaceError =
+            defaultOptions.map3dOptions.spaceErrorFactor;
+        },
+        onTileLoad: (tileHeader) => {
+          tileHeader.content.cartographicOrigin.z -=
+            defaultOptions.map3dOptions.zfactor;
+        },
+        operation: "terrain+draw",
+      });
 
-    return edificisMapboxLayer;
-
-  }catch(err){
-
-    console.info(err);
-
-    return null;
-
-  }
-
-
+      return citiesMapboxLayer;
+    } catch (error) {
+      console.error(`Error adding MapboxLayer: ${error.message}`);
+      return null;
+    }
   }
 
   /**
@@ -607,6 +614,7 @@ export default class Map {
   setStyle(style, options) {
     try {
       console.log("kk", style);
+      /*
       for (const key of Styles) {
         if (Styles.hasOwnProperty(key)) {
           const styl = Styles[key];
@@ -616,6 +624,7 @@ export default class Map {
           }
         }
       }
+      */
       console.log("base", style);
 
       if (options !== undefined) {
@@ -623,6 +632,22 @@ export default class Map {
       } else {
         this.map.setStyle(style);
       }
+
+      this.map.on("styledata", () => {
+        if (window.document.querySelector(".maplibregl-compact-show")) {
+          var element = window.document.querySelector(
+            ".maplibregl-compact-show"
+          );
+          element.classList.remove("maplibregl-compact-show");
+        }
+
+        console.info("styledata");
+        console.info(this.map.getStyle().name);
+        this._dealOrto3dStyle(this.map.getStyle().name);
+        //init test3d
+
+        //end test 3d
+      });
     } catch (error) {
       console.error(`Error setting style: ${error.message}`);
     }

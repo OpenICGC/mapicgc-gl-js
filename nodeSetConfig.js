@@ -50,7 +50,7 @@ function camelize(str) {
 
 async function getVectorLimitsLayers() {
     try {
-        const response = await axios.get('https://tilemaps.icgc.cat/tileserver/limits-tilejsonV3.json');
+        const response = await axios.get('https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json');
         const tileJson = response.data;
     
    
@@ -165,7 +165,7 @@ async function getVectorLimitsLayers() {
        
           let test= [
             { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
-            { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
+            { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
             { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
             { key: "DARK", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
             { key: "LIGHT", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
@@ -186,8 +186,8 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png"},
-            {name: "WORLD3M", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png"}
+            {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver.php/terreny_icgc_2m_rgb/{z}/{x}/{y}.png"},
+            {name: "WORLD3M", url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"}
  
           ]
           terrainOptions = test

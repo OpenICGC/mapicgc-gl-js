@@ -19,11 +19,13 @@ const defaultOptions = {
   map3dOptions: {
     spaceErrorFactor: 2,
     zfactor: 25,
+    minZoomRange:15.5,
+    maxZoomRange:22,
     urlTilesetCities:
       "http://imtilemapsdev.icgc.local/terrenys/Ciutats/tilesetV1.0.json",
     layerIdOrder: "place-isolated",
     layerId3d: "edificisMapboxLayer",
-    terrainSource: "ICGC5M",
+    terrainSource: "ICGC2M",
     style3dName: "orto3d",
   },
   baseStyles: {
