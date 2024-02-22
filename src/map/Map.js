@@ -266,7 +266,7 @@ inputsearch[0].addEventListener('input', function(event) {
    */
   getStyle() {
     try {
-      this.map.getStyle();
+      return this.map.getStyle();
     } catch (error) {
       console.error(`Error getting style: ${error.message}`);
     }
@@ -842,7 +842,7 @@ geojson.features.forEach(feature => {
    */
   getSource(source) {
     try {
-      this.map.getSource(source);
+     return this.map.getSource(source);
     } catch (error) {
       console.error(`Error getting source: ${error.message}`);
     }
@@ -860,6 +860,9 @@ geojson.features.forEach(feature => {
       console.error(`Error adding source: ${error.message}`);
     }
   }
+
+
+
   /**
    * Sets the style of the map.
    * @function setStyle
@@ -915,11 +918,28 @@ geojson.features.forEach(feature => {
 
   getLayer(layerId) {
     try {
-      this.map.getLayer(layerId);
+      return this.map.getLayer(layerId);
     } catch (error) {
       console.error(`Error getting layer: ${error.message}`);
     }
   }
+
+
+    /**
+   * Set filter for specified style layer.
+   * @function setFilter
+   * @param {string} layerId - The ID of the layer to retrieve.
+   * @param {array} filter - The filter.
+   * @param {string} options - Options object.
+   */
+
+    setFilter(layerId ,filter, options) {
+      try {
+        return this.map.setFilter(layerId, filter, options);
+      } catch (error) {
+        console.error(`Error setting filter: ${error.message}`);
+      }
+    }
   /**
    * Jumps to the specified coordinates and zoom on the map.
    * @function jumpTo
@@ -1149,7 +1169,7 @@ geojson.features.forEach(feature => {
    */
   addLayerGeoJSON(layer) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "geojson",
           data: layer.data,
@@ -1162,7 +1182,7 @@ geojson.features.forEach(feature => {
           layout: layer.layout,
           paint: layer.paint,
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
     }
@@ -1178,7 +1198,7 @@ geojson.features.forEach(feature => {
    */
   addLayerWMS(layer) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         console.log("holaaddlayerwms", layer);
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "raster",
@@ -1191,7 +1211,7 @@ geojson.features.forEach(feature => {
           source: `${layer.id}-sourceIcgcMap`,
           paint: {},
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
     }
@@ -1275,7 +1295,7 @@ geojson.features.forEach(feature => {
       };
 
       const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         for (const url of basesArray) {
           for (const key of Object.keys(defaultOptions.baseStyles)) {
             const item = defaultOptions.baseStyles[key];
@@ -1289,7 +1309,7 @@ geojson.features.forEach(feature => {
             }
           }
         }
-      });
+      // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
     }
@@ -1310,7 +1330,7 @@ geojson.features.forEach(feature => {
       };
 
       const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         baseLayers.forEach((base) => {
           const div = document.createElement("div");
           div.className = "basemap-item";
@@ -1319,7 +1339,7 @@ geojson.features.forEach(feature => {
           basemapGroup.appendChild(div);
           div.addEventListener("click", () => handleClick(base));
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
     }
@@ -1335,7 +1355,7 @@ geojson.features.forEach(feature => {
     try {
       let description;
 
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         // console.log('layer', layerName, options)
         this.map.on("mouseenter", layerName, () => {
           this.map.getCanvas().style.cursor = "pointer";
@@ -1380,7 +1400,7 @@ geojson.features.forEach(feature => {
             }
           }
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding feature query: ${error.message}`);
     }
@@ -1470,7 +1490,7 @@ geojson.features.forEach(feature => {
         },
       };
 
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         this.map.addSource("geojson", {
           type: "geojson",
           data: geojson,
@@ -1501,7 +1521,7 @@ geojson.features.forEach(feature => {
           },
           filter: ["in", "$type", "LineString"],
         });
-      });
+      // });
 
       this.map.on("click", (e) => {
         clearTimeout(clickTimer);
@@ -1651,12 +1671,12 @@ geojson.features.forEach(feature => {
    */
   addPopup(coordinates, text) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         new maplibregl.Popup()
           .setLngLat(coordinates)
           .setHTML(text)
           .addTo(this.map);
-      });
+      // });
     } catch (error) {}
   }
 
@@ -1779,7 +1799,7 @@ geojson.features.forEach(feature => {
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         const layers = this.map.getStyle().layers;
         let firstSymbolId;
         for (let i = 0; i < layers.length; i++) {
@@ -1831,7 +1851,7 @@ geojson.features.forEach(feature => {
             });
           }
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding layer tree: ${error.message}`);
     }
@@ -2028,7 +2048,7 @@ geojson.features.forEach(feature => {
       }
 
       let name = getKeyByUrl(layerUrl);
-      // console.log('name', name)
+      console.log('name', name)
 
       if (name === null) {
         // let op = Layers.VectorAdmin.find((objeto) =>
@@ -2047,18 +2067,21 @@ geojson.features.forEach(feature => {
         // layerUrl = op.url;
 
         const response = await fetch(layerUrl);
-        this.map.on("load", async () => {
+
+
+        // this.map.on("load", async () => {
           const fc = { type: "FeatureCollection", features: [] };
           for await (const f of flatgeobuf.deserialize(response.body))
+       
             fc.features.push(f);
-          let src = op.name + "-source";
+          let src = name + "-source";
 
           this.map.addSource(src, {
             type: "geojson",
             data: fc,
           });
           this.map.addLayer({
-            id: op.name + "-fill",
+            id: name + "-fill",
             type: "fill",
             source: src,
             paint: {
@@ -2067,16 +2090,26 @@ geojson.features.forEach(feature => {
             },
           });
           this.map.addLayer({
-            id: op.name + "-line",
+            id: name + "-underline",
             type: "line",
             source: src,
             paint: {
-              "line-color": "#FFFFFF",
-              "line-opacity": 0.49,
+              "line-color": "#ffffff",
+              "line-opacity": 1,
+              "line-width": 3,
+            },
+          });
+          this.map.addLayer({
+            id: name + "-line",
+            type: "line",
+            source: src,
+            paint: {
+              "line-color": "#4832a8",
+              "line-opacity": 1,
               "line-width": 1,
             },
           });
-        });
+        // });
       }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
@@ -2090,7 +2123,7 @@ geojson.features.forEach(feature => {
    * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
   addTerrainICGC(resolution, positionButton) {
-    this.map.on("load", () => {
+    // this.map.on("load", () => {
       try {
         // let op = Terrains.find(
         //   (objeto) => objeto.name === resolution
@@ -2155,6 +2188,6 @@ if (resolution.includes('terrarium') ){
       } catch (error) {
         console.error(`Error adding 3D terrain: ${error.message}`);
       }
-    }); //'load end
+    // }); //'load end
   }
 }

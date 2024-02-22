@@ -124,7 +124,6 @@ async function getVectorLimitsLayers() {
 
           let test= [
             { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
-            { key: 'toponimia',layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/redtopo/{z}/{x}/{y}.pbf"},
              ]
              vectorLayersOptions = test
              console.info('Dades vector Layers actualitzats' )
@@ -145,8 +144,9 @@ async function getVectorLimitsLayers() {
             let layerCims = '0'
             let layerCobertesSol = 'cobertes_2009'
           let test= [
-            { key: 'relleu', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerRelleu}/CAT3857/{z}/{x}/{y}.png`},
-            { key: 'geologia', layer:"", url: `https://tilemaps.icgc.cat/mapfactory/wmts/${layerGeologia}/MON3857NW/{z}/{x}/{y}.png`},
+            { key: 'espaisInteresGeologic', layer:"", url: `https://geoserveis.icgc.cat/servei/catalunya/espais-interes-geologic/wms/service?&service=WMS&request=GetMap&layers=espais-interes-geologic&styles=&format=image%2Fpng&transparent=true&version=1.1.1&tipus=wms&width=512&height=512&srs=EPSG%3A3857&bbox={bbox-epsg-3857}`},
+            { key: 'gravimetriaBouguer500000', layer:"", url: `https://geoserveis.icgc.cat/servei/catalunya/gravimetria/wms/service?&service=WMS&request=GetMap&layers=anomalia_bouguer_500000&styles=&format=image%2Fpng&transparent=true&version=1.1.1&tipus=wms&width=512&height=512&srs=EPSG%3A3857&bbox={bbox-epsg-3857}`},
+            { key: 'cobertesSol2018', layer:"", url: `https://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms/service?&service=WMS&request=GetMap&layers=cobertes_2018&styles=&format=image%2Fpng&transparent=true&version=1.1.1&tipus=wms&width=512&height=512&srs=EPSG%3A3857&bbox={bbox-epsg-3857}`},
             { key: 'administratiu', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png`},
             { key: 'simplificat', layer:"", url:`http://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png`},
             { key:"cims", layer:"", url:`https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVICE=WMS&VERSION=1.1.1&LAYERS=${layerCims}&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&SRS=EPSG:25831&BBOX=137118.923076923,4488408.75,650959.076923077,4749634.75&WIDTH=895&HEIGHT=455`},
