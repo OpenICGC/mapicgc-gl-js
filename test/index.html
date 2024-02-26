@@ -12,14 +12,19 @@
 
 
     <style>
+    
+      
       body {
         margin: 0;
-        padding: 0;
+  padding: 0;
       }
-      html,
-      body,
+   
       #map {
-        height: 100%;
+        position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
       }
       #geocoder-container {
       margin: 20px;
@@ -68,24 +73,32 @@
       //topografic, ortofoto, limits,fosc,ombra,, hipsometria, geologia, protegits
       const map = (window.map = new mapicgcgl.Map({
         container: "map",
-              style: mapicgcgl.Styles.TOPO,
-              // style: 'https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris_simplificat.json',
+              style: mapicgcgl.Styles.ORTO,
+              // style: 'http://imtilemapsdev.icgc.local/terrenys/Ciutats/tilesetV1.0.json',
               zoom: 8.4,
       
       }));
 
+      map.on("load", () => {
 
-      let pointOptions={
-            "circle-color": "black",
-            "circle-opacity": 0.8,
-      }
-      map.fetchDataAndMenu(
-        'Proposa_DAC_min.geojson',
-        'Proposa_DAC_min', 
-        'all',pointOptions)
+      // let pointOptions={
+      //       "circle-color": "black",
+      //       "circle-opacity": 0.8,
+      // }
+      // map.fetchDataAndMenu(
+      //   'Proposa_DAC_min.geojson',
+      //   'Proposa_DAC_min', 
+      //   // 'all',pointOptions)
+      //   'Xarxa',pointOptions)
+      // // map.addFeatureQuery('Proposa_DAC_min')
 
-      let optionsText=['DOMEmarker', 'id', 'Xarxa']
-      map.addFeatureQuery('Proposa_DAC_min')
+
+
+      // map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, 'bottom-right');
+
+
+      // let optionsText=['DOMEmarker', 'id', 'Xarxa']
+      
 
 
       
@@ -105,7 +118,7 @@
       // map.addImageLayerICGC('geologia');
 
 //       //censals, salut, provincies, aquifers...
-      // map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.areesBasiquesServeisSocialsVigent)
+      map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent)
       // map.getConfigImageLayers()
    
 //       // map.addFullScreen('bottom-right');
@@ -236,12 +249,13 @@ map.addGeocoderICGC()
       
 
 
-//       let wmsLayer = {
-//         id: "wms-test",
-//         tiles:
-//           "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
-//       };
-//       // map.addLayerWMS(wmsLayer);
+      // let wmsLayer = {
+      //   id: "wms-test",
+      //   tiles:
+      //   "https://geoserveis.icgc.cat/servei/catalunya/espais-interes-geologic/wms/service?&service=WMS&request=GetMap&layers=espais-interes-geologic&styles=&format=image%2Fpng&transparent=true&version=1.1.1&tipus=wms&width=512&height=512&srs=EPSG%3A3857&bbox={bbox-epsg-3857}"  
+      //   // "https://betaserver.icgc.cat/geoservice/194939610536528507705272100186218457502?service=WMS&request=GetMap&layers=swllH1905&styles=&format=image%2Fpng&transparent=true&version=1.1.1&nom=swellHeight_20210903&tipus=wms&businessId=-1&width=256&height=256&srs=EPSG%3A3857&bbox={bbox-epsg-3857}",
+      // };
+      // map.addLayerWMS(wmsLayer);
 
      
 //     //  map.add3DBuildingsICGC()
@@ -328,6 +342,7 @@ map.addBasemapsICGC(basemapsicgc)
 //       };
       // map.addLayerTree(layerTree);
 
+    })
     </script>
   </body>
 </html>

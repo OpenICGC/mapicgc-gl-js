@@ -63,46 +63,47 @@
 <body>
     <div id='menu'>
         <input id='TOPO' type='radio' name='rtoggle' value="TOPO">
-        <label for='topografic'>Mapa estàndard</label><br>
+        <label for='topografic'>TOPO</label><br>
+        <input id='ORTO' type='radio' name='rtoggle'  value='ORTO'>
+        <label for='ortofoto'>ORTO</label><br>
         <input id='ORTO3D' type='radio' name='rtoggle' checked='checked' value='ORTO3D'>
-        <label for='ortofoto'>Ortofoto</label><br>
+        <label for='ortofoto'>ORTO3D</label><br>
         <input id='ADMIN' type='radio' name='rtoggle' value='ADMIN'>
-        <label for='limits'>Limits</label><br>
+        <label for='limits'>ADMIN</label><br>
         <input id='DARK' type='radio' name='rtoggle' value='DARK'>
-        <label for='fosc'>fosc</label>
+        <label for='fosc'>DARK</label>
     </div>
-    <div id="comparison-container">
-        <div id="before" class="map"></div>
-        <div id="after" class="map"></div>
-    </div>
+    
+        <div id="map" class="map"></div>
+       
     <script>
         console.info(window);
         console.info(mapicgcgl.Layers);
         const map1 = new mapicgcgl.Map({
-            container: 'before',
-            style: mapicgcgl.Styles.TOPO,
+            container: 'map',
+            style: mapicgcgl.Styles.ORTO3D,
             center: [1.1464, 41.706],
             zoom: 7.4,
-            maxZoom: 14,
+           
             hash: true,
             pitch: 0,
             attributionControl: false
         });
-        const map2 = new mapicgcgl.Map({
-            container: 'after',
-            style: mapicgcgl.Styles.ORTO,
-            center: [1.1464, 41.706],
-            zoom: 7.4,
-            maxZoom: 14,
-            hash: true,
-            pitch: 0,
-            attributionControl: false
-        });
-        var container = "#comparison-container";
-        var map = new mapicgcgl.CompareMaps(map1, map2, container, {});
+
+        map1.on("load", ()=>{
+
+        
+
+        })
+
+       
+       
+       
         const layerList = document.getElementById('menu');
         const inputs = layerList.getElementsByTagName('input');
         function switchLayer(layer) {
+
+            console.info(mapicgcgl.Styles[layer.target.id]);
             const layerId = mapicgcgl.Styles[layer.target.id];
             map1.setStyle(layerId);
         }

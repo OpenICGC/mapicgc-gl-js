@@ -2,6 +2,10 @@ import maplibregl from "maplibre-gl";
 // import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 // import MeasuresControl from 'maplibre-gl-measures';
+import { MapboxLayer } from "@deck.gl/mapbox";
+import { Tile3DLayer } from "@deck.gl/geo-layers";
+import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
+import { AmbientLight, LightingEffect } from "@deck.gl/core";
 import {
   MaplibreExportControl,
   Size,
@@ -52,8 +56,8 @@ export default class Map {
         }
       }
     }
-    // console.log('dseeee', options)
-    options.maxZoom = 18;
+
+    // options.maxZoom = 18;
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
@@ -66,6 +70,99 @@ export default class Map {
         compact: true,
       })
     );
+
+    this.map.on("load", () => {
+// console.log('sss', this.map.getStyle().name)
+
+      if (window.document.querySelector(".maplibregl-compact-show")) {
+        var element = window.document.querySelector(".maplibregl-compact-show");
+        element.classList.remove("maplibregl-compact-show");
+      }
+
+      this._dealOrto3dStyle(this.map.getStyle().name);
+    });
+  }
+
+  _dealOrto3dStyle(name) {
+    try {
+      if (name == "orto3d") {
+        // console.log('entro', name)
+        const ambientLight = new AmbientLight({
+          intensity: 4,
+        });
+
+        const lightingEffect = new LightingEffect({
+          ambientLight,
+        });
+
+        this.map.setTerrain({
+          source: defaultOptions.map3dOptions.terrainSource,
+          exaggeration: 1,
+        });
+
+        const citiesMapboxLayer = this._createCitiesMapboxLayer();
+
+        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.addLayer(
+            citiesMapboxLayer,
+            defaultOptions.map3dOptions.layerIdOrder
+          );
+          this.map.setLayerZoomRange(
+            defaultOptions.map3dOptions.layerId3d,
+            defaultOptions.map3dOptions.minZoomRange,
+            defaultOptions.map3dOptions.maxZoomRange
+          );
+
+          citiesMapboxLayer.deck.setProps({
+            effects: [lightingEffect],
+          });
+        }
+      } else {
+        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
+
+          this.map.setTerrain(null);
+        }
+      }
+    } catch (error) {
+      console.error(`Error dealing orto 3D: ${error.message}`);
+      return null;
+    }
+  }
+
+  _createCitiesMapboxLayer() {
+    try {
+      const citiesMapboxLayer = new MapboxLayer({
+        id: defaultOptions.map3dOptions.layerId3d,
+        type: Tile3DLayer,
+        data: defaultOptions.map3dOptions.urlTilesetCities,
+        loader: Tiles3DLoader,
+
+        loadOptions: {
+          tileset: {
+            viewDistanceScale: 1,
+            updateTransforms: false,
+            maximumScreenSpaceError:
+              defaultOptions.map3dOptions.spaceErrorFactor,
+          },
+        },
+
+        onTilesetLoad: (tileset3d) => {
+          tileset3d.options.maximumScreenSpaceError =
+            defaultOptions.map3dOptions.spaceErrorFactor;
+        },
+        onTileLoad: (tileHeader) => {
+          tileHeader.content.cartographicOrigin.z -=
+            defaultOptions.map3dOptions.zfactor;
+        },
+        operation: "terrain+draw",
+      });
+
+      return citiesMapboxLayer;
+    } catch (error) {
+      console.error(`Error adding MapboxLayer: ${error.message}`);
+      return null;
+    }
   }
 
   /**
@@ -169,7 +266,7 @@ inputsearch[0].addEventListener('input', function(event) {
    */
   getStyle() {
     try {
-      this.map.getStyle();
+      return this.map.getStyle();
     } catch (error) {
       console.error(`Error getting style: ${error.message}`);
     }
@@ -274,7 +371,6 @@ inputsearch[0].addEventListener('input', function(event) {
    * @param {string} name - The geometry name (e.g., 'buildings').
    * @param {Object} options - Additional options for configuring the layer.
    */
-
   async fetchData(url, name, options) {
     try {
       const response = await fetch(url);
@@ -401,6 +497,28 @@ inputsearch[0].addEventListener('input', function(event) {
       const response = await fetch(url);
       const geojson = await response.json();
 
+      const menuGroup = document.getElementById("menu-group");
+
+
+      
+if (featureTree !== 'all'){
+
+
+const nameTitle = document.createElement("div");
+nameTitle.id = "titleDivMenu"
+nameTitle.textContent = name;
+menuGroup.appendChild(nameTitle);
+
+const featureTreeTitle = document.createElement("div");
+featureTreeTitle.id = "titleDivMenuSub"
+featureTreeTitle.textContent = `📂 ${featureTree}`;
+menuGroup.appendChild(featureTreeTitle);
+
+
+}else{
+
+}
+
       let type = geojson.features[0].geometry.type;
 
 if ( featureTree  === 'all'){
@@ -508,21 +626,21 @@ if ( featureTree  === 'all'){
       }
       // geojsonStore  = geojson
       // map.addLayerTree(geojson);
-      map.addMenuItem(name);
 
+      map.addMenuItem(name);
+// map.addFeatureQuery(name)
     }else{
 
 let field= featureTree
-// console.log('field', field, geojson.features)
 
-// let lll = geojson.features
 const layers = {};
 geojson.features.forEach(feature => {
     const fieldMarker = feature.properties[field];
-    
-    // Verificar si la capa ya existe
+    // aqui podriem mirar si te simbologia i afegir-la a la capa
+
+
     if (!layers[fieldMarker]) {
-        // Si no existe, crear la capa
+
         if (type.includes("ine")) {
           //line
             if (options !== undefined){
@@ -656,63 +774,63 @@ geojson.features.forEach(feature => {
     }
   }
 
-  async geocodeAddress() {
-    try {
-      var inputElement = document.getElementById("addressInput");
-      var address = inputElement.value;
-      const response = await fetch(url);
-      const geojson = await response.json();
-      var resultsContainer = document.getElementById("results");
-      resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
+  // async geocodeAddress() {
+  //   try {
+  //     var inputElement = document.getElementById("addressInput");
+  //     var address = inputElement.value;
+  //     const response = await fetch(url);
+  //     const geojson = await response.json();
+  //     var resultsContainer = document.getElementById("results");
+  //     resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
 
-      function geocode(address) {
-        var result = turf.filter(geojson, "address", address);
-        return result.features.slice(0, 5);
-      }
+  //     function geocode(address) {
+  //       var result = turf.filter(geojson, "address", address);
+  //       return result.features.slice(0, 5);
+  //     }
 
-      var results = geocode(address);
+  //     var results = geocode(address);
 
-      if (results.length > 0) {
-        results.forEach(function (feature) {
-          var coordinates = feature.geometry.coordinates;
-          var address = feature.properties.address;
+  //     if (results.length > 0) {
+  //       results.forEach(function (feature) {
+  //         var coordinates = feature.geometry.coordinates;
+  //         var address = feature.properties.address;
 
-          var resultItem = document.createElement("div");
-          resultItem.innerHTML =
-            "<strong>" +
-            address +
-            "</strong><br>Coordenadas: " +
-            coordinates.join(", ");
+  //         var resultItem = document.createElement("div");
+  //         resultItem.innerHTML =
+  //           "<strong>" +
+  //           address +
+  //           "</strong><br>Coordenadas: " +
+  //           coordinates.join(", ");
 
-          resultsContainer.appendChild(resultItem);
-        });
-      } else {
-        resultsContainer.innerHTML =
-          "No se encontraron resultados para la dirección: " + address;
-      }
-    } catch (error) {}
-  }
-  /**
-   * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
-   * @param {string} url - The URL to fetch GeoJSON data from.
-   * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
-   * @param {string} name - The geometry name (e.g., 'buildings').
-   * @param {Object} options - Additional options for configuring the layer.
-   */
+  //         resultsContainer.appendChild(resultItem);
+  //       });
+  //     } else {
+  //       resultsContainer.innerHTML =
+  //         "No se encontraron resultados para la dirección: " + address;
+  //     }
+  //   } catch (error) {}
+  // }
+  // /**
+  //  * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
+  //  * @param {string} url - The URL to fetch GeoJSON data from.
+  //  * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
+  //  * @param {string} name - The geometry name (e.g., 'buildings').
+  //  * @param {Object} options - Additional options for configuring the layer.
+  //  */
 
-  async fetchDataWithSearchbox(url, type, name, optionsGeo, options) {
-    try {
-      const response = await fetch(url);
-      const geojson = await response.json();
+  // async fetchDataWithSearchbox(url, type, name, optionsGeo, options) {
+  //   try {
+  //     const response = await fetch(url);
+  //     const geojson = await response.json();
 
-      function geocode(address) {
-        var result = turf.filter(geojson, "address", address);
-        return result.features.slice(0, 5);
-      }
-    } catch (error) {
-      console.error(`Error fetching data: ${error.message}`);
-    }
-  }
+  //     function geocode(address) {
+  //       var result = turf.filter(geojson, "address", address);
+  //       return result.features.slice(0, 5);
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error fetching data: ${error.message}`);
+  //   }
+  // }
 
   /**
    * Adds an event listener to the map.
@@ -735,7 +853,7 @@ geojson.features.forEach(feature => {
    */
   getSource(source) {
     try {
-      this.map.getSource(source);
+     return this.map.getSource(source);
     } catch (error) {
       console.error(`Error getting source: ${error.message}`);
     }
@@ -753,6 +871,9 @@ geojson.features.forEach(feature => {
       console.error(`Error adding source: ${error.message}`);
     }
   }
+
+
+
   /**
    * Sets the style of the map.
    * @function setStyle
@@ -763,6 +884,7 @@ geojson.features.forEach(feature => {
   setStyle(style, options) {
     try {
       console.log("kk", style);
+      /*
       for (const key of Styles) {
         if (Styles.hasOwnProperty(key)) {
           const styl = Styles[key];
@@ -772,6 +894,7 @@ geojson.features.forEach(feature => {
           }
         }
       }
+      */
       console.log("base", style);
 
       if (options !== undefined) {
@@ -779,6 +902,20 @@ geojson.features.forEach(feature => {
       } else {
         this.map.setStyle(style);
       }
+
+      this.map.on("styledata", () => {
+        if (window.document.querySelector(".maplibregl-compact-show")) {
+          var element = window.document.querySelector(
+            ".maplibregl-compact-show"
+          );
+          element.classList.remove("maplibregl-compact-show");
+        }
+
+        this._dealOrto3dStyle(this.map.getStyle().name);
+        //init test3d
+
+        //end test 3d
+      });
     } catch (error) {
       console.error(`Error setting style: ${error.message}`);
     }
@@ -792,11 +929,28 @@ geojson.features.forEach(feature => {
 
   getLayer(layerId) {
     try {
-      this.map.getLayer(layerId);
+      return this.map.getLayer(layerId);
     } catch (error) {
       console.error(`Error getting layer: ${error.message}`);
     }
   }
+
+
+    /**
+   * Set filter for specified style layer.
+   * @function setFilter
+   * @param {string} layerId - The ID of the layer to retrieve.
+   * @param {array} filter - The filter.
+   * @param {string} options - Options object.
+   */
+
+    setFilter(layerId ,filter, options) {
+      try {
+        return this.map.setFilter(layerId, filter, options);
+      } catch (error) {
+        console.error(`Error setting filter: ${error.message}`);
+      }
+    }
   /**
    * Jumps to the specified coordinates and zoom on the map.
    * @function jumpTo
@@ -813,15 +967,33 @@ geojson.features.forEach(feature => {
   /**
    * Sets layout property for a layer on the map.
    * @function setLayoutProperty
-   * @param {Object} object - Object containing layer ID and property to set.
+   * @param {Object} object - Object containing layer ID.
+   * @param {Object} property - Object containing property to set.
+   * @param {Object} value - Object containing value.
    */
-  setLayoutProperty(object) {
+  setLayoutProperty(object, property, value) {
     try {
-      this.map.setLayoutProperty(object);
+      this.map.setLayoutProperty(object, property, value);
     } catch (error) {
       console.error(`Error setting layout property: ${error.message}`);
     }
   }
+
+  /**
+   * Sets layout property for a layer on the map.
+   * @function setPaintProperty
+   * @param {Object} object - Object containing layer ID.
+   * @param {Object} property - Object containing property to set.
+   * @param {Object} value - Object containing value.
+   */
+  setPaintProperty(object, property, value) {
+    try {
+      this.map.setPaintProperty(object, property, value);
+    } catch (error) {
+      console.error(`Error setting paint property: ${error.message}`);
+    }
+  }
+
   /**
    * Adds a control to the map with the specified position.
    * @function addControl
@@ -940,10 +1112,17 @@ geojson.features.forEach(feature => {
    */
   setTerrain(options) {
     try {
-      this.map.on("load", () => {
-        return this.map.setTerrain(options);
-      });
+      //this.map.on("load", () => {
+      return this.map.setTerrain(options);
+      //});
       //  this.map.getZoom();
+    } catch (error) {
+      console.error(`Error setting terrain: ${error.message}`);
+    }
+  }
+  setLayerZoomRange(layerId, nimZoom, maxZoom) {
+    try {
+      return this.map.setLayerZoomRange(layerId, nimZoom, maxZoom);
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
@@ -978,10 +1157,11 @@ geojson.features.forEach(feature => {
    * Adds a layer to the map.
    * @function addLayer
    * @param {Object} layer - Options for the layer to add.
+   * @param {string} layerIdOrder - Optional layer Id draw position.
    */
-  addLayer(layer) {
+  addLayer(layer, layerIdOrder) {
     try {
-      this.map.addLayer(layer);
+      this.map.addLayer(layer, layerIdOrder);
     } catch (error) {
       console.error(`Error adding layer: ${error.message}`);
     }
@@ -1000,7 +1180,7 @@ geojson.features.forEach(feature => {
    */
   addLayerGeoJSON(layer) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "geojson",
           data: layer.data,
@@ -1013,7 +1193,7 @@ geojson.features.forEach(feature => {
           layout: layer.layout,
           paint: layer.paint,
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
     }
@@ -1029,7 +1209,7 @@ geojson.features.forEach(feature => {
    */
   addLayerWMS(layer) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         console.log("holaaddlayerwms", layer);
         this.map.addSource(`${layer.id}-sourceIcgcMap`, {
           type: "raster",
@@ -1042,7 +1222,7 @@ geojson.features.forEach(feature => {
           source: `${layer.id}-sourceIcgcMap`,
           paint: {},
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
     }
@@ -1115,7 +1295,7 @@ geojson.features.forEach(feature => {
   /**
    * Adds base layers to the map.
    * @function addBasemapsICGC
-   * @param {Object[]} baseLayers - Array of base layer objects.
+   * @param {Object[]} basesArray - Array of base layer objects.
    */
   addBasemapsICGC(basesArray) {
     try {
@@ -1126,7 +1306,7 @@ geojson.features.forEach(feature => {
       };
 
       const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         for (const url of basesArray) {
           for (const key of Object.keys(defaultOptions.baseStyles)) {
             const item = defaultOptions.baseStyles[key];
@@ -1140,7 +1320,7 @@ geojson.features.forEach(feature => {
             }
           }
         }
-      });
+      // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
     }
@@ -1161,7 +1341,7 @@ geojson.features.forEach(feature => {
       };
 
       const basemapGroup = document.getElementById("basemap-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         baseLayers.forEach((base) => {
           const div = document.createElement("div");
           div.className = "basemap-item";
@@ -1170,7 +1350,7 @@ geojson.features.forEach(feature => {
           basemapGroup.appendChild(div);
           div.addEventListener("click", () => handleClick(base));
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
     }
@@ -1186,7 +1366,7 @@ geojson.features.forEach(feature => {
     try {
       let description;
 
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         // console.log('layer', layerName, options)
         this.map.on("mouseenter", layerName, () => {
           this.map.getCanvas().style.cursor = "pointer";
@@ -1231,7 +1411,7 @@ geojson.features.forEach(feature => {
             }
           }
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding feature query: ${error.message}`);
     }
@@ -1321,7 +1501,7 @@ geojson.features.forEach(feature => {
         },
       };
 
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         this.map.addSource("geojson", {
           type: "geojson",
           data: geojson,
@@ -1352,7 +1532,7 @@ geojson.features.forEach(feature => {
           },
           filter: ["in", "$type", "LineString"],
         });
-      });
+      // });
 
       this.map.on("click", (e) => {
         clearTimeout(clickTimer);
@@ -1502,12 +1682,12 @@ geojson.features.forEach(feature => {
    */
   addPopup(coordinates, text) {
     try {
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         new maplibregl.Popup()
           .setLngLat(coordinates)
           .setHTML(text)
           .addTo(this.map);
-      });
+      // });
     } catch (error) {}
   }
 
@@ -1570,6 +1750,7 @@ geojson.features.forEach(feature => {
   /**
    * Adds a fullscreen control to the map.
    * @function addFullScreen
+   * @param {string} [position='top-right'] - Position to add the control on the map.
    */
   addFullScreen(position) {
     try {
@@ -1631,7 +1812,7 @@ geojson.features.forEach(feature => {
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
-      this.map.on("load", () => {
+      // this.map.on("load", () => {
         const layers = this.map.getStyle().layers;
         let firstSymbolId;
         for (let i = 0; i < layers.length; i++) {
@@ -1683,7 +1864,7 @@ geojson.features.forEach(feature => {
             });
           }
         });
-      });
+      // });
     } catch (error) {
       console.error(`Error adding layer tree: ${error.message}`);
     }
@@ -1772,8 +1953,7 @@ geojson.features.forEach(feature => {
    * Adds an ICGC image layer to the map based on the specified name and year.
    * @function addImageLayerICGC
    * @param {string} name - The name of the layer. Mandatory. options: 'orto', 'geo', 'slope', 'dem', 'relleu', etc.
-   * @param {integer} year - The year of the image layer (optional, applicable only for certain layers like 'orto').
-   */
+    */
   addImageLayerICGC(name) {
     try {
       console.log("name", name);
@@ -1863,9 +2043,8 @@ geojson.features.forEach(feature => {
    * Adds an ICGC vector layer to the map based on the specified name and year.
    * @function addVectorLayerICGC
    * @param {string} url - The url of the vector layer.
-   * @param {string} year - The year associated with the vector layer (optional).
    */
-  async addVectorLayerICGC(layerUrl, name, year) {
+  async addVectorLayerICGC(layerUrl) {
     try {
       function getKeyByUrl(url) {
         for (const key in Layers.VectorAdmin) {
@@ -1882,7 +2061,7 @@ geojson.features.forEach(feature => {
       }
 
       let name = getKeyByUrl(layerUrl);
-      // console.log('name', name)
+      console.log('name', name)
 
       if (name === null) {
         // let op = Layers.VectorAdmin.find((objeto) =>
@@ -1901,18 +2080,21 @@ geojson.features.forEach(feature => {
         // layerUrl = op.url;
 
         const response = await fetch(layerUrl);
-        this.map.on("load", async () => {
+
+
+        // this.map.on("load", async () => {
           const fc = { type: "FeatureCollection", features: [] };
           for await (const f of flatgeobuf.deserialize(response.body))
+       
             fc.features.push(f);
-          let src = op.name + "-source";
+          let src = name + "-source";
 
           this.map.addSource(src, {
             type: "geojson",
             data: fc,
           });
           this.map.addLayer({
-            id: op.name + "-fill",
+            id: name + "-fill",
             type: "fill",
             source: src,
             paint: {
@@ -1921,16 +2103,26 @@ geojson.features.forEach(feature => {
             },
           });
           this.map.addLayer({
-            id: op.name + "-line",
+            id: name + "-underline",
             type: "line",
             source: src,
             paint: {
-              "line-color": "#FFFFFF",
-              "line-opacity": 0.49,
+              "line-color": "#ffffff",
+              "line-opacity": 1,
+              "line-width": 3,
+            },
+          });
+          this.map.addLayer({
+            id: name + "-line",
+            type: "line",
+            source: src,
+            paint: {
+              "line-color": "#4832a8",
+              "line-opacity": 1,
               "line-width": 1,
             },
           });
-        });
+        // });
       }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
@@ -1944,11 +2136,12 @@ geojson.features.forEach(feature => {
    * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
   addTerrainICGC(resolution, positionButton) {
-    this.map.on("load", () => {
+    // this.map.on("load", () => {
       try {
         // let op = Terrains.find(
         //   (objeto) => objeto.name === resolution
         // );
+        // console.log('res', resolution)
         let op;
         for (const key in Terrains) {
           if (Terrains.hasOwnProperty(key)) {
@@ -1956,26 +2149,33 @@ geojson.features.forEach(feature => {
 
             if (objeto === resolution) {
               op = objeto;
-              // Si encontramos el objeto, podemos salir del bucle
+
             }
           }
         }
 
         let urlTerrainICGC = op;
+if (resolution.includes('terrarium') ){
+  // console.log('rsssssses', resolution)
+       // Add terrain source
+       this.map.addSource("terrainICGC-src", {
+        type: "raster-dem",
+        tiles: [urlTerrainICGC],
+        tileSize: 512,
+        encoding: "terrarium",
+        maxzoom: 16,
+      });
+}else{
+  this.map.addSource("terrainICGC-src", {
+    type: "raster-dem",
+    tiles: [urlTerrainICGC],
+    tileSize: 512,
+    maxzoom: 16,
+  });
+}
+ 
 
-        // Add terrain source
-        this.map.addSource("terrainICGC-src", {
-          type: "raster-dem",
-          tiles: [urlTerrainICGC],
-          tileSize: 512,
-          maxzoom: 16,
-        });
-
-        // Add terrain layer
-        // this.map.setTerrain({
-        //   source: "terrainMapZen",
-        //   exaggeration: 1.5,
-        // });
+    
         this.map.setTerrain({
           source: "terrainICGC-src",
           exaggeration: 1.5,
@@ -2001,6 +2201,6 @@ geojson.features.forEach(feature => {
       } catch (error) {
         console.error(`Error adding 3D terrain: ${error.message}`);
       }
-    }); //'load end
+    // }); //'load end
   }
 }
