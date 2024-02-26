@@ -79,7 +79,7 @@
     <script>
         console.info(window);
         console.info(mapicgcgl.Layers);
-        const map1 = new mapicgcgl.Map({
+        const map = new mapicgcgl.Map({
             container: 'map',
             style: mapicgcgl.Styles.ORTO3D,
             center: [1.1464, 41.706],
@@ -90,22 +90,18 @@
             attributionControl: false
         });
 
-        map1.on("load", ()=>{
+        map.on("load", ()=>{
 
         
-
         })
-
-       
-       
-       
+  
         const layerList = document.getElementById('menu');
         const inputs = layerList.getElementsByTagName('input');
         function switchLayer(layer) {
 
             console.info(mapicgcgl.Styles[layer.target.id]);
             const layerId = mapicgcgl.Styles[layer.target.id];
-            map1.setStyle(layerId);
+            map.setStyle(layerId);
         }
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].onclick = switchLayer;

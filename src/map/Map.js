@@ -71,8 +71,8 @@ export default class Map {
       })
     );
 
-    this.map.on("load", () => {
-// console.log('sss', this.map.getStyle().name)
+    this.map.on("load", async () => {
+      // console.log('sss', this.map.getStyle().name)
 
       if (window.document.querySelector(".maplibregl-compact-show")) {
         var element = window.document.querySelector(".maplibregl-compact-show");
@@ -83,10 +83,44 @@ export default class Map {
     });
   }
 
-  _dealOrto3dStyle(name) {
+  _3DFyStyle(image) {
+    this.map.addImage("stick", image.data);
+
+    this.map.getStyle().layers.forEach((layer) => {
+      if (layer["source-layer"] === "place" && layer.minzoom >= 15) {
+        if (image) {
+          const layerTest = layer.id;
+          this.map.setLayoutProperty(layerTest, "icon-image", "stick");
+          this.map.setLayoutProperty(layerTest, "text-offset", [0, -6]);
+          this.map.setLayoutProperty(layerTest, "symbol-placement", "point");
+          this.map.setLayoutProperty(layerTest, "symbol-avoid-edges", false);
+          this.map.setLayoutProperty(layerTest, "text-allow-overlap", true);
+          this.map.setLayoutProperty(layerTest, "text-ignore-placement", false);
+          this.map.setLayoutProperty(layerTest, "text-pitch-alignment", "auto");
+          this.map.setLayoutProperty(
+            layerTest,
+            "text-rotation-alignment",
+            "auto"
+          );
+          this.map.setLayoutProperty(layerTest, "text-justify", "center");
+          this.map.setLayoutProperty(layerTest, "text-anchor", "top");
+          this.map.setLayoutProperty(layerTest, "icon-anchor", "bottom");
+          this.map.setLayoutProperty(layerTest, "visibility", "visible");
+          this.map.setPaintProperty(layerTest, "text-color", "#000000");
+        }
+      }
+    });
+  }
+
+  async _dealOrto3dStyle(name) {
     try {
       if (name == "orto3d") {
-        // console.log('entro', name)
+        const image = await this.map.loadImage(
+          defaultOptions.map3dOptions.imageIcon
+        );
+
+        this.map.setMaxZoom(18.8);
+        this.map.easeTo({ pitch: 45 });
         const ambientLight = new AmbientLight({
           intensity: 4,
         });
@@ -97,7 +131,7 @@ export default class Map {
 
         this.map.setTerrain({
           source: defaultOptions.map3dOptions.terrainSource,
-          exaggeration: 1,
+          exaggeration: defaultOptions.map3dOptions.exaggeration,
         });
 
         const citiesMapboxLayer = this._createCitiesMapboxLayer();
@@ -116,6 +150,9 @@ export default class Map {
           citiesMapboxLayer.deck.setProps({
             effects: [lightingEffect],
           });
+
+          console.info(image);
+          this._3DFyStyle(image);
         }
       } else {
         if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
@@ -174,31 +211,27 @@ export default class Map {
   addGeocoderICGC(position) {
     try {
       // console.log("hello geocoder");
-if (position === undefined ){
-  position = 'top-right'
-}
+      if (position === undefined) {
+        position = "top-right";
+      }
       const urlSearchPelias =
         "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 
-        let options={
-          collapsed : true, 
-          marker: true,
-          popup: true,
-          showResultMarkers: true,
-          maplibregl: maplibregl,
-          showResultsWhileTyping: true,
-          minLength: 2,
-        };
+      let options = {
+        collapsed: true,
+        marker: true,
+        popup: true,
+        showResultMarkers: true,
+        maplibregl: maplibregl,
+        showResultsWhileTyping: true,
+        minLength: 2,
+      };
 
       const geocoderApi = {
-    
         forwardGeocode: async (config) => {
-      
           const features = [];
           try {
             const requesst = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
-      
-
 
             const request =
               urlSearchPelias +
@@ -232,7 +265,6 @@ if (position === undefined ){
             features,
           };
         },
-        
       };
 
       // Pass in or define a geocoding API that matches the above
@@ -242,16 +274,13 @@ if (position === undefined ){
       );
       // console.log('in', inputsearch)
       inputsearch[0].attributes[2].nodeValue = "Cerca...";
-inputsearch[0].addEventListener('input', function(event) {
-
-  let word = event.target.value
-  if (word.length > 3){
-    // console.log('més de 3:', word)
-  }
-  // Puedes realizar cualquier acción que desees aquí
-})
-
-
+      inputsearch[0].addEventListener("input", function (event) {
+        let word = event.target.value;
+        if (word.length > 3) {
+          // console.log('més de 3:', word)
+        }
+        // Puedes realizar cualquier acción que desees aquí
+      });
     } catch (error) {
       console.error(`Error adding ICGC geocoder: ${error.message}`);
     }
@@ -269,6 +298,35 @@ inputsearch[0].addEventListener('input', function(event) {
       return this.map.getStyle();
     } catch (error) {
       console.error(`Error getting style: ${error.message}`);
+    }
+  }
+
+  /**
+   * Load image to layer symbol as icon-image.
+   * @function loadImage
+   * @param {string} urlImage - The url image png or jpep.
+   * @returns {image} - The image.
+   */
+  async loadImage(urlImage) {
+    try {
+      return this.map.loadImage(urlImage);
+    } catch (error) {
+      console.error(`Error getting loadImage: ${error.message}`);
+    }
+  }
+
+  /**
+   * Add image to mapstyle.
+   * @function addImage
+   * @param {string} imageName - The url image png or jpep.
+   * @param {image} imageData - The image.data from return of loadImage function.
+   * @returns {image} - The image.
+   */
+  addImage(imageName, imageData) {
+    try {
+      return this.map.addImage(imageName, imageData);
+    } catch (error) {
+      console.error(`Error getting addImage: ${error.message}`);
     }
   }
 
@@ -379,104 +437,103 @@ inputsearch[0].addEventListener('input', function(event) {
       let type = geojson.features[0].geometry.type;
       if (type.includes("ine")) {
         //line
-          if (options !== undefined){
-            map.addLayer({
-              id: name,
-              type: "line",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
-              layout: {
-                visibility: "visible",
-              },
-              paint: options,
-            });
-          }else{
-              map.addLayer({
-                id: name,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  'line-color': 'black',
-                  'line-width': 2,
-                  'line-opacity': 1
-                }
-              });
-            }
+        if (options !== undefined) {
+          map.addLayer({
+            id: name,
+            type: "line",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: options,
+          });
+        } else {
+          map.addLayer({
+            id: name,
+            type: "line",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: {
+              "line-color": "black",
+              "line-width": 2,
+              "line-opacity": 1,
+            },
+          });
+        }
       }
       if (type.includes("olygon")) {
         //polygon
-        if (options !== undefined){
-        map.addLayer({
-          id: name,
-          type: "fill",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options
-        });
-      }else{
-        map.addLayer({
-          id: name,
-          type: "fill",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            'fill-color': 'blue',
-            'fill-opacity': 0.6
-          }
-        });
-      }
+        if (options !== undefined) {
+          map.addLayer({
+            id: name,
+            type: "fill",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: options,
+          });
+        } else {
+          map.addLayer({
+            id: name,
+            type: "fill",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: {
+              "fill-color": "blue",
+              "fill-opacity": 0.6,
+            },
+          });
+        }
       }
       if (type.includes("oint")) {
         //point
-        if (options !== undefined){
-        map.addLayer({
-          id: name,
-          type: "circle",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options,
-        });
-      }else{
-        map.addLayer({
-          id: name,
-          type: "circle",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            "circle-color": "red",
-            "circle-opacity": 0.85,
-          },
-        });
-
-      }
+        if (options !== undefined) {
+          map.addLayer({
+            id: name,
+            type: "circle",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: options,
+          });
+        } else {
+          map.addLayer({
+            id: name,
+            type: "circle",
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: {
+              visibility: "visible",
+            },
+            paint: {
+              "circle-color": "red",
+              "circle-opacity": 0.85,
+            },
+          });
+        }
       }
       // map.addFeatureQuery(name)
     } catch (error) {
@@ -499,33 +556,25 @@ inputsearch[0].addEventListener('input', function(event) {
 
       const menuGroup = document.getElementById("menu-group");
 
+      if (featureTree !== "all") {
+        const nameTitle = document.createElement("div");
+        nameTitle.id = "titleDivMenu";
+        nameTitle.textContent = name;
+        menuGroup.appendChild(nameTitle);
 
-      
-if (featureTree !== 'all'){
-
-
-const nameTitle = document.createElement("div");
-nameTitle.id = "titleDivMenu"
-nameTitle.textContent = name;
-menuGroup.appendChild(nameTitle);
-
-const featureTreeTitle = document.createElement("div");
-featureTreeTitle.id = "titleDivMenuSub"
-featureTreeTitle.textContent = `📂 ${featureTree}`;
-menuGroup.appendChild(featureTreeTitle);
-
-
-}else{
-
-}
+        const featureTreeTitle = document.createElement("div");
+        featureTreeTitle.id = "titleDivMenuSub";
+        featureTreeTitle.textContent = `📂 ${featureTree}`;
+        menuGroup.appendChild(featureTreeTitle);
+      } else {
+      }
 
       let type = geojson.features[0].geometry.type;
 
-if ( featureTree  === 'all'){
-
-      if (type.includes("ine")) {
-        //line
-          if (options !== undefined){
+      if (featureTree === "all") {
+        if (type.includes("ine")) {
+          //line
+          if (options !== undefined) {
             map.addLayer({
               id: name,
               type: "line",
@@ -538,126 +587,108 @@ if ( featureTree  === 'all'){
               },
               paint: options,
             });
-          }else{
-              map.addLayer({
-                id: name,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  'line-color': 'black',
-                  'line-width': 2,
-                  'line-opacity': 1
-                }
-              });
-            }
-      }
-      if (type.includes("olygon")) {
-        //polygon
-        if (options !== undefined){
-        map.addLayer({
-          id: name,
-          type: "fill",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options
-        });
-      }else{
-        map.addLayer({
-          id: name,
-          type: "fill",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            'fill-color': 'blue',
-            'fill-opacity': 0.6
+          } else {
+            map.addLayer({
+              id: name,
+              type: "line",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: {
+                "line-color": "black",
+                "line-width": 2,
+                "line-opacity": 1,
+              },
+            });
           }
-        });
-      }
-      }
-      if (type.includes("oint")) {
-        //point
-        if (options !== undefined){
-        map.addLayer({
-          id: name,
-          type: "circle",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: options,
-        });
-      }else{
-        map.addLayer({
-          id: name,
-          type: "circle",
-          source: {
-            type: "geojson",
-            data: geojson,
-          },
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            "circle-color": "red",
-            "circle-opacity": 0.85,
-          },
-        });
+        }
+        if (type.includes("olygon")) {
+          //polygon
+          if (options !== undefined) {
+            map.addLayer({
+              id: name,
+              type: "fill",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: options,
+            });
+          } else {
+            map.addLayer({
+              id: name,
+              type: "fill",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: {
+                "fill-color": "blue",
+                "fill-opacity": 0.6,
+              },
+            });
+          }
+        }
+        if (type.includes("oint")) {
+          //point
+          if (options !== undefined) {
+            map.addLayer({
+              id: name,
+              type: "circle",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: options,
+            });
+          } else {
+            map.addLayer({
+              id: name,
+              type: "circle",
+              source: {
+                type: "geojson",
+                data: geojson,
+              },
+              layout: {
+                visibility: "visible",
+              },
+              paint: {
+                "circle-color": "red",
+                "circle-opacity": 0.85,
+              },
+            });
+          }
+        }
+        // geojsonStore  = geojson
+        // map.addLayerTree(geojson);
 
-      }
-      }
-      // geojsonStore  = geojson
-      // map.addLayerTree(geojson);
+        map.addMenuItem(name);
+        // map.addFeatureQuery(name)
+      } else {
+        let field = featureTree;
 
-      map.addMenuItem(name);
-// map.addFeatureQuery(name)
-    }else{
+        const layers = {};
+        geojson.features.forEach((feature) => {
+          const fieldMarker = feature.properties[field];
+          // aqui podriem mirar si te simbologia i afegir-la a la capa
 
-let field= featureTree
-
-const layers = {};
-geojson.features.forEach(feature => {
-    const fieldMarker = feature.properties[field];
-    // aqui podriem mirar si te simbologia i afegir-la a la capa
-
-
-    if (!layers[fieldMarker]) {
-
-        if (type.includes("ine")) {
-          //line
-            if (options !== undefined){
-              map.addLayer({
-                id: fieldMarker,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                filter: ['==', `${field}`, fieldMarker] ,
-                paint: options,
-              });
-            }else{
+          if (!layers[fieldMarker]) {
+            if (type.includes("ine")) {
+              //line
+              if (options !== undefined) {
                 map.addLayer({
                   id: fieldMarker,
                   type: "line",
@@ -668,104 +699,107 @@ geojson.features.forEach(feature => {
                   layout: {
                     visibility: "visible",
                   },
-                  filter: ['==', `${field}`, fieldMarker] ,
+                  filter: ["==", `${field}`, fieldMarker],
+                  paint: options,
+                });
+              } else {
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "line",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  filter: ["==", `${field}`, fieldMarker],
                   paint: {
-                    'line-color': 'black',
-                    'line-width': 2,
-                    'line-opacity': 1
-                  }
+                    "line-color": "black",
+                    "line-width": 2,
+                    "line-opacity": 1,
+                  },
                 });
               }
-        }
-        if (type.includes("olygon")) {
-          //polygon
-          if (options !== undefined){
-          map.addLayer({
-            id: fieldMarker,
-            type: "fill",
-            source: {
-              type: "geojson",
-              data: geojson,
-            },
-            layout: {
-              visibility: "visible",
-            },
-            filter: ['==', `${field}`, fieldMarker] ,
-            paint: options
-          });
-        }else{
-          map.addLayer({
-            id: fieldMarker,
-            type: "fill",
-            source: {
-              type: "geojson",
-              data: geojson,
-            },
-            layout: {
-              visibility: "visible",
-            },
-            filter: ['==', `${field}`, fieldMarker] ,
-            paint: {
-              'fill-color': 'blue',
-              'fill-opacity': 0.6
             }
-          });
-        }
-        }
-        if (type.includes("oint")) {
-          //point
-          if (options !== undefined){
-          map.addLayer({
-            id: fieldMarker,
-            type: "circle",
-            source: {
-              type: "geojson",
-              data: geojson,
-            },
-            layout: {
-              visibility: "visible",
-            },
-            filter: ['==', `${field}`, fieldMarker] ,
-            paint: options,
-          });
-        }else{
-          map.addLayer({
-            id: fieldMarker,
-            type: "circle",
-            source: {
-              type: "geojson",
-              data: geojson,
-            },
-            layout: {
-              visibility: "visible",
-            },
-            
-            filter: ['==', `${field}`, fieldMarker] ,
-            paint: {
-              "circle-color": "red",
-              "circle-opacity": 0.85,
-            },
-          });
-  
-        }
-        }
+            if (type.includes("olygon")) {
+              //polygon
+              if (options !== undefined) {
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "fill",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  filter: ["==", `${field}`, fieldMarker],
+                  paint: options,
+                });
+              } else {
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "fill",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  filter: ["==", `${field}`, fieldMarker],
+                  paint: {
+                    "fill-color": "blue",
+                    "fill-opacity": 0.6,
+                  },
+                });
+              }
+            }
+            if (type.includes("oint")) {
+              //point
+              if (options !== undefined) {
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "circle",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  filter: ["==", `${field}`, fieldMarker],
+                  paint: options,
+                });
+              } else {
+                map.addLayer({
+                  id: fieldMarker,
+                  type: "circle",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
 
-        // Agregar la nueva capa al objeto de capas
-        layers[fieldMarker] = true;
-        map.addMenuItem(fieldMarker);
-    }
-});
+                  filter: ["==", `${field}`, fieldMarker],
+                  paint: {
+                    "circle-color": "red",
+                    "circle-opacity": 0.85,
+                  },
+                });
+              }
+            }
 
-
-    }
-
-    
-
-
-
-
-
-
+            // Agregar la nueva capa al objeto de capas
+            layers[fieldMarker] = true;
+            map.addMenuItem(fieldMarker);
+          }
+        });
+      }
 
       //add feature queries
       // map.addFeatureQuery(name);
@@ -853,7 +887,7 @@ geojson.features.forEach(feature => {
    */
   getSource(source) {
     try {
-     return this.map.getSource(source);
+      return this.map.getSource(source);
     } catch (error) {
       console.error(`Error getting source: ${error.message}`);
     }
@@ -871,8 +905,6 @@ geojson.features.forEach(feature => {
       console.error(`Error adding source: ${error.message}`);
     }
   }
-
-
 
   /**
    * Sets the style of the map.
@@ -935,8 +967,7 @@ geojson.features.forEach(feature => {
     }
   }
 
-
-    /**
+  /**
    * Set filter for specified style layer.
    * @function setFilter
    * @param {string} layerId - The ID of the layer to retrieve.
@@ -944,13 +975,13 @@ geojson.features.forEach(feature => {
    * @param {string} options - Options object.
    */
 
-    setFilter(layerId ,filter, options) {
-      try {
-        return this.map.setFilter(layerId, filter, options);
-      } catch (error) {
-        console.error(`Error setting filter: ${error.message}`);
-      }
+  setFilter(layerId, filter, options) {
+    try {
+      return this.map.setFilter(layerId, filter, options);
+    } catch (error) {
+      console.error(`Error setting filter: ${error.message}`);
     }
+  }
   /**
    * Jumps to the specified coordinates and zoom on the map.
    * @function jumpTo
@@ -1181,18 +1212,18 @@ geojson.features.forEach(feature => {
   addLayerGeoJSON(layer) {
     try {
       // this.map.on("load", () => {
-        this.map.addSource(`${layer.id}-sourceIcgcMap`, {
-          type: "geojson",
-          data: layer.data,
-        });
+      this.map.addSource(`${layer.id}-sourceIcgcMap`, {
+        type: "geojson",
+        data: layer.data,
+      });
 
-        this.map.addLayer({
-          id: `${layer.id}-layerIcgcMap`,
-          type: layer.layerType,
-          source: `${layer.id}-sourceIcgcMap`,
-          layout: layer.layout,
-          paint: layer.paint,
-        });
+      this.map.addLayer({
+        id: `${layer.id}-layerIcgcMap`,
+        type: layer.layerType,
+        source: `${layer.id}-sourceIcgcMap`,
+        layout: layer.layout,
+        paint: layer.paint,
+      });
       // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
@@ -1210,18 +1241,18 @@ geojson.features.forEach(feature => {
   addLayerWMS(layer) {
     try {
       // this.map.on("load", () => {
-        console.log("holaaddlayerwms", layer);
-        this.map.addSource(`${layer.id}-sourceIcgcMap`, {
-          type: "raster",
-          tiles: [layer.tiles],
-          tileSize: 256,
-        });
-        this.map.addLayer({
-          id: `${layer.id}-layerIcgcMap`,
-          type: "raster",
-          source: `${layer.id}-sourceIcgcMap`,
-          paint: {},
-        });
+      console.log("holaaddlayerwms", layer);
+      this.map.addSource(`${layer.id}-sourceIcgcMap`, {
+        type: "raster",
+        tiles: [layer.tiles],
+        tileSize: 256,
+      });
+      this.map.addLayer({
+        id: `${layer.id}-layerIcgcMap`,
+        type: "raster",
+        source: `${layer.id}-sourceIcgcMap`,
+        paint: {},
+      });
       // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
@@ -1307,19 +1338,19 @@ geojson.features.forEach(feature => {
 
       const basemapGroup = document.getElementById("basemap-group");
       // this.map.on("load", () => {
-        for (const url of basesArray) {
-          for (const key of Object.keys(defaultOptions.baseStyles)) {
-            const item = defaultOptions.baseStyles[key];
-            if (url === item.url) {
-              const div = document.createElement("div");
-              div.className = "basemap-item";
-              div.title = item.key;
-              div.style.backgroundImage = `url('${item.image}')`;
-              basemapGroup.appendChild(div);
-              div.addEventListener("click", () => handleClick(item.url));
-            }
+      for (const url of basesArray) {
+        for (const key of Object.keys(defaultOptions.baseStyles)) {
+          const item = defaultOptions.baseStyles[key];
+          if (url === item.url) {
+            const div = document.createElement("div");
+            div.className = "basemap-item";
+            div.title = item.key;
+            div.style.backgroundImage = `url('${item.image}')`;
+            basemapGroup.appendChild(div);
+            div.addEventListener("click", () => handleClick(item.url));
           }
         }
+      }
       // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
@@ -1342,14 +1373,14 @@ geojson.features.forEach(feature => {
 
       const basemapGroup = document.getElementById("basemap-group");
       // this.map.on("load", () => {
-        baseLayers.forEach((base) => {
-          const div = document.createElement("div");
-          div.className = "basemap-item";
-          div.title = base.label;
-          div.style.backgroundImage = `url('${base.image}')`;
-          basemapGroup.appendChild(div);
-          div.addEventListener("click", () => handleClick(base));
-        });
+      baseLayers.forEach((base) => {
+        const div = document.createElement("div");
+        div.className = "basemap-item";
+        div.title = base.label;
+        div.style.backgroundImage = `url('${base.image}')`;
+        basemapGroup.appendChild(div);
+        div.addEventListener("click", () => handleClick(base));
+      });
       // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
@@ -1367,50 +1398,50 @@ geojson.features.forEach(feature => {
       let description;
 
       // this.map.on("load", () => {
-        // console.log('layer', layerName, options)
-        this.map.on("mouseenter", layerName, () => {
-          this.map.getCanvas().style.cursor = "pointer";
-        });
+      // console.log('layer', layerName, options)
+      this.map.on("mouseenter", layerName, () => {
+        this.map.getCanvas().style.cursor = "pointer";
+      });
 
-        this.map.on("mouseleave", layerName, () => {
-          this.map.getCanvas().style.cursor = "";
-        });
-        this.map.on("click", (e) => {
-          let features = this.map.queryRenderedFeatures(e.point);
-          if (features && features[0].source === layerName) {
-            let coordinates = [e.lngLat.lng, e.lngLat.lat];
+      this.map.on("mouseleave", layerName, () => {
+        this.map.getCanvas().style.cursor = "";
+      });
+      this.map.on("click", (e) => {
+        let features = this.map.queryRenderedFeatures(e.point);
+        if (features && features[0].source === layerName) {
+          let coordinates = [e.lngLat.lng, e.lngLat.lat];
 
-            if (options !== undefined && options.length > 0) {
-              if (options !== null) {
-                let text = "";
-                options.forEach((prop) => {
-                  let pr = features[0].properties[prop];
-
-                  text = text + `<h4>${pr}</h4>`;
-                });
-                description = text;
-                map.addPopup(coordinates, description);
-              }
-            } else {
-              // console.log('hello')
+          if (options !== undefined && options.length > 0) {
+            if (options !== null) {
               let text = "";
-              for (const key in features[0].properties) {
-                //  console.log('key', key)
+              options.forEach((prop) => {
+                let pr = features[0].properties[prop];
 
-                text +=
-                  "<b>" + key + "</b>:" + features[0].properties[key] + "<br>";
-              }
-
+                text = text + `<h4>${pr}</h4>`;
+              });
               description = text;
               map.addPopup(coordinates, description);
-              // popup.setLngLat(e.lngLat)
-              //   .setHTML(text)
-              //   .addTo(map);
-
-              // });
             }
+          } else {
+            // console.log('hello')
+            let text = "";
+            for (const key in features[0].properties) {
+              //  console.log('key', key)
+
+              text +=
+                "<b>" + key + "</b>:" + features[0].properties[key] + "<br>";
+            }
+
+            description = text;
+            map.addPopup(coordinates, description);
+            // popup.setLngLat(e.lngLat)
+            //   .setHTML(text)
+            //   .addTo(map);
+
+            // });
           }
-        });
+        }
+      });
       // });
     } catch (error) {
       console.error(`Error adding feature query: ${error.message}`);
@@ -1502,36 +1533,36 @@ geojson.features.forEach(feature => {
       };
 
       // this.map.on("load", () => {
-        this.map.addSource("geojson", {
-          type: "geojson",
-          data: geojson,
-        });
+      this.map.addSource("geojson", {
+        type: "geojson",
+        data: geojson,
+      });
 
-        // Add styles to the map
-        this.map.addLayer({
-          id: "measure-points",
-          type: "circle",
-          source: "geojson",
-          paint: {
-            "circle-radius": 5,
-            "circle-color": "#000",
-          },
-          filter: ["in", "$type", "Point"],
-        });
-        this.map.addLayer({
-          id: "measure-lines",
-          type: "line",
-          source: "geojson",
-          layout: {
-            "line-cap": "round",
-            "line-join": "round",
-          },
-          paint: {
-            "line-color": "#000",
-            "line-width": 2.5,
-          },
-          filter: ["in", "$type", "LineString"],
-        });
+      // Add styles to the map
+      this.map.addLayer({
+        id: "measure-points",
+        type: "circle",
+        source: "geojson",
+        paint: {
+          "circle-radius": 5,
+          "circle-color": "#000",
+        },
+        filter: ["in", "$type", "Point"],
+      });
+      this.map.addLayer({
+        id: "measure-lines",
+        type: "line",
+        source: "geojson",
+        layout: {
+          "line-cap": "round",
+          "line-join": "round",
+        },
+        paint: {
+          "line-color": "#000",
+          "line-width": 2.5,
+        },
+        filter: ["in", "$type", "LineString"],
+      });
       // });
 
       this.map.on("click", (e) => {
@@ -1683,10 +1714,10 @@ geojson.features.forEach(feature => {
   addPopup(coordinates, text) {
     try {
       // this.map.on("load", () => {
-        new maplibregl.Popup()
-          .setLngLat(coordinates)
-          .setHTML(text)
-          .addTo(this.map);
+      new maplibregl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(text)
+        .addTo(this.map);
       // });
     } catch (error) {}
   }
@@ -1770,30 +1801,30 @@ geojson.features.forEach(feature => {
    */
   addMenuItem(name) {
     try {
-      if (name.length > 0){
-      const menuGroup = document.getElementById("menu-group");
+      if (name.length > 0) {
+        const menuGroup = document.getElementById("menu-group");
 
-      const input = document.createElement("input");
+        const input = document.createElement("input");
 
-      input.type = "checkbox";
-      input.id = name;
-      input.checked = true;
+        input.type = "checkbox";
+        input.id = name;
+        input.checked = true;
 
-      menuGroup.appendChild(input);
+        menuGroup.appendChild(input);
 
-      const label = document.createElement("label");
-      label.setAttribute("for", name);
-      label.textContent = name;
-      menuGroup.appendChild(label);
+        const label = document.createElement("label");
+        label.setAttribute("for", name);
+        label.textContent = name;
+        menuGroup.appendChild(label);
 
-      input.addEventListener("change", (e) => {
-        this.map.setLayoutProperty(
-          name,
-          "visibility",
-          e.target.checked ? "visible" : "none"
-        );
-      });
-    }
+        input.addEventListener("change", (e) => {
+          this.map.setLayoutProperty(
+            name,
+            "visibility",
+            e.target.checked ? "visible" : "none"
+          );
+        });
+      }
     } catch (error) {
       console.error(`Error adding menu item: ${error.message}`);
     }
@@ -1813,57 +1844,57 @@ geojson.features.forEach(feature => {
 
       const filterGroup = document.getElementById("filter-group");
       // this.map.on("load", () => {
-        const layers = this.map.getStyle().layers;
-        let firstSymbolId;
-        for (let i = 0; i < layers.length; i++) {
-          if (layers[i].type === "symbol") {
-            firstSymbolId = layers[i].id;
-            break;
-          }
+      const layers = this.map.getStyle().layers;
+      let firstSymbolId;
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].type === "symbol") {
+          firstSymbolId = layers[i].id;
+          break;
         }
-        this.map.addSource(`${options.id}-source`, {
-          type: options.type,
-          data: places,
-        });
-        places.features.forEach((feature) => {
-          const symbol = feature.properties["icon"];
-          const layerID = `poi-${symbol}`;
+      }
+      this.map.addSource(`${options.id}-source`, {
+        type: options.type,
+        data: places,
+      });
+      places.features.forEach((feature) => {
+        const symbol = feature.properties["icon"];
+        const layerID = `poi-${symbol}`;
 
-          if (!this.map.getLayer(layerID)) {
-            this.map.addLayer(
-              {
-                id: layerID,
-                type: "circle",
-                source: `${options.id}-source`,
-                paint: {
-                  "circle-radius": 6,
-                  "circle-color": "#B42222",
-                },
-                filter: ["==", "icon", symbol],
+        if (!this.map.getLayer(layerID)) {
+          this.map.addLayer(
+            {
+              id: layerID,
+              type: "circle",
+              source: `${options.id}-source`,
+              paint: {
+                "circle-radius": 6,
+                "circle-color": "#B42222",
               },
-              firstSymbolId
+              filter: ["==", "icon", symbol],
+            },
+            firstSymbolId
+          );
+
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.id = layerID;
+          input.checked = true;
+          filterGroup.appendChild(input);
+
+          const label = document.createElement("label");
+          label.setAttribute("for", layerID);
+          label.textContent = symbol;
+          filterGroup.appendChild(label);
+
+          input.addEventListener("change", (e) => {
+            this.map.setLayoutProperty(
+              layerID,
+              "visibility",
+              e.target.checked ? "visible" : "none"
             );
-
-            const input = document.createElement("input");
-            input.type = "checkbox";
-            input.id = layerID;
-            input.checked = true;
-            filterGroup.appendChild(input);
-
-            const label = document.createElement("label");
-            label.setAttribute("for", layerID);
-            label.textContent = symbol;
-            filterGroup.appendChild(label);
-
-            input.addEventListener("change", (e) => {
-              this.map.setLayoutProperty(
-                layerID,
-                "visibility",
-                e.target.checked ? "visible" : "none"
-              );
-            });
-          }
-        });
+          });
+        }
+      });
       // });
     } catch (error) {
       console.error(`Error adding layer tree: ${error.message}`);
@@ -1953,7 +1984,7 @@ geojson.features.forEach(feature => {
    * Adds an ICGC image layer to the map based on the specified name and year.
    * @function addImageLayerICGC
    * @param {string} name - The name of the layer. Mandatory. options: 'orto', 'geo', 'slope', 'dem', 'relleu', etc.
-    */
+   */
   addImageLayerICGC(name) {
     try {
       console.log("name", name);
@@ -2081,44 +2112,55 @@ geojson.features.forEach(feature => {
 
         const response = await fetch(layerUrl);
 
-
         // this.map.on("load", async () => {
-          const fc = { type: "FeatureCollection", features: [] };
-          for await (const f of flatgeobuf.deserialize(response.body))
-       
-            fc.features.push(f);
+        const fc = { type: "FeatureCollection", features: [] };
+        for await (const f of flatgeobuf.deserialize(response.body))
+          fc.features.push(f);
 
-// console.log('ffff', fc, response)
+        // console.log('ffff', fc, response)
 
-          let src = name + "-source";
+        let src = name + "-source";
 
-          this.map.addSource(src, {
-            type: "geojson",
-            data: fc,
+        this.map.addSource(src, {
+          type: "geojson",
+          data: fc,
+        });
+
+        if (layerUrl.includes("text")) {
+          // console.log('entro', name)
+          this.map.addLayer({
+            id: name + "-text",
+            type: "symbol",
+            source: src,
+            layout: {
+              "text-letter-spacing": 0.1,
+              "text-size": {
+                base: 1.2,
+                stops: [
+                  [8, 0],
+                  [12, 14],
+                  [15, 15],
+                ],
+              },
+              "text-font": ["FiraSans-Regular"],
+              "text-field": ["get", "NOM_AC"],
+              "text-transform": "none",
+              "text-max-width": 25,
+              visibility: "visible",
+              "text-justify": "right",
+              "text-anchor": "top",
+              "text-allow-overlap": false,
+              "symbol-spacing": 2,
+              "text-line-height": 1,
+            },
+            paint: {
+              "text-halo-blur": 0.5,
+              "text-color": "rgba(90, 7, 7, 1)",
+              "text-halo-width": 2,
+              "text-halo-color": "rgba(255, 255, 255,0.8)",
+            },
           });
-
-          if (layerUrl.includes('text')){
-            // console.log('entro', name)
-            this.map.addLayer({
-              id: name + "-text",
-              type: "symbol",
-              source: src,
-              layout:{
-                "text-letter-spacing":0.1,
-                "text-size":{"base":1.2,"stops":[[8,0],[12,14],[15,15]]},
-                "text-font":["FiraSans-Regular"],
-                "text-field":["get","NOM_AC"],
-                "text-transform":"none",
-                "text-max-width":25,
-                "visibility":"visible",
-                "text-justify":"right",
-                "text-anchor":"top",
-                "text-allow-overlap":false,
-                "symbol-spacing":2,
-                "text-line-height":1},
-              paint:{"text-halo-blur":0.5,"text-color":"rgba(90, 7, 7, 1)","text-halo-width":2,"text-halo-color":"rgba(255, 255, 255,0.8)"}
-            });
-          }else{
+        } else {
           this.map.addLayer({
             id: name + "-fill",
             type: "fill",
@@ -2148,7 +2190,7 @@ geojson.features.forEach(feature => {
               "line-width": 1,
             },
           });
-          }
+        }
 
         // });
       }
@@ -2165,70 +2207,67 @@ geojson.features.forEach(feature => {
    */
   addTerrainICGC(resolution, positionButton) {
     // this.map.on("load", () => {
-      try {
-        // let op = Terrains.find(
-        //   (objeto) => objeto.name === resolution
-        // );
-        // console.log('res', resolution)
-        let op;
-        for (const key in Terrains) {
-          if (Terrains.hasOwnProperty(key)) {
-            const objeto = Terrains[key];
+    try {
+      // let op = Terrains.find(
+      //   (objeto) => objeto.name === resolution
+      // );
+      // console.log('res', resolution)
+      let op;
+      for (const key in Terrains) {
+        if (Terrains.hasOwnProperty(key)) {
+          const objeto = Terrains[key];
 
-            if (objeto === resolution) {
-              op = objeto;
-
-            }
+          if (objeto === resolution) {
+            op = objeto;
           }
         }
-
-        let urlTerrainICGC = op;
-if (resolution.includes('terrarium') ){
-  // console.log('rsssssses', resolution)
-       // Add terrain source
-       this.map.addSource("terrainICGC-src", {
-        type: "raster-dem",
-        tiles: [urlTerrainICGC],
-        tileSize: 512,
-        encoding: "terrarium",
-        maxzoom: 16,
-      });
-}else{
-  this.map.addSource("terrainICGC-src", {
-    type: "raster-dem",
-    tiles: [urlTerrainICGC],
-    tileSize: 512,
-    maxzoom: 16,
-  });
-}
- 
-
-    
-        this.map.setTerrain({
-          source: "terrainICGC-src",
-          exaggeration: 1.5,
-        });
-
-        if (positionButton === undefined) {
-          positionButton = "top-right";
-        }
-        // this.map.addControl(
-        //   new maplibregl.TerrainControl({
-        //     source: "terrainICGC-src",
-        //     exaggeration: 1.5,
-        //   }), positionButton
-        // );
-        this.map.addControl(
-          new Pitch3DToggleControl({
-            pitch: 90,
-            bearing: null,
-            minpitchzoom: null,
-          }),
-          positionButton
-        );
-      } catch (error) {
-        console.error(`Error adding 3D terrain: ${error.message}`);
       }
+
+      let urlTerrainICGC = op;
+      if (resolution.includes("terrarium")) {
+        // console.log('rsssssses', resolution)
+        // Add terrain source
+        this.map.addSource("terrainICGC-src", {
+          type: "raster-dem",
+          tiles: [urlTerrainICGC],
+          tileSize: 512,
+          encoding: "terrarium",
+          maxzoom: 16,
+        });
+      } else {
+        this.map.addSource("terrainICGC-src", {
+          type: "raster-dem",
+          tiles: [urlTerrainICGC],
+          tileSize: 512,
+          maxzoom: 16,
+        });
+      }
+
+      this.map.setTerrain({
+        source: "terrainICGC-src",
+        exaggeration: 1.5,
+      });
+
+      if (positionButton === undefined) {
+        positionButton = "top-right";
+      }
+      // this.map.addControl(
+      //   new maplibregl.TerrainControl({
+      //     source: "terrainICGC-src",
+      //     exaggeration: 1.5,
+      //   }), positionButton
+      // );
+      this.map.addControl(
+        new Pitch3DToggleControl({
+          pitch: 90,
+          bearing: null,
+          minpitchzoom: null,
+        }),
+        positionButton
+      );
+    } catch (error) {
+      console.error(`Error adding 3D terrain: ${error.message}`);
+    }
     // }); //'load end
   }
 }
