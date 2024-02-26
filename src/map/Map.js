@@ -2061,7 +2061,7 @@ geojson.features.forEach(feature => {
       }
 
       let name = getKeyByUrl(layerUrl);
-      console.log('name', name)
+      // console.log('name', name)
 
       if (name === null) {
         // let op = Layers.VectorAdmin.find((objeto) =>
@@ -2087,12 +2087,38 @@ geojson.features.forEach(feature => {
           for await (const f of flatgeobuf.deserialize(response.body))
        
             fc.features.push(f);
+
+// console.log('ffff', fc, response)
+
           let src = name + "-source";
 
           this.map.addSource(src, {
             type: "geojson",
             data: fc,
           });
+
+          if (layerUrl.includes('text')){
+            // console.log('entro', name)
+            this.map.addLayer({
+              id: name + "-text",
+              type: "symbol",
+              source: src,
+              layout:{
+                "text-letter-spacing":0.1,
+                "text-size":{"base":1.2,"stops":[[8,0],[12,14],[15,15]]},
+                "text-font":["FiraSans-Regular"],
+                "text-field":["get","NOM_AC"],
+                "text-transform":"none",
+                "text-max-width":25,
+                "visibility":"visible",
+                "text-justify":"right",
+                "text-anchor":"top",
+                "text-allow-overlap":false,
+                "symbol-spacing":2,
+                "text-line-height":1},
+              paint:{"text-halo-blur":0.5,"text-color":"rgba(90, 7, 7, 1)","text-halo-width":2,"text-halo-color":"rgba(255, 255, 255,0.8)"}
+            });
+          }else{
           this.map.addLayer({
             id: name + "-fill",
             type: "fill",
@@ -2122,6 +2148,8 @@ geojson.features.forEach(feature => {
               "line-width": 1,
             },
           });
+          }
+
         // });
       }
     } catch (error) {
