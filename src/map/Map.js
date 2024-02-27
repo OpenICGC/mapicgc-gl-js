@@ -1,5 +1,5 @@
 import maplibregl from "maplibre-gl";
-// import flatgeobuf from "flatgeobuf";
+//import flatgeobuf from "flatgeobuf";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 // import MeasuresControl from 'maplibre-gl-measures';
 import { MapboxLayer } from "@deck.gl/mapbox";
@@ -72,7 +72,6 @@ export default class Map {
     );
 
     this.map.on("load", async () => {
-      // console.log('sss', this.map.getStyle().name)
 
       if (window.document.querySelector(".maplibregl-compact-show")) {
         var element = window.document.querySelector(".maplibregl-compact-show");
@@ -83,124 +82,6 @@ export default class Map {
     });
   }
 
-  _3DFyStyle(image) {
-    this.map.addImage("stick", image.data);
-
-    this.map.getStyle().layers.forEach((layer) => {
-      if (layer["source-layer"] === "place" && layer.minzoom >= 15) {
-        if (image) {
-          const layerTest = layer.id;
-          this.map.setLayoutProperty(layerTest, "icon-image", "stick");
-          this.map.setLayoutProperty(layerTest, "text-offset", [0, -6]);
-          this.map.setLayoutProperty(layerTest, "symbol-placement", "point");
-          this.map.setLayoutProperty(layerTest, "symbol-avoid-edges", false);
-          this.map.setLayoutProperty(layerTest, "text-allow-overlap", true);
-          this.map.setLayoutProperty(layerTest, "text-ignore-placement", false);
-          this.map.setLayoutProperty(layerTest, "text-pitch-alignment", "auto");
-          this.map.setLayoutProperty(
-            layerTest,
-            "text-rotation-alignment",
-            "auto"
-          );
-          this.map.setLayoutProperty(layerTest, "text-justify", "center");
-          this.map.setLayoutProperty(layerTest, "text-anchor", "top");
-          this.map.setLayoutProperty(layerTest, "icon-anchor", "bottom");
-          this.map.setLayoutProperty(layerTest, "visibility", "visible");
-          this.map.setPaintProperty(layerTest, "text-color", "#000000");
-        }
-      }
-    });
-  }
-
-  async _dealOrto3dStyle(name) {
-    try {
-      if (name == "orto3d") {
-        const image = await this.map.loadImage(
-          defaultOptions.map3dOptions.imageIcon
-        );
-
-        this.map.setMaxZoom(18.8);
-        this.map.easeTo({ pitch: 45 });
-        const ambientLight = new AmbientLight({
-          intensity: 4,
-        });
-
-        const lightingEffect = new LightingEffect({
-          ambientLight,
-        });
-
-        this.map.setTerrain({
-          source: defaultOptions.map3dOptions.terrainSource,
-          exaggeration: defaultOptions.map3dOptions.exaggeration,
-        });
-
-        const citiesMapboxLayer = this._createCitiesMapboxLayer();
-
-        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.addLayer(
-            citiesMapboxLayer,
-            defaultOptions.map3dOptions.layerIdOrder
-          );
-          this.map.setLayerZoomRange(
-            defaultOptions.map3dOptions.layerId3d,
-            defaultOptions.map3dOptions.minZoomRange,
-            defaultOptions.map3dOptions.maxZoomRange
-          );
-
-          citiesMapboxLayer.deck.setProps({
-            effects: [lightingEffect],
-          });
-
-          console.info(image);
-          this._3DFyStyle(image);
-        }
-      } else {
-        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
-
-          this.map.setTerrain(null);
-        }
-      }
-    } catch (error) {
-      console.error(`Error dealing orto 3D: ${error.message}`);
-      return null;
-    }
-  }
-
-  _createCitiesMapboxLayer() {
-    try {
-      const citiesMapboxLayer = new MapboxLayer({
-        id: defaultOptions.map3dOptions.layerId3d,
-        type: Tile3DLayer,
-        data: defaultOptions.map3dOptions.urlTilesetCities,
-        loader: Tiles3DLoader,
-
-        loadOptions: {
-          tileset: {
-            viewDistanceScale: 1,
-            updateTransforms: false,
-            maximumScreenSpaceError:
-              defaultOptions.map3dOptions.spaceErrorFactor,
-          },
-        },
-
-        onTilesetLoad: (tileset3d) => {
-          tileset3d.options.maximumScreenSpaceError =
-            defaultOptions.map3dOptions.spaceErrorFactor;
-        },
-        onTileLoad: (tileHeader) => {
-          tileHeader.content.cartographicOrigin.z -=
-            defaultOptions.map3dOptions.zfactor;
-        },
-        operation: "terrain+draw",
-      });
-
-      return citiesMapboxLayer;
-    } catch (error) {
-      console.error(`Error adding MapboxLayer: ${error.message}`);
-      return null;
-    }
-  }
 
   /**
    * Add geocoder.
@@ -2270,4 +2151,135 @@ export default class Map {
     }
     // }); //'load end
   }
-}
+
+
+//Internal methods
+
+
+  async _raiseText3DStyle() {
+
+    try {
+      const image = await this.map.loadImage(
+        defaultOptions.map3dOptions.imageIcon
+      );
+    this.map.addImage("stick", image.data);
+
+    this.map.getStyle().layers.forEach((layer) => {
+      if (layer["source-layer"] === defaultOptions.map3dOptions.sourceLayerFilterId && layer.minzoom >= defaultOptions.map3dOptions.minZoomFilter) {
+        if (image) {
+          const lyId = layer.id;
+          this.map.setLayoutProperty(lyId, "icon-image", "stick");
+          this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
+          this.map.setLayoutProperty(lyId, "symbol-placement", "point");
+          this.map.setLayoutProperty(lyId, "symbol-avoid-edges", false);
+          this.map.setLayoutProperty(lyId, "text-allow-overlap", true);
+          this.map.setLayoutProperty(lyId, "text-ignore-placement", false);
+          this.map.setLayoutProperty(lyId, "text-pitch-alignment", "auto");
+          this.map.setLayoutProperty(lyId,"text-rotation-alignment","auto");
+          this.map.setLayoutProperty(lyId, "text-justify", "center");
+          this.map.setLayoutProperty(lyId, "text-anchor", "bottom");
+          this.map.setLayoutProperty(lyId, "icon-anchor", "bottom");
+          this.map.setPaintProperty(lyId, "text-color", "#ffffff");
+          this.map.setPaintProperty(lyId, "text-halo-color", "#000000");
+          this.map.setPaintProperty(lyId, "text-halo-width", 2);
+        }
+      }
+    });
+  } catch (error) {
+    console.error(`Error dealing orto 3D: ${error.message}`);
+    return null;
+  }
+  }
+
+   _dealOrto3dStyle(name) {
+    try {
+      if (name == "orto3d") {
+       
+
+        this.map.setMaxZoom(18.8);
+        this.map.easeTo({ pitch: 45 });
+        const ambientLight = new AmbientLight({
+          intensity: 4,
+        });
+
+        const lightingEffect = new LightingEffect({
+          ambientLight,
+        });
+
+        this.map.setTerrain({
+          source: defaultOptions.map3dOptions.terrainSource,
+          exaggeration: defaultOptions.map3dOptions.exaggeration,
+        });
+
+        const citiesMapboxLayer = this._createCitiesMapboxLayer();
+
+        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.addLayer(
+            citiesMapboxLayer,
+            defaultOptions.map3dOptions.layerIdOrder
+          );
+          this.map.setLayerZoomRange(
+            defaultOptions.map3dOptions.layerId3d,
+            defaultOptions.map3dOptions.minZoomRange,
+            defaultOptions.map3dOptions.maxZoomRange
+          );
+
+          citiesMapboxLayer.deck.setProps({
+            effects: [lightingEffect],
+          });
+
+        
+          this._raiseText3DStyle();
+        }
+      } else {
+        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
+
+          this.map.setTerrain(null);
+        }
+      }
+    } catch (error) {
+      console.error(`Error dealing orto 3D: ${error.message}`);
+      return null;
+    }
+  }
+
+  _createCitiesMapboxLayer() {
+    try {
+      const citiesMapboxLayer = new MapboxLayer({
+        id: defaultOptions.map3dOptions.layerId3d,
+        type: Tile3DLayer,
+        data: defaultOptions.map3dOptions.urlTilesetCities,
+        loader: Tiles3DLoader,
+
+        loadOptions: {
+          tileset: {
+            viewDistanceScale: 1,
+            updateTransforms: false,
+            maximumScreenSpaceError:
+              defaultOptions.map3dOptions.spaceErrorFactor,
+          },
+        },
+
+        onTilesetLoad: (tileset3d) => {
+          tileset3d.options.maximumScreenSpaceError =
+            defaultOptions.map3dOptions.spaceErrorFactor;
+        },
+        onTileLoad: (tileHeader) => {
+          tileHeader.content.cartographicOrigin.z -=
+            defaultOptions.map3dOptions.zfactor;
+        },
+        operation: "terrain+draw",
+      });
+
+      return citiesMapboxLayer;
+    } catch (error) {
+      console.error(`Error adding MapboxLayer: ${error.message}`);
+      return null;
+    }
+  }
+
+
+} //end class
+
+

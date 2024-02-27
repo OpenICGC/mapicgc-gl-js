@@ -25,6 +25,8 @@ map3dOptions: {
   maxZoomRange: 22,
   urlTilesetCities: "https://tilemaps.icgc.cat/vector/3dtiles/ciutats/v1/tilesetV1.0.json",
   layerIdOrder: "place-isolated",
+  sourceLayerFilterId:"place",
+  minZoomFilter:15,
   layerId3d: "edificisMapboxLayer",
   terrainSource: "ICGC5M",
   style3dName: "orto3d",
