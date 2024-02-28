@@ -1,8 +1,11 @@
 
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
-const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = {
+geocoder: {
+  peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
+  peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
+},
 mapOptions: {
   container: "map",
   center: {
@@ -17,20 +20,28 @@ mapOptions: {
   maxZoom: 18,
   maxPitch: 85,
 },
+logoOptions:{
+  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg",
+  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/ICGC_white_norma.svg",
+  logoLink: "https://www.icgc.cat",
+  logoTitle:"Institut Cartogràfic i Geològic de Catalunya",
+  logoWidth:100
+},
+
 map3dOptions: {
   spaceErrorFactor: 2,
-  exaggeration:1, //1.1
-  zfactor: 49, //25
+  exaggeration: 1,
+  zfactor: 49,
   minZoomRange: 15.5,
   maxZoomRange: 22,
   urlTilesetCities: "https://tilemaps.icgc.cat/vector/3dtiles/ciutats/v1/tilesetV1.0.json",
   layerIdOrder: "place-isolated",
-  sourceLayerFilterId:"place",
-  minZoomFilter:15,
+  sourceLayerFilterId: "place",
+  minZoomFilter: 15,
   layerId3d: "edificisMapboxLayer",
   terrainSource: "ICGC5M",
   style3dName: "orto3d",
-  imageIcon:"https://tilemaps.icgc.cat/cdn/images/stick.png"
+  imageIcon: "https://tilemaps.icgc.cat/cdn/images/stick.png",
 },
 baseStyles: {
   0: {
