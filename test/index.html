@@ -5,7 +5,7 @@
     <title>MapIcgc</title>
     <script src="../dist/mapicgc-gl.js"></script>
     <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
-    <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
+    <link rel="stylesheet" href=" https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" />
     <script src="https://unpkg.com/flatgeobuf@3.26.2/dist/flatgeobuf-geojson.min.js"></script>
     <script src="https://unpkg.com/@turf/turf"></script>
 
@@ -79,18 +79,41 @@
       
       }));
 
-      map.on("load", () => {
+      map.on("load", async () => {
+        // let image = await map.loadImage('https://tilemaps.icgc.cat/cdn/images/tower.png');
+        // map.addImage('tower', image.data, { sdf: true });
 
-      // let pointOptions={
-      //       "circle-color": "black",
-      //       "circle-opacity": 0.8,
-      // }
-      // map.fetchDataAndMenu(
-      //   'Proposa_DAC_min.geojson',
-      //   'Proposa_DAC_min', 
-      //   // 'all',pointOptions)
-      //   'Xarxa',pointOptions)
+      let pointOptions={
+            "circle-color": "black",
+            "circle-opacity": 0.8,
+      }
+      let iconColorq=["tower",[ "match",
+              ["get", "comarca"],
+              "Garraf", "#eb4034",
+              "Barcelonès", "#782276",
+              "Vallès Occidental", "#eeff00",
+              "Baix Empordà", "#000000",
+              "rgba(150,50,200,0.8)",]
+             
+            ];      
+            let iconColor=["tower", "#782276" 
+             
+            ];   
+            map.fetchDataAndMenu(
+        'Proposa_DAC_min.geojson',
+        'Proposa_DAC_min', 
+        'comarca', pointOptions ) 
+setTimeout(() => {
+  
+         //   // 'all',pointOptions)
       // // map.addFeatureQuery('Proposa_DAC_min')
+
+
+
+      console.log(map.getStyle())
+}, 3500);
+      // console.log(iconColor)
+
 
 
 
@@ -110,7 +133,7 @@
 // const comp = new mapicgcgl.Compare()
       //indicate resolution (2 or 5m)
       // map.addTerrainICGC(mapicgcgl.Terrains.WORLD3M, 'bottom-right');
-      console.log(mapicgcgl.Layers)
+      // console.log(mapicgcgl.Layers)
       // map.addImageLayerICGC(mapicgcgl.Layers.WMS.geologia);   
 
       // map.addExportControl()
@@ -118,15 +141,20 @@
       // map.addImageLayerICGC('geologia');
 
 //       //censals, salut, provincies, aquifers...
-map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent)
-      map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigentText)
+map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent, "none")
+
+// map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigentText, "visible")
       // map.getConfigImageLayers()
    
 //       // map.addFullScreen('bottom-right');
 
-map.addGeocoderICGC()
+// map.addGeocoderICGC()
+setTimeout(() => {
+let labelIDLayer = "agrupacionsCensalsVigent"+"Text"
+map.setLayoutProperty(labelIDLayer, "visibility", "visible" )
+map.setPaintProperty(labelIDLayer, "text-color", "red")
+}, 2000);
 
-      // map.addMeasureControl()
 
 //       map.addExportControl('bottom-right');
 
@@ -206,26 +234,25 @@ map.addGeocoderICGC()
 //       };
 //       // map.addLayerGeoJSON(geojsonLayer);
 //      console.log('vL',map.getConfigVectorLayers())
-    //  let pointOptions={
-    //         "circle-color": "black",
-    //         "circle-opacity": 0.8,
-    //   }
-    //   map.fetchDataAndMenu(
-    //     'Proposa_DAC_min.geojson',
-    //     'Proposa_DAC_min', pointOptions)
+     let poointOptions={
+            "circle-color": "black",
+            "circle-opacity": 0.8,
+      }
+      // map.fetchDataAndMenu(
+      //   'Proposa_DAC_min.geojson',
+      //   'Proposa_DAC_min', pointOptions)
 
     //   let optionsText=['DOMEmarker', 'id', 'Xarxa']
     //   map.addFeatureQuery('Proposa_DAC_min')
    
-      //   let paintOptions = {
-      //     'line-color': 'red',
-      //     'line-width': 2,
-      //     'line-opacity': 0.5
-      //   }
-      //   map.fetchData(
-      //   'https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson',
-      //   'RutesMontserrat',
-      //   paintOptions)
+        // let paintOptions = {
+        //   'line-color': 'red',
+        //   'line-width': 2,
+        //   'line-opacity': 0.5
+        // }
+        // map.fetchDataAndMenu(
+        //   'Proposa_DAC_min.geojson',
+        // 'Proposa_DAC_min', "comarca", poointOptions)
 
       //   let optionsText=['alies', 'comarca']
       //   map.addFeatureQuery('centres', optionsText)

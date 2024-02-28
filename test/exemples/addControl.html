@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>test mapicgc-gl-js</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.js"></script>
+    <link href=" https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="map" class="map"></div>
+
+    <script>
+        const map = new mapicgcgl.Map({
+            container: "map",
+            style: mapicgcgl.Styles.TOPO,
+            center: [2.1464, 41.306],
+            zoom: 7.4,
+            maxZoom: 19,
+            hash: true,
+            pitch: 0,
+        });
+        map.on("load", () => {
+            // mapicgc-gl-js library:
+            map.addGeolocateControl(
+                {
+                    positionOptions: {
+                        enableHighAccuracy: true,
+                    },
+                    trackUserLocation: true,
+                },
+                "bottom-right"
+            );
+
+            map.addExportControl();
+
+            // from other library
+            map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+        });
+    </script>
+</body>
+
+</html>

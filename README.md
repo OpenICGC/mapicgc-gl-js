@@ -1,9 +1,8 @@
 <p align="center">
-  <img src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/logo2.png" width="400px">
+  <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png" width="400px">
 </p>
 <p align="center">
-  <img src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/JS-logo.svg" width="20px">
-  <img src="https://tilemaps.icgc.cat//cdn/mapicgc-gl-js/images/TS-logo.svg" width="20px">
+  <img src="https://tilemaps.icgc.cat/cdn/images/JS-logo.svg" width="20px">
   <img src="https://badge.fury.io/js/mapicgc-gl-js.svg"></img>
   <a href="https://twitter.com/icgcat" target="_blank"><img src="https://img.shields.io/twitter/follow/icgcat?style=social"></img></a>
 </p>
@@ -15,7 +14,7 @@ Version 0.0.41
 
 
 
-The MapICGC GL JS library builds upon the MapLibre GL JS framework, exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.
+The MapICGC GL JS library builds upon the **MapLibre GL JS** framework, exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.
 
  Our goal is to simplify the development process for MapICGC developers! With MapICGC GL JS, you won't need to load external plugins for basic functionalities, deal with complex data source URLs, or search for syntax to enable 3D terrain every time you embark on a project. All these features are either built-in, loaded dynamically when necessary, or accessible through straightforward functions.
 
@@ -49,14 +48,14 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 
       const map = Map({
         container: 'map',
-        style:  mapicgcgl.Styles.LIGHT, // style from mapicgc library
-        center: [2.1464, 41.306], // starting position [lng, lat]
-        zoom: 7.4, //starting zoom 
+        style:  mapicgcgl.Styles.LIGHT, 
+        center: [2.1464, 41.306], 
+        zoom: 7.4, 
       });
     </script>
    ```
    <div align="center">
-    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/images/map1.png"></img></a></div>
+    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://tilemaps.icgc.cat/cdn//images/map1.png"></img></a></div>
 <br>
 
 # Documentation
@@ -64,6 +63,16 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 Full documentation for this library is <a href="https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-doc" target="_blank">available here</a>. 
 
 Check out the features through <a href="https://codepen.io/collection/mrvVZd" target="_blank">examples</a>.
+
+
+<br>
+
+# Dependencies
+
+MapICGC GL JS integrates the following libraries: 
+- <a href="https://github.com/maplibre/maplibre-gl-compare" target="_blank"> @maplibre/maplibre-gl-compare </a>
+- <a href="https://github.com/maplibre/maplibre-gl-geocoder" target="_blank"> @maplibre/maplibre-gl-geocoder </a>
+- <a href="https://www.npmjs.com/package/@watergis/maplibre-gl-export" target="_blank"> @watergis/maplibre-gl-export </a>
 
 
 <br>

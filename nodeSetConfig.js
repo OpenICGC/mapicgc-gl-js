@@ -122,6 +122,7 @@ async function getVectorLimitsLayers() {
 
           let test= [
             { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
+            { key: 'cobertes2018', url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json"}
              ]
              vectorLayersOptions = test
              console.info('Dades vector Layers actualitzats' )
@@ -232,14 +233,12 @@ function replace(){
 const updatedConfigNode = `
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
-const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
 \nmodule.exports = defaultOptions;
 `;
 const updatedConfig = `
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
-const geocoderUrl = "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 const defaultOptions = ${stringifyWithoutQuotes(defaultOptions, null, 2)};
 \nexport default defaultOptions;
 `;

@@ -1,9 +1,9 @@
 import maplibregl from "maplibre-gl";
-
+//import flatgeobuf from "flatgeobuf";
 
 import { deserialize } from 'flatgeobuf/lib/mjs/geojson.js'
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
-
+// import MeasuresControl from 'maplibre-gl-measures';
 import { MapboxLayer } from "@deck.gl/mapbox";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
 import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
@@ -17,7 +17,6 @@ import {
 } from "@watergis/maplibre-gl-export";
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
-import LogoControl from "../controls/LogoControl.js";
 import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
@@ -75,22 +74,13 @@ export default class Map {
     );
 
     this.map.on("load", async () => {
-      const nameStyle = this.map.getStyle().name;
 
       if (window.document.querySelector(".maplibregl-compact-show")) {
         var element = window.document.querySelector(".maplibregl-compact-show");
         element.classList.remove("maplibregl-compact-show");
       }
 
-       this.map.addControl(
-        new LogoControl({
-          color: nameStyle.indexOf("orto") === -1 ? true : false,
-        }),
-        "bottom-left"
-      );
-
-      this._dealOrto3dStyle(nameStyle);
-
+      this._dealOrto3dStyle(this.map.getStyle().name);
     });
   }
 
@@ -462,18 +452,24 @@ export default class Map {
       }
 
       let type = geojson.features[0].geometry.type;
+      map.addSource("userSource", {
+        attribution: "ICGC",
+        type: "vector",
+        data: geojson
+      });
 
+console.log('type', type)
+//CARREGA TOT JUNT
       if (featureTree === "all") {
+        console.log('all')
         if (type.includes("ine")) {
+          console.log('line')
           //line
           if (options !== undefined) {
             map.addLayer({
               id: name,
               type: "line",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
               layout: {
                 visibility: "visible",
               },
@@ -483,10 +479,8 @@ export default class Map {
             map.addLayer({
               id: name,
               type: "line",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
+             
               layout: {
                 visibility: "visible",
               },
@@ -499,15 +493,14 @@ export default class Map {
           }
         }
         if (type.includes("olygon")) {
+          console.log('polygon')
           //polygon
           if (options !== undefined) {
             map.addLayer({
               id: name,
               type: "fill",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
+             
               layout: {
                 visibility: "visible",
               },
@@ -517,10 +510,8 @@ export default class Map {
             map.addLayer({
               id: name,
               type: "fill",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
+             
               layout: {
                 visibility: "visible",
               },
@@ -532,28 +523,41 @@ export default class Map {
           }
         }
         if (type.includes("oint")) {
+          // this.map.setLayoutProperty(lyId, "icon-image", "stick");
+          // this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
+          // this.map.setLayoutProperty(lyId, "symbol-placement", "point");
           //point
+      
           if (options !== undefined) {
+          
+
+
             map.addLayer({
               id: name,
               type: "circle",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
+             
               layout: {
                 visibility: "visible",
               },
               paint: options,
             });
+
+          
+            
           } else {
-            map.addLayer({
+
+
+            console.log('hola3')
+
+            // if image found
+
+
+         map.addLayer({
               id: name,
               type: "circle",
-              source: {
-                type: "geojson",
-                data: geojson,
-              },
+              source: "userSource",
+             "source-layer": "userSource",
               layout: {
                 visibility: "visible",
               },
@@ -562,6 +566,19 @@ export default class Map {
                 "circle-opacity": 0.85,
               },
             });
+
+
+// end if
+     
+
+
+
+
+
+
+
+
+
           }
         }
         // geojsonStore  = geojson
@@ -570,13 +587,16 @@ export default class Map {
         map.addMenuItem(name);
         // map.addFeatureQuery(name)
       } else {
+
+// ENTRA FILTRAT
+
         let field = featureTree;
 
         const layers = {};
         geojson.features.forEach((feature) => {
           const fieldMarker = feature.properties[field];
-          if (fieldMarker !== null){
           // aqui podriem mirar si te simbologia i afegir-la a la capa
+    if (fieldMarker !== null){
 
           if (!layers[fieldMarker]) {
             if (type.includes("ine")) {
@@ -585,10 +605,8 @@ export default class Map {
                 map.addLayer({
                   id: fieldMarker,
                   type: "line",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
+                  source: "userSource",
+                 
                   layout: {
                     visibility: "visible",
                   },
@@ -599,10 +617,8 @@ export default class Map {
                 map.addLayer({
                   id: fieldMarker,
                   type: "line",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
+                  source: "userSource",
+             
                   layout: {
                     visibility: "visible",
                   },
@@ -621,10 +637,8 @@ export default class Map {
                 map.addLayer({
                   id: fieldMarker,
                   type: "fill",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
+                  source: "userSource",
+             
                   layout: {
                     visibility: "visible",
                   },
@@ -635,10 +649,8 @@ export default class Map {
                 map.addLayer({
                   id: fieldMarker,
                   type: "fill",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
+                  source: "userSource",
+             
                   layout: {
                     visibility: "visible",
                   },
@@ -653,20 +665,53 @@ export default class Map {
             if (type.includes("oint")) {
               //point
               if (options !== undefined) {
+
+                if (Array.isArray(options)){
+                  // if (fieldMarker !== null){
+                  console.log('ar', geojson)
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "symbol",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                      'icon-image': options[0],
+                      'icon-size': 0.15,
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: {
+                      "icon-color" : 'red'
+                      
+                    }
+                  });
+                // }
+                }else{
+
+console.log('entro, ', fieldMarker)
                 map.addLayer({
                   id: fieldMarker,
                   type: "circle",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
+                     source: {
+              type: "geojson",
+              data: geojson,
+            },
+
                   layout: {
                     visibility: "visible",
                   },
                   filter: ["==", `${field}`, fieldMarker],
                   paint: options,
                 });
+
+
+              }
+
+
               } else {
+                console.log('keee', fieldMarker)
                 map.addLayer({
                   id: fieldMarker,
                   type: "circle",
@@ -674,6 +719,7 @@ export default class Map {
                     type: "geojson",
                     data: geojson,
                   },
+      
                   layout: {
                     visibility: "visible",
                   },
@@ -693,6 +739,7 @@ export default class Map {
           }
         }
         });
+      
       }
 
       //add feature queries
@@ -701,7 +748,6 @@ export default class Map {
       console.error(`Error fetching data: ${error.message}`);
     }
   }
-
 
   // async geocodeAddress() {
   //   try {
@@ -1359,6 +1405,217 @@ export default class Map {
       console.error(`Error adding scale: ${error.message}`);
     }
   }
+  /**
+   * Removes the measure control from the map.
+   * @function removeMeasureControl
+   */
+  removeMeasureControl() {
+    try {
+      const removeMeasure = document.getElementById("xButton");
+      const distanceContainer = document.getElementById("distance");
+      distanceContainer.innerHTML = "";
+
+      let layers = this.map.getStyle().layers;
+      console.log('es aqui211??', layers.length)
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].id.includes("measure")) {
+          this.map.removeLayer(layers[i].id);
+        }
+      }
+    } catch (error) {
+      console.error(`Error removing measure control: ${error.message}`);
+    }
+  }
+
+//   /**
+//    * Adds a measure control to the map.
+//    * @function addMeasureControl
+//    */
+//   addMeasureControl() {
+//     try {
+//       const distanceContainer = document.getElementById("distance");
+//       const distanceContainerT = document.getElementById("distanceTotal");
+//       let endMeasure = false;
+//       let measureOn = false;
+//       var clickTimer;
+
+//       const rulerButton = document.createElement("div");
+//       rulerButton.id = "rulerButton";
+
+//       rulerButton.onclick = () => {
+//         try {
+//           if (!measureOn) {
+//             document.getElementById("rulerButton").style.backgroundColor =
+//               "#41b883";
+//           } else {
+//             document.getElementById("rulerButton").style.backgroundColor =
+//               "#ff597a";
+//           }
+//           measureOn = !measureOn;
+//         } catch (error) {
+//           console.error(`Error adding measure control: ${error.message}`);
+//         }
+//       };
+//       distanceContainerT.appendChild(rulerButton);
+
+//       // GeoJSON object to hold our measurement features
+//       const geojson = {
+//         type: "FeatureCollection",
+//         features: [],
+//       };
+
+//       // Used to draw a line between points
+//       const linestring = {
+//         type: "Feature",
+//         geometry: {
+//           type: "LineString",
+//           coordinates: [],
+//         },
+//       };
+
+//       // this.map.on("load", () => {
+//       this.map.addSource("geojson", {
+//         type: "geojson",
+//         data: geojson,
+//       });
+
+//       // Add styles to the map
+//       this.map.addLayer({
+//         id: "measure-points",
+//         type: "circle",
+//         source: "geojson",
+//         paint: {
+//           "circle-radius": 5,
+//           "circle-color": "#000",
+//         },
+//         filter: ["in", "$type", "Point"],
+//       });
+//       this.map.addLayer({
+//         id: "measure-lines",
+//         type: "line",
+//         source: "geojson",
+//         layout: {
+//           "line-cap": "round",
+//           "line-join": "round",
+//         },
+//         paint: {
+//           "line-color": "#000",
+//           "line-width": 2.5,
+//         },
+//         filter: ["in", "$type", "LineString"],
+//       });
+//       // });
+
+//       this.map.on("click", (e) => {
+//         clearTimeout(clickTimer);
+//         if (!endMeasure && measureOn) {
+//           clickTimer = setTimeout(() => {
+//             handleSingleClick(e, this.map);
+//           }, 50);
+//         }
+//       });
+
+//       this.map.on("dblclick", (e) => {
+//         if (measureOn) {
+//           clearTimeout(clickTimer);
+//           handleDoubleClick(e, this.map);
+//         }
+//       });
+
+//       this.map.on("mousemove", (e) => {
+//         if (!endMeasure && measureOn) {
+//           const features = this.map.queryRenderedFeatures(e.point, {
+//             layers: ["measure-points"],
+//           });
+//           // UI indicator for clicking/hovering a point on the map
+
+//           this.map.getCanvas().style.cursor = features.length
+//             ? "pointer"
+//             : "crosshair";
+//         } else {
+//           this.map.getCanvas().style.cursor = "grab";
+//         }
+//       });
+
+//       function handleSingleClick(e, map) {
+//         const features = map.queryRenderedFeatures(e.point, {
+//           layers: ["measure-points"],
+//         });
+
+//         // Remove the linestring from the group
+//         // So we can redraw it based on the points collection
+//         if (geojson.features.length > 1) geojson.features.pop();
+
+//         // Clear the Distance container to populate it with a new value
+//         distanceContainerT.innerHTML = "";
+
+//         // If a feature was clicked, remove it from the map
+//         if (features.length) {
+//           const id = features[0].properties.id;
+//           geojson.features = geojson.features.filter((point) => {
+//             return point.properties.id !== id;
+//           });
+//         } else {
+//           const point = {
+//             type: "Feature",
+//             geometry: {
+//               type: "Point",
+//               coordinates: [e.lngLat.lng, e.lngLat.lat],
+//             },
+//             properties: {
+//               id: String(new Date().getTime()),
+//             },
+//           };
+
+//           geojson.features.push(point);
+//         }
+
+//         // if (geojson.features.length > 0) {
+//         linestring.geometry.coordinates = geojson.features.map((point) => {
+//           return point.geometry.coordinates;
+//         });
+
+//         geojson.features.push(linestring);
+
+//         // Populate the distanceContainer with total distance
+//         const value = document.createElement("pre");
+//         // console.log('kk', linestring.geometry.coordinates)
+//         value.textContent = `Distància total: ${turf
+//           .length(linestring)
+//           .toLocaleString()}km`;
+//         distanceContainerT.appendChild(value);
+
+//         const xButton = document.createElement("div");
+//         xButton.id = "xButton";
+//         xButton.textContent = "X";
+//         xButton.onclick = () => {
+//           try {
+//             const removeMeasure = document.getElementById("xButton");
+//             const distanceContainer = document.getElementById("distance");
+//             distanceContainer.innerHTML = "";
+
+//             let layers = map.getStyle().layers;
+// console.log('es aqui1??', layers.length)
+//             for (let i = 0; i < layers.length; i++) {
+//               if (layers[i].id.includes("measure")) {
+//                 map.removeLayer(layers[i].id);
+//               }
+//             }
+//           } catch (error) {
+//             console.error(`Error adding measure control: ${error.message}`);
+//           }
+//         };
+//         distanceContainerT.appendChild(xButton);
+
+//         map.getSource("geojson").setData(geojson);
+//       }
+
+//       function handleDoubleClick(e, map) {
+//         map.getCanvas().style.cursor = "grab";
+//         endMeasure = true;
+//       }
+//     } catch (error) {}
+//   }
 
   /**
    * Adds an export control to the map with the provided options and position.
@@ -1798,19 +2055,18 @@ export default class Map {
           "font-weight: bold; font-style: italic;"
         );
       } else {
-     
+        // layerUrl = op.url;
 
         const response = await fetch(layerUrl);
 
 
-   
+        // this.map.on("load", async () => {
           const fc = { type: "FeatureCollection", features: [] };
-
-        
-         for await (const f of deserialize(response.body))
+          for await (const f of deserialize(response.body))
+       
             fc.features.push(f);
 
-
+// console.log('ffff', fc, response)
 
           let src = name + "-source";
 
@@ -1987,33 +2243,27 @@ this.map.addLayer({
       const image = await this.map.loadImage(
         defaultOptions.map3dOptions.imageIcon
       );
-      this.map.addImage("stick", image.data);
+    this.map.addImage("stick", image.data);
 
-      this.map.getStyle().layers.forEach((layer) => {
-        if (
-          layer["source-layer"] ===
-            defaultOptions.map3dOptions.sourceLayerFilterId &&
-          layer.minzoom >= defaultOptions.map3dOptions.minZoomFilter
-        ) {
-          if (image) {
-            const lyId = layer.id;
-            this.map.setLayoutProperty(lyId, "icon-image", "stick");
-            this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
-            this.map.setLayoutProperty(lyId, "symbol-placement", "point");
-            this.map.setLayoutProperty(lyId, "symbol-avoid-edges", false);
-            this.map.setLayoutProperty(lyId, "text-allow-overlap", true);
-            this.map.setLayoutProperty(lyId, "text-ignore-placement", false);
-            this.map.setLayoutProperty(lyId, "text-pitch-alignment", "auto");
-            this.map.setLayoutProperty(lyId, "text-rotation-alignment", "auto");
-            this.map.setLayoutProperty(lyId, "text-justify", "center");
-            this.map.setLayoutProperty(lyId, "text-anchor", "bottom");
-            this.map.setLayoutProperty(lyId, "icon-anchor", "bottom");
-            this.map.setPaintProperty(lyId, "text-color", "#ffffff");
-            this.map.setPaintProperty(lyId, "text-halo-color", "#000000");
-            this.map.setPaintProperty(lyId, "text-halo-width", 2);
-          }
-
-        
+    this.map.getStyle().layers.forEach((layer) => {
+      if (layer["source-layer"] === defaultOptions.map3dOptions.sourceLayerFilterId && layer.minzoom >= defaultOptions.map3dOptions.minZoomFilter) {
+        if (image) {
+          const lyId = layer.id;
+          this.map.setLayoutProperty(lyId, "icon-image", "stick");
+          this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
+          this.map.setLayoutProperty(lyId, "symbol-placement", "point");
+          this.map.setLayoutProperty(lyId, "symbol-avoid-edges", false);
+          this.map.setLayoutProperty(lyId, "text-allow-overlap", true);
+          this.map.setLayoutProperty(lyId, "text-ignore-placement", false);
+          this.map.setLayoutProperty(lyId, "text-pitch-alignment", "auto");
+          this.map.setLayoutProperty(lyId,"text-rotation-alignment","auto");
+          this.map.setLayoutProperty(lyId, "text-justify", "center");
+          this.map.setLayoutProperty(lyId, "text-anchor", "bottom");
+          this.map.setLayoutProperty(lyId, "icon-anchor", "bottom");
+          this.map.setPaintProperty(lyId, "text-color", "#ffffff");
+          this.map.setPaintProperty(lyId, "text-halo-color", "#000000");
+          this.map.setPaintProperty(lyId, "text-halo-width", 2);
+        }
       }
     });
   } catch (error) {
