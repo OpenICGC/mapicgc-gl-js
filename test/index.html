@@ -80,29 +80,36 @@
       }));
 
       map.on("load", async () => {
+
+        let paintOptions = {
+          'line-color': 'red',
+          'line-width': 2
+        }
+        map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensals2015, paintOptions)
+        // map.addFGBLayerICGC(mapicgcgl.Layers.FGBAdmin.agrupacionsCensalsVigent, "visible")
         // let image = await map.loadImage('https://tilemaps.icgc.cat/cdn/images/tower.png');
         // map.addImage('tower', image.data, { sdf: true });
 
-      let pointOptions={
-            "circle-color": "black",
-            "circle-opacity": 0.8,
-      }
-      let iconColorq=["tower",[ "match",
-              ["get", "comarca"],
-              "Garraf", "#eb4034",
-              "Barcelonès", "#782276",
-              "Vallès Occidental", "#eeff00",
-              "Baix Empordà", "#000000",
-              "rgba(150,50,200,0.8)",]
+      // let pointOptions={
+      //       "circle-color": "black",
+      //       "circle-opacity": 0.8,
+      // }
+      // let iconColorq=["tower",[ "match",
+      //         ["get", "comarca"],
+      //         "Garraf", "#eb4034",
+      //         "Barcelonès", "#782276",
+      //         "Vallès Occidental", "#eeff00",
+      //         "Baix Empordà", "#000000",
+      //         "rgba(150,50,200,0.8)",]
              
-            ];      
-            let iconColor=["tower", "#782276" 
+      //       ];      
+      //       let iconColor=["tower", "#782276" 
              
-            ];   
-            map.fetchDataAndMenu(
-        'Proposa_DAC_min.geojson',
-        'Proposa_DAC_min', 
-        'comarca', pointOptions ) 
+      //       ];   
+      //       map.fetchDataAndMenu(
+      //   'Proposa_DAC_min.geojson',
+      //   'Proposa_DAC_min', 
+      //   'comarca', pointOptions ) 
 setTimeout(() => {
   
          //   // 'all',pointOptions)
@@ -141,7 +148,7 @@ setTimeout(() => {
       // map.addImageLayerICGC('geologia');
 
 //       //censals, salut, provincies, aquifers...
-map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent, "none")
+// map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent, "none")
 
 // map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigentText, "visible")
       // map.getConfigImageLayers()
@@ -149,11 +156,11 @@ map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensalsVigent, "n
 //       // map.addFullScreen('bottom-right');
 
 // map.addGeocoderICGC()
-setTimeout(() => {
-let labelIDLayer = "agrupacionsCensalsVigent"+"Text"
-map.setLayoutProperty(labelIDLayer, "visibility", "visible" )
-map.setPaintProperty(labelIDLayer, "text-color", "red")
-}, 2000);
+// setTimeout(() => {
+// let labelIDLayer = "agrupacionsCensalsVigent"+"Text"
+// map.setLayoutProperty(labelIDLayer, "visibility", "visible" )
+// map.setPaintProperty(labelIDLayer, "text-color", "red")
+// }, 2000);
 
 
 //       map.addExportControl('bottom-right');

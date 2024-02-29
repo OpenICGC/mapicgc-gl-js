@@ -64,7 +64,7 @@ export default class Map {
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
-    
+
     this.map = new maplibregl.Map(options);
     this.map.options = options;
 
@@ -82,7 +82,7 @@ export default class Map {
         element.classList.remove("maplibregl-compact-show");
       }
 
-       this.map.addControl(
+      this.map.addControl(
         new LogoControl({
           color: nameStyle.indexOf("orto") === -1 ? true : false,
         }),
@@ -109,7 +109,7 @@ export default class Map {
       }
       // const urlSearchPelias = defaultOptions
       // console.log('geo', urlSearchPelias)
-        // "https://eines.icgc.cat/geocodificador/autocompletar?text=";
+      // "https://eines.icgc.cat/geocodificador/autocompletar?text=";
 
       let options = {
         collapsed: true,
@@ -313,6 +313,25 @@ export default class Map {
       return vectorArray;
     } catch (error) {
       console.error(`Error retrieving vectorAdmin layers: ${error.message}`);
+    }
+  }
+  /**
+ * Retrieves the available fgb layers from default options.
+ * @function getConfigFGBAdminLayers
+ * @returns {Array} - Array containing the keys of available fgbadmin layers.
+ */
+  getConfigFGBAdminLayers() {
+    try {
+      let vectorArray = [];
+      for (const key in Layers.FGBAdmin) {
+        if (Layers.FGBAdmin.hasOwnProperty(key)) {
+          vectorArray.push(key);
+        }
+      }
+
+      return vectorArray;
+    } catch (error) {
+      console.error(`Error retrieving FGBAdmin layers: ${error.message}`);
     }
   }
   /**
@@ -575,123 +594,123 @@ export default class Map {
         const layers = {};
         geojson.features.forEach((feature) => {
           const fieldMarker = feature.properties[field];
-          if (fieldMarker !== null){
-          // aqui podriem mirar si te simbologia i afegir-la a la capa
+          if (fieldMarker !== null) {
+            // aqui podriem mirar si te simbologia i afegir-la a la capa
 
-          if (!layers[fieldMarker]) {
-            if (type.includes("ine")) {
-              //line
-              if (options !== undefined) {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "line",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: options,
-                });
-              } else {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "line",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: {
-                    "line-color": "black",
-                    "line-width": 2,
-                    "line-opacity": 1,
-                  },
-                });
+            if (!layers[fieldMarker]) {
+              if (type.includes("ine")) {
+                //line
+                if (options !== undefined) {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "line",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: options,
+                  });
+                } else {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "line",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: {
+                      "line-color": "black",
+                      "line-width": 2,
+                      "line-opacity": 1,
+                    },
+                  });
+                }
               }
-            }
-            if (type.includes("olygon")) {
-              //polygon
-              if (options !== undefined) {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "fill",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: options,
-                });
-              } else {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "fill",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: {
-                    "fill-color": "blue",
-                    "fill-opacity": 0.6,
-                  },
-                });
+              if (type.includes("olygon")) {
+                //polygon
+                if (options !== undefined) {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "fill",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: options,
+                  });
+                } else {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "fill",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: {
+                      "fill-color": "blue",
+                      "fill-opacity": 0.6,
+                    },
+                  });
+                }
               }
-            }
-            if (type.includes("oint")) {
-              //point
-              if (options !== undefined) {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "circle",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: options,
-                });
-              } else {
-                map.addLayer({
-                  id: fieldMarker,
-                  type: "circle",
-                  source: {
-                    type: "geojson",
-                    data: geojson,
-                  },
-                  layout: {
-                    visibility: "visible",
-                  },
+              if (type.includes("oint")) {
+                //point
+                if (options !== undefined) {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "circle",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: options,
+                  });
+                } else {
+                  map.addLayer({
+                    id: fieldMarker,
+                    type: "circle",
+                    source: {
+                      type: "geojson",
+                      data: geojson,
+                    },
+                    layout: {
+                      visibility: "visible",
+                    },
 
-                  filter: ["==", `${field}`, fieldMarker],
-                  paint: {
-                    "circle-color": "red",
-                    "circle-opacity": 0.85,
-                  },
-                });
+                    filter: ["==", `${field}`, fieldMarker],
+                    paint: {
+                      "circle-color": "red",
+                      "circle-opacity": 0.85,
+                    },
+                  });
+                }
               }
-            }
 
-            // Agregar la nueva capa al objeto de capas
-            layers[fieldMarker] = true;
-            map.addMenuItem(fieldMarker);
+              // Agregar la nueva capa al objeto de capas
+              layers[fieldMarker] = true;
+              map.addMenuItem(fieldMarker);
+            }
           }
-        }
         });
       }
 
@@ -702,64 +721,6 @@ export default class Map {
     }
   }
 
-
-  // async geocodeAddress() {
-  //   try {
-  //     var inputElement = document.getElementById("addressInput");
-  //     var address = inputElement.value;
-  //     const response = await fetch(url);
-  //     const geojson = await response.json();
-  //     var resultsContainer = document.getElementById("results");
-  //     resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
-
-  //     function geocode(address) {
-  //       var result = turf.filter(geojson, "address", address);
-  //       return result.features.slice(0, 5);
-  //     }
-
-  //     var results = geocode(address);
-
-  //     if (results.length > 0) {
-  //       results.forEach(function (feature) {
-  //         var coordinates = feature.geometry.coordinates;
-  //         var address = feature.properties.address;
-
-  //         var resultItem = document.createElement("div");
-  //         resultItem.innerHTML =
-  //           "<strong>" +
-  //           address +
-  //           "</strong><br>Coordenadas: " +
-  //           coordinates.join(", ");
-
-  //         resultsContainer.appendChild(resultItem);
-  //       });
-  //     } else {
-  //       resultsContainer.innerHTML =
-  //         "No se encontraron resultados para la dirección: " + address;
-  //     }
-  //   } catch (error) {}
-  // }
-  // /**
-  //  * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
-  //  * @param {string} url - The URL to fetch GeoJSON data from.
-  //  * @param {string} type - The geometry type (e.g., 'line', 'polygon', 'point').
-  //  * @param {string} name - The geometry name (e.g., 'buildings').
-  //  * @param {Object} options - Additional options for configuring the layer.
-  //  */
-
-  // async fetchDataWithSearchbox(url, type, name, optionsGeo, options) {
-  //   try {
-  //     const response = await fetch(url);
-  //     const geojson = await response.json();
-
-  //     function geocode(address) {
-  //       var result = turf.filter(geojson, "address", address);
-  //       return result.features.slice(0, 5);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error fetching data: ${error.message}`);
-  //   }
-  // }
 
   /**
    * Adds an event listener to the map.
@@ -810,19 +771,6 @@ export default class Map {
 
   setStyle(style, options) {
     try {
-      console.log("kk", style);
-      /*
-      for (const key of Styles) {
-        if (Styles.hasOwnProperty(key)) {
-          const styl = Styles[key];
-          if (styl.key === style) {
-            style = styl.url;
-            // break; //
-          }
-        }
-      }
-      */
-      console.log("base", style);
 
       if (options !== undefined) {
         this.map.setStyle(style, options);
@@ -839,9 +787,7 @@ export default class Map {
         }
 
         this._dealOrto3dStyle(this.map.getStyle().name);
-        //init test3d
 
-        //end test 3d
       });
     } catch (error) {
       console.error(`Error setting style: ${error.message}`);
@@ -1046,6 +992,15 @@ export default class Map {
       console.error(`Error setting terrain: ${error.message}`);
     }
   }
+
+
+  /**
+   * Sets the zoom range for a specific layer on the map.
+   * @function setLayerZoomRange
+   * @param {string} layerId - The ID of the layer to set the zoom range for.
+   * @param {number} minZoom - The minimum zoom level.
+   * @param {number} maxZoom - The maximum zoom level.
+   */
   setLayerZoomRange(layerId, nimZoom, maxZoom) {
     try {
       return this.map.setLayerZoomRange(layerId, nimZoom, maxZoom);
@@ -1403,7 +1358,7 @@ export default class Map {
         .setHTML(text)
         .addTo(this.map);
       // });
-    } catch (error) {}
+    } catch (error) { }
   }
 
   /**
@@ -1756,41 +1711,19 @@ export default class Map {
     }
   }
 
-  
   /**
-   * Adds an ICGC vector layer to the map based on the specified name and year.
-   * @function addVectorLayerICGC
-   * @param {string} url - The url of the vector layer.
-   * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
-   * 
-   */
-  async addVectorLayerICGC(layerUrl, visibleLabel) {
+ * Adds an ICGC vector layer to the map based on the specified name and year.
+ * @function addVectorLayerICGC
+ * @param {string} url - The url of the vector layer.
+ * @param {object} paintOption - Paint option for the layer
+ * 
+ */
+  async addVectorLayerICGC(layerUrl, paintOption) {
     try {
-      // console.log('url', layerUrl, visibleLabel)
-      function getKeyByUrl(url) {
-        for (const key in Layers.VectorAdmin) {
-          // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
-          if (
-            Layers.VectorAdmin.hasOwnProperty(key) &&
-            Layers.VectorAdmin[key] === url
-          ) {
-            // console.log('entro', key)
-            return key; // Retorna la clave si encuentra la URL
-          }
-        }
-        return null; // Retorna null si no se encuentra la URL en el objeto
-      }
 
-      let name = getKeyByUrl(layerUrl);
-      // console.log('name', name)
-
+      let name = layerUrl
       if (name === null) {
-        // let op = Layers.VectorAdmin.find((objeto) =>
-        //   objeto.key.includes(name)
-        // );
-        // if (!op) {
-        // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
-        console.log(
+     console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
           "font-weight: bold; font-style: italic;",
           "font-weight: normal; font-style: normal; color: red;",
@@ -1798,68 +1731,183 @@ export default class Map {
           "font-weight: bold; font-style: italic;"
         );
       } else {
-     
 
-        const response = await fetch(layerUrl);
-
-
-   
-          const fc = { type: "FeatureCollection", features: [] };
-
-        
-         for await (const f of deserialize(response.body))
-            fc.features.push(f);
+        let sourceLimits = 'limitsSource'
 
 
+        this.map.addSource(sourceLimits, {
+          type: "vector",
+          url: defaultOptions.limitsUrl,
+        });
 
-          let src = name + "-source";
-
-          this.map.addSource(src, {
-            type: "geojson",
-            data: fc,
-          });
-
-          if (layerUrl.includes('text')){
-            // console.log('entro', name)
-            this.map.addLayer({
-              id: name,
-              type: "symbol",
-              source: src,
-              layout:{
-                "text-letter-spacing":0.1,
-                "text-size":{"base":1.2,"stops":[[8,0],[12,14],[15,15]]},
-                "text-font":["FiraSans-Regular"],
-                "text-field":["get","NOM_AC"],
-                "text-transform":"none",
-                "text-max-width":25,
-                "visibility":visibleLabel,
-                "text-justify":"right",
-                "text-anchor":"top",
-                "text-allow-overlap":false,
-                "symbol-spacing":2,
-                "text-line-height":1},
-              paint:{"text-halo-blur":0.5,"text-color":"rgba(90, 7, 7, 1)","text-halo-width":2,"text-halo-color":"rgba(255, 255, 255,0.8)"}
-            });
-          }else{
+        this.map.addLayer({
+          id: name + "-fill",
+          type: "fill",
+          source: sourceLimits,
+          "source-layer": name,
+          paint: {
+            "fill-color": "#0000FF",
+            "fill-opacity": 0,
+          },
+        });
+        this.map.addLayer({
+          id: name + "-underline",
+          type: "line",
+          source: sourceLimits,
+          "source-layer": name,
+          paint: {
+            "line-color": "#ffffff",
+            "line-opacity": 1,
+            "line-width": 3,
+          },
+        });
+        if (paintOption){
           this.map.addLayer({
-            id: name + "-fill",
-            type: "fill",
-            source: src,
-            paint: {
-              "fill-color": "#0000FF",
-              "fill-opacity": 0,
-            },
-          });
-          this.map.addLayer({
-            id: name + "-underline",
+            id: name + "-line",
             type: "line",
-            source: src,
-            paint: {
-              "line-color": "#ffffff",
-              "line-opacity": 1,
-              "line-width": 3,
-            },
+            source: sourceLimits,
+            "source-layer": name,
+            paint: paintOption,
           });
+        }else{
+           this.map.addLayer({
+          id: name + "-line",
+          type: "line",
+          source: sourceLimits,
+          "source-layer": name,
+          paint: {
+            "line-color": "#4832a8",
+            "line-opacity": 1,
+            "line-width": 1,
+          },
+        });
+        }
+       
+
+
+
+
+      // });
+    }
+      } catch(error) {
+    console.error(`Error adding ICGC vector layer: ${error.message}`);
+  }
+}
+  /**
+   * Adds an ICGC FGB layer to the map based on the specified name and year.
+   * @function addFGBLayerICGC
+   * @param {string} url - The url of the FGB layer.
+   * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
+   * @param {object} paintOption - Paint option for the layer
+   * 
+   */
+  async addFGBLayerICGC(layerUrl, visibleLabel, paintOption) {
+  try {
+    // console.log('url', layerUrl, visibleLabel,paintOption)
+    function getKeyByUrl(url) {
+      for (const key in Layers.FGBAdmin) {
+        // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
+        if (
+          Layers.FGBAdmin.hasOwnProperty(key) &&
+          Layers.FGBAdmin[key] === url
+        ) {
+          // console.log('entro', key)
+          return key; // Retorna la clave si encuentra la URL
+        }
+      }
+      return null; // Retorna null si no se encuentra la URL en el objeto
+    }
+
+    let name = getKeyByUrl(layerUrl);
+    // console.log('name', name)
+
+    if (name === null) {
+      // let op = Layers.VectorAdmin.find((objeto) =>
+      //   objeto.key.includes(name)
+      // );
+      // if (!op) {
+      // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
+      console.log(
+        "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
+        "font-weight: bold; font-style: italic;",
+        "font-weight: normal; font-style: normal; color: red;",
+        name,
+        "font-weight: bold; font-style: italic;"
+      );
+    } else {
+
+
+      const response = await fetch(layerUrl);
+
+
+
+      const fc = { type: "FeatureCollection", features: [] };
+
+
+      for await (const f of deserialize(response.body))
+        fc.features.push(f);
+
+
+
+      let src = name + "-source";
+
+      this.map.addSource(src, {
+        type: "geojson",
+        data: fc,
+      });
+
+      if (layerUrl.includes('text')) {
+        // console.log('entro', name)
+        this.map.addLayer({
+          id: name,
+          type: "symbol",
+          source: src,
+          layout: {
+            "text-letter-spacing": 0.1,
+            "text-size": { "base": 1.2, "stops": [[8, 0], [12, 14], [15, 15]] },
+            "text-font": ["FiraSans-Regular"],
+            "text-field": ["get", "NOM_AC"],
+            "text-transform": "none",
+            "text-max-width": 25,
+            "visibility": visibleLabel,
+            "text-justify": "right",
+            "text-anchor": "top",
+            "text-allow-overlap": false,
+            "symbol-spacing": 2,
+            "text-line-height": 1
+          },
+          paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
+        });
+      } else {
+        this.map.addLayer({
+          id: name + "-fill",
+          type: "fill",
+          source: src,
+          paint: {
+            "fill-color": "#0000FF",
+            "fill-opacity": 0,
+          },
+        });
+        this.map.addLayer({
+          id: name + "-underline",
+          type: "line",
+          source: src,
+          paint: {
+            "line-color": "#ffffff",
+            "line-opacity": 1,
+            "line-width": 3,
+          },
+        });
+        // console.log('painst', paintOption)
+        if (paintOption){
+          // console.log('paint', paintOption)
+  this.map.addLayer({
+          id: name + "-line",
+          type: "line",
+          source: src,
+          paint: paintOption
+        });
+        }else{
           this.map.addLayer({
             id: name + "-line",
             type: "line",
@@ -1870,112 +1918,115 @@ export default class Map {
               "line-width": 1,
             },
           });
+        }
+      
 
-//afegir text visible o no
-//primer trobar la capa
-let textLayer = name+"Text"
-this.map.addLayer({
-  id: textLayer,
-  type: "symbol",
-  source: src,
-  layout:{
-    "text-letter-spacing":0.1,
-    "text-size":{"base":1.2,"stops":[[8,0],[12,14],[15,15]]},
-    "text-font":["FiraSans-Regular"],
-    "text-field":["get","NOM_AC"],
-    "text-transform":"none",
-    "text-max-width":25,
-    "visibility":visibleLabel,
-    "text-justify":"right",
-    "text-anchor":"top",
-    "text-allow-overlap":false,
-    "symbol-spacing":2,
-    "text-line-height":1},
-  paint:{"text-halo-blur":0.5,"text-color":"rgba(90, 7, 7, 1)","text-halo-width":2,"text-halo-color":"rgba(255, 255, 255,0.8)"}
-})
+        //afegir text visible o no
+        //primer trobar la capa
+        let textLayer = name + "Text"
+        this.map.addLayer({
+          id: textLayer,
+          type: "symbol",
+          source: src,
+          layout: {
+            "text-letter-spacing": 0.1,
+            "text-size": { "base": 1.2, "stops": [[8, 0], [12, 14], [15, 15]] },
+            "text-font": ["FiraSans-Regular"],
+            "text-field": ["get", "NOM_AC"],
+            "text-transform": "none",
+            "text-max-width": 25,
+            "visibility": visibleLabel,
+            "text-justify": "right",
+            "text-anchor": "top",
+            "text-allow-overlap": false,
+            "symbol-spacing": 2,
+            "text-line-height": 1
+          },
+          paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
+        })
 
 
-          }
-
-        // });
       }
-    } catch (error) {
-      console.error(`Error adding ICGC vector layer: ${error.message}`);
+
+      // });
     }
+  } catch (error) {
+    console.error(`Error adding ICGC vector layer: ${error.message}`);
   }
+}
 
 
-  /**
-   * Adds 3D terrain to the map using hillshade.
-   * @function addTerrainICGC
-   * @param {string} resolution - resolution of the terrain data: 2m or 5m.
-   * @param {string} [positionButton='top-right'] - Position to add the button on the map.
-   */
-  addTerrainICGC(resolution, positionButton) {
-    // this.map.on("load", () => {
-    try {
-      // let op = Terrains.find(
-      //   (objeto) => objeto.name === resolution
-      // );
-      // console.log('res', resolution)
-      let op;
-      for (const key in Terrains) {
-        if (Terrains.hasOwnProperty(key)) {
-          const objeto = Terrains[key];
+/**
+ * Adds 3D terrain to the map using hillshade.
+ * @function addTerrainICGC
+ * @param {string} resolution - resolution of the terrain data: 2m or 5m.
+ * @param {string} [positionButton='top-right'] - Position to add the button on the map.
+ */
+addTerrainICGC(resolution, positionButton) {
+  // this.map.on("load", () => {
+  try {
+    // let op = Terrains.find(
+    //   (objeto) => objeto.name === resolution
+    // );
+    // console.log('res', resolution)
+    let op;
+    for (const key in Terrains) {
+      if (Terrains.hasOwnProperty(key)) {
+        const objeto = Terrains[key];
 
-          if (objeto === resolution) {
-            op = objeto;
-          }
+        if (objeto === resolution) {
+          op = objeto;
         }
       }
-
-      let urlTerrainICGC = op;
-      if (resolution.includes("terrarium")) {
-        // console.log('rsssssses', resolution)
-        // Add terrain source
-        this.map.addSource("terrainICGC-src", {
-          type: "raster-dem",
-          tiles: [urlTerrainICGC],
-          tileSize: 512,
-          encoding: "terrarium",
-          maxzoom: 16,
-        });
-      } else {
-        this.map.addSource("terrainICGC-src", {
-          type: "raster-dem",
-          tiles: [urlTerrainICGC],
-          tileSize: 512,
-          maxzoom: 16,
-        });
-      }
-
-      this.map.setTerrain({
-        source: "terrainICGC-src",
-        exaggeration: 1.5,
-      });
-
-      if (positionButton === undefined) {
-        positionButton = "top-right";
-      }
-      // this.map.addControl(
-      //   new maplibregl.TerrainControl({
-      //     source: "terrainICGC-src",
-      //     exaggeration: 1.5,
-      //   }), positionButton
-      // );
-      this.map.addControl(
-        new Pitch3DToggleControl({
-          pitch: 90,
-          bearing: null,
-          minpitchzoom: null,
-        }),
-        positionButton
-      );
-    } catch (error) {
-      console.error(`Error adding 3D terrain: ${error.message}`);
     }
-    // }); //'load end
+
+    let urlTerrainICGC = op;
+    if (resolution.includes("terrarium")) {
+      // console.log('rsssssses', resolution)
+      // Add terrain source
+      this.map.addSource("terrainICGC-src", {
+        type: "raster-dem",
+        tiles: [urlTerrainICGC],
+        tileSize: 512,
+        encoding: "terrarium",
+        maxzoom: 16,
+      });
+    } else {
+      this.map.addSource("terrainICGC-src", {
+        type: "raster-dem",
+        tiles: [urlTerrainICGC],
+        tileSize: 512,
+        maxzoom: 16,
+      });
+    }
+
+    this.map.setTerrain({
+      source: "terrainICGC-src",
+      exaggeration: 1.5,
+    });
+
+    if (positionButton === undefined) {
+      positionButton = "top-right";
+    }
+    // this.map.addControl(
+    //   new maplibregl.TerrainControl({
+    //     source: "terrainICGC-src",
+    //     exaggeration: 1.5,
+    //   }), positionButton
+    // );
+    this.map.addControl(
+      new Pitch3DToggleControl({
+        pitch: 90,
+        bearing: null,
+        minpitchzoom: null,
+      }),
+      positionButton
+    );
+  } catch (error) {
+    console.error(`Error adding 3D terrain: ${error.message}`);
   }
+  // }); //'load end
+}
 
 
 //Internal methods
@@ -1983,132 +2034,132 @@ this.map.addLayer({
 
   async _raiseText3DStyle() {
 
-    try {
-      const image = await this.map.loadImage(
-        defaultOptions.map3dOptions.imageIcon
-      );
-      this.map.addImage("stick", image.data);
+  try {
+    const image = await this.map.loadImage(
+      defaultOptions.map3dOptions.imageIcon
+    );
+    this.map.addImage("stick", image.data);
 
-      this.map.getStyle().layers.forEach((layer) => {
-        if (
-          layer["source-layer"] ===
-            defaultOptions.map3dOptions.sourceLayerFilterId &&
-          layer.minzoom >= defaultOptions.map3dOptions.minZoomFilter
-        ) {
-          if (image) {
-            const lyId = layer.id;
-            this.map.setLayoutProperty(lyId, "icon-image", "stick");
-            this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
-            this.map.setLayoutProperty(lyId, "symbol-placement", "point");
-            this.map.setLayoutProperty(lyId, "symbol-avoid-edges", false);
-            this.map.setLayoutProperty(lyId, "text-allow-overlap", true);
-            this.map.setLayoutProperty(lyId, "text-ignore-placement", false);
-            this.map.setLayoutProperty(lyId, "text-pitch-alignment", "auto");
-            this.map.setLayoutProperty(lyId, "text-rotation-alignment", "auto");
-            this.map.setLayoutProperty(lyId, "text-justify", "center");
-            this.map.setLayoutProperty(lyId, "text-anchor", "bottom");
-            this.map.setLayoutProperty(lyId, "icon-anchor", "bottom");
-            this.map.setPaintProperty(lyId, "text-color", "#ffffff");
-            this.map.setPaintProperty(lyId, "text-halo-color", "#000000");
-            this.map.setPaintProperty(lyId, "text-halo-width", 2);
-          }
+    this.map.getStyle().layers.forEach((layer) => {
+      if (
+        layer["source-layer"] ===
+        defaultOptions.map3dOptions.sourceLayerFilterId &&
+        layer.minzoom >= defaultOptions.map3dOptions.minZoomFilter
+      ) {
+        if (image) {
+          const lyId = layer.id;
+          this.map.setLayoutProperty(lyId, "icon-image", "stick");
+          this.map.setLayoutProperty(lyId, "text-offset", [0, -9]);
+          this.map.setLayoutProperty(lyId, "symbol-placement", "point");
+          this.map.setLayoutProperty(lyId, "symbol-avoid-edges", false);
+          this.map.setLayoutProperty(lyId, "text-allow-overlap", true);
+          this.map.setLayoutProperty(lyId, "text-ignore-placement", false);
+          this.map.setLayoutProperty(lyId, "text-pitch-alignment", "auto");
+          this.map.setLayoutProperty(lyId, "text-rotation-alignment", "auto");
+          this.map.setLayoutProperty(lyId, "text-justify", "center");
+          this.map.setLayoutProperty(lyId, "text-anchor", "bottom");
+          this.map.setLayoutProperty(lyId, "icon-anchor", "bottom");
+          this.map.setPaintProperty(lyId, "text-color", "#ffffff");
+          this.map.setPaintProperty(lyId, "text-halo-color", "#000000");
+          this.map.setPaintProperty(lyId, "text-halo-width", 2);
+        }
 
-        
+
       }
     });
   } catch (error) {
     console.error(`Error dealing orto 3D: ${error.message}`);
     return null;
   }
-  }
+}
 
-   _dealOrto3dStyle(name) {
-    try {
-      if (name == "orto3d") {
-       
+_dealOrto3dStyle(name) {
+  try {
+    if (name == "orto3d") {
 
-        this.map.setMaxZoom(18.8);
-        this.map.easeTo({ pitch: 45 });
-        const ambientLight = new AmbientLight({
-          intensity: 4,
-        });
 
-        const lightingEffect = new LightingEffect({
-          ambientLight,
-        });
-
-        this.map.setTerrain({
-          source: defaultOptions.map3dOptions.terrainSource,
-          exaggeration: defaultOptions.map3dOptions.exaggeration,
-        });
-
-        const citiesMapboxLayer = this._createCitiesMapboxLayer();
-
-        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.addLayer(
-            citiesMapboxLayer,
-            defaultOptions.map3dOptions.layerIdOrder
-          );
-          this.map.setLayerZoomRange(
-            defaultOptions.map3dOptions.layerId3d,
-            defaultOptions.map3dOptions.minZoomRange,
-            defaultOptions.map3dOptions.maxZoomRange
-          );
-
-          citiesMapboxLayer.deck.setProps({
-            effects: [lightingEffect],
-          });
-
-        
-          this._raiseText3DStyle();
-        }
-      } else {
-        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
-
-          this.map.setTerrain(null);
-        }
-      }
-    } catch (error) {
-      console.error(`Error dealing orto 3D: ${error.message}`);
-      return null;
-    }
-  }
-
-  _createCitiesMapboxLayer() {
-    try {
-      const citiesMapboxLayer = new MapboxLayer({
-        id: defaultOptions.map3dOptions.layerId3d,
-        type: Tile3DLayer,
-        data: defaultOptions.map3dOptions.urlTilesetCities,
-        loader: Tiles3DLoader,
-
-        loadOptions: {
-          tileset: {
-            viewDistanceScale: 1,
-            updateTransforms: false,
-            maximumScreenSpaceError:
-              defaultOptions.map3dOptions.spaceErrorFactor,
-          },
-        },
-
-        onTilesetLoad: (tileset3d) => {
-          tileset3d.options.maximumScreenSpaceError =
-            defaultOptions.map3dOptions.spaceErrorFactor;
-        },
-        onTileLoad: (tileHeader) => {
-          tileHeader.content.cartographicOrigin.z -=
-            defaultOptions.map3dOptions.zfactor;
-        },
-        operation: "terrain+draw",
+      this.map.setMaxZoom(18.8);
+      this.map.easeTo({ pitch: 45 });
+      const ambientLight = new AmbientLight({
+        intensity: 4,
       });
 
-      return citiesMapboxLayer;
-    } catch (error) {
-      console.error(`Error adding MapboxLayer: ${error.message}`);
-      return null;
+      const lightingEffect = new LightingEffect({
+        ambientLight,
+      });
+
+      this.map.setTerrain({
+        source: defaultOptions.map3dOptions.terrainSource,
+        exaggeration: defaultOptions.map3dOptions.exaggeration,
+      });
+
+      const citiesMapboxLayer = this._createCitiesMapboxLayer();
+
+      if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+        this.map.addLayer(
+          citiesMapboxLayer,
+          defaultOptions.map3dOptions.layerIdOrder
+        );
+        this.map.setLayerZoomRange(
+          defaultOptions.map3dOptions.layerId3d,
+          defaultOptions.map3dOptions.minZoomRange,
+          defaultOptions.map3dOptions.maxZoomRange
+        );
+
+        citiesMapboxLayer.deck.setProps({
+          effects: [lightingEffect],
+        });
+
+
+        this._raiseText3DStyle();
+      }
+    } else {
+      if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
+        this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
+
+        this.map.setTerrain(null);
+      }
     }
+  } catch (error) {
+    console.error(`Error dealing orto 3D: ${error.message}`);
+    return null;
   }
+}
+
+_createCitiesMapboxLayer() {
+  try {
+    const citiesMapboxLayer = new MapboxLayer({
+      id: defaultOptions.map3dOptions.layerId3d,
+      type: Tile3DLayer,
+      data: defaultOptions.map3dOptions.urlTilesetCities,
+      loader: Tiles3DLoader,
+
+      loadOptions: {
+        tileset: {
+          viewDistanceScale: 1,
+          updateTransforms: false,
+          maximumScreenSpaceError:
+            defaultOptions.map3dOptions.spaceErrorFactor,
+        },
+      },
+
+      onTilesetLoad: (tileset3d) => {
+        tileset3d.options.maximumScreenSpaceError =
+          defaultOptions.map3dOptions.spaceErrorFactor;
+      },
+      onTileLoad: (tileHeader) => {
+        tileHeader.content.cartographicOrigin.z -=
+          defaultOptions.map3dOptions.zfactor;
+      },
+      operation: "terrain+draw",
+    });
+
+    return citiesMapboxLayer;
+  } catch (error) {
+    console.error(`Error adding MapboxLayer: ${error.message}`);
+    return null;
+  }
+}
 
 
 } //end class

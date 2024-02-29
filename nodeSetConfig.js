@@ -25,6 +25,7 @@ const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
 dotenv.config();
 
 let vectorLimitsLayersOptions ;
+let fgbLayersOptions;
 let vectorLayersOptions;
 let ortoLayersOptions;
 let wmsLayersOptions;
@@ -33,6 +34,7 @@ let terrainOptions;
 
 
 getVectorLimitsLayers()
+getFGBLimitsLayers()
 getOrtoWMSLayers()
 getWMSLayers()
 getVectorLayers()
@@ -59,7 +61,6 @@ async function getVectorLimitsLayers() {
           vectorLimitsLayersOptions = vectorLayerIds.map((id) => ({
             name: camelize(id),
             key: id.toLowerCase().replace(/ /g, '_'),
-            url: `https://tilemaps.icgc.cat/vector/fgb/${id.toLowerCase().replace(/ /g, '_')}.fgb`,
           }));
      
           console.log('Dades Limits vector actualitzats' );
@@ -68,6 +69,32 @@ async function getVectorLimitsLayers() {
         }
       } catch (error) {
         console.error('Error fetching limits vector-layers:', error.message);
+      }
+    
+  }
+  async function getFGBLimitsLayers() {
+    try {
+        const response = await axios.get('https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json');
+        const tileJson = response.data;
+    
+   
+        if (tileJson.vector_layers && Array.isArray(tileJson.vector_layers)) {
+          const fgbLayerIds = tileJson.vector_layers
+            .filter(layer => layer.id.toLowerCase().includes('vigent'))
+            .map((layer) => ({
+              name: camelize(layer.id),
+              key: layer.id.toLowerCase().replace(/ /g, '_'),
+              url: `https://tilemaps.icgc.cat/vector/fgb/${layer.id.toLowerCase().replace(/ /g, '_')}.fgb`,
+            }));
+            console.log('fgb', fgbLayerIds)
+        fgbLayersOptions = fgbLayerIds
+          console.log('Dades Limits fgb actualitzats');
+        
+        } else {
+          console.log('no  fgb-layers');
+        }
+      } catch (error) {
+        console.error('Error fetching limits fgb-layers:', error.message);
       }
     
   }
@@ -87,10 +114,10 @@ async function getVectorLimitsLayers() {
               console.error('Error parsing XML:', err);
               return;
             }
-        console.log('result', result)
+        // console.log('result', result)
             // Extract layer names from the parsed result
             const layers = result?.WMS_Capabilities?.Capability[0]?.Layer[0]?.Layer;
-        console.log('layers',layers)
+        // console.log('layers',layers)
             if (layers) {
               const vectorArray = layers.map(layer => ({
                 name: camelize(layer.Name[0]),
@@ -210,6 +237,7 @@ setTimeout(() => {
 function replace(){
   defaultOptions.vectorLayersICGC = vectorLimitsLayersOptions
   defaultOptions.vectorLayers = vectorLayersOptions
+  defaultOptions.fgbLayers = fgbLayersOptions
   defaultOptions.ortoLayersICGC = ortoLayersOptions
   defaultOptions.wmsLayers = wmsLayersOptions
   defaultOptions.baseStyles = stylesOptions
@@ -258,7 +286,7 @@ console.log('Variables actualitzades correctament a config.js');
 }
 
 function replaceConstants(){
-console.log('replaceeee')
+// console.log('replaceeee')
 
 function stringifyWithoutQuotes(obj, indent = 0) {
   const padding = ' '.repeat(indent);
@@ -328,10 +356,19 @@ const convertedVectorICGCLayers = {};
 for (const key in originalVectorICGCLayers) {
   if (originalVectorICGCLayers.hasOwnProperty(key)) {
     const item = originalVectorICGCLayers[key];
-    convertedVectorICGCLayers[item.name] = item.url;
+    convertedVectorICGCLayers[item.name] = item.key;
   }
 }
 
+let originalFGBICGCLayers = defaultOptions.fgbLayers
+const convertedFGBICGCLayers = {};
+for (const key in originalFGBICGCLayers) {
+  if (originalFGBICGCLayers.hasOwnProperty(key)) {
+    const item = originalFGBICGCLayers[key];
+    convertedFGBICGCLayers[item.name] = item.url;
+  }
+  console.log('con', convertedFGBICGCLayers)
+}
 let originalVectorLayers = defaultOptions.vectorLayers
 const convertedVectorLayers = {};
 for (const key in originalVectorLayers) {
@@ -353,9 +390,10 @@ for (const key in originalWmsLayers) {
 const layersConfig = `
 const Orto = ${stringifyWithoutQuotes(convertedOrtoLayers, null, 2)};
 const VectorAdmin = ${stringifyWithoutQuotes(convertedVectorICGCLayers, null, 2)};
+const FGBAdmin = ${stringifyWithoutQuotes(convertedFGBICGCLayers, null, 2)}
 const Vector = ${stringifyWithoutQuotes(convertedVectorLayers, null, 2)};
 const WMS = ${stringifyWithoutQuotes(convertedWmsLayers, null, 2)};
-\nexport default {Orto,VectorAdmin, WMS, Vector};
+\nexport default {Orto,VectorAdmin, WMS, FGBAdmin, Vector};
 `;
 
 // Escribe el contenido actualizado en el archivo config.js
