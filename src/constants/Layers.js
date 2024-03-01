@@ -176,7 +176,6 @@ vegueriesVigent: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent.fgb",
 vegueriesVigentText: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_text.fgb",
 }
 const Vector = {
-altimetria: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf",
 cobertes2018: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
 };
 const WMS = {

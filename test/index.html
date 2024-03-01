@@ -4,10 +4,14 @@
     <meta charset="utf-8" />
     <title>MapIcgc</title>
     <script src="../dist/mapicgc-gl.js"></script>
-    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
-    <link rel="stylesheet" href=" https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" />
+    <!-- <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script> -->
+    <link rel="stylesheet" href="../dist/mapicgc-gl.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!--   
     <script src="https://unpkg.com/flatgeobuf@3.26.2/dist/flatgeobuf-geojson.min.js"></script>
-    <script src="https://unpkg.com/@turf/turf"></script>
+    <script src="https://unpkg.com/@turf/turf"></script> -->
 
 
 
@@ -80,12 +84,11 @@
       }));
 
       map.on("load", async () => {
-
-        let paintOptions = {
-          'line-color': 'red',
-          'line-width': 2
-        }
-        map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensals2015, paintOptions)
+        map.addVectorLayerICGC(
+                mapicgcgl.Layers.Vector.cobertes2018
+            );
+            map.addFeatureQuery('cobertes2018')
+        // map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.agrupacionsCensals2015, paintOptions)
         // map.addFGBLayerICGC(mapicgcgl.Layers.FGBAdmin.agrupacionsCensalsVigent, "visible")
         // let image = await map.loadImage('https://tilemaps.icgc.cat/cdn/images/tower.png');
         // map.addImage('tower', image.data, { sdf: true });

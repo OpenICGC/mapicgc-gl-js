@@ -360,7 +360,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          });
+          }, this._firstSymbolLayer() );
         } else {
           map.addLayer({
             id: name,
@@ -377,7 +377,7 @@ export default class Map {
               "line-width": 2,
               "line-opacity": 1,
             },
-          });
+          }, this._firstSymbolLayer());
         }
       }
       if (type.includes("olygon")) {
@@ -394,7 +394,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          });
+          }, this._firstSymbolLayer());
         } else {
           map.addLayer({
             id: name,
@@ -410,7 +410,7 @@ export default class Map {
               "fill-color": "blue",
               "fill-opacity": 0.6,
             },
-          });
+          }, this._firstSymbolLayer());
         }
       }
       if (type.includes("oint")) {
@@ -427,7 +427,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          });
+          }, this._firstSymbolLayer());
         } else {
           map.addLayer({
             id: name,
@@ -443,7 +443,7 @@ export default class Map {
               "circle-color": "red",
               "circle-opacity": 0.85,
             },
-          });
+          }, this._firstSymbolLayer());
         }
       }
       // map.addFeatureQuery(name)
@@ -497,7 +497,7 @@ export default class Map {
                 visibility: "visible",
               },
               paint: options,
-            });
+            }, this._firstSymbolLayer());
           } else {
             map.addLayer({
               id: name,
@@ -514,7 +514,7 @@ export default class Map {
                 "line-width": 2,
                 "line-opacity": 1,
               },
-            });
+            }, this._firstSymbolLayer());
           }
         }
         if (type.includes("olygon")) {
@@ -531,7 +531,7 @@ export default class Map {
                 visibility: "visible",
               },
               paint: options,
-            });
+            }, this._firstSymbolLayer());
           } else {
             map.addLayer({
               id: name,
@@ -547,7 +547,7 @@ export default class Map {
                 "fill-color": "blue",
                 "fill-opacity": 0.6,
               },
-            });
+            }, this._firstSymbolLayer());
           }
         }
         if (type.includes("oint")) {
@@ -564,7 +564,7 @@ export default class Map {
                 visibility: "visible",
               },
               paint: options,
-            });
+            }, this._firstSymbolLayer());
           } else {
             map.addLayer({
               id: name,
@@ -580,7 +580,7 @@ export default class Map {
                 "circle-color": "red",
                 "circle-opacity": 0.85,
               },
-            });
+            }, this._firstSymbolLayer());
           }
         }
         // geojsonStore  = geojson
@@ -613,7 +613,7 @@ export default class Map {
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  });
+                  }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
                     id: fieldMarker,
@@ -631,7 +631,7 @@ export default class Map {
                       "line-width": 2,
                       "line-opacity": 1,
                     },
-                  });
+                  }, this._firstSymbolLayer());
                 }
               }
               if (type.includes("olygon")) {
@@ -649,7 +649,7 @@ export default class Map {
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  });
+                  }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
                     id: fieldMarker,
@@ -666,7 +666,7 @@ export default class Map {
                       "fill-color": "blue",
                       "fill-opacity": 0.6,
                     },
-                  });
+                  }, this._firstSymbolLayer());
                 }
               }
               if (type.includes("oint")) {
@@ -684,7 +684,7 @@ export default class Map {
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  });
+                  }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
                     id: fieldMarker,
@@ -702,7 +702,7 @@ export default class Map {
                       "circle-color": "red",
                       "circle-opacity": 0.85,
                     },
-                  });
+                  }, this._firstSymbolLayer());
                 }
               }
 
@@ -1073,7 +1073,7 @@ export default class Map {
         source: `${layer.id}-sourceIcgcMap`,
         layout: layer.layout,
         paint: layer.paint,
-      });
+      }, this._firstSymbolLayer());
       // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
@@ -1096,13 +1096,13 @@ export default class Map {
         type: "raster",
         tiles: [layer.tiles],
         tileSize: 256,
-      });
+      }, this._firstSymbolLayer());
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: "raster",
         source: `${layer.id}-sourceIcgcMap`,
         paint: {},
-      });
+      }, this._firstSymbolLayer());
       // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
@@ -1258,9 +1258,10 @@ export default class Map {
       });
       this.map.on("click", (e) => {
         let features = this.map.queryRenderedFeatures(e.point);
-        if (features && features[0].source === layerName) {
+        // console.log('kkk',features[0].source, layerName )
+        if ((features && features[0].source === layerName) ) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
-          console.log('es aqui3331??', options.length)
+          // console.log('es aqui3331??', options)
           if (options !== undefined && options.length > 0) {
             if (options !== null) {
               let text = "";
@@ -1483,16 +1484,7 @@ export default class Map {
       let places = options.features;
 
       const filterGroup = document.getElementById("filter-group");
-      // this.map.on("load", () => {
-      const layers = this.map.getStyle().layers;
-      let firstSymbolId;
-      console.log('es aqui12??', layers.length)
-      for (let i = 0; i < layers.length; i++) {
-        if (layers[i].type === "symbol") {
-          firstSymbolId = layers[i].id;
-          break;
-        }
-      }
+ 
       this.map.addSource(`${options.id}-source`, {
         type: options.type,
         data: places,
@@ -1513,7 +1505,7 @@ export default class Map {
               },
               filter: ["==", "icon", symbol],
             },
-            firstSymbolId
+             this._firstSymbolLayer()
           );
 
           const input = document.createElement("input");
@@ -1669,43 +1661,7 @@ export default class Map {
       };
       console.log("source", sourceWMS);
       this.addLayerWMS(sourceWMS);
-      // } else {
-      //   let sourceWMS = {
-      //     id: name + "Actual",
-      //     tiles:
-      //       "https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png",
-      //   };
-      //   this.addLayerWMS(sourceWMS);
-      // }
-      // }
-      //if not orto
-
-      // if (name.includes("relleu")) {
-      //   let sourceWMS = {
-      //     id: name + "Actual",
-      //     tiles:
-      //       "https://tilemaps.icgc.cat/mapfactory/wmts/relleu/CAT3857/{z}/{x}/{y}.png",
-      //   };
-      //   this.addLayerWMS(sourceWMS);
-      // }
-      // if (name.includes("geol")) {
-      //   let sourceWMS = {
-      //     id: name + "Actual",
-      //     tiles:
-      //       "https://tilemaps.icgc.cat/mapfactory/wmts/geologia/MON3857NW/{z}/{x}/{y}.png",
-      //   };
-      //   this.addLayerWMS(sourceWMS);
-      // }
-      // } else {
-      //   //if not includes geol, orto, relleu...
-      //   console.log(
-      //     "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-      //     "font-weight: bold; font-style: italic;",
-      //     "font-weight: normal; font-style: normal; color: red;",
-      //     name,
-      //     "font-weight: bold; font-style: italic;"
-      //   );
-      // }
+      
     } catch (error) {
       console.error(`Error adding ICGC image layer: ${error.message}`);
     }
@@ -1720,7 +1676,7 @@ export default class Map {
  */
   async addVectorLayerICGC(layerUrl, paintOption) {
     try {
-
+console.log('layerUrl', layerUrl)
       let name = layerUrl
       if (name === null) {
      console.log(
@@ -1731,6 +1687,167 @@ export default class Map {
           "font-weight: bold; font-style: italic;"
         );
       } else {
+if (layerUrl.includes("https")){
+
+
+
+  function getKeyByUrl(url) {
+    for (const key in Layers.Vector) {
+      // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
+      if (
+        Layers.Vector.hasOwnProperty(key) &&
+        Layers.Vector[key] === url
+      ) {
+        // console.log('entro', key)
+        return key; // Retorna la clave si encuentra la URL
+      }
+    }
+    return null; // Retorna null si no se encuentra la URL en el objeto
+  }
+
+  let name = getKeyByUrl(layerUrl);
+
+  this.map.addSource(name, {
+    type: "vector",
+    url: layerUrl,
+  });
+if (name === 'cobertes2018'){
+  map.addLayer({
+    "id": name,
+    "type": "fill",
+    "source": name,
+    "source-layer": "cobertes",
+    "maxzoom": 18,
+    "paint": {
+      "fill-opacity": [
+        'interpolate',
+        ['exponential', 0.5],
+        ['zoom'],
+        13.5,
+        1,
+        18,
+        0.4
+      ],
+      "fill-outline-color": "rgba(0,0, 0, 0)",
+      "fill-color": [
+        "interpolate",
+        [
+          "cubic-bezier",
+          0.5,
+          1,
+          1,
+          1
+        ],
+        [
+          "get",
+          "nivell_2"
+        ],
+        0,
+        "#ffffff",
+        111,
+        "#ffff00",
+        112,
+        "#ccff33",
+        113,
+        "#af5b15",
+        114,
+        "#808000",
+        115,
+        "#cdcd00",
+        116,
+        "#ffffcc",
+        221,
+        "#33cc33",
+        222,
+        "#66ff33",
+        223,
+        "#689018",
+        224,
+        "#967d5f",
+        225,
+        "#19e61e",
+        226,
+        "#b4ff9b",
+        227,
+        "#aaa500",
+        228,
+        "#c3c3a0",
+        229,
+        "#00ff9b",
+        230,
+        "#ff9632",
+        231,
+        "#282828",
+        232,
+        "#79797a",
+        233,
+        "#f5df78",
+        234,
+        "#3296ff",
+        341,
+        "#ff007d",
+        342,
+        "#ff53cd",
+        343,
+        "#ffa4e2",
+        344,
+        "#ffc8e2",
+        345,
+        "#ffb4b4",
+        346,
+        "#0f3700",
+        347,
+        "#730055",
+        348,
+        "#6200c4",
+        349,
+        "#4a9595",
+        350,
+        "#ff00f0",
+        351,
+        "#adaaca",
+        352,
+        "#ffe6e6",
+        353,
+        "#67629a",
+        354,
+        "#4a466e",
+        355,
+        "#2f2d46",
+        461,
+        "#6f6fff",
+        462,
+        "#0000dc",
+        463,
+        "#000064",
+        464,
+        "#185f94",
+        465,
+        "#12466d",
+        466,
+        "#000080"
+      ]
+    }
+  }, this._firstSymbolLayer());
+
+}
+
+//addLegend
+function getLegendByName(name) {
+  for (const layerKey in defaultOptions.vectorLayers) {
+    const layer = defaultOptions.vectorLayers[layerKey];
+    if (layer.key === name) {
+      return layer.legend;
+    }
+  }
+  return null; // Si no se encuentra ninguna coincidencia, retornamos null o algún otro valor que indique que no se encontró.
+}
+let legendUrl = getLegendByName(name)
+map.addLegend(name, legendUrl)
+
+
+}else{
+ 
 
         let sourceLimits = 'limitsSource'
 
@@ -1749,7 +1866,7 @@ export default class Map {
             "fill-color": "#0000FF",
             "fill-opacity": 0,
           },
-        });
+        }, this._firstSymbolLayer());
         this.map.addLayer({
           id: name + "-underline",
           type: "line",
@@ -1760,7 +1877,7 @@ export default class Map {
             "line-opacity": 1,
             "line-width": 3,
           },
-        });
+        }, this._firstSymbolLayer());
         if (paintOption){
           this.map.addLayer({
             id: name + "-line",
@@ -1768,7 +1885,7 @@ export default class Map {
             source: sourceLimits,
             "source-layer": name,
             paint: paintOption,
-          });
+          }, this._firstSymbolLayer());
         }else{
            this.map.addLayer({
           id: name + "-line",
@@ -1780,10 +1897,10 @@ export default class Map {
             "line-opacity": 1,
             "line-width": 1,
           },
-        });
+        }, this._firstSymbolLayer());
         }
        
-
+      }
 
 
 
@@ -1877,7 +1994,7 @@ export default class Map {
             "text-line-height": 1
           },
           paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
-        });
+        }, this._firstSymbolLayer());
       } else {
         this.map.addLayer({
           id: name + "-fill",
@@ -1887,7 +2004,7 @@ export default class Map {
             "fill-color": "#0000FF",
             "fill-opacity": 0,
           },
-        });
+        }, this._firstSymbolLayer());
         this.map.addLayer({
           id: name + "-underline",
           type: "line",
@@ -1897,7 +2014,7 @@ export default class Map {
             "line-opacity": 1,
             "line-width": 3,
           },
-        });
+        }, this._firstSymbolLayer());
         // console.log('painst', paintOption)
         if (paintOption){
           // console.log('paint', paintOption)
@@ -1906,7 +2023,7 @@ export default class Map {
           type: "line",
           source: src,
           paint: paintOption
-        });
+        }, this._firstSymbolLayer());
         }else{
           this.map.addLayer({
             id: name + "-line",
@@ -1917,7 +2034,7 @@ export default class Map {
               "line-opacity": 1,
               "line-width": 1,
             },
-          });
+          }, this._firstSymbolLayer());
         }
       
 
@@ -1943,7 +2060,7 @@ export default class Map {
             "text-line-height": 1
           },
           paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
-        })
+        }, this._firstSymbolLayer())
 
 
       }
@@ -2027,6 +2144,73 @@ addTerrainICGC(resolution, positionButton) {
   }
   // }); //'load end
 }
+
+/**
+ * Adds 3D terrain to the map using hillshade.
+ * @function addLegend
+ * @param {string} name - name of the layer legend  to add.
+ */
+addLegend(name, legendUrl){
+  try {
+   
+    console.log('namelegend', name, legendUrl)
+
+   
+
+    
+    const legendContainer = document.createElement('div');
+    legendContainer.id = 'legendContainer';
+    legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
+    legendContainer.style.display = 'block';
+    document.body.appendChild(legendContainer);
+
+      // Make legend container draggable and resizable
+      $(function() {
+        $("#legendContainer").draggable();
+        $("#legendContainer").resizable();
+      });
+
+    // Create toggle button
+    const toggleLegend = document.createElement('div');
+    toggleLegend.id = 'toggleLegend';
+    toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
+    document.body.appendChild(toggleLegend);
+
+    // Toggle legend visibility
+    toggleLegend.addEventListener('click', function() {
+      if (legendContainer.style.display === 'none') {
+        legendContainer.style.display = 'block';
+      } else {
+        legendContainer.style.display = 'none';
+      }
+    });
+
+
+
+
+
+
+    // const menuGroup = document.getElementById("map");
+    // const div = document.createElement("div");
+    // const imagen = document.createElement("img")
+    //   div.className = "legendDiv";
+    // menuGroup.appendChild(div); 
+    //   imagen.src= legendUrl
+    //   imagen.alt=name
+    // div.appendChild(imagen);
+
+    
+
+    // div.addEventListener("click", () => handleClick(name));
+
+
+  } catch (error) {
+    console.error(`Error adding legend: ${error.message}`);
+  }
+}
+
+
+
 
 
 //Internal methods
@@ -2125,6 +2309,24 @@ _dealOrto3dStyle(name) {
     return null;
   }
 }
+
+_firstSymbolLayer(){
+  try {
+    const layers = this.map.getStyle().layers;
+    let firstSymbolId;
+    // console.log('es aqui12??', layers.length)
+    for (let i = 0; i < layers.length; i++) {
+      if (layers[i].type === "symbol") {
+        firstSymbolId = layers[i].id;
+        break;
+      }
+    }
+    return firstSymbolId
+  } catch (error) {
+    console.error(`Error getting first symbol layer: ${error.message}`);
+  }
+}
+
 
 _createCitiesMapboxLayer() {
   try {

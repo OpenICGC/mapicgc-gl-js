@@ -1519,5 +1519,30 @@ h4::selection {
   /* min-width: 130px; */
   /* text-align: -webkit-center; */
 }
-
+#legendContainer {
+  position: absolute;
+  top: 20px;
+  right: 76px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  overflow-y: scroll;
+  cursor: grab; 
+}
+#toggleLegend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #00ab2d;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  z-index: 1000;
+}
 }

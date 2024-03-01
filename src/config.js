@@ -3,6 +3,7 @@ const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {
 limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
+
 geocoder: {
   peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
   peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
@@ -688,13 +689,9 @@ vectorLayersICGC: {
 },
 vectorLayers: {
   0: {
-    key: "altimetria",
-    layer: "",
-    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf",
-  },
-  1: {
     key: "cobertes2018",
     url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
+    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg"
   },
 },
 wmsLayers: {
