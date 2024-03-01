@@ -2,6 +2,8 @@
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {
+limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
+
 geocoder: {
   peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
   peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
@@ -12,6 +14,7 @@ mapOptions: {
     0: 1.537786,
     1: 41.837539,
   },
+
   zoom: 7.5,
   bearing: 0,
   pitch: 0,
@@ -20,14 +23,13 @@ mapOptions: {
   maxZoom: 18,
   maxPitch: 85,
 },
-logoOptions:{
+logoOptions: {
   logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg",
   logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/ICGC_white_norma.svg",
   logoLink: "https://www.icgc.cat",
-  logoTitle:"Institut Cartogràfic i Geològic de Catalunya",
-  logoWidth:100
+  logoTitle: "Institut Cartogràfic i Geològic de Catalunya",
+  logoWidth: 100,
 },
-
 map3dOptions: {
   spaceErrorFactor: 2,
   exaggeration: 1,
@@ -327,459 +329,369 @@ vectorLayersICGC: {
   0: {
     name: "agrupacionsCensals2015",
     key: "agrupacions_censals_2015",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2015.fgb",
   },
   1: {
     name: "agrupacionsCensals2016",
     key: "agrupacions_censals_2016",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2016.fgb",
   },
   2: {
     name: "agrupacionsCensals2017",
     key: "agrupacions_censals_2017",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2017.fgb",
   },
   3: {
     name: "agrupacionsCensals2018",
     key: "agrupacions_censals_2018",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2018.fgb",
   },
   4: {
     name: "agrupacionsCensals2019",
     key: "agrupacions_censals_2019",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2019.fgb",
   },
   5: {
     name: "agrupacionsCensals2020",
     key: "agrupacions_censals_2020",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2020.fgb",
   },
   6: {
     name: "agrupacionsCensals2021",
     key: "agrupacions_censals_2021",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_2021.fgb",
   },
   7: {
     name: "agrupacionsCensalsVigent",
     key: "agrupacions_censals_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent.fgb",
   },
   8: {
     name: "agrupacionsCensalsVigentText",
     key: "agrupacions_censals_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent_text.fgb",
   },
   9: {
     name: "areesBasiquesPolicials2019",
     key: "arees_basiques_policials_2019",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_2019.fgb",
   },
   10: {
     name: "areesBasiquesPolicials2020",
     key: "arees_basiques_policials_2020",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_2020.fgb",
   },
   11: {
     name: "areesBasiquesPolicials2022",
     key: "arees_basiques_policials_2022",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_2022.fgb",
   },
   12: {
     name: "areesBasiquesPolicialsVigent",
     key: "arees_basiques_policials_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent.fgb",
   },
   13: {
     name: "areesBasiquesPolicialsVigentText",
     key: "arees_basiques_policials_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent_text.fgb",
   },
   14: {
     name: "areesBasiquesSalutVigent",
     key: "arees_basiques_salut_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_salut_vigent.fgb",
   },
   15: {
     name: "areesBasiquesServeisSocialsVigent",
     key: "arees_basiques_serveis_socials_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent.fgb",
   },
   16: {
     name: "areesBasiquesServeisSocialsVigentText",
     key: "arees_basiques_serveis_socials_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent_text.fgb",
   },
   17: {
     name: "areesGestioAssistencialVigent",
     key: "arees_gestio_assistencial_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_gestio_assistencial_vigent.fgb",
   },
   18: {
     name: "areesHidrogeologiquesAquifersVigent",
     key: "arees_hidrogeologiques_aquifers_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/arees_hidrogeologiques_aquifers_vigent.fgb",
   },
   19: {
     name: "catalunyaVigent",
     key: "catalunya_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent.fgb",
   },
   20: {
     name: "catalunyaVigentText",
     key: "catalunya_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent_text.fgb",
   },
   21: {
     name: "comarques2022",
     key: "comarques_2022",
-    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_2022.fgb",
   },
   22: {
     name: "comarquesVigent",
     key: "comarques_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent.fgb",
   },
   23: {
     name: "comarquesVigentText",
     key: "comarques_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent_text.fgb",
   },
   24: {
     name: "districtesCensals2002",
     key: "districtes_censals_2002",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2002.fgb",
   },
   25: {
     name: "districtesCensals2003",
     key: "districtes_censals_2003",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2003.fgb",
   },
   26: {
     name: "districtesCensals2004",
     key: "districtes_censals_2004",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2004.fgb",
   },
   27: {
     name: "districtesCensals2005",
     key: "districtes_censals_2005",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2005.fgb",
   },
   28: {
     name: "districtesCensals2006",
     key: "districtes_censals_2006",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2006.fgb",
   },
   29: {
     name: "districtesCensals2007",
     key: "districtes_censals_2007",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2007.fgb",
   },
   30: {
     name: "districtesCensals2008",
     key: "districtes_censals_2008",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2008.fgb",
   },
   31: {
     name: "districtesCensals2009",
     key: "districtes_censals_2009",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2009.fgb",
   },
   32: {
     name: "districtesCensals2010",
     key: "districtes_censals_2010",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2010.fgb",
   },
   33: {
     name: "districtesCensals2011",
     key: "districtes_censals_2011",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2011.fgb",
   },
   34: {
     name: "districtesCensals2012",
     key: "districtes_censals_2012",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2012.fgb",
   },
   35: {
     name: "districtesCensals2013",
     key: "districtes_censals_2013",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2013.fgb",
   },
   36: {
     name: "districtesCensals2014",
     key: "districtes_censals_2014",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2014.fgb",
   },
   37: {
     name: "districtesCensals2015",
     key: "districtes_censals_2015",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2015.fgb",
   },
   38: {
     name: "districtesCensals2016",
     key: "districtes_censals_2016",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2016.fgb",
   },
   39: {
     name: "districtesCensals2017",
     key: "districtes_censals_2017",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2017.fgb",
   },
   40: {
     name: "districtesCensals2018",
     key: "districtes_censals_2018",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2018.fgb",
   },
   41: {
     name: "districtesCensals2019",
     key: "districtes_censals_2019",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2019.fgb",
   },
   42: {
     name: "districtesCensals2020",
     key: "districtes_censals_2020",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2020.fgb",
   },
   43: {
     name: "districtesCensals2021",
     key: "districtes_censals_2021",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2021.fgb",
   },
   44: {
     name: "districtesCensals2022",
     key: "districtes_censals_2022",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_2022.fgb",
   },
   45: {
     name: "districtesCensalsVigent",
     key: "districtes_censals_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent.fgb",
   },
   46: {
     name: "districtesCensalsVigentText",
     key: "districtes_censals_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent_text.fgb",
   },
   47: {
     name: "incendisForestalsVigent",
     key: "incendis_forestals_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent.fgb",
   },
   48: {
     name: "incendisForestalsVigentText",
     key: "incendis_forestals_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent_text.fgb",
   },
   49: {
     name: "municipis2022",
     key: "municipis_2022",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_2022.fgb",
   },
   50: {
     name: "municipis2022Text",
     key: "municipis_2022_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_2022_text.fgb",
   },
   51: {
     name: "municipisVigent",
     key: "municipis_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent.fgb",
   },
   52: {
     name: "municipisVigentText",
     key: "municipis_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent_text.fgb",
   },
   53: {
     name: "partitsJudicialsVigent",
     key: "partits_judicials_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent.fgb",
   },
   54: {
     name: "partitsJudicialsVigentText",
     key: "partits_judicials_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent_text.fgb",
   },
   55: {
     name: "plaTerritorial2015",
     key: "pla_territorial_2015",
-    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_2015.fgb",
   },
   56: {
     name: "plaTerritorialVigent",
     key: "pla_territorial_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent.fgb",
   },
   57: {
     name: "plaTerritorialVigentText",
     key: "pla_territorial_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent_text.fgb",
   },
   58: {
     name: "provinciesVigent",
     key: "provincies_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent.fgb",
   },
   59: {
     name: "provinciesVigentText",
     key: "provincies_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent_text.fgb",
   },
   60: {
     name: "regionsPolicialsVigent",
     key: "regions_policials_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent.fgb",
   },
   61: {
     name: "regionsPolicialsVigentText",
     key: "regions_policials_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent_text.fgb",
   },
   62: {
     name: "regionsSanitariesVigent",
     key: "regions_sanitaries_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent.fgb",
   },
   63: {
     name: "regionsSanitariesVigentText",
     key: "regions_sanitaries_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent_text.fgb",
   },
   64: {
     name: "seccionsCensals2002",
     key: "seccions_censals_2002",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2002.fgb",
   },
   65: {
     name: "seccionsCensals2003",
     key: "seccions_censals_2003",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2003.fgb",
   },
   66: {
     name: "seccionsCensals2004",
     key: "seccions_censals_2004",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2004.fgb",
   },
   67: {
     name: "seccionsCensals2005",
     key: "seccions_censals_2005",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2005.fgb",
   },
   68: {
     name: "seccionsCensals2006",
     key: "seccions_censals_2006",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2006.fgb",
   },
   69: {
     name: "seccionsCensals2007",
     key: "seccions_censals_2007",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2007.fgb",
   },
   70: {
     name: "seccionsCensals2008",
     key: "seccions_censals_2008",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2008.fgb",
   },
   71: {
     name: "seccionsCensals2009",
     key: "seccions_censals_2009",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2009.fgb",
   },
   72: {
     name: "seccionsCensals2010",
     key: "seccions_censals_2010",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2010.fgb",
   },
   73: {
     name: "seccionsCensals2011",
     key: "seccions_censals_2011",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2011.fgb",
   },
   74: {
     name: "seccionsCensals2012",
     key: "seccions_censals_2012",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2012.fgb",
   },
   75: {
     name: "seccionsCensals2013",
     key: "seccions_censals_2013",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2013.fgb",
   },
   76: {
     name: "seccionsCensals2014",
     key: "seccions_censals_2014",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2014.fgb",
   },
   77: {
     name: "seccionsCensals2015",
     key: "seccions_censals_2015",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2015.fgb",
   },
   78: {
     name: "seccionsCensals2016",
     key: "seccions_censals_2016",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2016.fgb",
   },
   79: {
     name: "seccionsCensals2017",
     key: "seccions_censals_2017",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2017.fgb",
   },
   80: {
     name: "seccionsCensals2018",
     key: "seccions_censals_2018",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2018.fgb",
   },
   81: {
     name: "seccionsCensals2019",
     key: "seccions_censals_2019",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2019.fgb",
   },
   82: {
     name: "seccionsCensals2020",
     key: "seccions_censals_2020",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2020.fgb",
   },
   83: {
     name: "seccionsCensals2021",
     key: "seccions_censals_2021",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2021.fgb",
   },
   84: {
     name: "seccionsCensals2022",
     key: "seccions_censals_2022",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_2022.fgb",
   },
   85: {
     name: "seccionsCensalsVigent",
     key: "seccions_censals_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent.fgb",
   },
   86: {
     name: "seccionsCensalsVigentText",
     key: "seccions_censals_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent_text.fgb",
   },
   87: {
     name: "sectorsSanitarisVigent",
     key: "sectors_sanitaris_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/sectors_sanitaris_vigent.fgb",
   },
   88: {
     name: "vegueriesVigent",
     key: "vegueries_vigent",
-    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent.fgb",
   },
   89: {
     name: "vegueriesVigentText",
     key: "vegueries_vigent_text",
-    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_text.fgb",
   },
 },
 vectorLayers: {
   0: {
-    key: "altimetria",
-    layer: "",
-    url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf",
+    key: "cobertes2018",
+    url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
+    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg"
   },
 },
 wmsLayers: {
@@ -817,6 +729,178 @@ wmsLayers: {
     key: "cobertesSol",
     layer: "",
     url: "http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=cobertes_2009&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836",
+  },
+},
+fgbLayers: {
+  0: {
+    name: "agrupacionsCensalsVigent",
+    key: "agrupacions_censals_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent.fgb",
+  },
+  1: {
+    name: "agrupacionsCensalsVigentText",
+    key: "agrupacions_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/agrupacions_censals_vigent_text.fgb",
+  },
+  2: {
+    name: "areesBasiquesPolicialsVigent",
+    key: "arees_basiques_policials_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent.fgb",
+  },
+  3: {
+    name: "areesBasiquesPolicialsVigentText",
+    key: "arees_basiques_policials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_policials_vigent_text.fgb",
+  },
+  4: {
+    name: "areesBasiquesSalutVigent",
+    key: "arees_basiques_salut_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_salut_vigent.fgb",
+  },
+  5: {
+    name: "areesBasiquesServeisSocialsVigent",
+    key: "arees_basiques_serveis_socials_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent.fgb",
+  },
+  6: {
+    name: "areesBasiquesServeisSocialsVigentText",
+    key: "arees_basiques_serveis_socials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_basiques_serveis_socials_vigent_text.fgb",
+  },
+  7: {
+    name: "areesGestioAssistencialVigent",
+    key: "arees_gestio_assistencial_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_gestio_assistencial_vigent.fgb",
+  },
+  8: {
+    name: "areesHidrogeologiquesAquifersVigent",
+    key: "arees_hidrogeologiques_aquifers_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/arees_hidrogeologiques_aquifers_vigent.fgb",
+  },
+  9: {
+    name: "catalunyaVigent",
+    key: "catalunya_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent.fgb",
+  },
+  10: {
+    name: "catalunyaVigentText",
+    key: "catalunya_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/catalunya_vigent_text.fgb",
+  },
+  11: {
+    name: "comarquesVigent",
+    key: "comarques_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent.fgb",
+  },
+  12: {
+    name: "comarquesVigentText",
+    key: "comarques_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/comarques_vigent_text.fgb",
+  },
+  13: {
+    name: "districtesCensalsVigent",
+    key: "districtes_censals_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent.fgb",
+  },
+  14: {
+    name: "districtesCensalsVigentText",
+    key: "districtes_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent_text.fgb",
+  },
+  15: {
+    name: "incendisForestalsVigent",
+    key: "incendis_forestals_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent.fgb",
+  },
+  16: {
+    name: "incendisForestalsVigentText",
+    key: "incendis_forestals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent_text.fgb",
+  },
+  17: {
+    name: "municipisVigent",
+    key: "municipis_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent.fgb",
+  },
+  18: {
+    name: "municipisVigentText",
+    key: "municipis_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent_text.fgb",
+  },
+  19: {
+    name: "partitsJudicialsVigent",
+    key: "partits_judicials_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent.fgb",
+  },
+  20: {
+    name: "partitsJudicialsVigentText",
+    key: "partits_judicials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent_text.fgb",
+  },
+  21: {
+    name: "plaTerritorialVigent",
+    key: "pla_territorial_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent.fgb",
+  },
+  22: {
+    name: "plaTerritorialVigentText",
+    key: "pla_territorial_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent_text.fgb",
+  },
+  23: {
+    name: "provinciesVigent",
+    key: "provincies_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent.fgb",
+  },
+  24: {
+    name: "provinciesVigentText",
+    key: "provincies_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent_text.fgb",
+  },
+  25: {
+    name: "regionsPolicialsVigent",
+    key: "regions_policials_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent.fgb",
+  },
+  26: {
+    name: "regionsPolicialsVigentText",
+    key: "regions_policials_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent_text.fgb",
+  },
+  27: {
+    name: "regionsSanitariesVigent",
+    key: "regions_sanitaries_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent.fgb",
+  },
+  28: {
+    name: "regionsSanitariesVigentText",
+    key: "regions_sanitaries_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent_text.fgb",
+  },
+  29: {
+    name: "seccionsCensalsVigent",
+    key: "seccions_censals_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent.fgb",
+  },
+  30: {
+    name: "seccionsCensalsVigentText",
+    key: "seccions_censals_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent_text.fgb",
+  },
+  31: {
+    name: "sectorsSanitarisVigent",
+    key: "sectors_sanitaris_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/sectors_sanitaris_vigent.fgb",
+  },
+  32: {
+    name: "vegueriesVigent",
+    key: "vegueries_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent.fgb",
+  },
+  33: {
+    name: "vegueriesVigentText",
+    key: "vegueries_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_text.fgb",
   },
 },
 };
