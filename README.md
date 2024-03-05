@@ -29,13 +29,12 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 
 ### NPM
 
-1. Intall the library:
+1. Install the library:
     ```bash
     npm i mapicgc-gl-js
 
 2. Import the library:
-    ```javascript"
-
+    ```html
     <script>
       import { Map,Styles } from 'mapicgc-gl-js'; 
 
