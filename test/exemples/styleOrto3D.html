@@ -3,20 +3,13 @@
     <meta charset='utf-8' />
     <title>test mapicgc-gl-js</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="../../dist/mapicgc-gl.js"></script>
+    <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
     
     <style>
         body {
             margin: 0;
             padding: 0;
-        }
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%
         }
         .map {
             position: absolute;
@@ -38,26 +31,7 @@
             -moz-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
             box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
         }
-        #div_pitch {
-            position: absolute;
-            right: 10px;
-            top: 142px;
-            width: 30px;
-            z-index: 100;
-        }
-        .sliderClass {
-            position: absolute;
-            left: 10px;
-            top: 79px;
-            width: 130px;
-            z-index: 100;
-            display: none;
-            background-color: white;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            opacity: 0.9;
-        }
+       
     </style>
 </head>
 <body>
@@ -77,14 +51,12 @@
         <div id="map" class="map"></div>
        
     <script>
-        console.info(window);
-        console.info(mapicgcgl.Layers);
+       
         const map = new mapicgcgl.Map({
             container: 'map',
             style: mapicgcgl.Styles.ORTO3D,
             center: [1.1464, 41.706],
-            zoom: 7.4,
-           
+            zoom: 7.4,          
             hash: true,
             pitch: 0,
             attributionControl: false

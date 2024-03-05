@@ -60,7 +60,6 @@ export default class Map {
       }
     }
 
-    // options.maxZoom = 18;
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
@@ -107,10 +106,7 @@ export default class Map {
       if (position === undefined) {
         position = "top-right";
       }
-      // const urlSearchPelias = defaultOptions
-      // console.log('geo', urlSearchPelias)
-      // "https://eines.icgc.cat/geocodificador/autocompletar?text=";
-
+     
       let options = {
         collapsed: true,
         marker: true,
@@ -2335,23 +2331,25 @@ _createCitiesMapboxLayer() {
       type: Tile3DLayer,
       data: defaultOptions.map3dOptions.urlTilesetCities,
       loader: Tiles3DLoader,
-
       loadOptions: {
         tileset: {
           viewDistanceScale: 1,
-          updateTransforms: false,
+          updateTransforms: true,
           maximumScreenSpaceError:
             defaultOptions.map3dOptions.spaceErrorFactor,
         },
+
       },
 
       onTilesetLoad: (tileset3d) => {
         tileset3d.options.maximumScreenSpaceError =
           defaultOptions.map3dOptions.spaceErrorFactor;
+         
       },
       onTileLoad: (tileHeader) => {
         tileHeader.content.cartographicOrigin.z -=
           defaultOptions.map3dOptions.zfactor;
+         
       },
       operation: "terrain+draw",
     });
