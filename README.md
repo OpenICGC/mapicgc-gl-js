@@ -1,15 +1,17 @@
 <p align="center">
-  <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png" width="400px">
+  <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png"  alt="MapICGC Logo" width="400px">
 </p>
 <p align="center">
   <img src="https://tilemaps.icgc.cat/cdn/images/JS-logo.svg" width="20px">
-  <img src="https://badge.fury.io/js/mapicgc-gl-js.svg"></img>
-  <a href="https://twitter.com/icgcat" target="_blank"><img src="https://img.shields.io/twitter/follow/icgcat?style=social"></img></a>
+  <img src="https://badge.fury.io/js/mapicgc-gl-js.svg">
+  <a href="https://twitter.com/icgcat" target="_blank">
+  <img src="https://img.shields.io/twitter/follow/icgcat?style=social">
+  </a>
 </p>
 
 <br>
 
-## MapICGC-gl-js
+# MapICGC GL JS
 
 
 The MapICGC GL JS library builds upon the  open-source library [**MapLibre GL JS**](https://github.com/maplibre/maplibre-gl-js), exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.
@@ -94,7 +96,7 @@ MapICGC GL JS integrates the following libraries:
 
 ## Developed by:
 
- <a href="https://www.icgc.cat/" target="_blank"><img src="https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg" width="150"></img></a>
+ <a href="https://www.icgc.cat/" target="_blank"><img src="https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
 
 
 
