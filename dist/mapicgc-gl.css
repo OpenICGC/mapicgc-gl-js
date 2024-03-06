@@ -1093,22 +1093,21 @@ h4::selection {
     margin-top: 15vh;
   }
 }
+.coordControl{
 
-.coordControl {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  height: 17px;
-  margin: 0 auto;
-  padding: 2px;
-  padding-bottom: 1.5px;
-  left: 45%;
-  border: none;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  color: #222;
-  background: hsla(0, 0%, 100%, 0.849);
+   
+    bottom: 0;
+    height: auto;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    left: 45%;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.85em;
+    text-align: center;
+    color: #333;
+    background: hsla(0, 0%, 100%, 0.849);
 }
 @media (max-width: 700px) {
   .coordControl{

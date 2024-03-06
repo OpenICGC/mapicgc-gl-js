@@ -46,6 +46,7 @@
     "@watergis/maplibre-gl-export": "^3.1.0",
     "axios": "^1.6.7",
     "flatgeobuf": "^3.27.2",
-    "maplibre-gl": "^4.1.0"
+    "maplibre-gl": "^4.1.0",
+    "utm-latlng": "^1.0.8"
   }
 }

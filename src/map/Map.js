@@ -1,8 +1,8 @@
 import maplibregl from "maplibre-gl";
 
-
 import { deserialize } from 'flatgeobuf/lib/mjs/geojson.js'
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
+
 
 import { MapboxLayer } from "@deck.gl/mapbox";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
@@ -18,6 +18,7 @@ import {
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
+import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
 import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
@@ -896,24 +897,13 @@ export default class Map {
   /**
    * Adds a mouse coordinate control to the map.
    * @function addMouseCoordControl
+   * @param {Object} options - Options for the geolocate control.
+   * @param {string} [position='bottom-left'] - Position to add the control on the map.
    */
-  addMouseCoordControl() {
+  addMouseCoordControl(options, position="bottom-left") {
     try {
-      this.map.on("mousemove", function (e) {
-        const auxLat = e.lngLat.lat;
-        const auxLon = e.lngLat.lng;
 
-        const msg =
-          "Lon/Lat (WGS 84)   Lon: " +
-          auxLon.toFixed(6) +
-          "  Lat: " +
-          auxLat.toFixed(6);
-        const divInfo = document.getElementById("divInfo");
-        const div = document.createElement("div");
-        div.className = "coordControl";
-        div.innerHTML = msg + " - ZL: " + map.getZoom().toFixed(1);
-        divInfo.appendChild(div);
-      });
+      this.map.addControl(new MouseCoordinatesControl(options),position);
     } catch (error) {
       console.error(`Error adding mouse coordinate control: ${error.message}`);
     }

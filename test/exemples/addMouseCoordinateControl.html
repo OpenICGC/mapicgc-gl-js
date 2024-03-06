@@ -1,18 +1,15 @@
 <html>
-
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>addMouseCoordinateControl test </title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
             padding: 0;
         }
-
         #map {
             position: absolute;
             top: 0;
@@ -22,12 +19,8 @@
         }
     </style>
 </head>
-
 <body>
-
-
     <div id="map" class="map"></div>
-
     <script>
         const map = new mapicgcgl.Map({
             container: "map",
@@ -39,24 +32,8 @@
             pitch: 0,
         });
         map.on("load", () => {
-            // mapicgc-gl-js library:
-            map.addGeolocateControl(
-                {
-                    positionOptions: {
-                        enableHighAccuracy: true,
-                    },
-                    trackUserLocation: true,
-                },
-                "bottom-right"
-            );
-
-            map.addExportControl();
-            map.addMouseCoordControl();
-
-            // from other library
-            map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+            map.addMouseCoordControl({width:'225px'},"bottom-left");
         });
     </script>
 </body>
-
 </html>
