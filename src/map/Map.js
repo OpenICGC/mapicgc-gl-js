@@ -341,13 +341,14 @@ export default class Map {
     try {
       const response = await fetch(url);
       const geojson = await response.json();
-
+      let nameUser = name + '-userSource'
+// console.log('geojs', geojson)
       let type = geojson.features[0].geometry.type;
       if (type.includes("ine")) {
         //line
         if (options !== undefined) {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "line",
             source: {
               type: "geojson",
@@ -360,7 +361,7 @@ export default class Map {
           }, this._firstSymbolLayer() );
         } else {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "line",
             source: {
               type: "geojson",
@@ -381,7 +382,7 @@ export default class Map {
         //polygon
         if (options !== undefined) {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "fill",
             source: {
               type: "geojson",
@@ -394,7 +395,7 @@ export default class Map {
           }, this._firstSymbolLayer());
         } else {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "fill",
             source: {
               type: "geojson",
@@ -414,7 +415,7 @@ export default class Map {
         //point
         if (options !== undefined) {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "circle",
             source: {
               type: "geojson",
@@ -427,7 +428,7 @@ export default class Map {
           }, this._firstSymbolLayer());
         } else {
           map.addLayer({
-            id: name,
+            id: nameUser,
             type: "circle",
             source: {
               type: "geojson",
@@ -461,7 +462,7 @@ export default class Map {
     try {
       const response = await fetch(url);
       const geojson = await response.json();
-
+let nameUser = name+'-nameUser'
       const menuGroup = document.getElementById("menu-group");
 
       if (featureTree !== "all") {
@@ -772,8 +773,11 @@ export default class Map {
       if (options !== undefined) {
         this.map.setStyle(style, options);
       } else {
+
         this.map.setStyle(style);
+
       }
+
 
       this.map.on("styledata", () => {
         if (window.document.querySelector(".maplibregl-compact-show")) {
@@ -1048,7 +1052,7 @@ export default class Map {
   addLayerGeoJSON(layer) {
     try {
       // this.map.on("load", () => {
-      this.map.addSource(`${layer.id}-sourceIcgcMap`, {
+      this.map.addSource(`${layer.id}-userSource`, {
         type: "geojson",
         data: layer.data,
       });
@@ -1056,7 +1060,7 @@ export default class Map {
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: layer.layerType,
-        source: `${layer.id}-sourceIcgcMap`,
+        source: `${layer.id}-userSource`,
         layout: layer.layout,
         paint: layer.paint,
       }, this._firstSymbolLayer());
@@ -1077,8 +1081,8 @@ export default class Map {
   addLayerWMS(layer) {
     try {
       // this.map.on("load", () => {
-      console.log("holaaddlayerwms", layer);
-      this.map.addSource(`${layer.id}-sourceIcgcMap`, {
+      // console.log("holaaddlayerwms", layer);
+      this.map.addSource(`${layer.id}-userSource`, {
         type: "raster",
         tiles: [layer.tiles],
         tileSize: 256,
@@ -1086,7 +1090,7 @@ export default class Map {
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: "raster",
-        source: `${layer.id}-sourceIcgcMap`,
+        source: `${layer.id}-userSource`,
         paint: {},
       }, this._firstSymbolLayer());
       // });
@@ -1169,7 +1173,14 @@ export default class Map {
       // console.log('bases', basesArray)
       const handleClick = (base) => {
         // console.log('baseCLIK', base)
-        this.map.setStyle(base);
+
+
+
+
+
+
+
+        map.setStyle(base);
       };
 
       const basemapGroup = document.getElementById("basemap-group");
@@ -1204,7 +1215,7 @@ export default class Map {
     try {
       const handleClick = (base) => {
         console.log("base", base);
-        this.map.setStyle(base.url);
+        map.setStyle(base.url);
       };
 
       const basemapGroup = document.getElementById("basemap-group");
@@ -1229,10 +1240,13 @@ export default class Map {
    * @param {objetc} options - optional indications for the popup
    */
 
-  addFeatureQuery(layerName, options) {
+  addFeatureQuery(layerName, options, userEvent) {
     try {
       let description;
-
+      if (userEvent === undefined){
+        userEvent = "click"
+      }
+      layerName = layerName+'-userSource'
       // this.map.on("load", () => {
       // console.log('layer', layerName, options)
       this.map.on("mouseenter", layerName, () => {
@@ -1242,7 +1256,8 @@ export default class Map {
       this.map.on("mouseleave", layerName, () => {
         this.map.getCanvas().style.cursor = "";
       });
-      this.map.on("click", (e) => {
+
+      this.map.on(userEvent, (e) => {
         let features = this.map.queryRenderedFeatures(e.point);
         // console.log('kkk',features[0].source, layerName )
         if ((features && features[0].source === layerName) ) {
@@ -1471,7 +1486,7 @@ export default class Map {
 
       const filterGroup = document.getElementById("filter-group");
  
-      this.map.addSource(`${options.id}-source`, {
+      this.map.addSource(`${options.id}-userSource`, {
         type: options.type,
         data: places,
       });
@@ -1484,7 +1499,7 @@ export default class Map {
             {
               id: layerID,
               type: "circle",
-              source: `${options.id}-source`,
+              source: `${options.id}-userSource`,
               paint: {
                 "circle-radius": 6,
                 "circle-color": "#B42222",
@@ -1657,12 +1672,13 @@ export default class Map {
  * Adds an ICGC vector layer to the map based on the specified name and year.
  * @function addVectorLayerICGC
  * @param {string} url - The url of the vector layer.
+ * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
  * @param {object} paintOption - Paint option for the layer
  * 
  */
-  async addVectorLayerICGC(layerUrl, paintOption) {
+  async addVectorLayerICGC(layerUrl, visibleLabel, paintOption) {
     try {
-console.log('layerUrl', layerUrl)
+// console.log('layerUrl', layerUrl)
       let name = layerUrl
       if (name === null) {
      console.log(
@@ -1704,6 +1720,9 @@ if (name === 'cobertes2018'){
     "source": name,
     "source-layer": "cobertes",
     "maxzoom": 18,
+    "layout":{
+      "visibility": visibleLabel,
+    },
     "paint": {
       "fill-opacity": [
         'interpolate',
@@ -1826,10 +1845,13 @@ function getLegendByName(name) {
       return layer.legend;
     }
   }
-  return null; // Si no se encuentra ninguna coincidencia, retornamos null o algún otro valor que indique que no se encontró.
-}
+  return null; }
+
 let legendUrl = getLegendByName(name)
-map.addLegend(name, legendUrl)
+if (visibleLabel==="visible"){
+  map.addLegend(name, legendUrl)
+}
+
 
 
 }else{
@@ -1848,6 +1870,9 @@ map.addLegend(name, legendUrl)
           type: "fill",
           source: sourceLimits,
           "source-layer": name,
+          layout:{
+            "visibility": visibleLabel,
+          },
           paint: {
             "fill-color": "#0000FF",
             "fill-opacity": 0,
@@ -1858,6 +1883,9 @@ map.addLegend(name, legendUrl)
           type: "line",
           source: sourceLimits,
           "source-layer": name,
+          layout:{
+            "visibility": visibleLabel,
+          },
           paint: {
             "line-color": "#ffffff",
             "line-opacity": 1,
@@ -1870,6 +1898,9 @@ map.addLegend(name, legendUrl)
             type: "line",
             source: sourceLimits,
             "source-layer": name,
+            layout:{
+              "visibility": visibleLabel,
+            },
             paint: paintOption,
           }, this._firstSymbolLayer());
         }else{
@@ -1877,6 +1908,9 @@ map.addLegend(name, legendUrl)
           id: name + "-line",
           type: "line",
           source: sourceLimits,
+          layout:{
+            "visibility": visibleLabel,
+          },
           "source-layer": name,
           paint: {
             "line-color": "#4832a8",
@@ -1946,13 +1980,13 @@ map.addLegend(name, legendUrl)
 
       const fc = { type: "FeatureCollection", features: [] };
 
-
+// console.log('fetc', fc)
       for await (const f of deserialize(response.body))
         fc.features.push(f);
 
 
 
-      let src = name + "-source";
+      let src = name + "-userSource";
 
       this.map.addSource(src, {
         type: "geojson",
@@ -2087,7 +2121,7 @@ addTerrainICGC(resolution, positionButton) {
     if (resolution.includes("terrarium")) {
       // console.log('rsssssses', resolution)
       // Add terrain source
-      this.map.addSource("terrainICGC-src", {
+      this.map.addSource("terrainICGC-userSource", {
         type: "raster-dem",
         tiles: [urlTerrainICGC],
         tileSize: 512,
@@ -2095,7 +2129,7 @@ addTerrainICGC(resolution, positionButton) {
         maxzoom: 16,
       });
     } else {
-      this.map.addSource("terrainICGC-src", {
+      this.map.addSource("terrainICGC-userSource", {
         type: "raster-dem",
         tiles: [urlTerrainICGC],
         tileSize: 512,
@@ -2104,7 +2138,7 @@ addTerrainICGC(resolution, positionButton) {
     }
 
     this.map.setTerrain({
-      source: "terrainICGC-src",
+      source: "terrainICGC-userSource",
       exaggeration: 1.5,
     });
 
@@ -2139,40 +2173,121 @@ addTerrainICGC(resolution, positionButton) {
 addLegend(name, legendUrl){
   try {
    
-    console.log('namelegend', name, legendUrl)
+    // console.log('namelegend', name, legendUrl)
 
-   
+   //add jquery to head
+
+   function addJQueryUI() {
+    // Create link element for jQuery UI CSS
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
+    // console.log('entro1')
+    // Create script element for jQuery
+    var jqueryScript = document.createElement("script");
+    jqueryScript.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+
+
+    // console.log('entro12')
+    // Create script element for jQuery UI
+    var jqueryUIScript = document.createElement("script");
+    jqueryUIScript.src = "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js";
+
+    // Get the head element of the document
+    var head = document.head || document.getElementsByTagName("head")[0];
+
+    // Append the elements to the head
+    head.appendChild(link);
+    // console.log('entro14')
+    // Append jQuery script to head and wait for it to load before loading jQuery UI
+    jqueryScript.onload = function() {
+        head.appendChild(jqueryUIScript);
+        // console.log('entro')
+        // Call any jQuery code here, after both jQuery and jQuery UI are loaded
+        $(document).ready(function() {
+            // console.log("jQuery is ready");
+            
+            // Example: Using jQuery UI datepicker
+        
+            const legendContainer = document.createElement('div');
+            legendContainer.id = 'legendContainer';
+            legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
+            legendContainer.style.display = 'none';
+            document.body.appendChild(legendContainer);
+            jqueryUIScript.onload = function() {
+              // Make legend container draggable and resizable
+              $(function() {
+                $("#legendContainer").draggable();
+                $("#legendContainer").resizable();
+              });
+            }
+            head.appendChild(jqueryScript);
+            // Create toggle button
+            const toggleLegend = document.createElement('div');
+            toggleLegend.id = 'toggleLegend';
+            toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
+            document.body.appendChild(toggleLegend);
+        
+            // Toggle legend visibility
+            toggleLegend.addEventListener('click', function() {
+              if (legendContainer.style.display === 'none') {
+                legendContainer.style.display = 'block';
+              } else {
+                legendContainer.style.display = 'none';
+              }
+            });
+        
+        
+        });
+    };
+
+    head.appendChild(jqueryScript);
+}
+
+
+// Call the function to add jQuery UI when the document is ready
+// document.addEventListener("DOMContentLoaded", function() {
+  addJQueryUI();
+
+
+//   $(document).ready(function() {
+//     console.log('entro')
+//     // Example: Using jQuery UI datepicker
+
+//     const legendContainer = document.createElement('div');
+//     legendContainer.id = 'legendContainer';
+//     legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
+//     legendContainer.style.display = 'block';
+//     document.body.appendChild(legendContainer);
+
+//       // Make legend container draggable and resizable
+//       $(function() {
+//         $("#legendContainer").draggable();
+//         $("#legendContainer").resizable();
+//       });
+
+//     // Create toggle button
+//     const toggleLegend = document.createElement('div');
+//     toggleLegend.id = 'toggleLegend';
+//     toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
+//     document.body.appendChild(toggleLegend);
+
+//     // Toggle legend visibility
+//     toggleLegend.addEventListener('click', function() {
+//       if (legendContainer.style.display === 'none') {
+//         legendContainer.style.display = 'block';
+//       } else {
+//         legendContainer.style.display = 'none';
+//       }
+//     });
+
+
+
+// });
+
+// });
 
     
-    const legendContainer = document.createElement('div');
-    legendContainer.id = 'legendContainer';
-    legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
-    legendContainer.style.display = 'block';
-    document.body.appendChild(legendContainer);
-
-      // Make legend container draggable and resizable
-      $(function() {
-        $("#legendContainer").draggable();
-        $("#legendContainer").resizable();
-      });
-
-    // Create toggle button
-    const toggleLegend = document.createElement('div');
-    toggleLegend.id = 'toggleLegend';
-    toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
-    document.body.appendChild(toggleLegend);
-
-    // Toggle legend visibility
-    toggleLegend.addEventListener('click', function() {
-      if (legendContainer.style.display === 'none') {
-        legendContainer.style.display = 'block';
-      } else {
-        legendContainer.style.display = 'none';
-      }
-    });
-
-
-
 
 
 

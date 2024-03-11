@@ -2,7 +2,7 @@
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {
-  limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
+limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
 geocoder: {
   peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
   peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
@@ -13,7 +13,6 @@ mapOptions: {
     0: 1.537786,
     1: 41.837539,
   },
-
   zoom: 7.5,
   bearing: 0,
   pitch: 0,
@@ -422,266 +421,162 @@ vectorLayersICGC: {
     key: "comarques_vigent_text",
   },
   24: {
-    name: "districtesCensals2002",
-    key: "districtes_censals_2002",
-  },
-  25: {
-    name: "districtesCensals2003",
-    key: "districtes_censals_2003",
-  },
-  26: {
-    name: "districtesCensals2004",
-    key: "districtes_censals_2004",
-  },
-  27: {
-    name: "districtesCensals2005",
-    key: "districtes_censals_2005",
-  },
-  28: {
-    name: "districtesCensals2006",
-    key: "districtes_censals_2006",
-  },
-  29: {
-    name: "districtesCensals2007",
-    key: "districtes_censals_2007",
-  },
-  30: {
-    name: "districtesCensals2008",
-    key: "districtes_censals_2008",
-  },
-  31: {
-    name: "districtesCensals2009",
-    key: "districtes_censals_2009",
-  },
-  32: {
-    name: "districtesCensals2010",
-    key: "districtes_censals_2010",
-  },
-  33: {
-    name: "districtesCensals2011",
-    key: "districtes_censals_2011",
-  },
-  34: {
-    name: "districtesCensals2012",
-    key: "districtes_censals_2012",
-  },
-  35: {
-    name: "districtesCensals2013",
-    key: "districtes_censals_2013",
-  },
-  36: {
-    name: "districtesCensals2014",
-    key: "districtes_censals_2014",
-  },
-  37: {
     name: "districtesCensals2015",
     key: "districtes_censals_2015",
   },
-  38: {
+  25: {
     name: "districtesCensals2016",
     key: "districtes_censals_2016",
   },
-  39: {
+  26: {
     name: "districtesCensals2017",
     key: "districtes_censals_2017",
   },
-  40: {
+  27: {
     name: "districtesCensals2018",
     key: "districtes_censals_2018",
   },
-  41: {
+  28: {
     name: "districtesCensals2019",
     key: "districtes_censals_2019",
   },
-  42: {
+  29: {
     name: "districtesCensals2020",
     key: "districtes_censals_2020",
   },
-  43: {
+  30: {
     name: "districtesCensals2021",
     key: "districtes_censals_2021",
   },
-  44: {
+  31: {
     name: "districtesCensals2022",
     key: "districtes_censals_2022",
   },
-  45: {
+  32: {
     name: "districtesCensalsVigent",
     key: "districtes_censals_vigent",
   },
-  46: {
+  33: {
     name: "districtesCensalsVigentText",
     key: "districtes_censals_vigent_text",
   },
-  47: {
+  34: {
     name: "incendisForestalsVigent",
     key: "incendis_forestals_vigent",
   },
-  48: {
+  35: {
     name: "incendisForestalsVigentText",
     key: "incendis_forestals_vigent_text",
   },
-  49: {
+  36: {
     name: "municipis2022",
     key: "municipis_2022",
   },
-  50: {
+  37: {
     name: "municipis2022Text",
     key: "municipis_2022_text",
   },
-  51: {
+  38: {
     name: "municipisVigent",
     key: "municipis_vigent",
   },
-  52: {
+  39: {
     name: "municipisVigentText",
     key: "municipis_vigent_text",
   },
-  53: {
+  40: {
     name: "partitsJudicialsVigent",
     key: "partits_judicials_vigent",
   },
-  54: {
+  41: {
     name: "partitsJudicialsVigentText",
     key: "partits_judicials_vigent_text",
   },
-  55: {
+  42: {
     name: "plaTerritorial2015",
     key: "pla_territorial_2015",
   },
-  56: {
+  43: {
     name: "plaTerritorialVigent",
     key: "pla_territorial_vigent",
   },
-  57: {
+  44: {
     name: "plaTerritorialVigentText",
     key: "pla_territorial_vigent_text",
   },
-  58: {
+  45: {
     name: "provinciesVigent",
     key: "provincies_vigent",
   },
-  59: {
+  46: {
     name: "provinciesVigentText",
     key: "provincies_vigent_text",
   },
-  60: {
+  47: {
     name: "regionsPolicialsVigent",
     key: "regions_policials_vigent",
   },
-  61: {
+  48: {
     name: "regionsPolicialsVigentText",
     key: "regions_policials_vigent_text",
   },
-  62: {
+  49: {
     name: "regionsSanitariesVigent",
     key: "regions_sanitaries_vigent",
   },
-  63: {
+  50: {
     name: "regionsSanitariesVigentText",
     key: "regions_sanitaries_vigent_text",
   },
-  64: {
-    name: "seccionsCensals2002",
-    key: "seccions_censals_2002",
-  },
-  65: {
-    name: "seccionsCensals2003",
-    key: "seccions_censals_2003",
-  },
-  66: {
-    name: "seccionsCensals2004",
-    key: "seccions_censals_2004",
-  },
-  67: {
-    name: "seccionsCensals2005",
-    key: "seccions_censals_2005",
-  },
-  68: {
-    name: "seccionsCensals2006",
-    key: "seccions_censals_2006",
-  },
-  69: {
-    name: "seccionsCensals2007",
-    key: "seccions_censals_2007",
-  },
-  70: {
-    name: "seccionsCensals2008",
-    key: "seccions_censals_2008",
-  },
-  71: {
-    name: "seccionsCensals2009",
-    key: "seccions_censals_2009",
-  },
-  72: {
-    name: "seccionsCensals2010",
-    key: "seccions_censals_2010",
-  },
-  73: {
-    name: "seccionsCensals2011",
-    key: "seccions_censals_2011",
-  },
-  74: {
-    name: "seccionsCensals2012",
-    key: "seccions_censals_2012",
-  },
-  75: {
-    name: "seccionsCensals2013",
-    key: "seccions_censals_2013",
-  },
-  76: {
-    name: "seccionsCensals2014",
-    key: "seccions_censals_2014",
-  },
-  77: {
+  51: {
     name: "seccionsCensals2015",
     key: "seccions_censals_2015",
   },
-  78: {
+  52: {
     name: "seccionsCensals2016",
     key: "seccions_censals_2016",
   },
-  79: {
+  53: {
     name: "seccionsCensals2017",
     key: "seccions_censals_2017",
   },
-  80: {
+  54: {
     name: "seccionsCensals2018",
     key: "seccions_censals_2018",
   },
-  81: {
+  55: {
     name: "seccionsCensals2019",
     key: "seccions_censals_2019",
   },
-  82: {
+  56: {
     name: "seccionsCensals2020",
     key: "seccions_censals_2020",
   },
-  83: {
+  57: {
     name: "seccionsCensals2021",
     key: "seccions_censals_2021",
   },
-  84: {
+  58: {
     name: "seccionsCensals2022",
     key: "seccions_censals_2022",
   },
-  85: {
+  59: {
     name: "seccionsCensalsVigent",
     key: "seccions_censals_vigent",
   },
-  86: {
+  60: {
     name: "seccionsCensalsVigentText",
     key: "seccions_censals_vigent_text",
   },
-  87: {
+  61: {
     name: "sectorsSanitarisVigent",
     key: "sectors_sanitaris_vigent",
   },
-  88: {
+  62: {
     name: "vegueriesVigent",
     key: "vegueries_vigent",
   },
-  89: {
+  63: {
     name: "vegueriesVigentText",
     key: "vegueries_vigent_text",
   },
@@ -690,7 +585,7 @@ vectorLayers: {
   0: {
     key: "cobertes2018",
     url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
-    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg"
+    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg",
   },
 },
 wmsLayers: {

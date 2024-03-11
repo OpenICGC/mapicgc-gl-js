@@ -6,6 +6,8 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+
+
       <style>
         body {
             margin: 0;
@@ -39,17 +41,17 @@
             pitch: 0,
         });
         map.on("load", () => {
-           
+        let labelVisibility = "visible" // select : "visible" or "none"
         let paintOptions = {
           'line-color': 'red',
-          'line-width': 2
+          'line-width': 1
         } ;
         // map.addVectorLayerICGC(
-        //         mapicgcgl.Layers.VectorAdmin.comarques2022,
+        //         mapicgcgl.Layers.VectorAdmin.comarques2022, labelVisibility,
         //         paintOptions
         //     );
             map.addVectorLayerICGC(
-                mapicgcgl.Layers.vectorLayers.altimetria
+                mapicgcgl.Layers.Vector.cobertes2018
             );
         });
     </script>
