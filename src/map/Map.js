@@ -3,11 +3,11 @@ import maplibregl from "maplibre-gl";
 import { deserialize } from 'flatgeobuf/lib/mjs/geojson.js'
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 
-
 import { MapboxLayer } from "@deck.gl/mapbox";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
 import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
 import { AmbientLight, LightingEffect } from "@deck.gl/core";
+
 import {
   MaplibreExportControl,
   Size,
@@ -341,7 +341,8 @@ export default class Map {
     try {
       const response = await fetch(url);
       const geojson = await response.json();
-      let nameUser = name + '-userSource'
+      let nameUser = name 
+      // let nameUser = name + '-userSource'
 // console.log('geojs', geojson)
       let type = geojson.features[0].geometry.type;
       if (type.includes("ine")) {
@@ -592,15 +593,17 @@ let nameUser = name+'-nameUser'
         const layers = {};
         geojson.features.forEach((feature) => {
           const fieldMarker = feature.properties[field];
+          // const idFieldMarker = fieldMarker+`-${name}`
+          const idFieldMarker = fieldMarker
           if (fieldMarker !== null) {
             // aqui podriem mirar si te simbologia i afegir-la a la capa
 
-            if (!layers[fieldMarker]) {
+            if (!layers[idFieldMarker]) {
               if (type.includes("ine")) {
                 //line
                 if (options !== undefined) {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "line",
                     source: {
                       type: "geojson",
@@ -614,7 +617,7 @@ let nameUser = name+'-nameUser'
                   }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "line",
                     source: {
                       type: "geojson",
@@ -636,7 +639,7 @@ let nameUser = name+'-nameUser'
                 //polygon
                 if (options !== undefined) {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "fill",
                     source: {
                       type: "geojson",
@@ -650,7 +653,7 @@ let nameUser = name+'-nameUser'
                   }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "fill",
                     source: {
                       type: "geojson",
@@ -671,7 +674,7 @@ let nameUser = name+'-nameUser'
                 //point
                 if (options !== undefined) {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "circle",
                     source: {
                       type: "geojson",
@@ -685,7 +688,7 @@ let nameUser = name+'-nameUser'
                   }, this._firstSymbolLayer());
                 } else {
                   map.addLayer({
-                    id: fieldMarker,
+                    id: idFieldMarker,
                     type: "circle",
                     source: {
                       type: "geojson",
@@ -705,8 +708,8 @@ let nameUser = name+'-nameUser'
               }
 
               // Agregar la nueva capa al objeto de capas
-              layers[fieldMarker] = true;
-              map.addMenuItem(fieldMarker);
+              layers[idFieldMarker] = true;
+              map.addMenuItem(idFieldMarker);
             }
           }
         });
@@ -941,6 +944,17 @@ let nameUser = name+'-nameUser'
       console.error(`Error adding geolocate control: ${error.message}`);
     }
   }
+    /**
+   * Adds a fullscreen control to the map.
+   * @function addFullscreenControl
+   */
+    addFullscreenControl() {
+      try {
+      this.map.addControl(new maplibregl.FullscreenControl())
+      } catch (error) {
+        console.error(`Error adding fullscreen control: ${error.message}`);
+      }
+    }
   /**
    * Retrieves the bounds of the map.
    * @function getBounds
@@ -1052,7 +1066,8 @@ let nameUser = name+'-nameUser'
   addLayerGeoJSON(layer) {
     try {
       // this.map.on("load", () => {
-      this.map.addSource(`${layer.id}-userSource`, {
+      this.map.addSource(`${layer.id}`, {
+        // this.map.addSource(`${layer.id}-userSource`, {
         type: "geojson",
         data: layer.data,
       });
@@ -1060,7 +1075,8 @@ let nameUser = name+'-nameUser'
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: layer.layerType,
-        source: `${layer.id}-userSource`,
+        source: `${layer.id}`,
+        // source: `${layer.id}-userSource`,
         layout: layer.layout,
         paint: layer.paint,
       }, this._firstSymbolLayer());
@@ -1082,7 +1098,8 @@ let nameUser = name+'-nameUser'
     try {
       // this.map.on("load", () => {
       // console.log("holaaddlayerwms", layer);
-      this.map.addSource(`${layer.id}-userSource`, {
+      this.map.addSource(`${layer.id}`, {
+        // this.map.addSource(`${layer.id}-userSource`, {
         type: "raster",
         tiles: [layer.tiles],
         tileSize: 256,
@@ -1090,7 +1107,8 @@ let nameUser = name+'-nameUser'
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: "raster",
-        source: `${layer.id}-userSource`,
+        source: `${layer.id}`,
+        // source: `${layer.id}-userSource`,
         paint: {},
       }, this._firstSymbolLayer());
       // });
@@ -1240,24 +1258,26 @@ let nameUser = name+'-nameUser'
    * @param {objetc} options - optional indications for the popup
    */
 
-  addFeatureQuery(layerName, options, userEvent) {
+  addFeatureQuery(layerName, options) {
     try {
       let description;
-      if (userEvent === undefined){
-        userEvent = "click"
-      }
-      layerName = layerName+'-userSource'
+    
+      // layerName = layerName+'-userSource'
+
       // this.map.on("load", () => {
       // console.log('layer', layerName, options)
       this.map.on("mouseenter", layerName, () => {
         this.map.getCanvas().style.cursor = "pointer";
       });
+      
 
       this.map.on("mouseleave", layerName, () => {
         this.map.getCanvas().style.cursor = "";
       });
 
-      this.map.on(userEvent, (e) => {
+      this.map.on('click', (e) => {
+
+        // console.log('click', this.map.queryRenderedFeatures(e.point))
         let features = this.map.queryRenderedFeatures(e.point);
         // console.log('kkk',features[0].source, layerName )
         if ((features && features[0].source === layerName) ) {
@@ -1486,7 +1506,8 @@ let nameUser = name+'-nameUser'
 
       const filterGroup = document.getElementById("filter-group");
  
-      this.map.addSource(`${options.id}-userSource`, {
+      this.map.addSource(`${options.id}`, {
+        // this.map.addSource(`${options.id}-userSource`, {
         type: options.type,
         data: places,
       });
@@ -1499,7 +1520,8 @@ let nameUser = name+'-nameUser'
             {
               id: layerID,
               type: "circle",
-              source: `${options.id}-userSource`,
+              source: `${options.id}`,
+              // source: `${options.id}-userSource`,
               paint: {
                 "circle-radius": 6,
                 "circle-color": "#B42222",
@@ -1621,11 +1643,11 @@ let nameUser = name+'-nameUser'
    */
   addImageLayerICGC(name) {
     try {
-      console.log("name", name);
+      // console.log("name", name);
 
       let idName = null;
       function findImageType(url, var1, var2, var3, var4) {
-        console.log("hola", name);
+        // console.log("hola", name);
         const vectors = [var1, var2, var3, var4];
         for (const vector of vectors) {
           for (const [key, value] of Object.entries(vector)) {
@@ -1645,7 +1667,7 @@ let nameUser = name+'-nameUser'
         Layers.Vector
       );
 
-      console.log("op", idName);
+      // console.log("op", idName);
       if (!idName) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1660,7 +1682,7 @@ let nameUser = name+'-nameUser'
         id: idName,
         tiles: name,
       };
-      console.log("source", sourceWMS);
+      // console.log("source", sourceWMS);
       this.addLayerWMS(sourceWMS);
       
     } catch (error) {
@@ -1986,8 +2008,8 @@ if (visibleLabel==="visible"){
 
 
 
-      let src = name + "-userSource";
-
+      let src = name ;
+      // let src = name + "-userSource";
       this.map.addSource(src, {
         type: "geojson",
         data: fc,
@@ -2118,27 +2140,54 @@ addTerrainICGC(resolution, positionButton) {
     }
 
     let urlTerrainICGC = op;
-    if (resolution.includes("terrarium")) {
-      // console.log('rsssssses', resolution)
-      // Add terrain source
-      this.map.addSource("terrainICGC-userSource", {
-        type: "raster-dem",
-        tiles: [urlTerrainICGC],
-        tileSize: 512,
-        encoding: "terrarium",
-        maxzoom: 16,
-      });
-    } else {
-      this.map.addSource("terrainICGC-userSource", {
-        type: "raster-dem",
-        tiles: [urlTerrainICGC],
-        tileSize: 512,
-        maxzoom: 16,
-      });
-    }
+    if (this.getSource("terrainICGC") !== undefined){
 
+
+      let lyrs = this.getStyle().layers
+      lyrs.forEach(element => {
+        if (element.source === "terrainICGC"){
+          // console.log('eleme', element)
+                this.removeLayer(element.id)
+        }
+
+        
+      });
+
+      // this.removeLayer("terrainICGC_fosca")
+this.removeSource("terrainICGC")
+
+    }
+    if (this.getSource("terrainICGC") === undefined){
+
+       
+   
+    // if (this.getSource("terrainICGC") === undefined){
+        if (resolution.includes("terrarium")) {
+     
+          // Add terrain source
+          this.map.addSource("terrainICGC", {
+            // this.map.addSource("terrainICGC-userSource", {
+            type: "raster-dem",
+            tiles: [urlTerrainICGC],
+            tileSize: 512,
+            encoding: "terrarium",
+            maxzoom: 16,
+          });
+        } else {
+
+
+          this.map.addSource("terrainICGC", {
+            // this.map.addSource("terrainICGC-userSource", {
+            type: "raster-dem",
+            tiles: [urlTerrainICGC],
+            tileSize: 512,
+            maxzoom: 16,
+          });
+        }
+  }
     this.map.setTerrain({
-      source: "terrainICGC-userSource",
+      source: "terrainICGC",
+      // source: "terrainICGC-userSource",
       exaggeration: 1.5,
     });
 
@@ -2309,8 +2358,6 @@ addLegend(name, legendUrl){
     console.error(`Error adding legend: ${error.message}`);
   }
 }
-
-
 
 
 

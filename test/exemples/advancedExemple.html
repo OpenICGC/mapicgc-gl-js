@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>test mapicgc-gl-js</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="../../dist/mapicgc-gl.umd.js"></script>
+    <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="map" class="map"></div>
+    <nav id="menu-group" class="filter-group"></nav>
+
+    <script>
+        const map = new mapicgcgl.Map({
+            container: "map",
+            style: mapicgcgl.Styles.ORTO,
+            center: [1.808, 41.618],
+            zoom: 10,
+            maxZoom: 19,
+            hash: true,
+            pitch: 0,
+        });
+
+        map.on("load", () => {
+
+            map.addGeocoderICGC();
+            map.addGeolocateControl(
+                {
+                    positionOptions: {
+                        enableHighAccuracy: true,
+                    },
+                    trackUserLocation: true,
+                },
+                "bottom-right"
+            );
+            map.addFullscreenControl()
+            map.addExportControl();
+            map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+
+            map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
+
+            map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013);
+
+            let labelVisibility = "visible" // select : "visible" or "none"
+            let paintOptionsfgb = {
+                'line-color': 'green',
+                'line-width': 2
+            };
+            map.addFGBLayerICGC(mapicgcgl.Layers.FGBAdmin.comarquesVigent, labelVisibility, paintOptionsfgb);
+
+            let paintOptionsVector = {
+                'line-color': 'black',
+                'line-width': 1
+            };
+            map.addVectorLayerICGC(
+                mapicgcgl.Layers.VectorAdmin.comarques2022, labelVisibility, paintOptionsVector);
+
+            let paintOptions = {
+                'line-color': 'yellow',
+                'line-width': 3
+            };
+            setTimeout(() => {
+                   map.fetchDataAndMenu(
+                "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
+                "RutesMontserrat", "all", paintOptions);
+
+            // let queryFields = ["nom", "municipi"];
+            // map.addFeatureQuery("RutesMontserrat", queryFields);
+            map.addFeatureQuery("RutesMontserrat");
+            }, 1000);
+         
+        });
+
+    </script>
+</body>
+
+</html>

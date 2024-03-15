@@ -1529,7 +1529,7 @@ h4::selection {
   z-index: 1000;
   overflow-y: scroll;
   cursor: grab; 
-}
+};
 #toggleLegend {
   position: absolute;
   top: 20px;
@@ -1543,5 +1543,23 @@ h4::selection {
   line-height: 40px;
   cursor: pointer;
   z-index: 1000;
+};
+#geocoder-container {
+  margin: 20px;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+};
+
+#results {
+  margin-top: 10px;
+};
+
+.divLogos{
+  display: flex;
 }
+
+
+
+
 }

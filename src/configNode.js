@@ -21,11 +21,18 @@ mapOptions: {
   maxZoom: 18,
   maxPitch: 85,
 },
-logoOptions: {
-  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/ICGC_white_norma.svg",
+logoIcgcOptions: {
+  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_color.png",
+  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_blanc.svg",
   logoLink: "https://www.icgc.cat",
   logoTitle: "Institut Cartogràfic i Geològic de Catalunya",
+  logoWidth: 100,
+},
+logoGencatOptions: {
+  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png",
+  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_blanc.svg",
+  logoLink: "https://web.gencat.cat/",
+  logoTitle: "Generalitat de Catalunya",
   logoWidth: 100,
 },
 map3dOptions: {
