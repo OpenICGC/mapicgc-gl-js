@@ -148,8 +148,7 @@ async function getVectorLimitsLayers() {
 
 
           let test= [
-            { key: 'altimetria', layer:"", url: "https://betaserver.icgc.cat/tileserver3/tileserver.php/alti_bt5m/{z}/{x}/{y}.pbf"},
-            { key: 'cobertes2018', url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json"}
+            { key: 'cobertes2018', url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json", legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg"}
              ]
              vectorLayersOptions = test
              console.info('Dades vector Layers actualitzats' )

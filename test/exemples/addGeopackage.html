@@ -7,6 +7,7 @@
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
 
+
     <style>
         body {
             margin: 0;
@@ -40,23 +41,12 @@
             pitch: 0,
         });
 
-        let paintOptions = {
-            "line-color": "green",
-            "line-width": 3,
-            "line-opacity": 1,
-        };
+       
 
         map.on("load", () => {
-            map.fetchData(
-                "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat",
-                paintOptions
-            );
-            let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO];
 
 
-            
-map.addBasemapsICGC(basemapsicgc);
+           
         });
     </script>
 </body>
