@@ -904,7 +904,9 @@ let nameUser = name+'-nameUser'
   /**
    * Adds a mouse coordinate control to the map.
    * @function addMouseCoordControl
-   * @param {Object} options - Options for the geolocate control.
+   * @param {Number} options.width - Width control i.
+   * @param {Boolean} options.utm - Boolean to show coordinates in UTM.
+   * @param {Boolean} options.lonlat - Boolean to show coordinates in Lon Lat.
    * @param {string} [position='bottom-left'] - Position to add the control on the map.
    */
   addMouseCoordControl(options, position="bottom-left") {
