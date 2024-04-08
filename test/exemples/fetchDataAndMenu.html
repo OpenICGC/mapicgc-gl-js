@@ -31,25 +31,44 @@
     <script>
         const map = new mapicgcgl.Map({
             container: "map",
-            style: mapicgcgl.Styles.LIGHT,
+            style: mapicgcgl.Styles.TOPO,
             center: [1.808, 41.618],
             zoom: 10,
             maxZoom: 19,
             hash: true,
             pitch: 0,
         });
-
+        let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
+        let filterField = 'municipi' // select 'all' for view all the features as a single layer
         let paintOptions = {
             "line-color": "green",
             "line-width": 3,
             "line-opacity": 1,
         };
+        let filterFGBField = 'NOMPROV' // select 'all' for view all the features as a single layer
+        let paintOptionsfgb = {
+            "fill-color": "blue",
+            "fill-opacity": 0.6,
+            
+            };
 
         map.on("load", () => {
+
             map.fetchDataAndMenu(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", "municipi", paintOptions);
+                "RutesMontserrat", filterField, layerPosition, paintOptions);
+                
+            //try with FGB data:
+
+            map.fetchDataAndMenu(
+                mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
+                filterFGBField, layerPosition, paintOptionsfgb
+            );
+        
         });
+
+      
+
     </script>
 </body>
 

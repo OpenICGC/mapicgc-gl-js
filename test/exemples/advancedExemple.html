@@ -60,9 +60,11 @@
 
             map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
 
-            map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013);
+            let layerImagePosition = 'top' // select: 'top', 'lines' or 'labels'
+            map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, layerImagePosition);
 
             let labelVisibility = "visible" // select : "visible" or "none"
+
             let paintOptionsfgb = {
                 'line-color': 'green',
                 'line-width': 2
@@ -73,17 +75,22 @@
                 'line-color': 'black',
                 'line-width': 1
             };
+            let layerVectorPosition = 'top' // select: 'top', 'lines' or 'labels'
+       
             map.addVectorLayerICGC(
-                mapicgcgl.Layers.VectorAdmin.comarques2022, labelVisibility, paintOptionsVector);
+                mapicgcgl.Layers.VectorAdmin.comarques2022, layerVectorPosition, labelVisibility, paintOptionsVector);
 
             let paintOptions = {
                 'line-color': 'yellow',
                 'line-width': 3
             };
+            let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
+            let filterField = 'municipi' // select 'all' for view all the features as a single layer
+       
             setTimeout(() => {
                    map.fetchDataAndMenu(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", "all", paintOptions);
+                "RutesMontserrat", filterField, layerPosition, paintOptions);
 
             // let queryFields = ["nom", "municipi"];
             // map.addFeatureQuery("RutesMontserrat", queryFields);

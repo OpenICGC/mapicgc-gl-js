@@ -7,11 +7,12 @@ export default class LogoControl {
   onAdd(map) {
     this._map = map;
     let _this = this;
-    
+    // console.log('thus,', this.options)
     // Crear el primer logo
     this._img1 = document.createElement("img");
     this._img1.className = "maplibregl-ctrl";
     this._img1.src = this.options.color ? defaultOptions.logoIcgcOptions.logoUrlColor : defaultOptions.logoIcgcOptions.logoUrlWhite;
+
     this._img1.width = defaultOptions.logoIcgcOptions.logoWidth;
     this._img1.title = defaultOptions.logoIcgcOptions.logoTitle;
     

@@ -39,19 +39,32 @@
             hash: true,
             pitch: 0,
         });
-
+        let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
         let paintOptions = {
             "line-color": "green",
             "line-width": 3,
             "line-opacity": 1,
         };
+        let paintOptionsfgb = {
+                'line-color': 'grey',
+                'line-width': 2
+            };
 
         map.on("load", () => {
             map.fetchData(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat",
+                "RutesMontserrat", layerPosition,
                 paintOptions
             );
+            // try with FGB data:
+        
+            map.fetchData(
+                mapicgcgl.Layers.FGBAdmin.comarquesVigent,
+                "Comarques", layerPosition,
+                paintOptionsfgb
+            );
+
+
             let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO];
 
 
