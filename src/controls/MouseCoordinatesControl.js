@@ -2,6 +2,12 @@ import utmObj from "utm-latlng";
 export default class MouseCoordinatesControl {
   constructor(options) {
     this.options = options || {};
+    this.options.utm = this.options.hasOwnProperty("utm")
+      ? this.options.utm
+      : true;
+    this.options.lonlat = this.options.hasOwnProperty("lonlat")
+      ? this.options.lonlat
+      : true;
   }
   onAdd(map) {
     const utm = new utmObj();
@@ -13,13 +19,19 @@ export default class MouseCoordinatesControl {
       const auxLat = e.lngLat.lat;
       const auxLon = e.lngLat.lng;
       let utmMsg = "";
-      if (this._lookUTM31(auxLon, auxLat)) {
-        const auxUTM = utm.convertLatLngToUtm(auxLat, auxLon, 2);
-        utmMsg = `ETRS89 UTM 31N X:<b> ${auxUTM.Easting}</b> Y:<b> ${auxUTM.Northing}</b> <br>`;
+      let lonLatMsg = "";
+      const auxUTM = utm.convertLatLngToUtm(auxLat, auxLon, 2);
+      const hemi = auxLat > 0.00 ? "N": "S";
+
+      if (this.options.utm) {
+        utmMsg = `ETRS89 UTM ${auxUTM.ZoneNumber}${hemi} X:<b> ${auxUTM.Easting}</b> Y:<b> ${auxUTM.Northing}</b> <br>`;
       }
-      const msg = `${utmMsg}WGS 84 Lon:<b> ${auxLon.toFixed(
-        6
-      )}</b>  Lat:<b> ${auxLat.toFixed(6)}</b>`;
+      if (this.options.lonlat) {
+        lonLatMsg = `WGS 84 Lon:<b> ${auxLon.toFixed(
+          5
+        )}</b>  Lat:<b> ${auxLat.toFixed(5)}</b>`;
+      }
+      const msg = `${utmMsg}${lonLatMsg}`;
       this._container.innerHTML = msg;
     });
     return this._container;
