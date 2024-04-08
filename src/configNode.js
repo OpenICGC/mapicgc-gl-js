@@ -30,7 +30,7 @@ logoIcgcOptions: {
 },
 logoGencatOptions: {
   logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_blanc.svg",
+  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_blanc.png",
   logoLink: "https://web.gencat.cat/",
   logoTitle: "Generalitat de Catalunya",
   logoWidth: 100,

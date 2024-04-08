@@ -41,17 +41,18 @@
             pitch: 0,
         });
         map.on("load", () => {
+        let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
         let labelVisibility = "visible" // select : "visible" or "none"
         let paintOptions = {
           'line-color': 'red',
           'line-width': 1
         } ;
         // map.addVectorLayerICGC(
-        //         mapicgcgl.Layers.VectorAdmin.comarques2022, labelVisibility,
+        //         mapicgcgl.Layers.VectorAdmin.comarques2022, layerPosition, labelVisibility,
         //         paintOptions
         //     );
             map.addVectorLayerICGC(
-                mapicgcgl.Layers.Vector.cobertes2018
+                mapicgcgl.Layers.Vector.cobertes2018, layerPosition
             );
         });
     </script>

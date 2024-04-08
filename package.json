@@ -1,9 +1,22 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.42",
+  "version": "0.0.52",
   "description": "mapicgc-gl-js",
   "author": "ICGC",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "map",
+    "js",
+    "webmap",
+    "ICGC",
+    "app",
+    "maplibre"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OpenICGC/mapicgc-gl-js.git"
+  },
   "main": "dist/mapicgc-gl.js",
   "module": "dist/mapicgc-gl.js",
   "exports": {
@@ -46,7 +59,7 @@
     "@watergis/maplibre-gl-export": "^3.1.0",
     "axios": "^1.6.7",
     "flatgeobuf": "^3.27.2",
-    "maplibre-gl": "^4.1.0",
+    "maplibre-gl": "^4.1.2",
     "utm-latlng": "^1.0.8"
   }
 }

@@ -76,21 +76,19 @@ export default class Map {
 
     this.map.on("load", async () => {
       const nameStyle = this.map.getStyle().name;
-
+      const urlName = this.map.options.style;
       if (window.document.querySelector(".maplibregl-compact-show")) {
         var element = window.document.querySelector(".maplibregl-compact-show");
         element.classList.remove("maplibregl-compact-show");
       }
-
       this.map.addControl(
         new LogoControl({
-          color: nameStyle.indexOf("orto") === -1 ? true : false,
+          color:  urlName.indexOf("orto") === -1 ? true : false,
+          // color: orto
         }),
         "bottom-left"
       );
-
       this._dealOrto3dStyle(nameStyle);
-
     });
   }
 
@@ -335,15 +333,29 @@ export default class Map {
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
    * @param {string} url - The URL to fetch GeoJSON data from.
    * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchData(url, name, options) {
+  async fetchData(url, name, position, options) {
     try {
+      // console.log('fetch', url)
+      if (url.includes('.fgb')){
+      // console.log('is FGB')
+          this.addFGBLayerICGC(url, position,null,options)
+      }else{
+
       const response = await fetch(url);
       const geojson = await response.json();
       let nameUser = name 
-      // let nameUser = name + '-userSource'
-// console.log('geojs', geojson)
+
+      let keyLayer = ''
+      if (position === 'labels'){
+        keyLayer = this._firstSymbolLayer()
+      }
+      if (position === 'lines'){
+        keyLayer =  this._firstLineLayer()
+      }
+
       let type = geojson.features[0].geometry.type;
       if (type.includes("ine")) {
         //line
@@ -359,7 +371,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          }, this._firstSymbolLayer() );
+          }, keyLayer );
         } else {
           map.addLayer({
             id: nameUser,
@@ -376,7 +388,7 @@ export default class Map {
               "line-width": 2,
               "line-opacity": 1,
             },
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         }
       }
       if (type.includes("olygon")) {
@@ -393,7 +405,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         } else {
           map.addLayer({
             id: nameUser,
@@ -409,7 +421,7 @@ export default class Map {
               "fill-color": "blue",
               "fill-opacity": 0.6,
             },
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         }
       }
       if (type.includes("oint")) {
@@ -426,7 +438,7 @@ export default class Map {
               visibility: "visible",
             },
             paint: options,
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         } else {
           map.addLayer({
             id: nameUser,
@@ -442,9 +454,10 @@ export default class Map {
               "circle-color": "red",
               "circle-opacity": 0.85,
             },
-          }, this._firstSymbolLayer());
+          },keyLayer);
         }
       }
+    }
       // map.addFeatureQuery(name)
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
@@ -456,15 +469,137 @@ export default class Map {
    * @param {string} url - The URL to fetch GeoJSON data from.
    * @param {string} name - The geometry name (e.g., 'buildings').
    * @param {string} featureTree - Import all features as unique or group based on a field ('all', 'field').
-   * @param {Object} options - Additional options for configuring the layer.
+   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'. 
+  * @param {Object} options - Additional options for configuring the layer.
    */
 
-  async fetchDataAndMenu(url, name, featureTree, options) {
+  async fetchDataAndMenu(url, name, featureTree, position, options) {
     try {
-      const response = await fetch(url);
-      const geojson = await response.json();
-let nameUser = name+'-nameUser'
       const menuGroup = document.getElementById("menu-group");
+      let visibleLabel = "visible";
+
+      let keyLayer = '';
+
+      if (position === 'labels'){
+        keyLayer = this._firstSymbolLayer()
+      }
+      if (position === 'lines'){
+        keyLayer =  this._firstLineLayer()
+      }
+      let geojson
+
+      if (url.includes('.fgb')){
+        // console.log('is FGB menu')
+
+        function getKeyByUrl(url) {
+          for (const key in Layers.FGBAdmin) {
+            // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
+            if (
+              Layers.FGBAdmin.hasOwnProperty(key) &&
+              Layers.FGBAdmin[key] === url
+            ) {
+              // console.log('entro', key)
+              return key; // Retorna la clave si encuentra la URL
+            }
+          }
+          return null; // Retorna null si no se encuentra la URL en el objeto
+        }
+    
+        let name = getKeyByUrl(url);
+
+        if (name === null) {
+          // let op = Layers.VectorAdmin.find((objeto) =>
+          //   objeto.key.includes(name)
+          // );
+          // if (!op) {
+          // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
+          console.log(
+            "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
+            "font-weight: bold; font-style: italic;",
+            "font-weight: normal; font-style: normal; color: red;",
+            name,
+            "font-weight: bold; font-style: italic;"
+          );
+        } else {
+          const response = await fetch(url);
+
+
+
+          const fc = { type: "FeatureCollection", features: [] };
+    
+    // console.log('fetc', fc)
+          for await (const f of deserialize(response.body))
+            fc.features.push(f);
+    // console.log('feat', fc)
+    geojson = fc
+    
+          let src = name ;
+          // let src = name + "-userSource";
+          this.map.addSource(src, {
+            type: "geojson",
+            data: fc,
+          });
+    
+          if (url.includes('text')) {
+            // console.log('entro', name)
+            this.map.addLayer({
+              id: name,
+              type: "symbol",
+              source: src,
+              layout: {
+                "text-letter-spacing": 0.1,
+                "text-size": { "base": 1.2, "stops": [[8, 0], [12, 14], [15, 15]] },
+                "text-font": ["FiraSans-Regular"],
+                "text-field": ["get", "NOM_AC"],
+                "text-transform": "none",
+                "text-max-width": 25,
+                "visibility": visibleLabel,
+                "text-justify": "right",
+                "text-anchor": "top",
+                "text-allow-overlap": false,
+                "symbol-spacing": 2,
+                "text-line-height": 1
+              },
+              paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
+            }, keyLayer);
+          } else {
+           
+            let textLayer = name + "Text"
+            this.map.addLayer({
+              id: textLayer,
+              type: "symbol",
+              source: src,
+              layout: {
+                "text-letter-spacing": 0.1,
+                "text-size": { "base": 1.2, "stops": [[8, 0], [12, 14], [15, 15]] },
+                "text-font": ["FiraSans-Regular"],
+                "text-field": ["get", "NOM_AC"],
+                "text-transform": "none",
+                "text-max-width": 25,
+                "visibility": visibleLabel,
+                "text-justify": "right",
+                "text-anchor": "top",
+                "text-allow-overlap": false,
+                "symbol-spacing": 2,
+                "text-line-height": 1
+              },
+              paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
+            }, keyLayer)
+    
+    
+          }
+    
+        }
+
+
+
+
+        }else{
+
+
+      const response = await fetch(url);
+       geojson = await response.json();
+        }
 
       if (featureTree !== "all") {
         const nameTitle = document.createElement("div");
@@ -476,13 +611,15 @@ let nameUser = name+'-nameUser'
         featureTreeTitle.id = "titleDivMenuSub";
         featureTreeTitle.textContent = `📂 ${featureTree}`;
         menuGroup.appendChild(featureTreeTitle);
+
       } else {
       }
 
       let type = geojson.features[0].geometry.type;
-
+// console.log('type', type)
       if (featureTree === "all") {
         if (type.includes("ine")) {
+          // console.log('linee')
           //line
           if (options !== undefined) {
             map.addLayer({
@@ -496,7 +633,7 @@ let nameUser = name+'-nameUser'
                 visibility: "visible",
               },
               paint: options,
-            }, this._firstSymbolLayer());
+            }, keyLayer);
           } else {
             map.addLayer({
               id: name,
@@ -513,10 +650,11 @@ let nameUser = name+'-nameUser'
                 "line-width": 2,
                 "line-opacity": 1,
               },
-            }, this._firstSymbolLayer());
+            }, keyLayer);
           }
         }
         if (type.includes("olygon")) {
+          // console.log('poolygon')
           //polygon
           if (options !== undefined) {
             map.addLayer({
@@ -530,7 +668,7 @@ let nameUser = name+'-nameUser'
                 visibility: "visible",
               },
               paint: options,
-            }, this._firstSymbolLayer());
+            }, keyLayer);
           } else {
             map.addLayer({
               id: name,
@@ -546,8 +684,10 @@ let nameUser = name+'-nameUser'
                 "fill-color": "blue",
                 "fill-opacity": 0.6,
               },
-            }, this._firstSymbolLayer());
+            }, keyLayer);
+  
           }
+
         }
         if (type.includes("oint")) {
           //point
@@ -563,7 +703,7 @@ let nameUser = name+'-nameUser'
                 visibility: "visible",
               },
               paint: options,
-            }, this._firstSymbolLayer());
+            }, keyLayer);
           } else {
             map.addLayer({
               id: name,
@@ -579,22 +719,23 @@ let nameUser = name+'-nameUser'
                 "circle-color": "red",
                 "circle-opacity": 0.85,
               },
-            }, this._firstSymbolLayer());
+            }, keyLayer);
           }
         }
         // geojsonStore  = geojson
         // map.addLayerTree(geojson);
-
+console.log('itemSensefiltre', name)
         map.addMenuItem(name);
         // map.addFeatureQuery(name)
-      } else {
+      } else {  //add filter
         let field = featureTree;
 
         const layers = {};
         geojson.features.forEach((feature) => {
           const fieldMarker = feature.properties[field];
-          // const idFieldMarker = fieldMarker+`-${name}`
-          const idFieldMarker = fieldMarker
+          const idFieldMarker = fieldMarker+`-userFieldFilter-`+name
+         
+          // const idFieldMarker = fieldMarker
           if (fieldMarker !== null) {
             // aqui podriem mirar si te simbologia i afegir-la a la capa
 
@@ -614,7 +755,7 @@ let nameUser = name+'-nameUser'
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  }, this._firstSymbolLayer());
+                  }, keyLayer);
                 } else {
                   map.addLayer({
                     id: idFieldMarker,
@@ -632,7 +773,7 @@ let nameUser = name+'-nameUser'
                       "line-width": 2,
                       "line-opacity": 1,
                     },
-                  }, this._firstSymbolLayer());
+                  },keyLayer);
                 }
               }
               if (type.includes("olygon")) {
@@ -650,7 +791,7 @@ let nameUser = name+'-nameUser'
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  }, this._firstSymbolLayer());
+                  }, keyLayer);
                 } else {
                   map.addLayer({
                     id: idFieldMarker,
@@ -667,7 +808,7 @@ let nameUser = name+'-nameUser'
                       "fill-color": "blue",
                       "fill-opacity": 0.6,
                     },
-                  }, this._firstSymbolLayer());
+                  }, keyLayer);
                 }
               }
               if (type.includes("oint")) {
@@ -685,7 +826,7 @@ let nameUser = name+'-nameUser'
                     },
                     filter: ["==", `${field}`, fieldMarker],
                     paint: options,
-                  }, this._firstSymbolLayer());
+                  }, keyLayer);
                 } else {
                   map.addLayer({
                     id: idFieldMarker,
@@ -703,18 +844,19 @@ let nameUser = name+'-nameUser'
                       "circle-color": "red",
                       "circle-opacity": 0.85,
                     },
-                  }, this._firstSymbolLayer());
+                  }, keyLayer);
                 }
               }
 
               // Agregar la nueva capa al objeto de capas
               layers[idFieldMarker] = true;
+              // console.log('name', idFieldMarker,fieldMarker)
               map.addMenuItem(idFieldMarker);
             }
           }
         });
       }
-
+   
       //add feature queries
       // map.addFeatureQuery(name);
     } catch (error) {
@@ -1095,24 +1237,33 @@ let nameUser = name+'-nameUser'
    * @param {string} layer.id - Unique identifier for the layer.
    * @param {string} layer.type - Type of layer ('raster').
    * @param {string[]} layer.tiles - Tiles for the raster layer.
+   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
    */
-  addLayerWMS(layer) {
+  addLayerWMS(layer, position) {
     try {
       // this.map.on("load", () => {
       // console.log("holaaddlayerwms", layer);
+        let keyLayer = ''
+        if (position === 'labels'){
+          keyLayer = this._firstSymbolLayer()
+        }
+        if (position === 'lines'){
+          keyLayer =  this._firstLineLayer()
+        }
+
       this.map.addSource(`${layer.id}`, {
         // this.map.addSource(`${layer.id}-userSource`, {
         type: "raster",
         tiles: [layer.tiles],
         tileSize: 256,
-      }, this._firstSymbolLayer());
+      }, keyLayer);
       this.map.addLayer({
         id: `${layer.id}-layerIcgcMap`,
         type: "raster",
         source: `${layer.id}`,
         // source: `${layer.id}-userSource`,
         paint: {},
-      }, this._firstSymbolLayer());
+      }, keyLayer);
       // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
@@ -1267,8 +1418,9 @@ let nameUser = name+'-nameUser'
       // layerName = layerName+'-userSource'
 
       // this.map.on("load", () => {
-      // console.log('layer', layerName, options)
+      // console.log('layer', layerName)
       this.map.on("mouseenter", layerName, () => {
+        // console.log('layerenter', layerName)
         this.map.getCanvas().style.cursor = "pointer";
       });
       
@@ -1279,12 +1431,13 @@ let nameUser = name+'-nameUser'
 
       this.map.on('click', (e) => {
 
-        // console.log('click', this.map.queryRenderedFeatures(e.point))
+        // console.log('click', this.map.queryRenderedFeatures(e.point), layerName)
         let features = this.map.queryRenderedFeatures(e.point);
         // console.log('kkk',features[0].source, layerName )
-        if ((features && features[0].source === layerName) ) {
+        if ((features && features[0].source.includes(layerName)) ) {
+          // if ((features && features[0].source === layerName) ) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
-          // console.log('es aqui3331??', options)
+          // console.log('es aqui3331??', features[0])
           if (options !== undefined && options.length > 0) {
             if (options !== null) {
               let text = "";
@@ -1465,6 +1618,14 @@ let nameUser = name+'-nameUser'
   addMenuItem(name) {
     // console.log('adddMenu', name, name.length)
     try {
+let menuLabel 
+      if (name.includes('-userFieldFilter-')){
+        menuLabel = name.split('-userFieldFilter-')[0]
+        // console.log('name', name)
+      }else{
+     
+        menuLabel = name
+      }
       if (name.length > 0) {
         const menuGroup = document.getElementById("menu-group");
 
@@ -1478,7 +1639,7 @@ let nameUser = name+'-nameUser'
 
         const label = document.createElement("label");
         label.setAttribute("for", name);
-        label.textContent = name;
+        label.textContent = menuLabel;
         menuGroup.appendChild(label);
 
         input.addEventListener("change", (e) => {
@@ -1643,9 +1804,9 @@ let nameUser = name+'-nameUser'
    * @function addImageLayerICGC
    * @param {string} name - The name of the layer. Mandatory. options: 'orto', 'geo', 'slope', 'dem', 'relleu', etc.
    */
-  addImageLayerICGC(name) {
+  addImageLayerICGC(name,position) {
     try {
-      // console.log("name", name);
+      // console.log("name", name, position);
 
       let idName = null;
       function findImageType(url, var1, var2, var3, var4) {
@@ -1685,7 +1846,7 @@ let nameUser = name+'-nameUser'
         tiles: name,
       };
       // console.log("source", sourceWMS);
-      this.addLayerWMS(sourceWMS);
+      this.addLayerWMS(sourceWMS, position);
       
     } catch (error) {
       console.error(`Error adding ICGC image layer: ${error.message}`);
@@ -1696,13 +1857,22 @@ let nameUser = name+'-nameUser'
  * Adds an ICGC vector layer to the map based on the specified name and year.
  * @function addVectorLayerICGC
  * @param {string} url - The url of the vector layer.
+ * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
  * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
  * @param {object} paintOption - Paint option for the layer
  * 
  */
-  async addVectorLayerICGC(layerUrl, visibleLabel, paintOption) {
+  async addVectorLayerICGC(layerUrl, position, visibleLabel, paintOption) {
     try {
 // console.log('layerUrl', layerUrl)
+let keyLayer = ''
+if (position === 'labels'){
+ keyLayer = this._firstSymbolLayer()
+}
+if (position === 'lines'){
+  keyLayer = this._firstLineLayer()
+}
+
       let name = layerUrl
       if (name === null) {
      console.log(
@@ -1731,6 +1901,7 @@ if (layerUrl.includes("https")){
     return null; // Retorna null si no se encuentra la URL en el objeto
   }
 
+
   let name = getKeyByUrl(layerUrl);
 
   this.map.addSource(name, {
@@ -1745,7 +1916,7 @@ if (name === 'cobertes2018'){
     "source-layer": "cobertes",
     "maxzoom": 18,
     "layout":{
-      "visibility": visibleLabel,
+      "visibility": 'visible',
     },
     "paint": {
       "fill-opacity": [
@@ -1857,7 +2028,7 @@ if (name === 'cobertes2018'){
         "#000080"
       ]
     }
-  }, this._firstSymbolLayer());
+  }, keyLayer);
 
 }
 
@@ -1901,7 +2072,7 @@ if (visibleLabel==="visible"){
             "fill-color": "#0000FF",
             "fill-opacity": 0,
           },
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         this.map.addLayer({
           id: name + "-underline",
           type: "line",
@@ -1915,7 +2086,7 @@ if (visibleLabel==="visible"){
             "line-opacity": 1,
             "line-width": 3,
           },
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         if (paintOption){
           this.map.addLayer({
             id: name + "-line",
@@ -1926,7 +2097,7 @@ if (visibleLabel==="visible"){
               "visibility": visibleLabel,
             },
             paint: paintOption,
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         }else{
            this.map.addLayer({
           id: name + "-line",
@@ -1941,7 +2112,7 @@ if (visibleLabel==="visible"){
             "line-opacity": 1,
             "line-width": 1,
           },
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         }
        
       }
@@ -1962,9 +2133,18 @@ if (visibleLabel==="visible"){
    * @param {object} paintOption - Paint option for the layer
    * 
    */
-  async addFGBLayerICGC(layerUrl, visibleLabel, paintOption) {
+  async addFGBLayerICGC(layerUrl, position, paintOption) {
+    // console.log('hola', layerUrl, position, paintOption)
   try {
-    // console.log('url', layerUrl, visibleLabel,paintOption)
+    // console.log('urlooooooo')
+    let visibleLabel = "visible"
+    let keyLayer = ''
+    if (position === 'labels'){
+      keyLayer = this._firstSymbolLayer()
+    }
+    if (position === 'lines'){
+      keyLayer =  this._firstLineLayer()
+    }
     function getKeyByUrl(url) {
       for (const key in Layers.FGBAdmin) {
         // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
@@ -2038,7 +2218,7 @@ if (visibleLabel==="visible"){
             "text-line-height": 1
           },
           paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
-        }, this._firstSymbolLayer());
+        }, keyLayer);
       } else {
         this.map.addLayer({
           id: name + "-fill",
@@ -2048,7 +2228,7 @@ if (visibleLabel==="visible"){
             "fill-color": "#0000FF",
             "fill-opacity": 0,
           },
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         this.map.addLayer({
           id: name + "-underline",
           type: "line",
@@ -2058,7 +2238,7 @@ if (visibleLabel==="visible"){
             "line-opacity": 1,
             "line-width": 3,
           },
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         // console.log('painst', paintOption)
         if (paintOption){
           // console.log('paint', paintOption)
@@ -2067,7 +2247,7 @@ if (visibleLabel==="visible"){
           type: "line",
           source: src,
           paint: paintOption
-        }, this._firstSymbolLayer());
+        }, keyLayer);
         }else{
           this.map.addLayer({
             id: name + "-line",
@@ -2078,7 +2258,7 @@ if (visibleLabel==="visible"){
               "line-opacity": 1,
               "line-width": 1,
             },
-          }, this._firstSymbolLayer());
+          }, keyLayer);
         }
       
 
@@ -2104,7 +2284,7 @@ if (visibleLabel==="visible"){
             "text-line-height": 1
           },
           paint: { "text-halo-blur": 0.5, "text-color": "rgba(90, 7, 7, 1)", "text-halo-width": 2, "text-halo-color": "rgba(255, 255, 255,0.8)" }
-        }, this._firstSymbolLayer())
+        }, keyLayer)
 
 
       }
@@ -2112,7 +2292,7 @@ if (visibleLabel==="visible"){
       // });
     }
   } catch (error) {
-    console.error(`Error adding ICGC vector layer: ${error.message}`);
+    console.error(`Error adding ICGC FGB layer: ${error.message}`);
   }
 }
 
@@ -2477,6 +2657,22 @@ _firstSymbolLayer(){
   }
 }
 
+_firstLineLayer(){
+  try {
+    const layers = this.map.getStyle().layers;
+    let firsLineId;
+    // console.log('es aqui12??', layers.length)
+    for (let i = 0; i < layers.length; i++) {
+      if (layers[i].type === "line") {
+        firsLineId = layers[i].id;
+        break;
+      }
+    }
+    return firsLineId
+  } catch (error) {
+    console.error(`Error getting first symbol layer: ${error.message}`);
+  }
+}
 
 _createCitiesMapboxLayer() {
   try {
