@@ -36,8 +36,9 @@
         hash: true,
         pitch: 0,
       });
+      let layerImagePosition = 'labels' // select: 'top', 'lines' or 'labels'
       map.on("load", () => {
-        map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, 'labels');
+        map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, layerImagePosition);
       });
     </script>
 </body>

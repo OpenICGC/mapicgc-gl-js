@@ -654,11 +654,11 @@ export default class Map {
           }
         }
         if (type.includes("olygon")) {
-          // console.log('poolygon')
+          // console.log('poolygon', options, name)
           //polygon
           if (options !== undefined) {
-            map.addLayer({
-              id: name,
+            this.map.addLayer({
+              id: name ,
               type: "fill",
               source: {
                 type: "geojson",
@@ -669,8 +669,26 @@ export default class Map {
               },
               paint: options,
             }, keyLayer);
+            // this.map.addLayer({
+            //   id: name + "-underline",
+            //   type: "line",
+            //   source: {
+            //     type: "geojson",
+            //     data: geojson,
+            //   },
+            //   layout: {
+            //     visibility: "visible",
+            //   },
+            //   paint: options,
+            // }, keyLayer);
+
+
+
+
+
+
           } else {
-            map.addLayer({
+            this.map.addLayer({
               id: name,
               type: "fill",
               source: {
@@ -681,10 +699,48 @@ export default class Map {
                 visibility: "visible",
               },
               paint: {
-                "fill-color": "blue",
-                "fill-opacity": 0.6,
+                "fill-color": "#0000FF",
+                "fill-opacity": 0,
               },
             }, keyLayer);
+            // this.map.addLayer({
+            //   id: name + "-underline",
+            //   type: "line",
+            //   source: {
+            //     type: "geojson",
+            //     data: geojson,
+            //   },
+            //   layout: {
+            //     visibility: "visible",
+            //   },
+            //   paint: {
+            //     "line-color": "#0000FF",
+            //     "line-opacity": 1,
+            //     "line-width": 3,
+            //   },
+            // }, keyLayer);
+
+
+
+
+
+
+
+            // map.addLayer({
+            //   id: name,
+            //   type: "fill",
+            //   source: {
+            //     type: "geojson",
+            //     data: geojson,
+            //   },
+            //   layout: {
+            //     visibility: "visible",
+            //   },
+            //   paint: {
+            //     "fill-color": "blue",
+            //     "fill-opacity": 0.6,
+            //   },
+            // }, keyLayer);
   
           }
 
@@ -1409,16 +1465,17 @@ console.log('itemSensefiltre', name)
    * @function addFeatureQuery
    * @param {string} layerName - name of the layer
    * @param {objetc} options - optional indications for the popup
+   * @param {objetc} popupStyle - optional indications for the popup style
    */
 
-  addFeatureQuery(layerName, options) {
+  addFeatureQuery(layerName, options, popupStyle) {
     try {
       let description;
     
       // layerName = layerName+'-userSource'
 
       // this.map.on("load", () => {
-      // console.log('layer', layerName)
+      // console.log('layer', layerName, options, popupStyle)
       this.map.on("mouseenter", layerName, () => {
         // console.log('layerenter', layerName)
         this.map.getCanvas().style.cursor = "pointer";
@@ -1438,29 +1495,25 @@ console.log('itemSensefiltre', name)
           // if ((features && features[0].source === layerName) ) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
           // console.log('es aqui3331??', features[0])
-          if (options !== undefined && options.length > 0) {
+          if (options !== undefined && options.length > 0 && options !== 'all') {
             if (options !== null) {
               let text = "";
               options.forEach((prop) => {
                 let pr = features[0].properties[prop];
-
                 text = text + `<h4>${pr}</h4>`;
               });
               description = text;
-              map.addPopup(coordinates, description);
+              map.addPopup(coordinates, description, popupStyle);
             }
           } else {
-            // console.log('hello')
             let text = "";
             for (const key in features[0].properties) {
-              //  console.log('key', key)
-
               text +=
                 "<b>" + key + "</b>:" + features[0].properties[key] + "<br>";
             }
 
             description = text;
-            map.addPopup(coordinates, description);
+            map.addPopup(coordinates, description, popupStyle);
             // popup.setLngLat(e.lngLat)
             //   .setHTML(text)
             //   .addTo(map);
@@ -1579,15 +1632,70 @@ console.log('itemSensefiltre', name)
    * @param {Object} options - Options for the popup to add.
    * @param {LngLatLike} coord - Coordinates for placing the popup.
    * @param {string} text - HTML content for the popup.
+   * @param {string} popupStyle - css content for the popup style.
    * @returns {Object} - Instance of the added popup.
    */
-  addPopup(coord, text) {
+  addPopup(coord, text, popupStyle) {
     try {
-      let popup = new maplibregl.Popup()
+      // console.log('popupstyle', popupStyle)
+      if (popupStyle.image === undefined){
+         let popup = new maplibregl.Popup()
         .setLngLat(coord)
-        .setHTML(text)
+        // .innerHTML( )
+        .setHTML(`
+       
+        <div class="popupBody">
+          
+          <div class="popupTop">
+          ${popupStyle.title}
+        
+          </div>
+          
+          <div class="popupBottom">
+          <div class="popupBottomUp">
+ ${text}
+        
+          </div>
+          <div class="popupBottomDown">
+             
+          </div>
+         
+            
+          </div>
+        </div>
+      `)
         .addTo(this.map);
       return popup;
+      }else{ //if images area provided
+        let popup = new maplibregl.Popup()
+        .setLngLat(coord)
+        // .innerHTML( )
+        .setHTML(`
+       
+        <div class="popupBody">
+          
+          <div class="popupTop">
+          ${popupStyle.title}
+        
+          </div>
+          
+          <div class="popupBottom">
+          <div class="popupBottomUp">
+          ${text}
+        
+          </div>
+          <div class="popupBottomDown">
+             <img style="  padding: 8px;  width: 50%;" src=${popupStyle.image} />
+          </div>
+         
+            
+          </div>
+        </div>
+      `)
+        .addTo(this.map);
+      return popup;
+      }
+     
     } catch (error) {
       console.error(`Error adding popup: ${error.message}`);
       return null;
@@ -1622,7 +1730,9 @@ let menuLabel
       if (name.includes('-userFieldFilter-')){
         menuLabel = name.split('-userFieldFilter-')[0]
         // console.log('name', name)
-      }else{
+      }
+      
+      else{
      
         menuLabel = name
       }
@@ -1642,6 +1752,9 @@ let menuLabel
         label.textContent = menuLabel;
         menuGroup.appendChild(label);
 
+
+
+        
         input.addEventListener("change", (e) => {
           this.map.setLayoutProperty(
             name,

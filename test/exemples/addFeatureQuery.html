@@ -20,6 +20,8 @@
             width: 100%;
             height: 100%
         }
+
+
     </style>
 </head>
 
@@ -45,15 +47,21 @@
                 "line-width": 2,
                 "line-opacity": 1,
             };
+            let layerPosition = 'top';
             map.fetchData(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat",
+                "RutesMontserrat", layerPosition,
                 paintOptions
             );
-
+            
+            let popupStyle = {
+                title : 'Informació:',
+                image: 'https://tilemaps.icgc.cat/cdn/logos/icgc_logo_color.png'
+            };
             // si volem camps específics:
-            let queryFields = ["nom", "municipi"];
-            map.addFeatureQuery("RutesMontserrat", queryFields);
+            // let queryFields = ["nom", "municipi"];
+            let queryFields = [];
+            map.addFeatureQuery("RutesMontserrat", queryFields, popupStyle);
 
             //si volem tots els paràmetres:
             // map.addFeatureQuery("RutesMontserrat");
