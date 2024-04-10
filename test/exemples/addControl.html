@@ -49,10 +49,10 @@
                 },
                 "bottom-right"
             );
-
+            map.addNavigationControl()
             map.addExportControl();
             map.addMouseCoordControl();
-
+            map.addFullscreenControl({},'top-right')
             // from other library
             map.addControl(new maplibregl.NavigationControl(), "bottom-right");
         });

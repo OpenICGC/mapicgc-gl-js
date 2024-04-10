@@ -460,6 +460,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   position: absolute;
   top: 0;
   will-change: transform;
+  z-index: 9999999;
 }
 .maplibregl-popup-anchor-top,
 .maplibregl-popup-anchor-top-left,
@@ -930,13 +931,7 @@ background: #d4d4d4;
 
 
     
-#logos{
-  display: flex;
-  flex-direction: row;
-  bottom: 1px;
-  position: absolute;
-  left: 10px;
-}
+
 #marker {
   background-image: url('https://maplibre.org/maplibre-gl-js/docs/assets/washington-monument.jpg');
   background-size: cover;

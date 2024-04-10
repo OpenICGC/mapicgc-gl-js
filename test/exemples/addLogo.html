@@ -21,9 +21,10 @@
         #logos {
         display: flex;
         flex-direction: row;
-        bottom: 1px;
+        top: 30%;
         position: absolute;
-        left: 10px;
+        right:45%;
+
       }
         
     </style>
@@ -44,10 +45,12 @@
         hash: true,
         pitch: 0,
       });
+      
       let options = {
         id: "icgcColorLogo",
-        url: "https://betaserver.icgc.cat/logos/ICGC_color_norma.svg",
+        url: "https://tilemaps.icgc.cat/cdn/images/grumpyCatTest.png",
         href: "https://www.icgc.cat",
+        height: '150px'
       };
       map.on("load", () => {
         map.addLogo(options);

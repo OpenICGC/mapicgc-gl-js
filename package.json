@@ -1,8 +1,8 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.54",
-  "description": "mapicgc-gl-js",
+  "version": "0.0.55",
+  "description": "mapicgc-gl-js library",
   "author": "ICGC",
   "license": "BSD-3-Clause",
   "keywords": [
@@ -17,6 +17,12 @@
     "type": "git",
     "url": "https://github.com/OpenICGC/mapicgc-gl-js.git"
   },
+  "contributors": [
+    {
+      "name": "Unitat Geostart ICGC",
+      "email": "geostart@icgc.cat"
+    }
+  ],
   "main": "dist/mapicgc-gl.js",
   "module": "dist/mapicgc-gl.js",
   "exports": {

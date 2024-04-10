@@ -25,27 +25,70 @@
 
 <body>
 
+    <meta charset="utf-8" />
+    <title>Exemple mapicgc-gl-js: Afegir mapa base ICGC</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.js"></script>
+    <link
+      href="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css"
+      rel="stylesheet"
+    />
 
-    <div id="map" class="map"></div>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
     <div id="basemap-group" class="basemap-group"></div>
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 7.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-        map.on("load", () => {
-            //add multiple ICGC basemaps and get a style menu component
-            let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO];
-
-
-            
-            map.addBasemapsICGC(basemapsicgc);
-        });
+      // add basemap
+      const map = new mapicgcgl.Map({
+        container: "map",
+        style: mapicgcgl.Styles.TOPO, // <-- add style basemap here
+        center: [2.1464, 41.306],
+        zoom: 7.4,
+        maxZoom: 19,
+        hash: true,
+        pitch: 0,
+      });
+      map.on("load", () => {
+        //add multiple ICGC basemaps and get a style menu component
+        map.addFullscreenControl();
+        let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO];
+        map.addBasemapsICGC(basemapsicgc);
+      });
+      //If you need to add basemaps from other sources, please follow the structure for each object
+      //   let baseLayers = [
+      //     {
+      //       id: 0,
+      //       value: "Mapa estàndard",
+      //       label: "icgc_mapa_estandard_general",
+      //        url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
+      // image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png",
+      //     },
+      //     {
+      //       id: 1,
+      //       value: "Ortofotomapa híbrid",
+      //       label: "icgc_orto_hibrida",
+      //         url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+      // image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
+      //     },
+      //   ];
+      //   map.addBasemaps(baseLayers);
     </script>
 </body>
 

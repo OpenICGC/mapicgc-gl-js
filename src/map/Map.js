@@ -508,19 +508,21 @@ export default class Map {
         let name = getKeyByUrl(url);
 
         if (name === null) {
+          name='userFGB'
           // let op = Layers.VectorAdmin.find((objeto) =>
           //   objeto.key.includes(name)
           // );
           // if (!op) {
           // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
-          console.log(
-            "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-            "font-weight: bold; font-style: italic;",
-            "font-weight: normal; font-style: normal; color: red;",
-            name,
-            "font-weight: bold; font-style: italic;"
-          );
+          // console.log(
+          //   "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
+          //   "font-weight: bold; font-style: italic;",
+          //   "font-weight: normal; font-style: normal; color: red;",
+          //   name,
+          //   "font-weight: bold; font-style: italic;"
+          // );
         } else {
+        }
           const response = await fetch(url);
 
 
@@ -589,7 +591,7 @@ export default class Map {
     
           }
     
-        }
+        //} //aquest
 
 
 
@@ -780,7 +782,7 @@ export default class Map {
         }
         // geojsonStore  = geojson
         // map.addLayerTree(geojson);
-console.log('itemSensefiltre', name)
+// console.log('itemSensefiltre', name)
         map.addMenuItem(name);
         // map.addFeatureQuery(name)
       } else {  //add filter
@@ -1147,10 +1149,25 @@ console.log('itemSensefiltre', name)
     /**
    * Adds a fullscreen control to the map.
    * @function addFullscreenControl
+    * @param {Object} options - Options for the geolocate control.
+   * @param {string} [position='top-right'] - Position to add the control on the map.
+   
    */
-    addFullscreenControl() {
+    addFullscreenControl(options, position) {
       try {
-      this.map.addControl(new maplibregl.FullscreenControl())
+        if (position === undefined) {
+          position = "top-right";
+        }
+        if (options === undefined) {
+          this.map.addControl(
+            new maplibregl.FullscreenControl({
+              container: HTMLElement
+            }),
+            position
+          );
+        } else {
+      this.map.addControl(new maplibregl.FullscreenControl(options), position)
+        }
       } catch (error) {
         console.error(`Error adding fullscreen control: ${error.message}`);
       }
@@ -1262,9 +1279,21 @@ console.log('itemSensefiltre', name)
    * @param {string} layer.layerType - Map layer type (e.g., 'symbol', 'circle', 'fill').
    * @param {Object} layer.layout - Layer layout configuration.
    * @param {Object} layer.paint - Layer paint configuration.
+   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
+  
    */
-  addLayerGeoJSON(layer) {
+  addLayerGeoJSON(layer, position) {
     try {
+      let keyLayer = ''
+      if (position === 'labels'){
+        keyLayer = this._firstSymbolLayer()
+      }
+      if (position === 'lines'){
+        keyLayer =  this._firstLineLayer()
+      }
+
+
+
       // this.map.on("load", () => {
       this.map.addSource(`${layer.id}`, {
         // this.map.addSource(`${layer.id}-userSource`, {
@@ -1279,7 +1308,7 @@ console.log('itemSensefiltre', name)
         // source: `${layer.id}-userSource`,
         layout: layer.layout,
         paint: layer.paint,
-      }, this._firstSymbolLayer());
+      }, keyLayer);
       // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
@@ -1370,12 +1399,15 @@ console.log('itemSensefiltre', name)
    * @param {string} options.id - Unique identifier for the logo.
    * @param {string} options.url - URL of the logo image.
    * @param {string} options.href - URL to navigate to when the logo is clicked.
-   */
-  addLogo(options) {
+   * @param {string} options.height - Height of the logo.
+   * @param {string} position - Position of the logo.
+ 
+  */
+  addLogo(options, position) {
     try {
       const img = document.createElement("img");
       img.src = options.url;
-      img.style.height = "62px";
+      img.style.height = options.height;
       const logos = document.getElementById("logos");
       const link = document.createElement("a");
       link.id = options.id;
@@ -1441,7 +1473,7 @@ console.log('itemSensefiltre', name)
   addBasemaps(baseLayers) {
     try {
       const handleClick = (base) => {
-        console.log("base", base);
+        // console.log("base", base);
         map.setStyle(base.url);
       };
 
@@ -1873,13 +1905,13 @@ let menuLabel
    * Adds an attribution control to the map with the provided options.
    * @function addAttributionControl
    * @param {Object} options - Options for the attribution control.
+   * @param {string} [position='bottom-right'] - Position to add the control on the map.
+  
    */
-  addAttributionControl(options) {
+  addAttributionControl(options, position) {
     try {
       this.map.addControl(
-        new maplibregl.AttributionControl(options.options),
-        options.position
-      );
+        new maplibregl.AttributionControl(options), position );
     } catch (error) {
       console.error(`Error adding attribution control: ${error.message}`);
     }
@@ -2276,20 +2308,21 @@ if (visibleLabel==="visible"){
     // console.log('name', name)
 
     if (name === null) {
+      name = 'userFGB'
       // let op = Layers.VectorAdmin.find((objeto) =>
       //   objeto.key.includes(name)
       // );
       // if (!op) {
       // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
-      console.log(
-        "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-        "font-weight: bold; font-style: italic;",
-        "font-weight: normal; font-style: normal; color: red;",
-        name,
-        "font-weight: bold; font-style: italic;"
-      );
+      // console.log(
+      //   "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
+      //   "font-weight: bold; font-style: italic;",
+      //   "font-weight: normal; font-style: normal; color: red;",
+      //   name,
+      //   "font-weight: bold; font-style: italic;"
+      // );
     } else {
-
+    }
 
       const response = await fetch(layerUrl);
 
@@ -2403,7 +2436,7 @@ if (visibleLabel==="visible"){
       }
 
       // });
-    }
+    //} /////////////////aquest es 
   } catch (error) {
     console.error(`Error adding ICGC FGB layer: ${error.message}`);
   }
