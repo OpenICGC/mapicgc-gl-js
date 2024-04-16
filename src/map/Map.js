@@ -19,10 +19,21 @@ import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
-import Terrains from "../constants/Terrains.js";
-import Styles from "../constants/Styles.js";
-import Layers from "../constants/Layers.js";
-import defaultOptions from "../config.js";
+// import Terrains from "../constants/Terrains.js";
+// import Styles from "../constants/Styles.js";
+// import Layers from "../constants/Layers.js";
+// import defaultOptions from "../config.js";
+import axios from "axios";
+
+import mapicgcConfig from "../mapicgc-config.json"
+
+
+
+let Layers 
+let Styles 
+let Terrains 
+let defaultOptions
+
 // import "../plugins/maplibre-gl-geocoder.js";
 
 /**
@@ -35,64 +46,88 @@ export default class Map {
    */
 
   constructor(options) {
-    let arrayUserOptions = Object.getOwnPropertyNames(options);
-    if (arrayUserOptions) {
-      // console.log('d44eeee', arrayUserOptions)
-      // arrayUserOptions.forEach((el) => {
-      //   if (el === "style") {
-      //     options[el] = this._dealStyleMaps(options[el]);
-      //   } else {
-      //     options[el] = options[el];
-      //   }
-      // });
+    // console.log('entro MAP constructor', options)
+    axios.get('https://tilemaps.icgc.cat/cdn/configs/mapicgc-config.json')
+    .then (response =>{
+      // console.log('entro')
+      Layers = response.data.Layers;
+      Styles = response.data.Styles;
+      Terrains = response.data.Terrains;
+      defaultOptions = response.data.defaultOptions;
+      // console.log('response', response.data)
+      
+
+this.initTheMap(options)
+    
+
+
+    })
+    .catch(error =>{
+      
+       Layers = mapicgcConfig.Layers;
+       Styles = mapicgcConfig.Styles;
+       Terrains = mapicgcConfig.Terrains;
+      defaultOptions = mapicgcConfig.defaultOptions;
+      console.log('Error en la petició. Carregant configuració per defecte...')
+      this.initTheMap(options)
     }
-    if (!options) {
-      options = defaultOptions.mapOptions;
-    } else {
-      for (const key in defaultOptions.mapOptions) {
-        let center = [
-          defaultOptions.mapOptions.center[0],
-          defaultOptions.mapOptions.center[1],
-        ];
-        defaultOptions.mapOptions.center = center;
-        if (!options.hasOwnProperty(key)) {
-          options[key] = defaultOptions.mapOptions[key];
-        }
-      }
-    }
+      
+    
+    )
+    
+   
 
-    options.maxPitch = 85;
-    options.maplibreLogo = false;
-    options.attributionControl = false;
-
-    this.map = new maplibregl.Map(options);
-    this.map.options = options;
-
-    this.map.addControl(
-      new maplibregl.AttributionControl({
-        compact: true,
-      })
-    );
-
-    this.map.on("load", async () => {
-      const nameStyle = this.map.getStyle().name;
-      const urlName = this.map.options.style;
-      if (window.document.querySelector(".maplibregl-compact-show")) {
-        var element = window.document.querySelector(".maplibregl-compact-show");
-        element.classList.remove("maplibregl-compact-show");
-      }
-      this.map.addControl(
-        new LogoControl({
-          color:  urlName.indexOf("orto") === -1 ? true : false,
-          // color: orto
-        }),
-        "bottom-left"
-      );
-      this._dealOrto3dStyle(nameStyle);
-    });
+    
   }
 
+initTheMap(options){
+  // console.log('entropros')
+  if (!options) {
+    options = defaultOptions.mapOptions;
+  } else {
+    for (const key in defaultOptions.mapOptions) {
+      let center = [
+        defaultOptions.mapOptions.center[0],
+        defaultOptions.mapOptions.center[1],
+      ];
+      defaultOptions.mapOptions.center = center;
+      if (!options.hasOwnProperty(key)) {
+        options[key] = defaultOptions.mapOptions[key];
+      }
+    }
+  }
 
+  options.maxPitch = 85;
+  options.maplibreLogo = false;
+  options.attributionControl = false;
+// console.log('OPT', options)
+  this.map = new maplibregl.Map(options);
+  this.map.options = options;
+
+  this.map.addControl(
+    new maplibregl.AttributionControl({
+      compact: true,
+    })
+  );
+// console.log('thismap', this.map)
+  this.map.on("load", async () => {
+    const nameStyle = this.map.getStyle().name;
+    const urlName = this.map.options.style;
+    if (window.document.querySelector(".maplibregl-compact-show")) {
+      var element = window.document.querySelector(".maplibregl-compact-show");
+      element.classList.remove("maplibregl-compact-show");
+    }
+    this.map.addControl(
+      new LogoControl({
+        color:  urlName.indexOf("orto") === -1 ? true : false,
+        defaultOptions: defaultOptions
+        // color: orto
+      }),
+      "bottom-left"
+    );
+    this._dealOrto3dStyle(nameStyle);
+  });
+}
   /**
    * Add geocoder.
    * @function addGeocoderICGC
@@ -930,11 +965,20 @@ export default class Map {
    * @param {Function} func - The callback function to be executed when the event occurs.
    */
   on(type, func) {
-    try {
+  setTimeout(() => {
+        try {
+    // console.log('onfunction', this.map)
       this.map.on(type, func);
     } catch (error) {
-      console.error(`Error adding event listener: ${error.message}`);
+      console.error(`Error adding event ON listener: ${error.message}`);
     }
+  }, 500);
+
+
+
+   
+   
+   
   }
 
   /**

@@ -1,10 +1,12 @@
 
-import defaultOptions from "../config.js";
+// import defaultOptions from "../config.js";
 export default class LogoControl {
   constructor(options) {
     this.options = options;
+    // console.log('opt', options)
   }
   onAdd(map) {
+    let defaultOptions = this.options.defaultOptions
     this._map = map;
     let _this = this;
     // console.log('thus,', this.options)
