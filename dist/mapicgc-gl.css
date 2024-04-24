@@ -460,6 +460,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   position: absolute;
   top: 0;
   will-change: transform;
+  z-index: 9999999;
 }
 .maplibregl-popup-anchor-top,
 .maplibregl-popup-anchor-top-left,
@@ -528,6 +529,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   border-right: none;
 }
 .maplibregl-popup-close-button {
+  color: white;
   background-color: transparent;
   border: 0;
   border-radius: 0 3px 0 0;
@@ -543,7 +545,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  padding: 15px 10px;
+  padding: 0px;
   pointer-events: auto;
   position: relative;
   word-wrap: break-word !important
@@ -751,7 +753,46 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
         border-radius: 3px;
         width: auto;
         color: #fff;
+        overflow-y: auto;
+        max-height: 500px;
+        overflow-x: hidden;
     }
+    .filter-group::-webkit-scrollbar {
+      width: 8px;     /* Tamaño del scroll en vertical */
+      height: 8px;    /* Tamaño del scroll en horizontal */
+      display: block;  /* Ocultar scroll */
+  }
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.filter-group::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.filter-group::-webkit-scrollbar-thumb:hover {
+  background: #daac56;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.filter-group::-webkit-scrollbar-thumb:active {
+  background-color: #d8b97f;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+.filter-group::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+.filter-group::-webkit-scrollbar-track:hover,
+.filter-group::-webkit-scrollbar-track:active {
+background: #d4d4d4;
+}
+
+
+
 
     .filter-group input[type='checkbox']:first-child + label {
         border-radius: 3px 3px 0 0;
@@ -767,21 +808,21 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
     }
 
     .filter-group input[type='checkbox'] + label {
-        background-color: #3386c0;
+        background-color: #798e9f;
         display: block;
         cursor: pointer;
-        padding: 10px;
+        padding: 7px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     }
 
     .filter-group input[type='checkbox'] + label {
-        background-color: #3386c0;
+        background-color: #798e9f;
         text-transform: capitalize;
     }
 
     .filter-group input[type='checkbox'] + label:hover,
     .filter-group input[type='checkbox']:checked + label {
-        background-color: #4ea0da;
+        background-color: #798e9f;
     }
 
     .filter-group input[type='checkbox']:checked + label:before {
@@ -890,13 +931,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
 
 
     
-#logos{
-  display: flex;
-  flex-direction: row;
-  bottom: 1px;
-  position: absolute;
-  left: 10px;
-}
+
 #marker {
   background-image: url('https://maplibre.org/maplibre-gl-js/docs/assets/washington-monument.jpg');
   background-size: cover;
@@ -908,6 +943,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
 
 .maplibregl-popup {
   max-width: 200px;
+  position: relative;
 }
 #basemapSplide{
   position: relative;
@@ -1054,22 +1090,21 @@ h4::selection {
     margin-top: 15vh;
   }
 }
+.coordControl{
 
-.coordControl {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  height: 17px;
-  margin: 0 auto;
-  padding: 2px;
-  padding-bottom: 1.5px;
-  left: 45%;
-  border: none;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  color: #222;
-  background: hsla(0, 0%, 100%, 0.849);
+   
+    bottom: 0;
+    height: auto;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    left: 45%;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.85em;
+    text-align: center;
+    color: #333;
+    background: hsla(0, 0%, 100%, 0.849);
 }
 @media (max-width: 700px) {
   .coordControl{
@@ -1466,4 +1501,105 @@ h4::selection {
     font-size: 16px;
     text-align: center;
   }
+#titleDivMenu{
+  height: 25px;
+  background-color:rgb(214 132 0);
+  min-width: 130px;
+  text-align: -webkit-center;
+}
+
+#titleDivMenuSub{
+  height: 25px;
+  background-color: #7e8765;
+  padding-left: 24px;
+  /* min-width: 130px; */
+  /* text-align: -webkit-center; */
+}
+#legendContainer {
+  position: absolute;
+  top: 20px;
+  right: 76px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  overflow-y: scroll;
+  cursor: grab; 
+};
+#toggleLegend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #00ab2d;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  z-index: 1000;
+};
+#geocoder-container {
+  margin: 20px;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+};
+
+#results {
+  margin-top: 10px;
+};
+
+.divLogos{
+  display: flex;
+}
+
+
+.popup {
+  position: relative !important;
+  pointer-events: none;
+  color: #000;
+  line-height: 12px;
+  box-shadow: #00000040 0px 2px 10px;
+}
+
+.popupBody {
+  /* position: absolute; */
+  background: white;
+  width: 100%;
+  height: auto;
+  top: 0;
+  border-radius: 2px;
+  /* padding: 3px;  */
+}
+
+.popupTop {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: #4d4d4d;
+  color: white;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.popupBottom {
+    border-radius: inherit;
+    /* width: 100%; */
+    height: calc(100% - 20px);
+    /* display: flex; */
+    margin: 7px;
+    overflow: auto;
+  
+}
+.popupBottomDown {
+  text-align: -webkit-right;
+}
+
+
 }

@@ -1,0 +1,109 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>test mapicgc-gl-js</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="../../dist/mapicgc-gl.umd.js"></script>
+    <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="map" class="map"></div>
+    <nav id="menu-group" class="filter-group"></nav>
+
+    <script>
+        const map = new mapicgcgl.Map({
+            container: "map",
+            style: mapicgcgl.Styles.ORTO,
+            center: [1.808, 41.618],
+            zoom: 10,
+            maxZoom: 19,
+            hash: true,
+            pitch: 0,
+        });
+
+        map.on("load", () => {
+
+            map.addGeocoderICGC();
+            map.addGeolocateControl(
+                {
+                    positionOptions: {
+                        enableHighAccuracy: true,
+                    },
+                    trackUserLocation: true,
+                },
+                "bottom-right"
+            );
+            map.addFullscreenControl()
+            map.addExportControl();
+
+            map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
+
+            let layerImagePosition = 'top' // select: 'top', 'lines' or 'labels'
+            map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, layerImagePosition);
+
+            let labelVisibility = "visible" // select : "visible" or "none"
+
+            let paintOptionsfgb = {
+                'line-color': 'green',
+                'line-width': 2
+            };
+            map.addFGBLayerICGC(mapicgcgl.Layers.FGBAdmin.comarquesVigent, labelVisibility, paintOptionsfgb);
+
+            let paintOptionsVector = {
+                'line-color': 'black',
+                'line-width': 1
+            };
+            let layerVectorPosition = 'top' // select: 'top', 'lines' or 'labels'
+       
+            map.addVectorLayerICGC(
+                mapicgcgl.Layers.VectorAdmin.comarques2022, layerVectorPosition, labelVisibility, paintOptionsVector);
+
+            let paintOptions = {
+                'point-color': 'yellow',
+                'point-width': 3
+            };
+            let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
+            let filterField = 'comarca' // select 'all' for view all the features as a single layer
+       
+            setTimeout(() => {
+                   map.fetchDataAndMenu(
+                "https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson",
+                "Equipaments", filterField, layerPosition);
+
+            // let queryFields = ["nom", "municipi"];
+            // map.addFeatureQuery("RutesMontserrat", queryFields);
+            let popupStyle = {
+                title : 'Informació:',
+                image: 'https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png'
+            };
+            let queryFields = [];
+            map.addFeatureQuery("Equipaments", queryFields, popupStyle);
+            }, 1000);
+         
+        });
+
+    </script>
+</body>
+
+</html>

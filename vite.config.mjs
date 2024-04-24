@@ -3,7 +3,11 @@ import babel from '@rollup/plugin-babel';
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
+  define: {
+    'process.env': {}
+  },
   build: {
+    minify: true,
     lib: {
       entry: 'src/index.js',
       fileName: 'mapicgc-gl',
