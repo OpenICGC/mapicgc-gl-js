@@ -44,18 +44,18 @@ function ferCommit(commitMessage, callback) {
 // Función para fer push al primer repositori remot
 function ferPushOrigin(callback) {
     const pushCommand1 = 'git push origin master';
-    exec(pushCommand1, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
-        console.log("Push realitzat al repositori 'origin' amb èxit.");
+    // exec(pushCommand1, (error, stdout, stderr) => {
+    //     if (error) {
+    //         console.error(`Error: ${error.message}`);
+    //         return;
+    //     }
+    //     if (stderr) {
+    //         console.error(`stderr: ${stderr}`);
+    //         return;
+    //     }
+    //     console.log("Push realitzat al repositori 'origin' amb èxit.");
         callback();
-    });
+    // });
 }
 
 // Función para fer push al segon repositori remot
@@ -75,7 +75,7 @@ function ferPushOrigin2() {
 }
 
 // Función para hacer una etiqueta (tag) con la versión actual del package.json
-function etiquetarVersion() {
+function etiquetarVersion(callback) {
     const versionNumber = getVersionNumber();
     const tagCommand = `git tag -a v${versionNumber} -m "Versió ${versionNumber}"`;
     exec(tagCommand, (error, stdout, stderr) => {
@@ -88,6 +88,7 @@ function etiquetarVersion() {
             return;
         }
         console.log(`Etiqueta (tag) creada amb èxit: v${versionNumber}`);
+        callback();
     });
 }
 
@@ -98,9 +99,10 @@ const commitMessage = process.argv[2];
 if (commitMessage) {
     afegirCanvis(() => {
         ferCommit(commitMessage, () => {
-            ferPushOrigin(() => {
-                ferPushOrigin2();
-                etiquetarVersion(); // Llama a la función para etiquetar la versión
+            etiquetarVersion(() => {
+                ferPushOrigin(() => {
+                    ferPushOrigin2();
+                });
             });
         });
     });
