@@ -27,6 +27,14 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 
 <br>
 
+## Documentation
+
+Full documentation for this library is <a href="https://openicgc.github.io/mapicgc-doc/" target="_blank">available here</a>. 
+
+Check out the features through <a href="https://codepen.io/collection/mrvVZd" target="_blank">examples</a>.
+
+
+<br>
 ## Getting Started
 
 ### NPM
@@ -76,14 +84,7 @@ Result:
     <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://tilemaps.icgc.cat/cdn//images/map1.png"></img></a></div>
 <br>
 
-## Documentation
 
-Full documentation for this library is <a href="https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-doc" target="_blank">available here</a>. 
-
-Check out the features through <a href="https://codepen.io/collection/mrvVZd" target="_blank">examples</a>.
-
-
-<br>
 
 ## Dependencies
 
