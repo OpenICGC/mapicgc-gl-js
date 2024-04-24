@@ -5,7 +5,7 @@
   "description": "mapicgc-gl-js library",
   "author": "ICGC",
   "license": "BSD-3-Clause",
-  "keywords": [
+   "keywords": [
     "map",
     "js",
     "webmap",
@@ -30,9 +30,6 @@
       "import": "./dist/mapicgc-gl.js",
       "require": "./dist/mapicgc-gl.js"
     }
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@mapicgc-gl-js"
   },
   "scripts": {
     "dev": "vite",
