@@ -36,7 +36,7 @@
     "build-all": "npm-run-all build && node nodeDeploy.js",
     "build": "vite build",
     "preview": "vite preview",
-    "publish": "npm publish --access public",
+    "publish": "npm publish --access public", 
     "setConfig": "node nodeSetConfig.js"
   },
   "devDependencies": {
