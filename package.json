@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "description": "mapicgc-gl-js library",
   "author": "ICGC",
   "license": "BSD-3-Clause",
