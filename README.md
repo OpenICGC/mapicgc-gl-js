@@ -31,7 +31,7 @@ Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper funct
 
 Full documentation for this library is <a href="https://openicgc.github.io/mapicgc-doc/" target="_blank">available here</a>. 
 
-Check out the features through <a href="https://codepen.io/collection/mrvVZd" target="_blank">examples</a>.
+Check out the features through <a href="https://codepen.io/collection/mrvVZd" target="_blank">examples</a>. 
 
 
 <br>
