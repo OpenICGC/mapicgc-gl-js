@@ -10,7 +10,7 @@ function commitAndPush(commitMessage) {
     const pushCommand1 = 'git push origin master';
     const pushCommand2 = 'git push -u origin2 master';
     // Executar els comandaments en sèrie
-    exec(`${addCommand} && ${commitCommand} && ${pushCommand1} && ${pushCommand2}`, (error, stdout, stderr) => {
+    exec(`${addCommand} && ${commitCommand} && ${pushCommand1}`, (error, stdout, stderr) => {
         
         if (error) {
             console.error(`Error: ${error.message}`);
