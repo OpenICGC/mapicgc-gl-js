@@ -22,6 +22,18 @@ function commitAndPush(commitMessage) {
         }
         console.log(`Commit realitzat amb èxit: ${commitMessage}`);
     });
+    exec(`${addCommand} && ${commitCommand} && ${pushCommand2}`, (error, stdout, stderr) => {
+        
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`Commit realitzat amb èxit: ${commitMessage}`);
+    });
 }
  
 // Utilitzar el primer argument de la línia de comandes com a missatge del commit
