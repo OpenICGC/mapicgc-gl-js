@@ -1,4 +1,6 @@
 
+import mapicgcConfig from "../mapicgc-config.json";
+/*
 const Orto = {
 ortofotoColorProvisional: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_provisional",
 ortofotoColor2022: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2022",
@@ -162,4 +164,9 @@ cims: "https://geoserveis.icgc.cat/icc_100cims/wms/service?REQUEST=GetMap&SERVIC
 cobertesSol: "http://geoserveis.icgc.cat/servei/catalunya/cobertes-sol/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&LAYERS=cobertes_2009&STYLES=&FORMAT=image/png&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&CRS=EPSG:25831&BBOX=374110.828167253,4639230.79853085,452621.120632226,4703578.45000215&WIDTH=1020&HEIGHT=836",
 };
 
-export default {Orto,VectorAdmin, WMS, FGBAdmin, Vector};
+*/
+
+//export default {Orto,VectorAdmin, WMS, FGBAdmin, Vector};
+export default mapicgcConfig.Layers;
+
+
