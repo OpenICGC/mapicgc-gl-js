@@ -610,7 +610,7 @@ export default class Map {
           // console.log('linee')
           //line
           if (options !== undefined) {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: name,
                 type: "line",
@@ -626,7 +626,7 @@ export default class Map {
               keyLayer
             );
           } else {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: name,
                 type: "line",
@@ -690,7 +690,7 @@ export default class Map {
         if (type.includes("oint")) {
           //point
           if (options !== undefined) {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: name,
                 type: "circle",
@@ -706,7 +706,7 @@ export default class Map {
               keyLayer
             );
           } else {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: name,
                 type: "circle",
@@ -726,7 +726,7 @@ export default class Map {
             );
           }
         }
-        map.addMenuItem(name);
+        this.addMenuItem(name);
       } else {
         //add filter
         let field = featureTree;
@@ -741,7 +741,7 @@ export default class Map {
               if (type.includes("ine")) {
                 //line
                 if (options !== undefined) {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "line",
@@ -758,7 +758,7 @@ export default class Map {
                     keyLayer
                   );
                 } else {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "line",
@@ -783,7 +783,7 @@ export default class Map {
               if (type.includes("olygon")) {
                 //polygon
                 if (options !== undefined) {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "fill",
@@ -800,7 +800,7 @@ export default class Map {
                     keyLayer
                   );
                 } else {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "fill",
@@ -824,7 +824,7 @@ export default class Map {
               if (type.includes("oint")) {
                 //point
                 if (options !== undefined) {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "circle",
@@ -841,7 +841,7 @@ export default class Map {
                     keyLayer
                   );
                 } else {
-                  map.addLayer(
+                  this.map.addLayer(
                     {
                       id: idFieldMarker,
                       type: "circle",
@@ -865,7 +865,7 @@ export default class Map {
               // Agregar la nueva capa al objeto de capas
               layers[idFieldMarker] = true;
               // console.log('name', idFieldMarker,fieldMarker)
-              map.addMenuItem(idFieldMarker);
+              this.addMenuItem(idFieldMarker);
             }
           }
         });
@@ -1511,7 +1511,7 @@ export default class Map {
         };
         position = "top-right";
       }
-      map.addControl(new MaplibreExportControl(options), position);
+      this.map.addControl(new MaplibreExportControl(options), position);
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
     }
@@ -2464,46 +2464,9 @@ export default class Map {
         };
         head.appendChild(jqueryScript);
       }
-      // Call the function to add jQuery UI when the document is ready
-      // document.addEventListener("DOMContentLoaded", function() {
+      
       addJQueryUI();
-      //   $(document).ready(function() {
-      //     console.log('entro')
-      //     // Example: Using jQuery UI datepicker
-      //     const legendContainer = document.createElement('div');
-      //     legendContainer.id = 'legendContainer';
-      //     legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
-      //     legendContainer.style.display = 'block';
-      //     document.body.appendChild(legendContainer);
-      //       // Make legend container draggable and resizable
-      //       $(function() {
-      //         $("#legendContainer").draggable();
-      //         $("#legendContainer").resizable();
-      //       });
-      //     // Create toggle button
-      //     const toggleLegend = document.createElement('div');
-      //     toggleLegend.id = 'toggleLegend';
-      //     toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
-      //     document.body.appendChild(toggleLegend);
-      //     // Toggle legend visibility
-      //     toggleLegend.addEventListener('click', function() {
-      //       if (legendContainer.style.display === 'none') {
-      //         legendContainer.style.display = 'block';
-      //       } else {
-      //         legendContainer.style.display = 'none';
-      //       }
-      //     });
-      // });
-      // });
-      // const menuGroup = document.getElementById("map");
-      // const div = document.createElement("div");
-      // const imagen = document.createElement("img")
-      //   div.className = "legendDiv";
-      // menuGroup.appendChild(div);
-      //   imagen.src= legendUrl
-      //   imagen.alt=name
-      // div.appendChild(imagen);
-      // div.addEventListener("click", () => handleClick(name));
+      
     } catch (error) {
       console.error(`Error adding legend: ${error.message}`);
     }

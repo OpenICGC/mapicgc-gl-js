@@ -2,4 +2,4 @@
 import mapicgcConfig from "../mapicgc-config.json";
 
 
-  export default mapicgcConfig.Styles;
+export default mapicgcConfig.Styles;
