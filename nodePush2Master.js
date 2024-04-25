@@ -44,18 +44,18 @@ function ferCommit(commitMessage, callback) {
 // Función para fer push al primer repositori remot
 function ferPushOrigin(callback) {
     const pushCommand1 = 'git push origin master';
-    // exec(pushCommand1, (error, stdout, stderr) => {
-    //     if (error) {
-    //         console.error(`Error: ${error.message}`);
-    //         return;
-    //     }
-    //     if (stderr) {
-    //         console.error(`stderr: ${stderr}`);
-    //         return;
-    //     }
-    //     console.log("Push realitzat al repositori 'origin' amb èxit.");
+    exec(pushCommand1, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return;
+        }
+        console.log("Push realitzat al repositori 'origin' amb èxit.");
         callback();
-    // });
+    });
 }
 
 // Función para fer push al segon repositori remot
