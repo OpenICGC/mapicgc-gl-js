@@ -19,22 +19,11 @@ import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
-// import Terrains from "../constants/Terrains.js";
-// import Styles from "../constants/Styles.js";
-// import Layers from "../constants/Layers.js";
-// import defaultOptions from "../config.js";
-import axios from "axios";
+import Terrains from "../constants/Terrains.js";
+import Styles from "../constants/Styles.js";
+import Layers from "../constants/Layers.js";
+import defaultOptions from "../config.js";
 
-import mapicgcConfig from "../mapicgc-config.json"
-
-
-
-let Layers 
-let Styles 
-let Terrains 
-let defaultOptions
-
-// import "../plugins/maplibre-gl-geocoder.js";
 
 /**
  * Class representing a custom map with additional functions.FVec
@@ -46,38 +35,9 @@ export default class Map {
    */
 
   constructor(options) {
-    // console.log('entro MAP constructor', options)
-    axios.get('https://tilemaps.icgc.cat/cdn/configs/mapicgc-config.json')
-    .then (response =>{
-      // console.log('entro')
-      Layers = response.data.Layers;
-      Styles = response.data.Styles;
-      Terrains = response.data.Terrains;
-      defaultOptions = response.data.defaultOptions;
-      // console.log('response', response.data)
-      
 
 this.initTheMap(options)
-    
-
-
-    })
-    .catch(error =>{
-      
-       Layers = mapicgcConfig.Layers;
-       Styles = mapicgcConfig.Styles;
-       Terrains = mapicgcConfig.Terrains;
-      defaultOptions = mapicgcConfig.defaultOptions;
-      console.log('Error en la petició. Carregant configuració per defecte...')
-      this.initTheMap(options)
-    }
-      
-    
-    )
-    
-   
-
-    
+  
   }
 
 initTheMap(options){
@@ -706,24 +666,7 @@ initTheMap(options){
               },
               paint: options,
             }, keyLayer);
-            // this.map.addLayer({
-            //   id: name + "-underline",
-            //   type: "line",
-            //   source: {
-            //     type: "geojson",
-            //     data: geojson,
-            //   },
-            //   layout: {
-            //     visibility: "visible",
-            //   },
-            //   paint: options,
-            // }, keyLayer);
-
-
-
-
-
-
+    
           } else {
             this.map.addLayer({
               id: name,
@@ -740,46 +683,7 @@ initTheMap(options){
                 "fill-opacity": 0,
               },
             }, keyLayer);
-            // this.map.addLayer({
-            //   id: name + "-underline",
-            //   type: "line",
-            //   source: {
-            //     type: "geojson",
-            //     data: geojson,
-            //   },
-            //   layout: {
-            //     visibility: "visible",
-            //   },
-            //   paint: {
-            //     "line-color": "#0000FF",
-            //     "line-opacity": 1,
-            //     "line-width": 3,
-            //   },
-            // }, keyLayer);
-
-
-
-
-
-
-
-            // map.addLayer({
-            //   id: name,
-            //   type: "fill",
-            //   source: {
-            //     type: "geojson",
-            //     data: geojson,
-            //   },
-            //   layout: {
-            //     visibility: "visible",
-            //   },
-            //   paint: {
-            //     "fill-color": "blue",
-            //     "fill-opacity": 0.6,
-            //   },
-            // }, keyLayer);
-  
-          }
+           }
 
         }
         if (type.includes("oint")) {
@@ -815,11 +719,9 @@ initTheMap(options){
             }, keyLayer);
           }
         }
-        // geojsonStore  = geojson
-        // map.addLayerTree(geojson);
-// console.log('itemSensefiltre', name)
+
         map.addMenuItem(name);
-        // map.addFeatureQuery(name)
+
       } else {  //add filter
         let field = featureTree;
 
