@@ -20,6 +20,25 @@
             width: 100%;
             height: 100%
         }
+
+        #menu-group {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #000000;
+        }
+
+        #menu-group input[type='checkbox']+label {
+            background-color: #ffffff !important;
+        }
+
+        #titleDivMenu {
+            background-color: rgb(213 212 212);
+        }
+
+        #titleDivMenuSub {
+            background-color: #e9e9e9;
+        }
     </style>
 </head>
 
@@ -27,7 +46,7 @@
 
 
     <div id="map" class="map"></div>
-    <nav id="menu-group" class="filter-group"></nav>
+
     <script>
         const map = new mapicgcgl.Map({
             container: "map",
@@ -38,43 +57,56 @@
             hash: true,
             pitch: 0,
         });
-        let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
-        let filterField = 'municipi' // select 'all' for view all the features as a single layer
-        let paintOptions = {
-            "line-color": "green",
-            "line-width": 3,
-            "line-opacity": 1,
-        };
-        let filterFGBField = 'NOMPROV' // select 'all' for view all the features as a single layer
-        let paintOptionsfgb = {
-          
-            "fill-color": "grey",
-            "fill-opacity": 0.6,}
        
-            
-            
+    
+        let filterField = 'municipi' // select 'all' for view all the features as a single layer
+        let optionsLayer = {
+            "layout": {
+                "visibility": "visible",
+            },
+            "paint": {
+                "line-color": "green",
+                "line-width": 3,
+                "line-opacity": 1,
+            },
+            layerPosition: "labels"
+        }
+
+        let filterFGBField = 'NOMPROV' // select 'all' for view all the features as a single layer
+          let optionsLayerfgb = {
+            "layout": {
+                "visibility": "visible",
+            },
+            "paint": {
+                "fill-color": "grey",
+                "fill-opacity": 0.16,
+            },
+            layerPosition: "labels"
+        }
+
 
         map.on("load", () => {
 
             map.fetchDataAndMenu(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", filterField, layerPosition, paintOptions);
-                
-           // try with FGB data:
+                "RutesMontserrat", filterField, optionsLayer);
 
-            map.fetchDataAndMenu(
-                mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
-                filterFGBField, layerPosition, paintOptionsfgb
-            );
+            //     map.fetchDataAndMenu(
+            //     "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
+            //     "RutesMontserrat", filterField, layerPosition, paintOptions);
 
             // map.fetchDataAndMenu(
-            //     "https://flatgeobuf.org/test/data/UScounties.fgb",
-            //     "UScounties", 'all', layerPosition, paintOptionsfgb
-            // ); 
-        
+            //     mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
+            //     filterFGBField, layerPosition, paintOptionsfgb
+            // );
+               map.fetchDataAndMenu(
+            mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
+            filterFGBField, optionsLayerfgb );
+
+
         });
 
-      
+
 
     </script>
 </body>

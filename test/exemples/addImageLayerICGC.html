@@ -36,9 +36,18 @@
         hash: true,
         pitch: 0,
       });
-      let layerImagePosition = 'labels' // select: 'top', 'lines' or 'labels'
+      let optionsLayer={
+        "type":"raster",
+      "layout":{
+        "visibility":"visible",
+       },
+      "paint":{
+        "raster-opacity": 1
+      },position:"labels" 
+      }
+   
       map.on("load", () => {
-        map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, layerImagePosition);
+        map.addImageLayerICGC("orto2013",mapicgcgl.Layers.Orto.ortofotoColor2013, optionsLayer);
       });
     </script>
 </body>

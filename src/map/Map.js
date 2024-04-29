@@ -20,9 +20,7 @@ import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
 import defaultOptions from "../config.js";
-/**
- * Class representing a custom map with additional functions.FVec
- */
+
 export default class Map {
   /**
    * Constructor for the Map class.
@@ -32,7 +30,6 @@ export default class Map {
     this.initTheMap(options);
   }
   initTheMap(options) {
-    // console.log('entropros')
     if (!options) {
       options = defaultOptions.mapOptions;
     } else {
@@ -50,7 +47,7 @@ export default class Map {
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
-    // console.log('OPT', options)
+
     this.map = new maplibregl.Map(options);
     this.map.options = options;
     this.map.addControl(
@@ -58,7 +55,7 @@ export default class Map {
         compact: true,
       })
     );
-    // console.log('thismap', this.map)
+
     this.map.on("load", async () => {
       const nameStyle = this.map.getStyle().name;
       const urlName = this.map.options.style;
@@ -70,7 +67,6 @@ export default class Map {
         new LogoControl({
           color: urlName.indexOf("orto") === -1 ? true : false,
           defaultOptions: defaultOptions,
-          // color: orto
         }),
         "bottom-left"
       );
@@ -84,7 +80,6 @@ export default class Map {
    */
   addGeocoderICGC(position) {
     try {
-      // console.log("hello geocoder");
       if (position === undefined) {
         position = "top-right";
       }
@@ -107,7 +102,7 @@ export default class Map {
               defaultOptions.geocoder.peliasUrl2;
             const response = await fetch(request);
             const geojson = await response.json();
-            // console.log('geoj', geojson)
+
             for (const feature of geojson.features) {
               const center = feature.geometry.coordinates;
               const point = {
@@ -132,19 +127,17 @@ export default class Map {
           };
         },
       };
-      // Pass in or define a geocoding API that matches the above
+
       this.map.addControl(new MaplibreGeocoder(geocoderApi, options), position);
       let inputsearch = document.getElementsByClassName(
         "maplibregl-ctrl-geocoder--input"
       );
-      // console.log('in', inputsearch)
+
       inputsearch[0].attributes[2].nodeValue = "Cerca...";
       inputsearch[0].addEventListener("input", function (event) {
         let word = event.target.value;
         if (word.length > 3) {
-          // console.log('més de 3:', word)
         }
-        // Puedes realizar cualquier acción que desees aquí
       });
     } catch (error) {
       console.error(`Error adding ICGC geocoder: ${error.message}`);
@@ -201,7 +194,7 @@ export default class Map {
       for (const style of Styles) {
         stylesArray.push(style.name);
       }
-      // console.log(stylesArray)
+
       return stylesArray;
     } catch (error) {
       console.error(`Error retrieving base styles: ${error.message}`);
@@ -220,7 +213,7 @@ export default class Map {
           imageArray.push(key);
         }
       }
-      // console.log('arrayLayers', imageArray)
+
       return imageArray;
     } catch (error) {
       console.error(`Error retrieving WMS layers: ${error.message}`);
@@ -239,7 +232,7 @@ export default class Map {
           imageArray.push(key);
         }
       }
-      // console.log('arrayLayers', imageArray)
+
       return imageArray;
     } catch (error) {
       console.error(`Error retrieving orto image layers: ${error.message}`);
@@ -303,29 +296,26 @@ export default class Map {
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
    * @param {string} url - The URL to fetch GeoJSON data from.
    * @param {string} name - The geometry name (e.g., 'buildings').
-   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchData(url, name, position, options) {
+  async fetchData(url, name, options) {
     try {
-      // console.log('fetch', url)
+      let layerPosition = options.layerPosition
       if (url.includes(".fgb")) {
-        // console.log('is FGB')
-        this.addFGBLayerICGC(url, position, null, options);
+        this.addFGBLayerICGC(url, layerPosition, null, options);
       } else {
         const response = await fetch(url);
         const geojson = await response.json();
         let nameUser = name;
         let keyLayer = "";
-        if (position === "labels") {
+        if (layerPosition === "labels") {
           keyLayer = this._firstSymbolLayer();
         }
-        if (position === "lines") {
+        if (layerPosition === "lines") {
           keyLayer = this._firstLineLayer();
         }
         let type = geojson.features[0].geometry.type;
         if (type.includes("ine")) {
-          //line
           if (options !== undefined) {
             map.addLayer(
               {
@@ -335,10 +325,8 @@ export default class Map {
                   type: "geojson",
                   data: geojson,
                 },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
+                layout: options.layout,
+                paint: options.paint,
               },
               keyLayer
             );
@@ -365,7 +353,6 @@ export default class Map {
           }
         }
         if (type.includes("olygon")) {
-          //polygon
           if (options !== undefined) {
             map.addLayer(
               {
@@ -375,10 +362,8 @@ export default class Map {
                   type: "geojson",
                   data: geojson,
                 },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
+                layout: options.layout,
+                paint: options.paint,
               },
               keyLayer
             );
@@ -404,7 +389,6 @@ export default class Map {
           }
         }
         if (type.includes("oint")) {
-          //point
           if (options !== undefined) {
             map.addLayer(
               {
@@ -414,10 +398,8 @@ export default class Map {
                   type: "geojson",
                   data: geojson,
                 },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
+                layout: options.layout,
+                paint: options.paint,
               },
               keyLayer
             );
@@ -443,7 +425,6 @@ export default class Map {
           }
         }
       }
-      // map.addFeatureQuery(name)
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -453,425 +434,467 @@ export default class Map {
    * @param {string} url - The URL to fetch GeoJSON data from.
    * @param {string} name - The geometry name (e.g., 'buildings').
    * @param {string} featureTree - Import all features as unique or group based on a field ('all', 'field').
-   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchDataAndMenu(url, name, featureTree, position, options) {
+  async fetchDataAndMenu(url, name, featureTree, options  ) {
     try {
-      const menuGroup = document.getElementById("menu-group");
-      let visibleLabel = "visible";
-      let keyLayer = "";
-      if (position === "labels") {
-        keyLayer = this._firstSymbolLayer();
+      let layerPosition
+      if (options !== null){
+        layerPosition = options.layerPosition
+      }else{
+        layerPosition = 'labels'
       }
-      if (position === "lines") {
-        keyLayer = this._firstLineLayer();
+       
+      let menuGroup;
+      let mapId = document.getElementById('map')
+
+      if (document.getElementById("menu-group")) {
+        menuGroup = document.getElementById("menu-group");
+      } else {
+        menuGroup = document.createElement("nav");
+        menuGroup.id = "menu-group";
+        menuGroup.classList.add = "filter-group";
+        mapId.appendChild(menuGroup);
       }
-      let geojson;
-      if (url.includes(".fgb")) {
-        // console.log('is FGB menu')
-        function getKeyByUrl(url) {
-          for (const key in Layers.FGBAdmin) {
-            // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
-            if (
-              Layers.FGBAdmin.hasOwnProperty(key) &&
-              Layers.FGBAdmin[key] === url
-            ) {
-              // console.log('entro', key)
-              return key; // Retorna la clave si encuentra la URL
-            }
-          }
-          return null; // Retorna null si no se encuentra la URL en el objeto
+
+      if (menuGroup !== null) {
+        let visibleLabel = "visible";
+        let keyLayer = "";
+        if (layerPosition === "labels") {
+          keyLayer = this._firstSymbolLayer();
         }
-        let name = getKeyByUrl(url);
-        if (name === null) {
-          name = "userFGB";
-          // let op = Layers.VectorAdmin.find((objeto) =>
-          //   objeto.key.includes(name)
-          // );
-          // if (!op) {
-          // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
-          // console.log(
-          //   "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-          //   "font-weight: bold; font-style: italic;",
-          //   "font-weight: normal; font-style: normal; color: red;",
-          //   name,
-          //   "font-weight: bold; font-style: italic;"
-          // );
+        if (layerPosition === "lines") {
+          keyLayer = this._firstLineLayer();
+        }
+        let geojson;
+        if (url.includes(".fgb")) {
+          function getKeyByUrl(url) {
+            for (const key in Layers.FGBAdmin) {
+              if (
+                Layers.FGBAdmin.hasOwnProperty(key) &&
+                Layers.FGBAdmin[key] === url
+              ) {
+                return key;
+              }
+            }
+            return null;
+          }
+          let name = getKeyByUrl(url);
+          if (name === null) {
+            name = "userFGB";
+          } else {
+          }
+          const response = await fetch(url);
+          const fc = { type: "FeatureCollection", features: [] };
+
+          for await (const f of deserialize(response.body)) fc.features.push(f);
+
+          geojson = fc;
+          let src = name;
+   
+
+
+          this.map.addSource(src, {
+            type: "geojson",
+            data: fc,
+          });
+          if (url.includes("text")) {
+            if (options !== undefined) {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "symbol",
+                  source: src,
+                  layout: options.layout,
+                  paint: options.paint,
+                },
+                keyLayer
+              );
+            }else{
+
+
+            this.map.addLayer(
+              {
+                id: name,
+                type: "symbol",
+                source: src,
+                layout: {
+                  "text-letter-spacing": 0.1,
+                  "text-size": {
+                    base: 1.2,
+                    stops: [
+                      [8, 0],
+                      [12, 14],
+                      [15, 15],
+                    ],
+                  },
+                  "text-font": ["FiraSans-Regular"],
+                  "text-field": ["get", "NOM_AC"],
+                  "text-transform": "none",
+                  "text-max-width": 25,
+                  visibility: visibleLabel,
+                  "text-justify": "right",
+                  "text-anchor": "top",
+                  "text-allow-overlap": false,
+                  "symbol-spacing": 2,
+                  "text-line-height": 1,
+                },
+                paint: {
+                  "text-halo-blur": 0.5,
+                  "text-color": "rgba(90, 7, 7, 1)",
+                  "text-halo-width": 2,
+                  "text-halo-color": "rgba(255, 255, 255,0.8)",
+                },
+              },
+              keyLayer
+            );
+
+          }
+          } else {
+            let textLayer = name + "Text";
+            this.map.addLayer(
+              {
+                id: textLayer,
+                type: "symbol",
+                source: src,
+                layout: {
+                  "text-letter-spacing": 0.1,
+                  "text-size": {
+                    base: 1.2,
+                    stops: [
+                      [8, 0],
+                      [12, 14],
+                      [15, 15],
+                    ],
+                  },
+                  "text-font": ["FiraSans-Regular"],
+                  "text-field": ["get", "NOM_AC"],
+                  "text-transform": "none",
+                  "text-max-width": 25,
+                  visibility: visibleLabel,
+                  "text-justify": "right",
+                  "text-anchor": "top",
+                  "text-allow-overlap": false,
+                  "symbol-spacing": 2,
+                  "text-line-height": 1,
+                },
+                paint: {
+                  "text-halo-blur": 0.5,
+                  "text-color": "rgba(90, 7, 7, 1)",
+                  "text-halo-width": 2,
+                  "text-halo-color": "rgba(255, 255, 255,0.8)",
+                },
+              },
+              keyLayer
+            );
+          }
+        } else {
+          const response = await fetch(url);
+          geojson = await response.json();
+        }
+        if (featureTree !== "all") {
+          const nameTitle = document.createElement("div");
+          nameTitle.id = "titleDivMenu";
+          nameTitle.textContent = name;
+    
+          menuGroup.appendChild(nameTitle);
+          const featureTreeTitle = document.createElement("div");
+          featureTreeTitle.id = "titleDivMenuSub";
+          featureTreeTitle.textContent = `📂 ${featureTree}`;
+          menuGroup.appendChild(featureTreeTitle);
         } else {
         }
-        const response = await fetch(url);
-        const fc = { type: "FeatureCollection", features: [] };
-        // console.log('fetc', fc)
-        for await (const f of deserialize(response.body)) fc.features.push(f);
-        // console.log('feat', fc)
-        geojson = fc;
-        let src = name;
-        // let src = name + "-userSource";
-        this.map.addSource(src, {
-          type: "geojson",
-          data: fc,
-        });
-        if (url.includes("text")) {
-          // console.log('entro', name)
-          this.map.addLayer(
-            {
-              id: name,
-              type: "symbol",
-              source: src,
-              layout: {
-                "text-letter-spacing": 0.1,
-                "text-size": {
-                  base: 1.2,
-                  stops: [
-                    [8, 0],
-                    [12, 14],
-                    [15, 15],
-                  ],
+        let type = geojson.features[0].geometry.type;
+
+        if (featureTree === "all") {
+          if (type.includes("ine")) {
+            if (options !== undefined) {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "line",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: options.layout,
+                  paint: options.paint,
                 },
-                "text-font": ["FiraSans-Regular"],
-                "text-field": ["get", "NOM_AC"],
-                "text-transform": "none",
-                "text-max-width": 25,
-                visibility: visibleLabel,
-                "text-justify": "right",
-                "text-anchor": "top",
-                "text-allow-overlap": false,
-                "symbol-spacing": 2,
-                "text-line-height": 1,
-              },
-              paint: {
-                "text-halo-blur": 0.5,
-                "text-color": "rgba(90, 7, 7, 1)",
-                "text-halo-width": 2,
-                "text-halo-color": "rgba(255, 255, 255,0.8)",
-              },
-            },
-            keyLayer
-          );
-        } else {
-          let textLayer = name + "Text";
-          this.map.addLayer(
-            {
-              id: textLayer,
-              type: "symbol",
-              source: src,
-              layout: {
-                "text-letter-spacing": 0.1,
-                "text-size": {
-                  base: 1.2,
-                  stops: [
-                    [8, 0],
-                    [12, 14],
-                    [15, 15],
-                  ],
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "line",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  paint: {
+                    "line-color": "black",
+                    "line-width": 2,
+                    "line-opacity": 1,
+                  },
                 },
-                "text-font": ["FiraSans-Regular"],
-                "text-field": ["get", "NOM_AC"],
-                "text-transform": "none",
-                "text-max-width": 25,
-                visibility: visibleLabel,
-                "text-justify": "right",
-                "text-anchor": "top",
-                "text-allow-overlap": false,
-                "symbol-spacing": 2,
-                "text-line-height": 1,
-              },
-              paint: {
-                "text-halo-blur": 0.5,
-                "text-color": "rgba(90, 7, 7, 1)",
-                "text-halo-width": 2,
-                "text-halo-color": "rgba(255, 255, 255,0.8)",
-              },
-            },
-            keyLayer
-          );
-        }
-        //} //aquest
-      } else {
-        const response = await fetch(url);
-        geojson = await response.json();
-      }
-      if (featureTree !== "all") {
-        const nameTitle = document.createElement("div");
-        nameTitle.id = "titleDivMenu";
-        nameTitle.textContent = name;
-        menuGroup.appendChild(nameTitle);
-        const featureTreeTitle = document.createElement("div");
-        featureTreeTitle.id = "titleDivMenuSub";
-        featureTreeTitle.textContent = `📂 ${featureTree}`;
-        menuGroup.appendChild(featureTreeTitle);
-      } else {
-      }
-      let type = geojson.features[0].geometry.type;
-      // console.log('type', type)
-      if (featureTree === "all") {
-        if (type.includes("ine")) {
-          // console.log('linee')
-          //line
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "line-color": "black",
-                  "line-width": 2,
-                  "line-opacity": 1,
-                },
-              },
-              keyLayer
-            );
-          }
-        }
-        if (type.includes("olygon")) {
-          // console.log('poolygon', options, name)
-          //polygon
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "fill-color": "#0000FF",
-                  "fill-opacity": 0,
-                },
-              },
-              keyLayer
-            );
-          }
-        }
-        if (type.includes("oint")) {
-          //point
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: options,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: name,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "circle-color": "red",
-                  "circle-opacity": 0.85,
-                },
-              },
-              keyLayer
-            );
-          }
-        }
-        this.addMenuItem(name);
-      } else {
-        //add filter
-        let field = featureTree;
-        const layers = {};
-        geojson.features.forEach((feature) => {
-          const fieldMarker = feature.properties[field];
-          const idFieldMarker = fieldMarker + `-userFieldFilter-` + name;
-          // const idFieldMarker = fieldMarker
-          if (fieldMarker !== null) {
-            // aqui podriem mirar si te simbologia i afegir-la a la capa
-            if (!layers[idFieldMarker]) {
-              if (type.includes("ine")) {
-                //line
-                if (options !== undefined) {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "line",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: options,
-                    },
-                    keyLayer
-                  );
-                } else {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "line",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: {
-                        "line-color": "black",
-                        "line-width": 2,
-                        "line-opacity": 1,
-                      },
-                    },
-                    keyLayer
-                  );
-                }
-              }
-              if (type.includes("olygon")) {
-                //polygon
-                if (options !== undefined) {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "fill",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: options,
-                    },
-                    keyLayer
-                  );
-                } else {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "fill",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: {
-                        "fill-color": "blue",
-                        "fill-opacity": 0.6,
-                      },
-                    },
-                    keyLayer
-                  );
-                }
-              }
-              if (type.includes("oint")) {
-                //point
-                if (options !== undefined) {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "circle",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: options,
-                    },
-                    keyLayer
-                  );
-                } else {
-                  this.map.addLayer(
-                    {
-                      id: idFieldMarker,
-                      type: "circle",
-                      source: {
-                        type: "geojson",
-                        data: geojson,
-                      },
-                      layout: {
-                        visibility: "visible",
-                      },
-                      filter: ["==", `${field}`, fieldMarker],
-                      paint: {
-                        "circle-color": "red",
-                        "circle-opacity": 0.85,
-                      },
-                    },
-                    keyLayer
-                  );
-                }
-              }
-              // Agregar la nueva capa al objeto de capas
-              layers[idFieldMarker] = true;
-              // console.log('name', idFieldMarker,fieldMarker)
-              this.addMenuItem(idFieldMarker);
+                keyLayer
+              );
             }
           }
-        });
+          if (type.includes("olygon")) {
+            if (options !== undefined) {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "fill",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: options.layout,
+                  paint: options.paint,
+                },
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "fill",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  paint: {
+                    "fill-color": "#0000FF",
+                    "fill-opacity": 0,
+                  },
+                },
+                keyLayer
+              );
+            }
+          }
+          if (type.includes("oint")) {
+            //point
+            if (options !== undefined) {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "circle",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: options.layout,
+                  paint: options.paint,
+                },
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "circle",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  paint: {
+                    "circle-color": "red",
+                    "circle-opacity": 0.85,
+                  },
+                },
+                keyLayer
+              );
+            }
+          }
+          if (type.includes("ymbol")) {
+            //symbol
+            if (options !== undefined) {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "symbol",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: options.layout,
+                  paint: options.paint,
+                },
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "symbol",
+                  source: {
+                    type: "geojson",
+                    data: geojson,
+                  },
+                  layout: {
+                    visibility: "visible",
+                  },
+                  paint: {
+                    "text-halo-blur": 0.5,
+                  "text-color": "rgba(90, 7, 7, 1)",
+                  "text-halo-width": 2,
+                  "text-halo-color": "rgba(255, 255, 255,0.8)",
+                  },
+                },
+                keyLayer
+              );
+            }
+          }
+
+          this.addMenuItem(name);
+        } else {
+          let field = featureTree;
+          const layers = {};
+          geojson.features.forEach((feature) => {
+            const fieldMarker = feature.properties[field];
+            const idFieldMarker = fieldMarker + `-userFieldFilter-` + name;
+
+            if (fieldMarker !== null) {
+              if (!layers[idFieldMarker]) {
+                if (type.includes("ine")) {
+                  if (options !== undefined) {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "line",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                        layout: options.layout,
+                        paint: options.paint,
+                       
+                        filter: ["==", `${field}`, fieldMarker],
+                     
+                      },
+                      keyLayer
+                    );
+                  } else {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "line",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                        layout: {
+                          visibility: "visible",
+                        },
+                        filter: ["==", `${field}`, fieldMarker],
+                        paint: {
+                          "line-color": "black",
+                          "line-width": 2,
+                          "line-opacity": 1,
+                        },
+                      },
+                      keyLayer
+                    );
+                  }
+                }
+                if (type.includes("olygon")) {
+                  if (options !== undefined) {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "fill",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                      
+                        filter: ["==", `${field}`, fieldMarker],
+                        layout: options.layout,
+                        paint: options.paint,
+                      },
+                      keyLayer
+                    );
+                  } else {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "fill",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                        layout: {
+                          visibility: "visible",
+                        },
+                        filter: ["==", `${field}`, fieldMarker],
+                        paint: {
+                          "fill-color": "blue",
+                          "fill-opacity": 0.6,
+                        },
+                      },
+                      keyLayer
+                    );
+                  }
+                }
+                if (type.includes("oint")) {
+                  if (options !== undefined) {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "circle",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                    
+                        filter: ["==", `${field}`, fieldMarker],
+                        layout: options.layout,
+                        paint: options.paint,
+                      },
+                      keyLayer
+                    );
+                  } else {
+                    this.map.addLayer(
+                      {
+                        id: idFieldMarker,
+                        type: "circle",
+                        source: {
+                          type: "geojson",
+                          data: geojson,
+                        },
+                        layout: {
+                          visibility: "visible",
+                        },
+                        filter: ["==", `${field}`, fieldMarker],
+                        paint: {
+                          "circle-color": "red",
+                          "circle-opacity": 0.85,
+                        },
+                      },
+                      keyLayer
+                    );
+                  }
+                }
+
+                layers[idFieldMarker] = true;
+
+                this.addMenuItem(idFieldMarker);
+              }
+            }
+          });
+        }
       }
-      //add feature queries
-      // map.addFeatureQuery(name);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
     }
@@ -885,7 +908,6 @@ export default class Map {
   on(type, func) {
     setTimeout(() => {
       try {
-        // console.log('onfunction', this.map)
         this.map.on(type, func);
       } catch (error) {
         console.error(`Error adding event ON listener: ${error.message}`);
@@ -1083,7 +1105,7 @@ export default class Map {
   /**
    * Adds a fullscreen control to the map.
    * @function addFullscreenControl
-    * @param {Object} options - Options for the geolocate control.
+   * @param {Object} options - Options for the geolocate control.
    * @param {string} [position='top-right'] - Position to add the control on the map.
    */
   addFullscreenControl(options, position) {
@@ -1115,7 +1137,6 @@ export default class Map {
   getBounds() {
     try {
       return this.map.getBounds();
-      //  this.map.getZoom();
     } catch (error) {
       console.error(`Error getting bounds: ${error.message}`);
     }
@@ -1128,7 +1149,6 @@ export default class Map {
   getCenter() {
     try {
       return this.map.getCenter();
-      //  this.map.getZoom();
     } catch (error) {
       console.error(`Error getting center: ${error.message}`);
     }
@@ -1141,10 +1161,7 @@ export default class Map {
    */
   setTerrain(options) {
     try {
-      //this.map.on("load", () => {
       return this.map.setTerrain(options);
-      //});
-      //  this.map.getZoom();
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
@@ -1220,9 +1237,8 @@ export default class Map {
       if (position === "lines") {
         keyLayer = this._firstLineLayer();
       }
-      // this.map.on("load", () => {
+
       this.map.addSource(`${layer.id}`, {
-        // this.map.addSource(`${layer.id}-userSource`, {
         type: "geojson",
         data: layer.data,
       });
@@ -1231,13 +1247,12 @@ export default class Map {
           id: `${layer.id}-layerIcgcMap`,
           type: layer.layerType,
           source: `${layer.id}`,
-          // source: `${layer.id}-userSource`,
+
           layout: layer.layout,
           paint: layer.paint,
         },
         keyLayer
       );
-      // });
     } catch (error) {
       console.error(`Error adding GeoJSON layer: ${error.message}`);
     }
@@ -1250,38 +1265,59 @@ export default class Map {
    * @param {string} layer.type - Type of layer ('raster').
    * @param {string[]} layer.tiles - Tiles for the raster layer.
    * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
+   * @param {Object} exportOptions - Options of the layer: type, layout, paint.
    */
-  addLayerWMS(layer, position) {
+  addLayerWMS(layer, position, exportOptions) {
     try {
-      // this.map.on("load", () => {
-      // console.log("holaaddlayerwms", layer);
+      console.log("position", position, exportOptions);
       let keyLayer = "";
       if (position === "labels") {
         keyLayer = this._firstSymbolLayer();
+        console.log("label", keyLayer);
       }
       if (position === "lines") {
         keyLayer = this._firstLineLayer();
       }
-      this.map.addSource(
-        `${layer.id}`,
-        {
-          // this.map.addSource(`${layer.id}-userSource`, {
-          type: "raster",
-          tiles: [layer.tiles],
-          tileSize: 256,
-        },
-        keyLayer
-      );
-      this.map.addLayer(
-        {
-          id: `${layer.id}-layerIcgcMap`,
-          type: "raster",
-          source: `${layer.id}`,
-          // source: `${layer.id}-userSource`,
-          paint: {},
-        },
-        keyLayer
-      );
+      if (exportOptions) {
+        this.map.addSource(
+          `${layer.id}`,
+          {
+            type: exportOptions.type,
+            tiles: [layer.tiles],
+            tileSize: 256,
+          },
+          keyLayer
+        );
+        this.map.addLayer(
+          {
+            id: layer.id,
+            type: exportOptions.type,
+            source: layer.id,
+            layout: exportOptions.layout,
+            paint: exportOptions.paint,
+          },
+          keyLayer
+        );
+      } else {
+        this.map.addSource(
+          `${layer.id}`,
+          {
+            type: "raster",
+            tiles: [layer.tiles],
+            tileSize: 256,
+          },
+          keyLayer
+        );
+        this.map.addLayer(
+          {
+            id: layer.id,
+            type: "raster",
+            source: layer.id,
+            paint: {},
+          },
+          keyLayer
+        );
+      }
       // });
     } catch (error) {
       console.error(`Error adding WMS layer: ${error.message}`);
@@ -1332,7 +1368,7 @@ export default class Map {
    * @param {string} options.href - URL to navigate to when the logo is clicked.
    * @param {string} options.height - Height of the logo.
    * @param {string} position - Position of the logo.
-  */
+   */
   addLogo(options, position) {
     try {
       const img = document.createElement("img");
@@ -1358,13 +1394,11 @@ export default class Map {
    */
   addBasemapsICGC(basesArray) {
     try {
-      // console.log('bases', basesArray)
       const handleClick = (base) => {
-        // console.log('baseCLIK', base)
         map.setStyle(base);
       };
       const basemapGroup = document.getElementById("basemap-group");
-      // this.map.on("load", () => {
+
       for (const url of basesArray) {
         for (const key of Object.keys(defaultOptions.baseStyles)) {
           const item = defaultOptions.baseStyles[key];
@@ -1378,7 +1412,6 @@ export default class Map {
           }
         }
       }
-      // });
     } catch (error) {
       console.error(`Error adding basemaps: ${error.message}`);
     }
@@ -1394,11 +1427,10 @@ export default class Map {
   addBasemaps(baseLayers) {
     try {
       const handleClick = (base) => {
-        // console.log("base", base);
         map.setStyle(base.url);
       };
       const basemapGroup = document.getElementById("basemap-group");
-      // this.map.on("load", () => {
+
       baseLayers.forEach((base) => {
         const div = document.createElement("div");
         div.className = "basemap-item";
@@ -1422,24 +1454,19 @@ export default class Map {
   addFeatureQuery(layerName, options, popupStyle) {
     try {
       let description;
-      // layerName = layerName+'-userSource'
-      // this.map.on("load", () => {
-      // console.log('layer', layerName, options, popupStyle)
+
       this.map.on("mouseenter", layerName, () => {
-        // console.log('layerenter', layerName)
         this.map.getCanvas().style.cursor = "pointer";
       });
       this.map.on("mouseleave", layerName, () => {
         this.map.getCanvas().style.cursor = "";
       });
       this.map.on("click", (e) => {
-        // console.log('click', this.map.queryRenderedFeatures(e.point), layerName)
         let features = this.map.queryRenderedFeatures(e.point);
-        // console.log('kkk',features[0].source, layerName )
+
         if (features && features[0].source.includes(layerName)) {
-          // if ((features && features[0].source === layerName) ) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
-          // console.log('es aqui3331??', features[0])
+
           if (
             options !== undefined &&
             options.length > 0 &&
@@ -1462,10 +1489,6 @@ export default class Map {
             }
             description = text;
             map.addPopup(coordinates, description, popupStyle);
-            // popup.setLngLat(e.lngLat)
-            //   .setHTML(text)
-            //   .addTo(map);
-            // });
           }
         }
       });
@@ -1511,6 +1534,7 @@ export default class Map {
         };
         position = "top-right";
       }
+      
       this.map.addControl(new MaplibreExportControl(options), position);
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
@@ -1524,12 +1548,10 @@ export default class Map {
    */
   addPopup(coordinates, text) {
     try {
-      // this.map.on("load", () => {
       new maplibregl.Popup()
         .setLngLat(coordinates)
         .setHTML(text)
         .addTo(this.map);
-      // });
     } catch (error) {}
   }
   /**
@@ -1576,11 +1598,10 @@ export default class Map {
    */
   addPopup(coord, text, popupStyle) {
     try {
-      // console.log('popupstyle', popupStyle)
       if (popupStyle.image === undefined) {
         let popup = new maplibregl.Popup()
           .setLngLat(coord)
-          // .innerHTML( )
+
           .setHTML(
             `
         <div class="popupBody">
@@ -1600,10 +1621,9 @@ export default class Map {
           .addTo(this.map);
         return popup;
       } else {
-        //if images area provided
         let popup = new maplibregl.Popup()
           .setLngLat(coord)
-          // .innerHTML( )
+
           .setHTML(
             `
         <div class="popupBody">
@@ -1650,12 +1670,10 @@ export default class Map {
    * @param {string} name - The name of the layer corresponding to the menu item.
    */
   addMenuItem(name) {
-    // console.log('adddMenu', name, name.length)
     try {
       let menuLabel;
       if (name.includes("-userFieldFilter-")) {
         menuLabel = name.split("-userFieldFilter-")[0];
-        // console.log('name', name)
       } else {
         menuLabel = name;
       }
@@ -1677,6 +1695,9 @@ export default class Map {
             e.target.checked ? "visible" : "none"
           );
         });
+
+
+
       }
     } catch (error) {
       console.error(`Error adding menu item: ${error.message}`);
@@ -1695,7 +1716,6 @@ export default class Map {
       let places = options.features;
       const filterGroup = document.getElementById("filter-group");
       this.map.addSource(`${options.id}`, {
-        // this.map.addSource(`${options.id}-userSource`, {
         type: options.type,
         data: places,
       });
@@ -1708,7 +1728,7 @@ export default class Map {
               id: layerID,
               type: "circle",
               source: `${options.id}`,
-              // source: `${options.id}-userSource`,
+
               paint: {
                 "circle-radius": 6,
                 "circle-color": "#B42222",
@@ -1816,14 +1836,31 @@ export default class Map {
   /**
    * Adds an ICGC image layer to the map based on the specified name and year.
    * @function addImageLayerICGC
-   * @param {string} name - The name of the layer. Mandatory. options: 'orto', 'geo', 'slope', 'dem', 'relleu', etc.
+   * @param {string} name - The url of the layer.
    */
-  addImageLayerICGC(name, position) {
+  addImageLayerICGC(idLayer, name, options) {
     try {
-      // console.log("name", name, position);
       let idName = null;
+      let position;
+      let exportOptions;
+      if (options) {
+        exportOptions = options;
+
+        position = options.position;
+      } else {
+        exportOptions = {
+          type: "raster",
+          layout: {
+            visibility: "visible",
+          },
+          paint: {
+            "raster-opacity": 1,
+          },
+          position: "labels",
+        };
+      }
+
       function findImageType(url, var1, var2, var3, var4) {
-        // console.log("hola", name);
         const vectors = [var1, var2, var3, var4];
         for (const vector of vectors) {
           for (const [key, value] of Object.entries(vector)) {
@@ -1832,7 +1869,7 @@ export default class Map {
             }
           }
         }
-        return null; //
+        return null;
       }
       idName = findImageType(
         name,
@@ -1841,7 +1878,7 @@ export default class Map {
         Layers.WMS,
         Layers.Vector
       );
-      // console.log("op", idName);
+
       if (!idName) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1852,11 +1889,11 @@ export default class Map {
         );
       }
       let sourceWMS = {
-        id: idName,
+        id: idLayer,
         tiles: name,
       };
-      // console.log("source", sourceWMS);
-      this.addLayerWMS(sourceWMS, position);
+
+      this.addLayerWMS(sourceWMS, position, exportOptions);
     } catch (error) {
       console.error(`Error adding ICGC image layer: ${error.message}`);
     }
@@ -1864,15 +1901,34 @@ export default class Map {
   /**
    * Adds an ICGC vector layer to the map based on the specified name and year.
    * @function addVectorLayerICGC
-   * @param {string} url - The url of the vector layer.
-   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
-   * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
-   * @param {object} paintOption - Paint option for the layer
+   * @param {string} idLayer - The user id for the vector layer.
+   * @param {string} layerUrl - The url of the vector layer.
+   * @param {object} options - Type, position,layout and paint options for the layer
    *
    */
-  async addVectorLayerICGC(layerUrl, position, visibleLabel, paintOption) {
+  async addVectorLayerICGC(idLayer, layerUrl, options) {
     try {
-      // console.log('layerUrl', layerUrl)
+      let position;
+      let layoutOptions;
+      let paintOption;
+      let type;
+      if (options) {
+        type = options.type;
+        position = options.position;
+        layoutOptions = options.layout;
+        paintOption = options.paint;
+      } else {
+        type = "line";
+        position = "labels";
+        layoutOptions = {
+          visibility: "visible",
+        };
+        paintOption = {
+          "line-color": "#fcfcfc",
+          "line-width": 0.2,
+        };
+      }
+
       let keyLayer = "";
       if (position === "labels") {
         keyLayer = this._firstSymbolLayer();
@@ -1880,7 +1936,9 @@ export default class Map {
       if (position === "lines") {
         keyLayer = this._firstLineLayer();
       }
+
       let name = layerUrl;
+
       if (name === null) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1905,6 +1963,7 @@ export default class Map {
             return null; // Retorna null si no se encuentra la URL en el objeto
           }
           let name = getKeyByUrl(layerUrl);
+          // console.log('anem', name)
           this.map.addSource(name, {
             type: "vector",
             url: layerUrl,
@@ -1917,9 +1976,7 @@ export default class Map {
                 source: name,
                 "source-layer": "cobertes",
                 maxzoom: 18,
-                layout: {
-                  visibility: "visible",
-                },
+                layout: layoutOptions,
                 paint: {
                   "fill-opacity": [
                     "interpolate",
@@ -2036,83 +2093,80 @@ export default class Map {
             return null;
           }
           let legendUrl = getLegendByName(name);
-          if (visibleLabel === "visible") {
+          if (layoutOptions.visibility === "visible") {
+            console.log('entro')
             map.addLegend(name, legendUrl);
+            console.log('entrqo')
           }
         } else {
-          let sourceLimits = "limitsSource";
+          let sourceLimits = idLayer;
           this.map.addSource(sourceLimits, {
             type: "vector",
             url: defaultOptions.limitsUrl,
           });
-          this.map.addLayer(
-            {
-              id: name + "-fill",
-              type: "fill",
-              source: sourceLimits,
-              "source-layer": name,
-              layout: {
-                visibility: visibleLabel,
-              },
-              paint: {
-                "fill-color": "#0000FF",
-                "fill-opacity": 0,
-              },
-            },
-            keyLayer
-          );
-          this.map.addLayer(
-            {
-              id: name + "-underline",
-              type: "line",
-              source: sourceLimits,
-              "source-layer": name,
-              layout: {
-                visibility: visibleLabel,
-              },
-              paint: {
-                "line-color": "#ffffff",
-                "line-opacity": 1,
-                "line-width": 3,
-              },
-            },
-            keyLayer
-          );
-          if (paintOption) {
-            this.map.addLayer(
-              {
-                id: name + "-line",
-                type: "line",
-                source: sourceLimits,
-                "source-layer": name,
-                layout: {
-                  visibility: visibleLabel,
+          if (type === "polygon") {
+            if (paintOption) {
+              this.map.addLayer(
+                {
+                  id: idLayer,
+                  type: "fill",
+                  source: sourceLimits,
+                  "source-layer": name,
+                  layout: layoutOptions,
+                  paint: paintOption,
                 },
-                paint: paintOption,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: name + "-line",
-                type: "line",
-                source: sourceLimits,
-                layout: {
-                  visibility: visibleLabel,
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: idLayer,
+                  type: "fill",
+                  source: sourceLimits,
+                  "source-layer": name,
+                  layout: layoutOptions,
+                  paint: {
+                    "fill-color": "#0000FF",
+                    "fill-opacity": 0,
+                  },
                 },
-                "source-layer": name,
-                paint: {
-                  "line-color": "#4832a8",
-                  "line-opacity": 1,
-                  "line-width": 1,
+                keyLayer
+              );
+            }
+          }
+
+          if (type === "line") {
+            if (paintOption) {
+              this.map.addLayer(
+                {
+                  id: idLayer,
+                  type: "line",
+                  source: sourceLimits,
+                  "source-layer": name,
+                  layout: layoutOptions,
+                  paint: paintOption,
                 },
-              },
-              keyLayer
-            );
+                keyLayer
+              );
+            } else {
+              this.map.addLayer(
+                {
+                  id: idLayer,
+                  type: "line",
+                  source: sourceLimits,
+                  layout: layoutOptions,
+                  "source-layer": name,
+                  paint: {
+                    "line-color": "#4832a8",
+                    "line-opacity": 1,
+                    "line-width": 1,
+                  },
+                },
+                keyLayer
+              );
+            }
           }
         }
-        // });
       }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
@@ -2127,9 +2181,7 @@ export default class Map {
    *
    */
   async addFGBLayerICGC(layerUrl, position, paintOption) {
-    // console.log('hola', layerUrl, position, paintOption)
     try {
-      // console.log('urlooooooo')
       let visibleLabel = "visible";
       let keyLayer = "";
       if (position === "labels") {
@@ -2140,47 +2192,32 @@ export default class Map {
       }
       function getKeyByUrl(url) {
         for (const key in Layers.FGBAdmin) {
-          // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
           if (
             Layers.FGBAdmin.hasOwnProperty(key) &&
             Layers.FGBAdmin[key] === url
           ) {
-            // console.log('entro', key)
-            return key; // Retorna la clave si encuentra la URL
+            return key;
           }
         }
-        return null; // Retorna null si no se encuentra la URL en el objeto
+        return null;
       }
       let name = getKeyByUrl(layerUrl);
-      // console.log('name', name)
+
       if (name === null) {
         name = "userFGB";
-        // let op = Layers.VectorAdmin.find((objeto) =>
-        //   objeto.key.includes(name)
-        // );
-        // if (!op) {
-        // console.log(`❌ The layer: <i><b>${name}</b></i> does not exist in the ICGC DB. Consult the documentation.`)
-        // console.log(
-        //   "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
-        //   "font-weight: bold; font-style: italic;",
-        //   "font-weight: normal; font-style: normal; color: red;",
-        //   name,
-        //   "font-weight: bold; font-style: italic;"
-        // );
       } else {
       }
       const response = await fetch(layerUrl);
       const fc = { type: "FeatureCollection", features: [] };
-      // console.log('fetc', fc)
+
       for await (const f of deserialize(response.body)) fc.features.push(f);
       let src = name;
-      // let src = name + "-userSource";
+
       this.map.addSource(src, {
         type: "geojson",
         data: fc,
       });
       if (layerUrl.includes("text")) {
-        // console.log('entro', name)
         this.map.addLayer(
           {
             id: name,
@@ -2242,9 +2279,8 @@ export default class Map {
           },
           keyLayer
         );
-        // console.log('painst', paintOption)
+
         if (paintOption) {
-          // console.log('paint', paintOption)
           this.map.addLayer(
             {
               id: name + "-line",
@@ -2269,8 +2305,6 @@ export default class Map {
             keyLayer
           );
         }
-        //afegir text visible o no
-        //primer trobar la capa
         let textLayer = name + "Text";
         this.map.addLayer(
           {
@@ -2308,8 +2342,6 @@ export default class Map {
           keyLayer
         );
       }
-      // });
-      //} /////////////////aquest es
     } catch (error) {
       console.error(`Error adding ICGC FGB layer: ${error.message}`);
     }
@@ -2321,12 +2353,7 @@ export default class Map {
    * @param {string} [positionButton='top-right'] - Position to add the button on the map.
    */
   addTerrainICGC(resolution, positionButton) {
-    // this.map.on("load", () => {
     try {
-      // let op = Terrains.find(
-      //   (objeto) => objeto.name === resolution
-      // );
-      // console.log('res', resolution)
       let op;
       for (const key in Terrains) {
         if (Terrains.hasOwnProperty(key)) {
@@ -2341,19 +2368,15 @@ export default class Map {
         let lyrs = this.getStyle().layers;
         lyrs.forEach((element) => {
           if (element.source === "terrainICGC") {
-            // console.log('eleme', element)
             this.removeLayer(element.id);
           }
         });
-        // this.removeLayer("terrainICGC_fosca")
+
         this.removeSource("terrainICGC");
       }
       if (this.getSource("terrainICGC") === undefined) {
-        // if (this.getSource("terrainICGC") === undefined){
         if (resolution.includes("terrarium")) {
-          // Add terrain source
           this.map.addSource("terrainICGC", {
-            // this.map.addSource("terrainICGC-userSource", {
             type: "raster-dem",
             tiles: [urlTerrainICGC],
             tileSize: 512,
@@ -2362,7 +2385,6 @@ export default class Map {
           });
         } else {
           this.map.addSource("terrainICGC", {
-            // this.map.addSource("terrainICGC-userSource", {
             type: "raster-dem",
             tiles: [urlTerrainICGC],
             tileSize: 512,
@@ -2372,18 +2394,13 @@ export default class Map {
       }
       this.map.setTerrain({
         source: "terrainICGC",
-        // source: "terrainICGC-userSource",
+
         exaggeration: 1.5,
       });
       if (positionButton === undefined) {
         positionButton = "top-right";
       }
-      // this.map.addControl(
-      //   new maplibregl.TerrainControl({
-      //     source: "terrainICGC-src",
-      //     exaggeration: 1.5,
-      //   }), positionButton
-      // );
+
       this.map.addControl(
         new Pitch3DToggleControl({
           pitch: 90,
@@ -2395,82 +2412,156 @@ export default class Map {
     } catch (error) {
       console.error(`Error adding 3D terrain: ${error.message}`);
     }
-    // }); //'load end
   }
-  /**
-   * Adds 3D terrain to the map using hillshade.
-   * @function addLegend
-   * @param {string} name - name of the layer legend  to add.
-   */
-  addLegend(name, legendUrl) {
-    try {
-      // console.log('namelegend', name, legendUrl)
-      //add jquery to head
-      function addJQueryUI() {
-        // Create link element for jQuery UI CSS
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href =
-          "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
-        // console.log('entro1')
-        // Create script element for jQuery
-        var jqueryScript = document.createElement("script");
-        jqueryScript.src = "https://code.jquery.com/jquery-3.6.0.min.js";
-        // console.log('entro12')
-        // Create script element for jQuery UI
-        var jqueryUIScript = document.createElement("script");
-        jqueryUIScript.src =
-          "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js";
-        // Get the head element of the document
-        var head = document.head || document.getElementsByTagName("head")[0];
-        // Append the elements to the head
-        head.appendChild(link);
-        // console.log('entro14')
-        // Append jQuery script to head and wait for it to load before loading jQuery UI
-        jqueryScript.onload = function () {
-          head.appendChild(jqueryUIScript);
-          // console.log('entro')
-          // Call any jQuery code here, after both jQuery and jQuery UI are loaded
-          $(document).ready(function () {
+  
+/**
+ * Adds 3D terrain to the map using hillshade.
+ * @function addLegend
+ * @param {string} name - name of the layer legend  to add.
+ */
+addLegend(name, legendUrl){
+  try {
+   
+    console.log('namelegend', name, legendUrl)
+
+   //add jquery to head
+
+   function addJQueryUI() {
+    // Create link element for jQuery UI CSS
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
+    // console.log('entro1')
+    // Create script element for jQuery
+    var jqueryScript = document.createElement("script");
+    jqueryScript.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+
+
+    // console.log('entro12')
+    // Create script element for jQuery UI
+    var jqueryUIScript = document.createElement("script");
+    jqueryUIScript.src = "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js";
+
+    // Get the head element of the document
+    var head = document.head || document.getElementsByTagName("head")[0];
+
+    // Append the elements to the head
+    head.appendChild(link);
+    // console.log('entro14')
+    // Append jQuery script to head and wait for it to load before loading jQuery UI
+    jqueryScript.onload = function() {
+        head.appendChild(jqueryUIScript);
+        // console.log('entro')
+        // Call any jQuery code here, after both jQuery and jQuery UI are loaded
+        $(document).ready(function() {
             // console.log("jQuery is ready");
+            
             // Example: Using jQuery UI datepicker
-            const legendContainer = document.createElement("div");
-            legendContainer.id = "legendContainer";
+        
+            const legendContainer = document.createElement('div');
+            legendContainer.id = 'legendContainer';
             legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
-            legendContainer.style.display = "none";
+            legendContainer.style.display = 'none';
             document.body.appendChild(legendContainer);
-            jqueryUIScript.onload = function () {
+            jqueryUIScript.onload = function() {
               // Make legend container draggable and resizable
-              $(function () {
+              $(function() {
                 $("#legendContainer").draggable();
                 $("#legendContainer").resizable();
               });
-            };
+            }
             head.appendChild(jqueryScript);
             // Create toggle button
-            const toggleLegend = document.createElement("div");
-            toggleLegend.id = "toggleLegend";
-            toggleLegend.innerHTML = "<span>&#x2630;</span>"; // You can replace this with any icon you prefer
+            const toggleLegend = document.createElement('div');
+            toggleLegend.id = 'toggleLegend';
+            toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
             document.body.appendChild(toggleLegend);
+        
             // Toggle legend visibility
-            toggleLegend.addEventListener("click", function () {
-              if (legendContainer.style.display === "none") {
-                legendContainer.style.display = "block";
+            toggleLegend.addEventListener('click', function() {
+              if (legendContainer.style.display === 'none') {
+                legendContainer.style.display = 'block';
               } else {
-                legendContainer.style.display = "none";
+                legendContainer.style.display = 'none';
               }
             });
-          });
-        };
-        head.appendChild(jqueryScript);
-      }
-      
-      addJQueryUI();
-      
-    } catch (error) {
-      console.error(`Error adding legend: ${error.message}`);
-    }
+        
+        
+        });
+    };
+
+    head.appendChild(jqueryScript);
+}
+
+
+// Call the function to add jQuery UI when the document is ready
+// document.addEventListener("DOMContentLoaded", function() {
+  addJQueryUI();
+
+
+//   $(document).ready(function() {
+//     console.log('entro')
+//     // Example: Using jQuery UI datepicker
+
+//     const legendContainer = document.createElement('div');
+//     legendContainer.id = 'legendContainer';
+//     legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
+//     legendContainer.style.display = 'block';
+//     document.body.appendChild(legendContainer);
+
+//       // Make legend container draggable and resizable
+//       $(function() {
+//         $("#legendContainer").draggable();
+//         $("#legendContainer").resizable();
+//       });
+
+//     // Create toggle button
+//     const toggleLegend = document.createElement('div');
+//     toggleLegend.id = 'toggleLegend';
+//     toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
+//     document.body.appendChild(toggleLegend);
+
+//     // Toggle legend visibility
+//     toggleLegend.addEventListener('click', function() {
+//       if (legendContainer.style.display === 'none') {
+//         legendContainer.style.display = 'block';
+//       } else {
+//         legendContainer.style.display = 'none';
+//       }
+//     });
+
+
+
+// });
+
+// });
+
+    
+
+
+
+    // const menuGroup = document.getElementById("map");
+    // const div = document.createElement("div");
+    // const imagen = document.createElement("img")
+    //   div.className = "legendDiv";
+    // menuGroup.appendChild(div); 
+    //   imagen.src= legendUrl
+    //   imagen.alt=name
+    // div.appendChild(imagen);
+
+    
+
+    // div.addEventListener("click", () => handleClick(name));
+
+
+  } catch (error) {
+    console.error(`Error adding legend: ${error.message}`);
   }
+}
+
+
+
+
   //Internal methods
   async _raiseText3DStyle() {
     try {
@@ -2554,7 +2645,7 @@ export default class Map {
     try {
       const layers = this.map.getStyle().layers;
       let firstSymbolId;
-      // console.log('es aqui12??', layers.length)
+
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].type === "symbol") {
           firstSymbolId = layers[i].id;
@@ -2570,7 +2661,7 @@ export default class Map {
     try {
       const layers = this.map.getStyle().layers;
       let firsLineId;
-      // console.log('es aqui12??', layers.length)
+
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].type === "line") {
           firsLineId = layers[i].id;
@@ -2613,4 +2704,4 @@ export default class Map {
       return null;
     }
   }
-} //end class
+}

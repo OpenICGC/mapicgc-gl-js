@@ -39,33 +39,42 @@
             hash: true,
             pitch: 0,
         });
-        let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
+    
         let paintOptions = {
+            "layout": {
+                "visibility": "visible",
+            },
+            "paint": {
             "line-color": "green",
             "line-width": 3,
             "line-opacity": 1,
+            },
+            layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
         };
         let paintOptionsfgb = {
+            "layout": {
+                "visibility": "visible",
+            },
+            "paint": {
                 'line-color': 'grey',
                 'line-width': 2
+            }, 
+            layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
             };
 
         map.on("load", () => {
             map.fetchData(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", layerPosition,
-                paintOptions
-            );
+                "RutesMontserrat", paintOptions);
             // try with FGB data:
         
             map.fetchData(
                 mapicgcgl.Layers.FGBAdmin.comarquesVigent,
-                "Comarques", layerPosition,
-                paintOptionsfgb
-            );
+                "Comarques", paintOptionsfgb);
+                
             // map.fetchData(
             //     "https://flatgeobuf.org/test/data/UScounties.fgb",
-            //     "UScounties", layerPosition
+            //     "UScounties", paintOptionsfgb
             // );
 
            

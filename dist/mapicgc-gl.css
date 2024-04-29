@@ -832,6 +832,126 @@ background: #d4d4d4;
 
 
 
+
+
+
+
+    #menu-group {
+      font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+      border-radius: 3px;
+      width: auto;
+      color: #fff;
+      overflow-y: auto;
+      max-height: 500px;
+      overflow-x: hidden;
+  }
+  #menu-group::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    display: block;  /* Ocultar scroll */
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+#menu-group::-webkit-scrollbar-thumb {
+background: #ccc;
+border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+#menu-group::-webkit-scrollbar-thumb:hover {
+background: #daac56;
+box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+#menu-group::-webkit-scrollbar-thumb:active {
+background-color: #d8b97f;
+}
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+#menu-group::-webkit-scrollbar-track {
+background: #e1e1e1;
+border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+#menu-group::-webkit-scrollbar-track:hover,
+#menu-group::-webkit-scrollbar-track:active {
+background: #d4d4d4;
+}
+
+
+
+
+#menu-group input[type='checkbox']:first-child + label {
+      border-radius: 3px 3px 0 0;
+  }
+
+  #menu-group label:last-child {
+      border-radius: 0 0 3px 3px;
+      border: none;
+  }
+
+  #menu-group input[type='checkbox'] {
+      display: none;
+  }
+
+  #menu-group input[type='checkbox'] + label {
+      background-color: #798e9f;
+      display: block;
+      cursor: pointer;
+      padding: 7px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  #menu-group input[type='checkbox'] + label {
+      background-color: #798e9f;
+      text-transform: capitalize;
+  }
+
+  #menu-group input[type='checkbox'] + label:hover,
+  #menu-group input[type='checkbox']:checked + label {
+      background-color: #798e9f;
+  }
+
+  #menu-group input[type='checkbox']:checked + label:before {
+      content: '✔';
+      margin-right: 5px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
     .maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon {
       background-size: 70%;
     }
@@ -1528,9 +1648,9 @@ h4::selection {
   cursor: grab; 
 };
 #toggleLegend {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
   background-color: #00ab2d;
   color: white;
   width: 40px;

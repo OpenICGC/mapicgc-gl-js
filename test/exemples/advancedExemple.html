@@ -22,6 +22,26 @@
             width: 100%;
             height: 100%
         }
+
+        /*personalitza el teu menú */
+        #menu-group {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #000000;
+        }
+
+        #menu-group input[type='checkbox']+label {
+            background-color: #ffffff !important;
+        }
+
+        #titleDivMenu {
+            background-color: rgb(213 212 212);
+        }
+
+        #titleDivMenuSub {
+            background-color: #e9e9e9;
+        }
     </style>
 </head>
 
@@ -58,26 +78,38 @@
             map.addExportControl();
 
             map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
+            let optionsLayer = {
+                "type": "raster",
+                "layout": {
+                    "visibility": "visible",
+                },
+                "paint": {
+                    "raster-opacity": 1
+                }, position: "labels"
+            }
 
-            let layerImagePosition = 'top' // select: 'top', 'lines' or 'labels'
-            map.addImageLayerICGC(mapicgcgl.Layers.Orto.ortofotoColor2013, layerImagePosition);
+            // map.addImageLayerICGC("orto2013",mapicgcgl.Layers.Orto.ortofotoColor2013, optionsLayer);
 
-            let labelVisibility = "visible" // select : "visible" or "none"
-
-            let paintOptionsfgb = {
-                'line-color': 'green',
-                'line-width': 2
+            //add vector icgc
+            let optionsLayerVector = {
+                "type": "line",
+                "layout": {
+                    "visibility": "visible"
+                },
+                "paint": {
+                    "line-color": "red",
+                    "line-width": 0.2,
+                }, position: "lines"
             };
-            map.addFGBLayerICGC(mapicgcgl.Layers.FGBAdmin.comarquesVigent, labelVisibility, paintOptionsfgb);
 
-            let paintOptionsVector = {
-                'line-color': 'black',
-                'line-width': 1
-            };
-            let layerVectorPosition = 'top' // select: 'top', 'lines' or 'labels'
-       
+
             map.addVectorLayerICGC(
-                mapicgcgl.Layers.VectorAdmin.comarques2022, layerVectorPosition, labelVisibility, paintOptionsVector);
+                "Municipis", //ID
+                mapicgcgl.Layers.VectorAdmin.municipisVigent, //Layer
+                optionsLayerVector //options
+            );
+
+
 
             let paintOptions = {
                 'point-color': 'yellow',
@@ -85,22 +117,33 @@
             };
             let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
             let filterField = 'comarca' // select 'all' for view all the features as a single layer
-       
-            setTimeout(() => {
-                   map.fetchDataAndMenu(
+
+
+
+            let optionsLayerEqui = {
+                'layout': {
+                    'visibility': "visible",
+                },
+                'paint': {
+                    "circle-color": "blue",
+                    "circle-opacity": 0.85,
+                }, layerPosition: "lines"
+            }
+
+            map.fetchDataAndMenu(
                 "https://analisi.transparenciacatalunya.cat/resource/8gmd-gz7i.geojson",
-                "Equipaments", filterField, layerPosition);
+                "Equipaments", filterField, optionsLayerEqui);
 
             // let queryFields = ["nom", "municipi"];
             // map.addFeatureQuery("RutesMontserrat", queryFields);
             let popupStyle = {
-                title : 'Informació:',
+                title: 'Informació:',
                 image: 'https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png'
             };
-            let queryFields = [];
+            let queryFields = ['nom']; // [] for query all the properties
             map.addFeatureQuery("Equipaments", queryFields, popupStyle);
-            }, 1000);
-         
+
+
         });
 
     </script>
