@@ -1783,7 +1783,7 @@ export default class Map {
           position: ORDER_LAYER_SYMBOL,
         };
       }
-      idName = this_findImageType(
+      idName = this._findImageType(
         name,
         Layers.Orto,
         Layers.VectorAdmin,
@@ -1818,136 +1818,86 @@ export default class Map {
    */
   async addVectorLayerICGC(idLayer, layerUrl, options) {
     try {
-      let position;
-      let layoutOptions;
-      let paintOption;
-      let type;
-      let keyLayer = "";
-      let name = layerUrl;
-      if (options) {
-        type = options.type || "line";
-        position = options.position || "top";
-        layoutOptions = options.layout;
-        paintOption = options.paint;
-      } else {
-        type = "line";
-        position = ORDER_LAYER_SYMBOL;
-        layoutOptions = {
-          visibility: "visible",
-        };
-        paintOption = {
-          "line-color": "#fcfcfc",
-          "line-width": 0.2,
-        };
-      }
-      keyLayer = this._dealOrderLayer(position);
-      if (!name) {
+      let {
+        type = "line",
+        position = ORDER_LAYER_SYMBOL,
+        layoutOptions = { visibility: "visible" },
+        paintOption,
+      } = options || {};
+      let keyLayer = this._dealOrderLayer(position);
+
+      if (!layerUrl) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
           "font-weight: bold; font-style: italic;",
           "font-weight: normal; font-style: normal; color: red;",
-          name,
+          layerUrl,
           "font-weight: bold; font-style: italic;"
         );
-      } else {
-        if (layerUrl.includes("https")) {
-          let name = this._getKeyByUrlVector(layerUrl);
-          this.map.addSource(name, {
-            type: "vector",
-            url: layerUrl,
-          });
-          if (name === "cobertes2018") {
-            map.addLayer(
-              {
-                id: name,
-                type: "fill",
-                source: name,
-                "source-layer": "cobertes",
-                maxzoom: 18,
-                layout: layoutOptions,
-                paint: Legends.cobertesSol,
-              },
-              keyLayer
-            );
-          }
-          //addLegend
-          let legendUrl = this._getLegendByName(name);
-          if (layoutOptions.visibility === "visible") {
-            map.addLegend(name, legendUrl);
-          }
-        } else {
-          let sourceLimits = idLayer;
-          this.map.addSource(sourceLimits, {
-            type: "vector",
-            url: defaultOptions.limitsUrl,
-          });
-          if (type === "fill" || type === "polygon") {
-            if (paintOption) {
-              this.map.addLayer(
-                {
-                  id: idLayer,
-                  type: "fill",
-                  source: sourceLimits,
-                  "source-layer": name,
-                  layout: layoutOptions,
-                  paint: paintOption,
-                },
-                keyLayer
-              );
-            } else {
-              this.map.addLayer(
-                {
-                  id: idLayer,
-                  type: "fill",
-                  source: sourceLimits,
-                  "source-layer": name,
-                  layout: layoutOptions,
-                  paint: {
-                    "fill-color": "#0000FF",
-                    "fill-opacity": 0,
-                  },
-                },
-                keyLayer
-              );
-            }
-          }
-          if (type === "line") {
-            if (paintOption) {
-              this.map.addLayer(
-                {
-                  id: idLayer,
-                  type: "line",
-                  source: sourceLimits,
-                  "source-layer": name,
-                  layout: layoutOptions,
-                  paint: paintOption,
-                },
-                keyLayer
-              );
-            } else {
-              this.map.addLayer(
-                {
-                  id: idLayer,
-                  type: "line",
-                  source: sourceLimits,
-                  layout: layoutOptions,
-                  "source-layer": name,
-                  paint: {
-                    "line-color": "#4832a8",
-                    "line-opacity": 1,
-                    "line-width": 1,
-                  },
-                },
-                keyLayer
-              );
-            }
-          }
+        return;
+      }
+
+      if (layerUrl.includes("https")) {
+        let sourceName = this._getKeyByUrlVector(layerUrl);
+        this.map.addSource(sourceName, {
+          type: "vector",
+          url: layerUrl,
+        });
+
+        let layerOptions = {
+          id: sourceName,
+          type: "fill",
+          source: sourceName,
+          "source-layer": "cobertes",
+          maxzoom: 18,
+          layout: layoutOptions,
+          paint: Legends.cobertesSol,
+        };
+
+        if (sourceName === "cobertes2018") {
+          this.map.addLayer(layerOptions, keyLayer);
         }
+
+        if (layoutOptions.visibility === "visible") {
+          let legendUrl = this._getLegendByName(sourceName);
+          map.addLegend(sourceName, legendUrl);
+        }
+      } else {
+        let sourceLimits = idLayer;
+        this.map.addSource(sourceLimits, {
+          type: "vector",
+          url: defaultOptions.limitsUrl,
+        });
+
+        let layerOptions = {
+          id: idLayer,
+          type: type,
+          source: sourceLimits,
+          "source-layer": layerUrl,
+          layout: layoutOptions,
+          paint: paintOption || {},
+        };
+
+        if (type === "fill" || type === "polygon") {
+          layerOptions.paint = paintOption || {
+            "fill-color": "#0000FF",
+            "fill-opacity": 0,
+          };
+        } else if (type === "line") {
+          layerOptions.paint = paintOption || {
+            "line-color": "#4832a8",
+            "line-opacity": 1,
+            "line-width": 1,
+          };
+        }
+
+        this.map.addLayer(layerOptions, keyLayer);
       }
     } catch (error) {
       console.error(`Error adding ICGC vector layer: ${error.message}`);
     }
   }
+
   /**
    * Adds an ICGC FGB layer to the map based on the specified name and year.
    * @function addFGBLayerICGC
