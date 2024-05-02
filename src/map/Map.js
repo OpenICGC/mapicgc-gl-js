@@ -22,11 +22,9 @@ import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
 import Legends from "../constants/Legends.js";
 import defaultOptions from "../config.js";
-
 const ORDER_LAYER_TOP = "top";
 const ORDER_LAYER_LINE = "lines";
 const ORDER_LAYER_SYMBOL = "labels";
-
 export default class Map {
   /**
    * Constructor for the Map class.
@@ -53,7 +51,6 @@ export default class Map {
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
-
     this.map = new maplibregl.Map(options);
     this.map.options = options;
     this.map.addControl(
@@ -61,7 +58,6 @@ export default class Map {
         compact: true,
       })
     );
-
     this.map.on("load", async () => {
       const nameStyle = this.map.getStyle().name;
       const urlName = this.map.options.style;
@@ -108,7 +104,6 @@ export default class Map {
               defaultOptions.geocoder.peliasUrl2;
             const response = await fetch(request);
             const geojson = await response.json();
-
             for (const feature of geojson.features) {
               const center = feature.geometry.coordinates;
               const point = {
@@ -133,12 +128,10 @@ export default class Map {
           };
         },
       };
-
       this.map.addControl(new MaplibreGeocoder(geocoderApi, options), position);
       let inputsearch = document.getElementsByClassName(
         "maplibregl-ctrl-geocoder--input"
       );
-
       inputsearch[0].attributes[2].nodeValue = "Cerca...";
       inputsearch[0].addEventListener("input", function (event) {
         let word = event.target.value;
@@ -200,7 +193,6 @@ export default class Map {
       for (const style of Styles) {
         stylesArray.push(style.name);
       }
-
       return stylesArray;
     } catch (error) {
       console.error(`Error retrieving base styles: ${error.message}`);
@@ -219,7 +211,6 @@ export default class Map {
           imageArray.push(key);
         }
       }
-
       return imageArray;
     } catch (error) {
       console.error(`Error retrieving WMS layers: ${error.message}`);
@@ -238,7 +229,6 @@ export default class Map {
           imageArray.push(key);
         }
       }
-
       return imageArray;
     } catch (error) {
       console.error(`Error retrieving orto image layers: ${error.message}`);
@@ -313,8 +303,7 @@ export default class Map {
         const response = await fetch(url);
         const geojson = await response.json();
         let nameUser = name;
-        let keyLayer =  this._dealOrderLayer(layerPosition);
-        
+        let keyLayer = this._dealOrderLayer(layerPosition);
         let type = geojson.features[0].geometry.type;
         if (type.includes("ine")) {
           if (options !== undefined) {
@@ -445,10 +434,8 @@ export default class Map {
       } else {
         layerPosition = ORDER_LAYER_SYMBOL;
       }
-
       let menuGroup;
       let mapId = document.getElementById("map");
-
       if (document.getElementById("menu-group")) {
         menuGroup = document.getElementById("menu-group");
       } else {
@@ -457,13 +444,11 @@ export default class Map {
         menuGroup.classList.add = "filter-group";
         mapId.appendChild(menuGroup);
       }
-
       if (menuGroup !== null) {
         let visibleLabel = "visible";
-        let keyLayer =  this._dealOrderLayer(layerPosition);
+        let keyLayer = this._dealOrderLayer(layerPosition);
         let geojson;
         if (url.includes(".fgb")) {
-          
           let name = this._getKeyByUrlFGB(url);
           if (name === null) {
             name = "userFGB";
@@ -471,12 +456,9 @@ export default class Map {
           }
           const response = await fetch(url);
           const fc = { type: "FeatureCollection", features: [] };
-
           for await (const f of deserialize(response.body)) fc.features.push(f);
-
           geojson = fc;
           let src = name;
-
           this.map.addSource(src, {
             type: "geojson",
             data: fc,
@@ -576,7 +558,6 @@ export default class Map {
           const nameTitle = document.createElement("div");
           nameTitle.id = "titleDivMenu";
           nameTitle.textContent = name;
-
           menuGroup.appendChild(nameTitle);
           const featureTreeTitle = document.createElement("div");
           featureTreeTitle.id = "titleDivMenuSub";
@@ -585,7 +566,6 @@ export default class Map {
         } else {
         }
         let type = geojson.features[0].geometry.type;
-
         if (featureTree === "all") {
           if (type.includes("ine")) {
             if (options !== undefined) {
@@ -736,7 +716,6 @@ export default class Map {
               );
             }
           }
-
           this.addMenuItem(name);
         } else {
           let field = featureTree;
@@ -744,7 +723,6 @@ export default class Map {
           geojson.features.forEach((feature) => {
             const fieldMarker = feature.properties[field];
             const idFieldMarker = fieldMarker + `-userFieldFilter-` + name;
-
             if (fieldMarker !== null) {
               if (!layers[idFieldMarker]) {
                 if (type.includes("ine")) {
@@ -759,7 +737,6 @@ export default class Map {
                         },
                         layout: options.layout,
                         paint: options.paint,
-
                         filter: ["==", `${field}`, fieldMarker],
                       },
                       keyLayer
@@ -797,7 +774,6 @@ export default class Map {
                           type: "geojson",
                           data: geojson,
                         },
-
                         filter: ["==", `${field}`, fieldMarker],
                         layout: options.layout,
                         paint: options.paint,
@@ -836,7 +812,6 @@ export default class Map {
                           type: "geojson",
                           data: geojson,
                         },
-
                         filter: ["==", `${field}`, fieldMarker],
                         layout: options.layout,
                         paint: options.paint,
@@ -865,9 +840,7 @@ export default class Map {
                     );
                   }
                 }
-
                 layers[idFieldMarker] = true;
-
                 this.addMenuItem(idFieldMarker);
               }
             }
@@ -1210,7 +1183,6 @@ export default class Map {
   addLayerGeoJSON(layer, layerPosition) {
     try {
       let keyLayer = this._dealOrderLayer(layerPosition);
-
       this.map.addSource(`${layer.id}`, {
         type: "geojson",
         data: layer.data,
@@ -1220,7 +1192,6 @@ export default class Map {
           id: `${layer.id}-layerIcgcMap`,
           type: layer.layerType,
           source: `${layer.id}`,
-
           layout: layer.layout,
           paint: layer.paint,
         },
@@ -1242,9 +1213,7 @@ export default class Map {
    */
   addLayerWMS(layer, layerPosition, exportOptions) {
     try {
-      
       let keyLayer = this._dealOrderLayer(layerPosition);
-     
       if (exportOptions) {
         this.map.addSource(
           `${layer.id}`,
@@ -1365,7 +1334,6 @@ export default class Map {
         map.setStyle(base);
       };
       const basemapGroup = document.getElementById("basemap-group");
-
       for (const url of basesArray) {
         for (const key of Object.keys(defaultOptions.baseStyles)) {
           const item = defaultOptions.baseStyles[key];
@@ -1397,7 +1365,6 @@ export default class Map {
         map.setStyle(base.url);
       };
       const basemapGroup = document.getElementById("basemap-group");
-
       baseLayers.forEach((base) => {
         const div = document.createElement("div");
         div.className = "basemap-item";
@@ -1421,7 +1388,6 @@ export default class Map {
   addFeatureQuery(layerName, options, popupStyle) {
     try {
       let description;
-
       this.map.on("mouseenter", layerName, () => {
         this.map.getCanvas().style.cursor = "pointer";
       });
@@ -1430,10 +1396,8 @@ export default class Map {
       });
       this.map.on("click", (e) => {
         let features = this.map.queryRenderedFeatures(e.point);
-
         if (features && features[0].source.includes(layerName)) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
-
           if (
             options !== undefined &&
             options.length > 0 &&
@@ -1501,9 +1465,7 @@ export default class Map {
         };
         position = "top-right";
       }
-
       this.map.addControl(new MaplibreExportControl(options), position);
-
       //© NARWASSCO, Ltd. ©Mapbox ©OpenStreetMap contributors, Powered by the United Nations Vector Tile Toolkit
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
@@ -1570,7 +1532,6 @@ export default class Map {
       if (popupStyle.image === undefined) {
         let popup = new maplibregl.Popup()
           .setLngLat(coord)
-
           .setHTML(
             `
         <div class="popupBody">
@@ -1592,7 +1553,6 @@ export default class Map {
       } else {
         let popup = new maplibregl.Popup()
           .setLngLat(coord)
-
           .setHTML(
             `
         <div class="popupBody">
@@ -1694,7 +1654,6 @@ export default class Map {
               id: layerID,
               type: "circle",
               source: `${options.id}`,
-
               paint: {
                 "circle-radius": 6,
                 "circle-color": "#B42222",
@@ -1811,7 +1770,6 @@ export default class Map {
       let exportOptions;
       if (options) {
         exportOptions = options;
-
         position = options.position;
       } else {
         exportOptions = {
@@ -1825,8 +1783,6 @@ export default class Map {
           position: ORDER_LAYER_SYMBOL,
         };
       }
-
-      
       idName = this_findImageType(
         name,
         Layers.Orto,
@@ -1834,7 +1790,6 @@ export default class Map {
         Layers.WMS,
         Layers.Vector
       );
-
       if (!idName) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1848,7 +1803,6 @@ export default class Map {
         id: idLayer,
         tiles: name,
       };
-
       this.addLayerWMS(sourceWMS, position, exportOptions);
     } catch (error) {
       console.error(`Error adding ICGC image layer: ${error.message}`);
@@ -1870,7 +1824,6 @@ export default class Map {
       let type;
       let keyLayer = "";
       let name = layerUrl;
-     
       if (options) {
         type = options.type || "line";
         position = options.position || "top";
@@ -1887,11 +1840,7 @@ export default class Map {
           "line-width": 0.2,
         };
       }
-
-        keyLayer =this._dealOrderLayer(position);
-
-      
-
+      keyLayer = this._dealOrderLayer(position);
       if (!name) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
@@ -1902,7 +1851,7 @@ export default class Map {
         );
       } else {
         if (layerUrl.includes("https")) {
-          let name = this._getKeyByUrlVector(layerUrl);        
+          let name = this._getKeyByUrlVector(layerUrl);
           this.map.addSource(name, {
             type: "vector",
             url: layerUrl,
@@ -1922,7 +1871,6 @@ export default class Map {
             );
           }
           //addLegend
-          
           let legendUrl = this._getLegendByName(name);
           if (layoutOptions.visibility === "visible") {
             map.addLegend(name, legendUrl);
@@ -1963,7 +1911,6 @@ export default class Map {
               );
             }
           }
-
           if (type === "line") {
             if (paintOption) {
               this.map.addLayer(
@@ -2013,19 +1960,15 @@ export default class Map {
     try {
       let visibleLabel = "visible";
       let keyLayer = this._dealOrderLayer(position);
-     
       let name = this._getKeyByUrlFGB(layerUrl);
-
       if (name === null) {
         name = "userFGB";
       } else {
       }
       const response = await fetch(layerUrl);
       const fc = { type: "FeatureCollection", features: [] };
-
       for await (const f of deserialize(response.body)) fc.features.push(f);
       let src = name;
-
       this.map.addSource(src, {
         type: "geojson",
         data: fc,
@@ -2092,7 +2035,6 @@ export default class Map {
           },
           keyLayer
         );
-
         if (paintOption) {
           this.map.addLayer(
             {
@@ -2184,7 +2126,6 @@ export default class Map {
             this.removeLayer(element.id);
           }
         });
-
         this.removeSource("terrainICGC");
       }
       if (this.getSource("terrainICGC") === undefined) {
@@ -2207,13 +2148,11 @@ export default class Map {
       }
       this.map.setTerrain({
         source: "terrainICGC",
-
         exaggeration: 1.5,
       });
       if (positionButton === undefined) {
         positionButton = "top-right";
       }
-
       this.map.addControl(
         new Pitch3DToggleControl({
           pitch: 90,
@@ -2226,7 +2165,6 @@ export default class Map {
       console.error(`Error adding 3D terrain: ${error.message}`);
     }
   }
-
   /**
    * Add image legend.
    * @function addLegend
@@ -2240,9 +2178,7 @@ export default class Map {
       console.error(`Error adding legend: ${error.message}`);
     }
   }
-
   //Internal methods
-
   _findImageType(url, var1, var2, var3, var4) {
     const vectors = [var1, var2, var3, var4];
     for (const vector of vectors) {
@@ -2254,22 +2190,15 @@ export default class Map {
     }
     return null;
   }
-
-
   _getKeyByUrlFGB(url) {
     for (const key in Layers.FGBAdmin) {
-      if (
-        Layers.FGBAdmin.hasOwnProperty(key) &&
-        Layers.FGBAdmin[key] === url
-      ) {
+      if (Layers.FGBAdmin.hasOwnProperty(key) && Layers.FGBAdmin[key] === url) {
         return key;
       }
     }
     return null;
   }
-
-
-   _getLegendByName(name) {
+  _getLegendByName(name) {
     for (const layerKey in defaultOptions.vectorLayers) {
       const layer = defaultOptions.vectorLayers[layerKey];
       if (layer.key === name) {
@@ -2278,25 +2207,14 @@ export default class Map {
     }
     return null;
   }
-
-
-
-   _getKeyByUrlVector(url) {
+  _getKeyByUrlVector(url) {
     for (const key in Layers.Vector) {
-      
-      if (
-        Layers.Vector.hasOwnProperty(key) &&
-        Layers.Vector[key] === url
-      ) {
-       
-        return key; 
+      if (Layers.Vector.hasOwnProperty(key) && Layers.Vector[key] === url) {
+        return key;
       }
     }
-    return null; 
+    return null;
   }
-
-
-
   async _raiseText3DStyle() {
     try {
       const image = await this.map.loadImage(
@@ -2375,7 +2293,6 @@ export default class Map {
       return null;
     }
   }
-
   _dealOrderLayer(order) {
     if (order === ORDER_LAYER_SYMBOL) {
       return this._firstSymbolLayer();
@@ -2385,12 +2302,10 @@ export default class Map {
       return "";
     }
   }
-
   _firstSymbolLayer() {
     try {
       const layers = this.map.getStyle().layers;
       let firstSymbolId;
-
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].type === "symbol") {
           firstSymbolId = layers[i].id;
@@ -2406,7 +2321,6 @@ export default class Map {
     try {
       const layers = this.map.getStyle().layers;
       let firsLineId;
-
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].type === "line") {
           firsLineId = layers[i].id;
