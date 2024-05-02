@@ -1569,6 +1569,9 @@ h4::selection {
   }
 }
 
+
+
+
 /* Media queries*/
 @media screen and (min-width: 640px) {
   .maplibregl-ctrl-geocoder.maplibregl-ctrl-geocoder--collapsed {
@@ -1722,4 +1725,91 @@ h4::selection {
 }
 
 
+}
+
+.maplibregl-legend-list {
+  display: none
+}
+
+.maplibregl-legend-list {
+  overflow-y: scroll;
+  max-height: 70vh;
+  margin: .3em
+}
+
+.maplibregl-ctrl-group .maplibregl-legend-list button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  height: auto
+}
+
+.maplibregl-legend-list button.active {
+  font-weight: 700
+}
+
+.maplibregl-legend-list button:hover {
+  background-color: #0000000d
+}
+
+.maplibregl-legend-list button+button {
+  border-top: 1px solid #ddd
+}
+
+.maplibregl-legend-switcher {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEXklEQVR4nO1bW28bRRReiSDKG6V/gV4kHnkCiqACnmkp8EThgZv6I9BGFTxWKNg+35md2VhBDWnclgZKIVJQq0ioQKHgRoISAW1p6WtbUCQaOc6iY2zXjt1kfNmLvfmkI1manfX5vrmdmTnrOJsIFxOZzDYf2KeBUQ2e0oQLGnzNgG9qwqpY5Tf4WrVsSp6VOlLXGUQopXZp4H0D/GTAZQMOurSyBv9oiN8zRDudJEMpdb8m9boh/q4HwuuaJnzrA6+5rjviJIz4QU18JSziLUa4rIF3YhfCI3pKExYiI95qF32ldkdOvHD48IOGmKsTWFzka8Ni1QCUz+e3RELeEO3UxMW4ibcKwT97We/RcMkzP6sJ/8RN9p4igP82ObUnHPI5tVcT/o2bpMWQWPaBV/pLntTLmrASN7kORFgxRPv7Qz6n9hjwnbhJddMTNPB87xEdJXfMb2iE2+PA9q7I5/P5LdVQNn4ivfWEBVm2OxbAEHPczvfPkO2IvK/U7iQEOX3sBasqp56wIu+67kgSA50+iLAg+5YNBdCkDsbtbHgi8NsWOzu+MrQCgP9YdwepZT+fAEdDNaID9xTAAOdtXvL5zKfB1/PzdTt57FhT+RefnWoqj8LEJ6teQDjXlryX8XbYvGDm+IlgLcrlcjA58VGdfFwQ3yx7Qevxmq6c4W1ceW52tu2f13rB/JmzQVwQ3+yGAg61Gf9cTIsAmvB9E/mJTGab7ent3JftBfikUBPgTBAXxDdLAVaIaOvd1md+0XYWPXpkMlheXm7646WlpWDC+JXyE9PTQalUipy8+CS+Wa8GObW3cfyPWlcEV8hOT35ct7ynm8v98abyKKzWALamSb3bIABPdVJ5GEwTH2mYAHEhfQI0TISGcN22onT3xUuXghvX/6rbQrFYL5eu+NviYlN5FCY+rR2K6xrhz0YBbttWnD19uu0kdPzodKX87NxXQVwQ3zroBTcbQmAu2VYchjigaqVNAWrYHAI0+JPgr7/0MAnqtC+DOvWBEFIeCvvAvrRthjzghbtDQOuHU70dFthegw1HIITzzloYSUVLiQAy56X6UNTLeDtaBBDY5vidOjmTuGNx8amnY3GBJCHazqKDajrHrzrrXY0ZwuXUXo0JJANzaAUg9aaT5utx1za1VgNPDlOCRCXIY37c6QQGoCFq/Q+dbpKktOTqJ4BAj3axqyQpgQQMlfTTQW154JbOZh9xeoEGnhmEFNm2KbOknnP6AQ94adBSZeW+00ljsrQB3+l7snTjcOjkBDnylgdu+Tn1tBMmxoHtSUyhlRWr5wmvwzzibEKCpbKs82NjYw84UUMTPWabWRZKqxMXrVNgw4LruiMGeEt2WpGRJ/zuA28UCoX7nKTAFSGIDhjwN+G1OM7Jfj727wU3wv/Hazgkty+9xA+V9VzeAYx2/eFD3CCirXIGLxcRBpg04B80+Krcz1eP4svVj6evCll5Rp6VOvkP8g/F7b8z7PgPslNWT+ShSSkAAAAASUVORK5CYII=');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70%
+}
+
+table.legend-table {
+  border-collapse: collapse;
+  margin: 0 auto
+}
+
+td.legend-table-td,th.legend-table-th {
+  border: 1px solid #fff;
+  margin: 10px;
+  padding: 2px;
+  text-align: left
+}
+
+.maplibregl-legend-close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  border-radius: 0 3px 0 0;
+  cursor: pointer;
+  background-color: #0000;
+  font-size: 13px;
+  padding-top: 5px;
+  padding-right: 5px
+}
+
+.maplibregl-legend-title-label {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 5px;
+  color: #1c1c1c
+}
+
+.maplibregl-legend-onlyRendered-checkbox {
+  margin: 5px 5px 5px .5em
+}
+
+.maplibregl-legend-onlyRendered-label {
+  font-size: 14px;
+  margin: 5px;
+  color: #1c1c1c
+}
+
+td.legend-table-td>svg {
+  height: 17px
+}
+
+td.legend-table-td>label {
+  color: #1c1c1c
 }

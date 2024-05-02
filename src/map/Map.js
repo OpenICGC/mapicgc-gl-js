@@ -15,11 +15,17 @@ import {
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
+import LegendControl from "../controls/LegendControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
 import Terrains from "../constants/Terrains.js";
 import Styles from "../constants/Styles.js";
 import Layers from "../constants/Layers.js";
+import Legends from "../constants/Legends.js";
 import defaultOptions from "../config.js";
+
+const ORDER_LAYER_TOP = "top";
+const ORDER_LAYER_LINE = "lines";
+const ORDER_LAYER_SYMBOL = "labels";
 
 export default class Map {
   /**
@@ -300,20 +306,15 @@ export default class Map {
    */
   async fetchData(url, name, options) {
     try {
-      let layerPosition = options.layerPosition
+      let layerPosition = options.layerPosition;
       if (url.includes(".fgb")) {
         this.addFGBLayerICGC(url, layerPosition, null, options);
       } else {
         const response = await fetch(url);
         const geojson = await response.json();
         let nameUser = name;
-        let keyLayer = "";
-        if (layerPosition === "labels") {
-          keyLayer = this._firstSymbolLayer();
-        }
-        if (layerPosition === "lines") {
-          keyLayer = this._firstLineLayer();
-        }
+        let keyLayer =  this._dealOrderLayer(layerPosition);
+        
         let type = geojson.features[0].geometry.type;
         if (type.includes("ine")) {
           if (options !== undefined) {
@@ -325,8 +326,8 @@ export default class Map {
                   type: "geojson",
                   data: geojson,
                 },
-                layout: options.layout,
-                paint: options.paint,
+                layout: options.layout || {},
+                paint: options.paint || {},
               },
               keyLayer
             );
@@ -436,17 +437,17 @@ export default class Map {
    * @param {string} featureTree - Import all features as unique or group based on a field ('all', 'field').
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchDataAndMenu(url, name, featureTree, options  ) {
+  async fetchDataAndMenu(url, name, featureTree, options) {
     try {
-      let layerPosition
-      if (options !== null){
-        layerPosition = options.layerPosition
-      }else{
-        layerPosition = 'labels'
+      let layerPosition;
+      if (options !== null) {
+        layerPosition = options.layerPosition;
+      } else {
+        layerPosition = ORDER_LAYER_SYMBOL;
       }
-       
+
       let menuGroup;
-      let mapId = document.getElementById('map')
+      let mapId = document.getElementById("map");
 
       if (document.getElementById("menu-group")) {
         menuGroup = document.getElementById("menu-group");
@@ -459,27 +460,11 @@ export default class Map {
 
       if (menuGroup !== null) {
         let visibleLabel = "visible";
-        let keyLayer = "";
-        if (layerPosition === "labels") {
-          keyLayer = this._firstSymbolLayer();
-        }
-        if (layerPosition === "lines") {
-          keyLayer = this._firstLineLayer();
-        }
+        let keyLayer =  this._dealOrderLayer(layerPosition);
         let geojson;
         if (url.includes(".fgb")) {
-          function getKeyByUrl(url) {
-            for (const key in Layers.FGBAdmin) {
-              if (
-                Layers.FGBAdmin.hasOwnProperty(key) &&
-                Layers.FGBAdmin[key] === url
-              ) {
-                return key;
-              }
-            }
-            return null;
-          }
-          let name = getKeyByUrl(url);
+          
+          let name = this._getKeyByUrlFGB(url);
           if (name === null) {
             name = "userFGB";
           } else {
@@ -491,8 +476,6 @@ export default class Map {
 
           geojson = fc;
           let src = name;
-   
-
 
           this.map.addSource(src, {
             type: "geojson",
@@ -510,46 +493,43 @@ export default class Map {
                 },
                 keyLayer
               );
-            }else{
-
-
-            this.map.addLayer(
-              {
-                id: name,
-                type: "symbol",
-                source: src,
-                layout: {
-                  "text-letter-spacing": 0.1,
-                  "text-size": {
-                    base: 1.2,
-                    stops: [
-                      [8, 0],
-                      [12, 14],
-                      [15, 15],
-                    ],
+            } else {
+              this.map.addLayer(
+                {
+                  id: name,
+                  type: "symbol",
+                  source: src,
+                  layout: {
+                    "text-letter-spacing": 0.1,
+                    "text-size": {
+                      base: 1.2,
+                      stops: [
+                        [8, 0],
+                        [12, 14],
+                        [15, 15],
+                      ],
+                    },
+                    "text-font": ["FiraSans-Regular"],
+                    "text-field": ["get", "NOM_AC"],
+                    "text-transform": "none",
+                    "text-max-width": 25,
+                    visibility: visibleLabel,
+                    "text-justify": "right",
+                    "text-anchor": "top",
+                    "text-allow-overlap": false,
+                    "symbol-spacing": 2,
+                    "text-line-height": 1,
                   },
-                  "text-font": ["FiraSans-Regular"],
-                  "text-field": ["get", "NOM_AC"],
-                  "text-transform": "none",
-                  "text-max-width": 25,
-                  visibility: visibleLabel,
-                  "text-justify": "right",
-                  "text-anchor": "top",
-                  "text-allow-overlap": false,
-                  "symbol-spacing": 2,
-                  "text-line-height": 1,
+                  paint: {
+                    "text-halo-blur": 0.5,
+                    "text-color": "rgba(90, 7, 7, 1)",
+                    "text-halo-width": 2,
+                    "text-halo-color": "rgba(255, 255, 255,0.8)",
+                  },
                 },
-                paint: {
-                  "text-halo-blur": 0.5,
-                  "text-color": "rgba(90, 7, 7, 1)",
-                  "text-halo-width": 2,
-                  "text-halo-color": "rgba(255, 255, 255,0.8)",
-                },
-              },
-              keyLayer
-            );
-
-          }
+                keyLayer
+              );
+            }
           } else {
             let textLayer = name + "Text";
             this.map.addLayer(
@@ -596,7 +576,7 @@ export default class Map {
           const nameTitle = document.createElement("div");
           nameTitle.id = "titleDivMenu";
           nameTitle.textContent = name;
-    
+
           menuGroup.appendChild(nameTitle);
           const featureTreeTitle = document.createElement("div");
           featureTreeTitle.id = "titleDivMenuSub";
@@ -747,9 +727,9 @@ export default class Map {
                   },
                   paint: {
                     "text-halo-blur": 0.5,
-                  "text-color": "rgba(90, 7, 7, 1)",
-                  "text-halo-width": 2,
-                  "text-halo-color": "rgba(255, 255, 255,0.8)",
+                    "text-color": "rgba(90, 7, 7, 1)",
+                    "text-halo-width": 2,
+                    "text-halo-color": "rgba(255, 255, 255,0.8)",
                   },
                 },
                 keyLayer
@@ -779,9 +759,8 @@ export default class Map {
                         },
                         layout: options.layout,
                         paint: options.paint,
-                       
+
                         filter: ["==", `${field}`, fieldMarker],
-                     
                       },
                       keyLayer
                     );
@@ -818,7 +797,7 @@ export default class Map {
                           type: "geojson",
                           data: geojson,
                         },
-                      
+
                         filter: ["==", `${field}`, fieldMarker],
                         layout: options.layout,
                         paint: options.paint,
@@ -857,7 +836,7 @@ export default class Map {
                           type: "geojson",
                           data: geojson,
                         },
-                    
+
                         filter: ["==", `${field}`, fieldMarker],
                         layout: options.layout,
                         paint: options.paint,
@@ -1226,17 +1205,11 @@ export default class Map {
    * @param {string} layer.layerType - Map layer type (e.g., 'symbol', 'circle', 'fill').
    * @param {Object} layer.layout - Layer layout configuration.
    * @param {Object} layer.paint - Layer paint configuration.
-   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
+   * @param {string} layerPosition - Position of the layer: 'top', below 'labels' or below 'lines'.
    */
-  addLayerGeoJSON(layer, position) {
+  addLayerGeoJSON(layer, layerPosition) {
     try {
-      let keyLayer = "";
-      if (position === "labels") {
-        keyLayer = this._firstSymbolLayer();
-      }
-      if (position === "lines") {
-        keyLayer = this._firstLineLayer();
-      }
+      let keyLayer = this._dealOrderLayer(layerPosition);
 
       this.map.addSource(`${layer.id}`, {
         type: "geojson",
@@ -1264,25 +1237,19 @@ export default class Map {
    * @param {string} layer.id - Unique identifier for the layer.
    * @param {string} layer.type - Type of layer ('raster').
    * @param {string[]} layer.tiles - Tiles for the raster layer.
-   * @param {string} position - Position of the layer: 'top', below 'labels' or below 'lines'.
+   * @param {string} layerPosition - Position of the layer: 'top', below 'labels' or below 'lines'.
    * @param {Object} exportOptions - Options of the layer: type, layout, paint.
    */
-  addLayerWMS(layer, position, exportOptions) {
+  addLayerWMS(layer, layerPosition, exportOptions) {
     try {
-      console.log("position", position, exportOptions);
-      let keyLayer = "";
-      if (position === "labels") {
-        keyLayer = this._firstSymbolLayer();
-        console.log("label", keyLayer);
-      }
-      if (position === "lines") {
-        keyLayer = this._firstLineLayer();
-      }
+      
+      let keyLayer = this._dealOrderLayer(layerPosition);
+     
       if (exportOptions) {
         this.map.addSource(
           `${layer.id}`,
           {
-            type: exportOptions.type,
+            type: exportOptions.type || "raster",
             tiles: [layer.tiles],
             tileSize: 256,
           },
@@ -1534,8 +1501,10 @@ export default class Map {
         };
         position = "top-right";
       }
-      
+
       this.map.addControl(new MaplibreExportControl(options), position);
+
+      //© NARWASSCO, Ltd. ©Mapbox ©OpenStreetMap contributors, Powered by the United Nations Vector Tile Toolkit
     } catch (error) {
       console.error(`Error adding export control: ${error.message}`);
     }
@@ -1695,9 +1664,6 @@ export default class Map {
             e.target.checked ? "visible" : "none"
           );
         });
-
-
-
       }
     } catch (error) {
       console.error(`Error adding menu item: ${error.message}`);
@@ -1856,22 +1822,12 @@ export default class Map {
           paint: {
             "raster-opacity": 1,
           },
-          position: "labels",
+          position: ORDER_LAYER_SYMBOL,
         };
       }
 
-      function findImageType(url, var1, var2, var3, var4) {
-        const vectors = [var1, var2, var3, var4];
-        for (const vector of vectors) {
-          for (const [key, value] of Object.entries(vector)) {
-            if (value === url) {
-              return key;
-            }
-          }
-        }
-        return null;
-      }
-      idName = findImageType(
+      
+      idName = this_findImageType(
         name,
         Layers.Orto,
         Layers.VectorAdmin,
@@ -1912,14 +1868,17 @@ export default class Map {
       let layoutOptions;
       let paintOption;
       let type;
+      let keyLayer = "";
+      let name = layerUrl;
+     
       if (options) {
-        type = options.type;
-        position = options.position;
+        type = options.type || "line";
+        position = options.position || "top";
         layoutOptions = options.layout;
         paintOption = options.paint;
       } else {
         type = "line";
-        position = "labels";
+        position = ORDER_LAYER_SYMBOL;
         layoutOptions = {
           visibility: "visible",
         };
@@ -1929,17 +1888,11 @@ export default class Map {
         };
       }
 
-      let keyLayer = "";
-      if (position === "labels") {
-        keyLayer = this._firstSymbolLayer();
-      }
-      if (position === "lines") {
-        keyLayer = this._firstLineLayer();
-      }
+        keyLayer =this._dealOrderLayer(position);
 
-      let name = layerUrl;
+      
 
-      if (name === null) {
+      if (!name) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
           "font-weight: bold; font-style: italic;",
@@ -1949,21 +1902,7 @@ export default class Map {
         );
       } else {
         if (layerUrl.includes("https")) {
-          function getKeyByUrl(url) {
-            for (const key in Layers.Vector) {
-              // console.log('key', key, Layers.VectorAdmin.hasOwnProperty(key), Layers.VectorAdmin[key] )
-              if (
-                Layers.Vector.hasOwnProperty(key) &&
-                Layers.Vector[key] === url
-              ) {
-                // console.log('entro', key)
-                return key; // Retorna la clave si encuentra la URL
-              }
-            }
-            return null; // Retorna null si no se encuentra la URL en el objeto
-          }
-          let name = getKeyByUrl(layerUrl);
-          // console.log('anem', name)
+          let name = this._getKeyByUrlVector(layerUrl);        
           this.map.addSource(name, {
             type: "vector",
             url: layerUrl,
@@ -1977,126 +1916,16 @@ export default class Map {
                 "source-layer": "cobertes",
                 maxzoom: 18,
                 layout: layoutOptions,
-                paint: {
-                  "fill-opacity": [
-                    "interpolate",
-                    ["exponential", 0.5],
-                    ["zoom"],
-                    13.5,
-                    1,
-                    18,
-                    0.4,
-                  ],
-                  "fill-outline-color": "rgba(0,0, 0, 0)",
-                  "fill-color": [
-                    "interpolate",
-                    ["cubic-bezier", 0.5, 1, 1, 1],
-                    ["get", "nivell_2"],
-                    0,
-                    "#ffffff",
-                    111,
-                    "#ffff00",
-                    112,
-                    "#ccff33",
-                    113,
-                    "#af5b15",
-                    114,
-                    "#808000",
-                    115,
-                    "#cdcd00",
-                    116,
-                    "#ffffcc",
-                    221,
-                    "#33cc33",
-                    222,
-                    "#66ff33",
-                    223,
-                    "#689018",
-                    224,
-                    "#967d5f",
-                    225,
-                    "#19e61e",
-                    226,
-                    "#b4ff9b",
-                    227,
-                    "#aaa500",
-                    228,
-                    "#c3c3a0",
-                    229,
-                    "#00ff9b",
-                    230,
-                    "#ff9632",
-                    231,
-                    "#282828",
-                    232,
-                    "#79797a",
-                    233,
-                    "#f5df78",
-                    234,
-                    "#3296ff",
-                    341,
-                    "#ff007d",
-                    342,
-                    "#ff53cd",
-                    343,
-                    "#ffa4e2",
-                    344,
-                    "#ffc8e2",
-                    345,
-                    "#ffb4b4",
-                    346,
-                    "#0f3700",
-                    347,
-                    "#730055",
-                    348,
-                    "#6200c4",
-                    349,
-                    "#4a9595",
-                    350,
-                    "#ff00f0",
-                    351,
-                    "#adaaca",
-                    352,
-                    "#ffe6e6",
-                    353,
-                    "#67629a",
-                    354,
-                    "#4a466e",
-                    355,
-                    "#2f2d46",
-                    461,
-                    "#6f6fff",
-                    462,
-                    "#0000dc",
-                    463,
-                    "#000064",
-                    464,
-                    "#185f94",
-                    465,
-                    "#12466d",
-                    466,
-                    "#000080",
-                  ],
-                },
+                paint: Legends.cobertesSol,
               },
               keyLayer
             );
           }
           //addLegend
-          function getLegendByName(name) {
-            for (const layerKey in defaultOptions.vectorLayers) {
-              const layer = defaultOptions.vectorLayers[layerKey];
-              if (layer.key === name) {
-                return layer.legend;
-              }
-            }
-            return null;
-          }
-          let legendUrl = getLegendByName(name);
+          
+          let legendUrl = this._getLegendByName(name);
           if (layoutOptions.visibility === "visible") {
-            console.log('entro')
             map.addLegend(name, legendUrl);
-            console.log('entrqo')
           }
         } else {
           let sourceLimits = idLayer;
@@ -2104,7 +1933,7 @@ export default class Map {
             type: "vector",
             url: defaultOptions.limitsUrl,
           });
-          if (type === "polygon") {
+          if (type === "fill" || type === "polygon") {
             if (paintOption) {
               this.map.addLayer(
                 {
@@ -2183,25 +2012,9 @@ export default class Map {
   async addFGBLayerICGC(layerUrl, position, paintOption) {
     try {
       let visibleLabel = "visible";
-      let keyLayer = "";
-      if (position === "labels") {
-        keyLayer = this._firstSymbolLayer();
-      }
-      if (position === "lines") {
-        keyLayer = this._firstLineLayer();
-      }
-      function getKeyByUrl(url) {
-        for (const key in Layers.FGBAdmin) {
-          if (
-            Layers.FGBAdmin.hasOwnProperty(key) &&
-            Layers.FGBAdmin[key] === url
-          ) {
-            return key;
-          }
-        }
-        return null;
-      }
-      let name = getKeyByUrl(layerUrl);
+      let keyLayer = this._dealOrderLayer(position);
+     
+      let name = this._getKeyByUrlFGB(layerUrl);
 
       if (name === null) {
         name = "userFGB";
@@ -2413,156 +2226,77 @@ export default class Map {
       console.error(`Error adding 3D terrain: ${error.message}`);
     }
   }
-  
-/**
- * Adds 3D terrain to the map using hillshade.
- * @function addLegend
- * @param {string} name - name of the layer legend  to add.
- */
-addLegend(name, legendUrl){
-  try {
-   
-    console.log('namelegend', name, legendUrl)
 
-   //add jquery to head
-
-   function addJQueryUI() {
-    // Create link element for jQuery UI CSS
-    var link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
-    // console.log('entro1')
-    // Create script element for jQuery
-    var jqueryScript = document.createElement("script");
-    jqueryScript.src = "https://code.jquery.com/jquery-3.6.0.min.js";
-
-
-    // console.log('entro12')
-    // Create script element for jQuery UI
-    var jqueryUIScript = document.createElement("script");
-    jqueryUIScript.src = "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js";
-
-    // Get the head element of the document
-    var head = document.head || document.getElementsByTagName("head")[0];
-
-    // Append the elements to the head
-    head.appendChild(link);
-    // console.log('entro14')
-    // Append jQuery script to head and wait for it to load before loading jQuery UI
-    jqueryScript.onload = function() {
-        head.appendChild(jqueryUIScript);
-        // console.log('entro')
-        // Call any jQuery code here, after both jQuery and jQuery UI are loaded
-        $(document).ready(function() {
-            // console.log("jQuery is ready");
-            
-            // Example: Using jQuery UI datepicker
-        
-            const legendContainer = document.createElement('div');
-            legendContainer.id = 'legendContainer';
-            legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
-            legendContainer.style.display = 'none';
-            document.body.appendChild(legendContainer);
-            jqueryUIScript.onload = function() {
-              // Make legend container draggable and resizable
-              $(function() {
-                $("#legendContainer").draggable();
-                $("#legendContainer").resizable();
-              });
-            }
-            head.appendChild(jqueryScript);
-            // Create toggle button
-            const toggleLegend = document.createElement('div');
-            toggleLegend.id = 'toggleLegend';
-            toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
-            document.body.appendChild(toggleLegend);
-        
-            // Toggle legend visibility
-            toggleLegend.addEventListener('click', function() {
-              if (legendContainer.style.display === 'none') {
-                legendContainer.style.display = 'block';
-              } else {
-                legendContainer.style.display = 'none';
-              }
-            });
-        
-        
-        });
-    };
-
-    head.appendChild(jqueryScript);
-}
-
-
-// Call the function to add jQuery UI when the document is ready
-// document.addEventListener("DOMContentLoaded", function() {
-  addJQueryUI();
-
-
-//   $(document).ready(function() {
-//     console.log('entro')
-//     // Example: Using jQuery UI datepicker
-
-//     const legendContainer = document.createElement('div');
-//     legendContainer.id = 'legendContainer';
-//     legendContainer.innerHTML = `<img src=${legendUrl} alt="Legend" >`;
-//     legendContainer.style.display = 'block';
-//     document.body.appendChild(legendContainer);
-
-//       // Make legend container draggable and resizable
-//       $(function() {
-//         $("#legendContainer").draggable();
-//         $("#legendContainer").resizable();
-//       });
-
-//     // Create toggle button
-//     const toggleLegend = document.createElement('div');
-//     toggleLegend.id = 'toggleLegend';
-//     toggleLegend.innerHTML = '<span>&#x2630;</span>'; // You can replace this with any icon you prefer
-//     document.body.appendChild(toggleLegend);
-
-//     // Toggle legend visibility
-//     toggleLegend.addEventListener('click', function() {
-//       if (legendContainer.style.display === 'none') {
-//         legendContainer.style.display = 'block';
-//       } else {
-//         legendContainer.style.display = 'none';
-//       }
-//     });
-
-
-
-// });
-
-// });
-
-    
-
-
-
-    // const menuGroup = document.getElementById("map");
-    // const div = document.createElement("div");
-    // const imagen = document.createElement("img")
-    //   div.className = "legendDiv";
-    // menuGroup.appendChild(div); 
-    //   imagen.src= legendUrl
-    //   imagen.alt=name
-    // div.appendChild(imagen);
-
-    
-
-    // div.addEventListener("click", () => handleClick(name));
-
-
-  } catch (error) {
-    console.error(`Error adding legend: ${error.message}`);
+  /**
+   * Add image legend.
+   * @function addLegend
+   * @param {string} name - layer's name.
+   * @param {string} legendUrl - image legend url.
+   */
+  addLegend(name, legendUrl) {
+    try {
+      this.map.addControl(new LegendControl({ name, legendUrl }));
+    } catch (error) {
+      console.error(`Error adding legend: ${error.message}`);
+    }
   }
-}
-
-
-
 
   //Internal methods
+
+  _findImageType(url, var1, var2, var3, var4) {
+    const vectors = [var1, var2, var3, var4];
+    for (const vector of vectors) {
+      for (const [key, value] of Object.entries(vector)) {
+        if (value === url) {
+          return key;
+        }
+      }
+    }
+    return null;
+  }
+
+
+  _getKeyByUrlFGB(url) {
+    for (const key in Layers.FGBAdmin) {
+      if (
+        Layers.FGBAdmin.hasOwnProperty(key) &&
+        Layers.FGBAdmin[key] === url
+      ) {
+        return key;
+      }
+    }
+    return null;
+  }
+
+
+   _getLegendByName(name) {
+    for (const layerKey in defaultOptions.vectorLayers) {
+      const layer = defaultOptions.vectorLayers[layerKey];
+      if (layer.key === name) {
+        return layer.legend;
+      }
+    }
+    return null;
+  }
+
+
+
+   _getKeyByUrlVector(url) {
+    for (const key in Layers.Vector) {
+      
+      if (
+        Layers.Vector.hasOwnProperty(key) &&
+        Layers.Vector[key] === url
+      ) {
+       
+        return key; 
+      }
+    }
+    return null; 
+  }
+
+
+
   async _raiseText3DStyle() {
     try {
       const image = await this.map.loadImage(
@@ -2641,6 +2375,17 @@ addLegend(name, legendUrl){
       return null;
     }
   }
+
+  _dealOrderLayer(order) {
+    if (order === ORDER_LAYER_SYMBOL) {
+      return this._firstSymbolLayer();
+    } else if (order === ORDER_LAYER_LINE) {
+      return this._firstLineLayer();
+    } else {
+      return "";
+    }
+  }
+
   _firstSymbolLayer() {
     try {
       const layers = this.map.getStyle().layers;

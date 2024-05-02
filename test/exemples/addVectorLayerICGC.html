@@ -1,19 +1,15 @@
 <html>
-
 <head>
     <meta charset='utf-8' />
     <title>test mapicgc-gl-js</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
-
     <style>
         body {
             margin: 0;
             padding: 0;
         }
-
         #map {
             position: absolute;
             top: 0;
@@ -21,7 +17,6 @@
             width: 100%;
             height: 100%
         }
-
         /* personalitza el teu botó de llegenda: */
         #toggleLegend {
             position: absolute;
@@ -37,17 +32,11 @@
             cursor: pointer;
             z-index: 1000;
         }
-
         ;
     </style>
 </head>
-
 <body>
-
-
     <div id="map"></div>
-
-
     <script>
         const map = new mapicgcgl.Map({
             container: "map",
@@ -63,25 +52,20 @@
             //     'cobertes2018', mapicgcgl.Layers.Vector.cobertes2018
             // );
             let optionsLayer = {
-                "type": "line",
+                "type": "fill",
                 "layout": {
                     "visibility": "visible"
                 },
                 "paint": {
-                    "line-color": "red",
-                    "line-width": 0.2,
-                }, position: "lines"
+                    "fill-color": "red"
+                }, position: "top"
             };
-
             map.addVectorLayerICGC(
-                "Municipis", //ID
-                mapicgcgl.Layers.VectorAdmin.municipisVigent, //Layer
+                "Cobertes", //ID
+                mapicgcgl.Layers.Vector.cobertes2018, //Layer
                 optionsLayer //options
             );
-
-
         });
     </script>
 </body>
-
 </html>

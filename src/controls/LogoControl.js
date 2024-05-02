@@ -1,12 +1,14 @@
 
+import mapicgcConfig from "../mapicgc-config.json";
+
 
 export default class LogoControl {
   constructor(options) {
-    this.options = options;
+    this.options = options || {};
 
   }
   onAdd(map) {
-    let defaultOptions = this.options.defaultOptions
+    let defaultOptions = mapicgcConfig.defaultOptions
     this._map = map;
     let _this = this;
 
