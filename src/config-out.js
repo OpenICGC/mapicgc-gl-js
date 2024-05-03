@@ -1,4 +1,6 @@
 
+
+
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {

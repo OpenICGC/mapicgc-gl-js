@@ -1,7 +1,7 @@
 export default class LegendControl {
   constructor(options) {
     this.options = options || {};
-    console.info(this.options);
+   
   }
   onAdd(map) {
     this._map = map;

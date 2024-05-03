@@ -1,4 +1,5 @@
 import maplibregl from "maplibre-gl";
+import "../../public/mapicgc-gl.css";
 import { deserialize } from "flatgeobuf/lib/mjs/geojson.js";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import { MapboxLayer } from "@deck.gl/mapbox";
@@ -17,21 +18,33 @@ import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import LegendControl from "../controls/LegendControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
-import Terrains from "../constants/Terrains.js";
-import Styles from "../constants/Styles.js";
-import Layers from "../constants/Layers.js";
+import ConfigICGC from "../constants/ConfigICGC.js";
 import Legends from "../constants/Legends.js";
-import defaultOptions from "../config.js";
+
 const ORDER_LAYER_TOP = "top";
 const ORDER_LAYER_LINE = "lines";
 const ORDER_LAYER_SYMBOL = "labels";
+let Styles, Terrains, Layers, defaultOptions;
 export default class Map {
   /**
    * Constructor for the Map class.
    * @param {Object} options - Options to initialize the map.
    */
   constructor(options) {
-    this.initTheMap(options);
+    ConfigICGC.then((data) => {
+      Styles = { ...data.Styles };
+      Layers = { ...data.Layers };
+      Terrains = { ...data.Terrains };
+      defaultOptions = { ...data.defaultOptions };
+      this.initTheMap(options);
+    }).catch((err) => {
+      console.info("Configuracio per defecte", err);
+      Styles = { ...mapicgcConfig.Styles };
+      Layers = { ...mapicgcConfig.Layers };
+      Terrains = { ...mapicgcConfig.Terrains };
+      defaultOptions = { ...mapicgcConfig.defaultOptions };
+      this.initTheMap(options);
+    });
   }
   initTheMap(options) {
     if (!options) {
@@ -325,7 +338,7 @@ options = opt
         let type = geojson.features[0].geometry.type;
         if (type.includes("ine")) {
           if (options !== undefined) {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "line",
@@ -339,7 +352,7 @@ options = opt
               keyLayer
             );
           } else {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "line",
@@ -362,7 +375,7 @@ options = opt
         }
         if (type.includes("olygon")) {
           if (options !== undefined) {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "fill",
@@ -376,7 +389,7 @@ options = opt
               keyLayer
             );
           } else {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "fill",
@@ -398,7 +411,7 @@ options = opt
         }
         if (type.includes("oint")) {
           if (options !== undefined) {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "circle",
@@ -412,7 +425,7 @@ options = opt
               keyLayer
             );
           } else {
-            map.addLayer(
+            this.map.addLayer(
               {
                 id: nameUser,
                 type: "circle",
@@ -1352,7 +1365,7 @@ options = opt
   addBasemapsICGC(basesArray) {
     try {
       const handleClick = (base) => {
-        map.setStyle(base);
+        this.map.setStyle(base);
       };
       let mapId = document.getElementById("map");
       let menuGroup;

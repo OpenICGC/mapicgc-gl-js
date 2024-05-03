@@ -1,9 +1,9 @@
 import Map from "./map/Map";
 import CompareMaps from "./plugins/CompareMaps";
-import Styles from "./constants/Styles";
-import Terrains from "./constants/Terrains";
-import Layers from "./constants/Layers";
+import ConfigICGC from "./constants/ConfigICGC";
 
 
 
-export { Map, CompareMaps,Styles,Terrains,Layers };
+
+
+export { Map, CompareMaps,ConfigICGC };

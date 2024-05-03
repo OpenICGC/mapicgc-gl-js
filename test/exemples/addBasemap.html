@@ -1,83 +1,88 @@
 <html>
 
 <head>
-    <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="../../dist/mapicgc-gl.umd.js"></script>
-    <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+  <meta charset='utf-8' />
+  <title>test mapicgc-gl-js</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src="../../dist/mapicgc-gl.umd.js"></script>
+  <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%
-        }
-    </style>
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%
+    }
+  </style>
 </head>
 
 <body>
 
-    <meta charset="utf-8" />
-    <title>Exemple mapicgc-gl-js: Afegir mapa base ICGC</title>
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
+  <meta charset="utf-8" />
+  <title>Exemple mapicgc-gl-js: Afegir mapa base ICGC</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <script src="../../dist/mapicgc-gl.umd.js"></script>
-    <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+  <script src="../../dist/mapicgc-gl.umd.js"></script>
+  <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
 
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-      }
-      #basemap-group {
-            position: absolute;
-            bottom: 40px;
-            right: 10px;
-            color: #000000;
-            display: flex;
-        }
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-    </style>
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #basemap-group {
+      position: absolute;
+      bottom: 40px;
+      right: 10px;
+      color: #000000;
+      display: flex;
+    }
+  </style>
   </head>
+
   <body>
     <div id="map"></div>
     <!-- <div id="basemap-group" class="basemap-group"></div> -->
     <script>
       // add basemap
-      console.info(window);
-      const map = new mapicgcgl.Map({
-        container: "map",
-        style: mapicgcgl.Styles.TOPO, // <-- add style basemap here
-        center: [2.1464, 41.306],
-        zoom: 7.4,
-        maxZoom: 19,
-        hash: true,
-        pitch: 0,
-      });
-      map.on("load", () => {
-        //add multiple ICGC basemaps and get a style menu component
-        map.addFullscreenControl();
-        let basemapsicgc = [mapicgcgl.Styles.ORTO, mapicgcgl.Styles.TOPO];
-        map.addBasemapsICGC(basemapsicgc);
-      });
+     
+      async function initMap() {
+        const data = await mapicgcgl.ConfigICGC;
+        const map = new mapicgcgl.Map({
+          container: "map",
+          style: data.Styles.TOPO, // <-- add style basemap here
+          center: [2.1464, 41.306],
+          zoom: 7.4,
+          maxZoom: 19,
+          hash: true,
+          pitch: 0,
+        });
+        map.on("load", () => {
+          //add multiple ICGC basemaps and get a style menu component
+          map.addFullscreenControl();
+          let basemapsicgc = [data.Styles.ORTO, data.Styles.TOPO];
+          map.addBasemapsICGC(basemapsicgc);
+        });
+
+      }
+
+      initMap();
       //If you need to add basemaps from other sources, please follow the structure for each object
       //   let baseLayers = [
       //     {
@@ -97,6 +102,6 @@
       //   ];
       //   map.addBasemaps(baseLayers);
     </script>
-</body>
+  </body>
 
 </html>
