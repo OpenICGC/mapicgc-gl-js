@@ -52,6 +52,7 @@
             layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
         };
         let paintOptionsfgb = {
+            "type": "line",
             "layout": {
                 "visibility": "visible",
             },
@@ -62,15 +63,16 @@
             layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
             };
 
-        map.on("load", () => {
+        map.on("load", () => {          
             map.fetchData(
+                mapicgcgl.Layers.FGBAdmin.comarquesVigent,
+                "Comarques", paintOptionsfgb);
+            map.fetchData( 
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
                 "RutesMontserrat", paintOptions);
             // try with FGB data:
         
-            map.fetchData(
-                mapicgcgl.Layers.FGBAdmin.comarquesVigent,
-                "Comarques", paintOptionsfgb);
+  
                 
             // map.fetchData(
             //     "https://flatgeobuf.org/test/data/UScounties.fgb",

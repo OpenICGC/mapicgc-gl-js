@@ -291,18 +291,36 @@ export default class Map {
   /**
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type.
    * @param {string} url - The URL to fetch GeoJSON data from.
-   * @param {string} name - The geometry name (e.g., 'buildings').
+   * @param {string} idLayer - The id for the layer.
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchData(url, name, options) {
+  async fetchData(url, idLayer, options) {
     try {
+
+      if (!options || options=== undefined){
+        let opt ={
+          "type": "line",
+          "layout": {
+              "visibility": "visible",
+          },
+          "paint": {
+              'line-color': 'grey',
+              'line-width': 2
+          }, 
+          layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
+        }
+        
+options = opt
+
+      }
       let layerPosition = options.layerPosition;
       if (url.includes(".fgb")) {
-        this.addFGBLayerICGC(url, layerPosition, null, options);
+     
+        this.addFGBLayerICGC(url, idLayer, options);
       } else {
         const response = await fetch(url);
         const geojson = await response.json();
-        let nameUser = name;
+        let nameUser = idLayer;
         let keyLayer = this._dealOrderLayer(layerPosition);
         let type = geojson.features[0].geometry.type;
         if (type.includes("ine")) {
@@ -422,11 +440,11 @@ export default class Map {
   /**
    * Fetches GeoJSON data from a URL and adds a corresponding layer to the map based on the specified geometry type and adds to the Menu as a checkbox item.
    * @param {string} url - The URL to fetch GeoJSON data from.
-   * @param {string} name - The geometry name (e.g., 'buildings').
-   * @param {string} featureTree - Import all features as unique or group based on a field ('all', 'field').
+   * @param {string} idLayer - The geometry name (e.g., 'buildings').
+   * @param {string} filterField - Import all features as unique or group based on a field ('all', 'field').
    * @param {Object} options - Additional options for configuring the layer.
    */
-  async fetchDataAndMenu(url, name, featureTree, options) {
+  async fetchDataAndMenu(url, idLayer, filterField, options) {
     try {
       let layerPosition;
       if (options !== null) {
@@ -458,7 +476,7 @@ export default class Map {
           const fc = { type: "FeatureCollection", features: [] };
           for await (const f of deserialize(response.body)) fc.features.push(f);
           geojson = fc;
-          let src = name;
+          let src = idLayer;
           this.map.addSource(src, {
             type: "geojson",
             data: fc,
@@ -467,7 +485,7 @@ export default class Map {
             if (options !== undefined) {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "symbol",
                   source: src,
                   layout: options.layout,
@@ -478,7 +496,7 @@ export default class Map {
             } else {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "symbol",
                   source: src,
                   layout: {
@@ -513,7 +531,7 @@ export default class Map {
               );
             }
           } else {
-            let textLayer = name + "Text";
+            let textLayer = idLayer + "Text";
             this.map.addLayer(
               {
                 id: textLayer,
@@ -554,24 +572,29 @@ export default class Map {
           const response = await fetch(url);
           geojson = await response.json();
         }
-        if (featureTree !== "all") {
+        if (filterField !== "all") {
           const nameTitle = document.createElement("div");
           nameTitle.id = "titleDivMenu";
-          nameTitle.textContent = name;
+          nameTitle.textContent = idLayer;
           menuGroup.appendChild(nameTitle);
           const featureTreeTitle = document.createElement("div");
           featureTreeTitle.id = "titleDivMenuSub";
-          featureTreeTitle.textContent = `📂 ${featureTree}`;
+          featureTreeTitle.textContent = `📂 ${filterField}`;
           menuGroup.appendChild(featureTreeTitle);
         } else {
         }
-        let type = geojson.features[0].geometry.type;
-        if (featureTree === "all") {
+        let type
+        if (options.type){
+          type = options.type
+        }else{
+          type = geojson.features[0].geometry.type;
+        }
+        if (filterField === "all") {
           if (type.includes("ine")) {
             if (options !== undefined) {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "line",
                   source: {
                     type: "geojson",
@@ -585,7 +608,7 @@ export default class Map {
             } else {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "line",
                   source: {
                     type: "geojson",
@@ -608,7 +631,7 @@ export default class Map {
             if (options !== undefined) {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "fill",
                   source: {
                     type: "geojson",
@@ -622,7 +645,7 @@ export default class Map {
             } else {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "fill",
                   source: {
                     type: "geojson",
@@ -645,7 +668,7 @@ export default class Map {
             if (options !== undefined) {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "circle",
                   source: {
                     type: "geojson",
@@ -659,7 +682,7 @@ export default class Map {
             } else {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "circle",
                   source: {
                     type: "geojson",
@@ -682,7 +705,7 @@ export default class Map {
             if (options !== undefined) {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "symbol",
                   source: {
                     type: "geojson",
@@ -696,7 +719,7 @@ export default class Map {
             } else {
               this.map.addLayer(
                 {
-                  id: name,
+                  id: idLayer,
                   type: "symbol",
                   source: {
                     type: "geojson",
@@ -716,13 +739,13 @@ export default class Map {
               );
             }
           }
-          this.addMenuItem(name);
+          this.addMenuItem(idLayer);
         } else {
-          let field = featureTree;
+          let field = filterField;
           const layers = {};
           geojson.features.forEach((feature) => {
             const fieldMarker = feature.properties[field];
-            const idFieldMarker = fieldMarker + `-userFieldFilter-` + name;
+            const idFieldMarker = fieldMarker + `-userFieldFilter-` + idLayer;
             if (fieldMarker !== null) {
               if (!layers[idFieldMarker]) {
                 if (type.includes("ine")) {
@@ -1125,9 +1148,9 @@ export default class Map {
    * @param {number} minZoom - The minimum zoom level.
    * @param {number} maxZoom - The maximum zoom level.
    */
-  setLayerZoomRange(layerId, nimZoom, maxZoom) {
+  setLayerZoomRange(layerId, minZoom, maxZoom) {
     try {
-      return this.map.setLayerZoomRange(layerId, nimZoom, maxZoom);
+      return this.map.setLayerZoomRange(layerId, minZoom, maxZoom);
     } catch (error) {
       console.error(`Error setting terrain: ${error.message}`);
     }
@@ -1204,51 +1227,50 @@ export default class Map {
   /**
    * Adds a WMS layer to the map.
    * @function addLayerWMS
-   * @param {Object} layer - Options for the WMS layer to add.
-   * @param {string} layer.id - Unique identifier for the layer.
-   * @param {string} layer.type - Type of layer ('raster').
-   * @param {string[]} layer.tiles - Tiles for the raster layer.
-   * @param {string} layerPosition - Position of the layer: 'top', below 'labels' or below 'lines'.
-   * @param {Object} exportOptions - Options of the layer: type, layout, paint.
+   
+   * @param {string[]} tiles - Tiles for the raster layer.
+   * @param {string} idLayer - Unique identifier for the layer.
+   * @param {Object} options - Options of the layer: layout, paint and layerPosition.
    */
-  addLayerWMS(layer, layerPosition, exportOptions) {
+
+  addLayerWMS(tiles, idLayer, options) {
     try {
-      let keyLayer = this._dealOrderLayer(layerPosition);
-      if (exportOptions) {
+      let keyLayer = this._dealOrderLayer(options.layerPosition);
+      if (options) {
         this.map.addSource(
-          `${layer.id}`,
+          `${idLayer}`,
           {
-            type: exportOptions.type || "raster",
-            tiles: [layer.tiles],
+            type: "raster",
+            tiles: [tiles],
             tileSize: 256,
           },
           keyLayer
         );
         this.map.addLayer(
           {
-            id: layer.id,
-            type: exportOptions.type,
-            source: layer.id,
-            layout: exportOptions.layout,
-            paint: exportOptions.paint,
+            id: idLayer,
+            type: "raster",
+            source: idLayer,
+            layout: options.layout,
+            paint: options.paint,
           },
           keyLayer
         );
       } else {
         this.map.addSource(
-          `${layer.id}`,
+          `${idLayer}`,
           {
             type: "raster",
-            tiles: [layer.tiles],
+            tiles: [tiles],
             tileSize: 256,
           },
           keyLayer
         );
         this.map.addLayer(
           {
-            id: layer.id,
+            id: idLayer,
             type: "raster",
-            source: layer.id,
+            source: idLayer,
             paint: {},
           },
           keyLayer
@@ -1274,11 +1296,11 @@ export default class Map {
   /**
    * Removes a layer from the map.
    * @function removeLayer
-   * @param {string} layerId - Identifier of the layer to remove.
+   * @param {string} idLayer - Identifier of the layer to remove.
    */
-  removeLayer(layerId) {
+  removeLayer(idLayer) {
     try {
-      this.map.removeLayer(layerId);
+      this.map.removeLayer(idLayer);
     } catch (error) {
       console.error(`Error removing layer: ${error.message}`);
     }
@@ -1286,7 +1308,7 @@ export default class Map {
   /**
    * Removes a source from the map.
    * @function removeSource
-   * @param {string} layerId - Identifier of the source to remove.
+   * @param {string} idLayer - Identifier of the source to remove.
    */
   removeSource(sourceId) {
     try {
@@ -1303,9 +1325,8 @@ export default class Map {
    * @param {string} options.url - URL of the logo image.
    * @param {string} options.href - URL to navigate to when the logo is clicked.
    * @param {string} options.height - Height of the logo.
-   * @param {string} position - Position of the logo.
    */
-  addLogo(options, position) {
+  addLogo(options) {
     try {
       const img = document.createElement("img");
       img.src = options.url;
@@ -1333,11 +1354,21 @@ export default class Map {
       const handleClick = (base) => {
         map.setStyle(base);
       };
+      let mapId = document.getElementById("map");
+      let menuGroup;
+      menuGroup = document.createElement("div");
+      menuGroup.id = "basemap-group";
+      menuGroup.classList.add = "filter-group";
+      mapId.appendChild(menuGroup);
       const basemapGroup = document.getElementById("basemap-group");
+
       for (const url of basesArray) {
         for (const key of Object.keys(defaultOptions.baseStyles)) {
+        
           const item = defaultOptions.baseStyles[key];
+     
           if (url === item.url) {
+            
             const div = document.createElement("div");
             div.className = "basemap-item";
             div.title = item.key;
@@ -1381,31 +1412,31 @@ export default class Map {
   /**
    * Adds feature query function to a layer.
    * @function addFeatureQuery
-   * @param {string} layerName - name of the layer
-   * @param {objetc} options - optional indications for the popup
+   * @param {string} idLayer - name of the layer
+   * @param {objetc} queryFields - optional indications for the popup
    * @param {objetc} popupStyle - optional indications for the popup style
    */
-  addFeatureQuery(layerName, options, popupStyle) {
+  addFeatureQuery(idLayer, queryFields, popupStyle) {
     try {
       let description;
-      this.map.on("mouseenter", layerName, () => {
+      this.map.on("mouseenter", idLayer, () => {
         this.map.getCanvas().style.cursor = "pointer";
       });
-      this.map.on("mouseleave", layerName, () => {
+      this.map.on("mouseleave", idLayer, () => {
         this.map.getCanvas().style.cursor = "";
       });
       this.map.on("click", (e) => {
         let features = this.map.queryRenderedFeatures(e.point);
-        if (features && features[0].source.includes(layerName)) {
+        if (features && features[0].source.includes(idLayer)) {
           let coordinates = [e.lngLat.lng, e.lngLat.lat];
           if (
-            options !== undefined &&
-            options.length > 0 &&
-            options !== "all"
+            queryFields !== undefined &&
+            queryFields.length > 0 &&
+            queryFields !== "all"
           ) {
-            if (options !== null) {
+            if (queryFields !== null) {
               let text = "";
-              options.forEach((prop) => {
+              queryFields.forEach((prop) => {
                 let pr = features[0].properties[prop];
                 text = text + `<h4>${pr}</h4>`;
               });
@@ -1732,45 +1763,22 @@ export default class Map {
       console.error(`Error adding attribution control: ${error.message}`);
     }
   }
-  /**
-   * Internal method to handle map styles.
-   * @function _dealStyleMaps
-   * @param {string} name - Name of the map style.
-   * @returns {string} - URL of the map style.
-   */
-  _dealStyleMaps(name) {
-    try {
-      if (name && name.indexOf("icgc.cat") != -1) {
-        for (const key in Styles) {
-          if (Styles.hasOwnProperty(key)) {
-            const style = Styles[key];
-            if (key === name) {
-              return style; //
-            }
-          }
-        }
-        return Styles[0];
-      } else {
-        return name;
-      }
-    } catch (error) {
-      console.error(`Error dealing with map styles: ${error.message}`);
-      return null;
-    }
-  }
+
   /**
    * Adds an ICGC image layer to the map based on the specified name and year.
    * @function addImageLayerICGC
-   * @param {string} name - The url of the layer.
+   * @param {string} url - The url of the  layer.
+   * @param {string} idLayer - The user id for the  layer.
+   * @param {object} options - Type, position,layout and paint options for the layer
    */
-  addImageLayerICGC(idLayer, name, options) {
+  addImageLayerICGC(url,idLayer, options) {
     try {
       let idName = null;
-      let position;
+      let layerPosition;
       let exportOptions;
       if (options) {
         exportOptions = options;
-        position = options.position;
+        layerPosition = options.layerPosition;
       } else {
         exportOptions = {
           type: "raster",
@@ -1780,11 +1788,11 @@ export default class Map {
           paint: {
             "raster-opacity": 1,
           },
-          position: ORDER_LAYER_SYMBOL,
+          layerPosition: ORDER_LAYER_SYMBOL,
         };
       }
       idName = this._findImageType(
-        name,
+        url,
         Layers.Orto,
         Layers.VectorAdmin,
         Layers.WMS,
@@ -1795,15 +1803,16 @@ export default class Map {
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
           "font-weight: bold; font-style: italic;",
           "font-weight: normal; font-style: normal; color: red;",
-          name,
+          url,
           "font-weight: bold; font-style: italic;"
         );
       }
       let sourceWMS = {
         id: idLayer,
-        tiles: name,
+        tiles: url,
       };
-      this.addLayerWMS(sourceWMS, position, exportOptions);
+      // this.addLayerWMS(sourceWMS, layerPosition, exportOptions);
+      this.addLayerWMS(url, idLayer, exportOptions);
     } catch (error) {
       console.error(`Error adding ICGC image layer: ${error.message}`);
     }
@@ -1811,37 +1820,39 @@ export default class Map {
   /**
    * Adds an ICGC vector layer to the map based on the specified name and year.
    * @function addVectorLayerICGC
+   * @param {string} url - The url of the vector layer.
    * @param {string} idLayer - The user id for the vector layer.
-   * @param {string} layerUrl - The url of the vector layer.
    * @param {object} options - Type, position,layout and paint options for the layer
    *
    */
-  async addVectorLayerICGC(idLayer, layerUrl, options) {
+  async addVectorLayerICGC(url, idLayer, options) {
     try {
+      
       let {
         type = "line",
-        position = ORDER_LAYER_SYMBOL,
+        layerPosition = ORDER_LAYER_SYMBOL,
         layoutOptions = { visibility: "visible" },
         paintOption,
       } = options || {};
-      let keyLayer = this._dealOrderLayer(position);
+      
+      let keyLayer = this._dealOrderLayer(layerPosition);
 
-      if (!layerUrl) {
+      if (!url) {
         console.log(
           "❌ %c The layer: %c%s%c does not exist in the ICGC DB. Consult the documentation.",
           "font-weight: bold; font-style: italic;",
           "font-weight: normal; font-style: normal; color: red;",
-          layerUrl,
+          url,
           "font-weight: bold; font-style: italic;"
         );
         return;
       }
 
-      if (layerUrl.includes("https")) {
-        let sourceName = this._getKeyByUrlVector(layerUrl);
+      if (url.includes("https")) {
+        let sourceName = this._getKeyByUrlVector(url);
         this.map.addSource(sourceName, {
           type: "vector",
-          url: layerUrl,
+          url: url,
         });
 
         let layerOptions = {
@@ -1850,7 +1861,7 @@ export default class Map {
           source: sourceName,
           "source-layer": "cobertes",
           maxzoom: 18,
-          layout: layoutOptions,
+          layout: options.layout,
           paint: Legends.cobertesSol,
         };
 
@@ -1873,9 +1884,9 @@ export default class Map {
           id: idLayer,
           type: type,
           source: sourceLimits,
-          "source-layer": layerUrl,
-          layout: layoutOptions,
-          paint: paintOption || {},
+          "source-layer": url,
+          layout: options.layout,
+          paint: options.paint || {},
         };
 
         if (type === "fill" || type === "polygon") {
@@ -1902,31 +1913,40 @@ export default class Map {
    * Adds an ICGC FGB layer to the map based on the specified name and year.
    * @function addFGBLayerICGC
    * @param {string} url - The url of the FGB layer.
-   * @param {string} visibleLabel - Visibility of the label ("visible" / "none").
-   * @param {object} paintOption - Paint option for the layer
+   * @param {string} idLayer - Id for the layer.
+   * @param {object} options - Paint option for the layer
    *
    */
-  async addFGBLayerICGC(layerUrl, position, paintOption) {
+  async addFGBLayerICGC(url, idLayer, options) {
+
     try {
-      let visibleLabel = "visible";
-      let keyLayer = this._dealOrderLayer(position);
-      let name = this._getKeyByUrlFGB(layerUrl);
-      if (name === null) {
-        name = "userFGB";
-      } else {
+
+  
+      if (!options){
+        options.layout = {'visibility' : true},
+        options.paint = {
+          "line-color": "#4832a8",
+          "line-opacity": 1,
+          "line-width": 1,
+        },
+        options.type = 'lines',
+        options.layerPosition = 'labels'
+
       }
-      const response = await fetch(layerUrl);
+      let keyLayer = this._dealOrderLayer(options.layerPosition);
+
+      const response = await fetch(url);
       const fc = { type: "FeatureCollection", features: [] };
       for await (const f of deserialize(response.body)) fc.features.push(f);
-      let src = name;
+      let src = idLayer;
       this.map.addSource(src, {
         type: "geojson",
         data: fc,
       });
-      if (layerUrl.includes("text")) {
+      if (url.includes("text")) {
         this.map.addLayer(
           {
-            id: name,
+            id: idLayer,
             type: "symbol",
             source: src,
             layout: {
@@ -1943,7 +1963,7 @@ export default class Map {
               "text-field": ["get", "NOM_AC"],
               "text-transform": "none",
               "text-max-width": 25,
-              visibility: visibleLabel,
+              visibility: options.layout.visibility,
               "text-justify": "right",
               "text-anchor": "top",
               "text-allow-overlap": false,
@@ -1960,92 +1980,18 @@ export default class Map {
           keyLayer
         );
       } else {
+        
         this.map.addLayer(
           {
-            id: name + "-fill",
-            type: "fill",
+            id: idLayer ,
+            type: options.type,
             source: src,
-            paint: {
-              "fill-color": "#0000FF",
-              "fill-opacity": 0,
-            },
+            layout: options.layout,
+            paint: options.paint,
           },
           keyLayer
         );
-        this.map.addLayer(
-          {
-            id: name + "-underline",
-            type: "line",
-            source: src,
-            paint: {
-              "line-color": "#ffffff",
-              "line-opacity": 1,
-              "line-width": 3,
-            },
-          },
-          keyLayer
-        );
-        if (paintOption) {
-          this.map.addLayer(
-            {
-              id: name + "-line",
-              type: "line",
-              source: src,
-              paint: paintOption,
-            },
-            keyLayer
-          );
-        } else {
-          this.map.addLayer(
-            {
-              id: name + "-line",
-              type: "line",
-              source: src,
-              paint: {
-                "line-color": "#4832a8",
-                "line-opacity": 1,
-                "line-width": 1,
-              },
-            },
-            keyLayer
-          );
-        }
-        let textLayer = name + "Text";
-        this.map.addLayer(
-          {
-            id: textLayer,
-            type: "symbol",
-            source: src,
-            layout: {
-              "text-letter-spacing": 0.1,
-              "text-size": {
-                base: 1.2,
-                stops: [
-                  [8, 0],
-                  [12, 14],
-                  [15, 15],
-                ],
-              },
-              "text-font": ["FiraSans-Regular"],
-              "text-field": ["get", "NOM_AC"],
-              "text-transform": "none",
-              "text-max-width": 25,
-              visibility: visibleLabel,
-              "text-justify": "right",
-              "text-anchor": "top",
-              "text-allow-overlap": false,
-              "symbol-spacing": 2,
-              "text-line-height": 1,
-            },
-            paint: {
-              "text-halo-blur": 0.5,
-              "text-color": "rgba(90, 7, 7, 1)",
-              "text-halo-width": 2,
-              "text-halo-color": "rgba(255, 255, 255,0.8)",
-            },
-          },
-          keyLayer
-        );
+    
       }
     } catch (error) {
       console.error(`Error adding ICGC FGB layer: ${error.message}`);
@@ -2054,16 +2000,16 @@ export default class Map {
   /**
    * Adds 3D terrain to the map using hillshade.
    * @function addTerrainICGC
-   * @param {string} resolution - resolution of the terrain data: 2m or 5m.
-   * @param {string} [positionButton='top-right'] - Position to add the button on the map.
+   * @param {string} url - dataset url of the terrain
+   * @param {string} controlPosition - Position to add the control on the map.
    */
-  addTerrainICGC(resolution, positionButton) {
+  addTerrainICGC(url, controlPosition) {
     try {
       let op;
       for (const key in Terrains) {
         if (Terrains.hasOwnProperty(key)) {
           const objeto = Terrains[key];
-          if (objeto === resolution) {
+          if (objeto === url) {
             op = objeto;
           }
         }
@@ -2079,7 +2025,7 @@ export default class Map {
         this.removeSource("terrainICGC");
       }
       if (this.getSource("terrainICGC") === undefined) {
-        if (resolution.includes("terrarium")) {
+        if (url.includes("terrarium")) {
           this.map.addSource("terrainICGC", {
             type: "raster-dem",
             tiles: [urlTerrainICGC],
@@ -2100,17 +2046,19 @@ export default class Map {
         source: "terrainICGC",
         exaggeration: 1.5,
       });
-      if (positionButton === undefined) {
-        positionButton = "top-right";
-      }
+      if (controlPosition === undefined || controlPosition === null) {
+ 
+      }else{
       this.map.addControl(
-        new Pitch3DToggleControl({
-          pitch: 90,
-          bearing: null,
-          minpitchzoom: null,
-        }),
-        positionButton
-      );
+            new Pitch3DToggleControl({
+              pitch: 90,
+              bearing: null,
+              minpitchzoom: null,
+            }),
+            controlPosition
+          );
+      }
+   
     } catch (error) {
       console.error(`Error adding 3D terrain: ${error.message}`);
     }
@@ -2118,16 +2066,17 @@ export default class Map {
   /**
    * Add image legend.
    * @function addLegend
-   * @param {string} name - layer's name.
-   * @param {string} legendUrl - image legend url.
+   * @param {string} url - image legend url.
+   * @param {string} idLayer - layer's name.
    */
-  addLegend(name, legendUrl) {
+  addLegend(url, idLayer) {
     try {
-      this.map.addControl(new LegendControl({ name, legendUrl }));
+      this.map.addControl(new LegendControl({ url, idLayer }));
     } catch (error) {
       console.error(`Error adding legend: ${error.message}`);
     }
   }
+
   //Internal methods
   _findImageType(url, var1, var2, var3, var4) {
     const vectors = [var1, var2, var3, var4];
@@ -2201,6 +2150,32 @@ export default class Map {
       return null;
     }
   }
+    /**
+   * Internal method to handle map styles.
+   * @function _dealStyleMaps
+   * @param {string} name - Name of the map style.
+   * @returns {string} - URL of the map style.
+   */
+    _dealStyleMaps(name) {
+      try {
+        if (name && name.indexOf("icgc.cat") != -1) {
+          for (const key in Styles) {
+            if (Styles.hasOwnProperty(key)) {
+              const style = Styles[key];
+              if (key === name) {
+                return style; //
+              }
+            }
+          }
+          return Styles[0];
+        } else {
+          return name;
+        }
+      } catch (error) {
+        console.error(`Error dealing with map styles: ${error.message}`);
+        return null;
+      }
+    }
   _dealOrto3dStyle(name) {
     try {
       if (name == "orto3d") {

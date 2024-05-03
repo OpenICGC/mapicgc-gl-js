@@ -74,12 +74,14 @@
 
         let filterFGBField = 'NOMPROV' // select 'all' for view all the features as a single layer
           let optionsLayerfgb = {
+            "type": 'line',
             "layout": {
                 "visibility": "visible",
             },
             "paint": {
-                "fill-color": "grey",
-                "fill-opacity": 0.16,
+                "line-color": "grey",
+                "line-opacity": 1,
+                "line-width": 2
             },
             layerPosition: "labels"
         }

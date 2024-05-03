@@ -43,16 +43,17 @@
         });
         map.on("load", () => {
             let paintOptions = {
+                layout:{'visibility': 'visible' }, 
+                paint:{
                 "line-color": "red",
                 "line-width": 2,
-                "line-opacity": 1,
+                "line-opacity": 1},
+                layerPosition: 'top'
             };
-            let layerPosition = 'top';
-            map.fetchData(
+   
+            map.fetchData( 
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", layerPosition,
-                paintOptions
-            );
+                "RutesMontserrat", paintOptions);
             
             let popupStyle = {
                 title : 'Informació:',

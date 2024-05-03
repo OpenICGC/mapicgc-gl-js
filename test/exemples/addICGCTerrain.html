@@ -37,8 +37,10 @@
         pitch: 80,
         bearing: 40,
       });
+
+      let controlPosition= "bottom-right" // set null for no button 
       map.on("load", () => {
-        map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
+        map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, controlPosition);
       });
     </script>
 </body>

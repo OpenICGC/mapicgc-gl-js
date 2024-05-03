@@ -53,7 +53,7 @@ map3dOptions: {
 baseStyles: {
   0: {
     key: "TOPO",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
+    url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png",
   },
   1: {
