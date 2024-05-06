@@ -31,7 +31,7 @@
 
     <script>
         async function initMap() {
-            const data = await mapicgcgl.ConfigICGC;
+            const data = await mapicgcgl.Config.getConfigICGC();
             const map = new mapicgcgl.Map({
                 container: "map",
                 style: data.Styles.TOPO,

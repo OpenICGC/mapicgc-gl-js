@@ -60,10 +60,9 @@
     <div id="map"></div>
     <!-- <div id="basemap-group" class="basemap-group"></div> -->
     <script>
-      // add basemap
      
       async function initMap() {
-        const data = await mapicgcgl.ConfigICGC;
+        const data = await  mapicgcgl.Config.getConfigICGC();
         const map = new mapicgcgl.Map({
           container: "map",
           style: data.Styles.TOPO, // <-- add style basemap here

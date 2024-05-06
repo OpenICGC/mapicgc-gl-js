@@ -39,7 +39,7 @@
 
   <script>
     async function initMap() {
-      const data = await mapicgcgl.ConfigICGC;
+      const data = await mapicgcgl.Config.getConfigICGC();;
       const map1 = new mapicgcgl.Map({
         container: "before",
         style: data.Styles.ORTO,

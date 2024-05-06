@@ -1,10 +1,11 @@
 {
   "name": "mapicgc-gl-js",
-  "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.65",
+  "homepage": "https://openicgc.github.io/mapicgc-doc/",
+  "version": "0.0.76",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
+  "type": "commonjs",
   "keywords": [
     "map",
     "js",
@@ -23,12 +24,12 @@
       "email": "geostart@icgc.cat"
     }
   ],
-  "main": "dist/mapicgc-gl.js",
+  "main": "dist/mapicgc-gl.mjs",
   "module": "dist/mapicgc-gl.js",
   "exports": {
     ".": {
-      "import": "./dist/mapicgc-gl.js",
-      "require": "./dist/mapicgc-gl.js"
+      "import": "./dist/mapicgc-gl.mjs",
+      "require": "./dist/mapicgc-gl.mjs"
     }
   },
   "scripts": {

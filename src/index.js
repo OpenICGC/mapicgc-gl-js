@@ -1,9 +1,5 @@
 import Map from "./map/Map";
 import CompareMaps from "./plugins/CompareMaps";
-import ConfigICGC from "./constants/ConfigICGC";
+import Config from "./constants/ConfigICGC";
 
-
-
-
-
-export { Map, CompareMaps,ConfigICGC };
+export { Map, CompareMaps,Config };

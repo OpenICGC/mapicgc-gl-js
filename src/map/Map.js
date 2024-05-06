@@ -1,5 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "../../public/mapicgc-gl.css";
+import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import { deserialize } from "flatgeobuf/lib/mjs/geojson.js";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
 import { MapboxLayer } from "@deck.gl/mapbox";
@@ -13,13 +14,13 @@ import {
   Format,
   DPI,
 } from "@watergis/maplibre-gl-export";
-import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import LegendControl from "../controls/LegendControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
-import ConfigICGC from "../constants/ConfigICGC.js";
+import Config from "../constants/ConfigICGC.js";
 import Legends from "../constants/Legends.js";
+import mapicgcConfig from "../mapicgc-config.json";
 
 const ORDER_LAYER_TOP = "top";
 const ORDER_LAYER_LINE = "lines";
@@ -31,7 +32,8 @@ export default class Map {
    * @param {Object} options - Options to initialize the map.
    */
   constructor(options) {
-    ConfigICGC.then((data) => {
+    
+    Config.getConfigICGC().then((data) => {
       Styles = { ...data.Styles };
       Layers = { ...data.Layers };
       Terrains = { ...data.Terrains };
