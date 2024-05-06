@@ -309,26 +309,23 @@ export default class Map {
    */
   async fetchData(url, idLayer, options) {
     try {
-
-      if (!options || options=== undefined){
-        let opt ={
-          "type": "line",
-          "layout": {
-              "visibility": "visible",
+      if (!options || options === undefined) {
+        let opt = {
+          type: "line",
+          layout: {
+            visibility: "visible",
           },
-          "paint": {
-              'line-color': 'grey',
-              'line-width': 2
-          }, 
-          layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
-        }
-        
-options = opt
+          paint: {
+            "line-color": "grey",
+            "line-width": 2,
+          },
+          layerPosition: "top", // select: 'top', 'lines' or 'labels'
+        };
 
+        options = opt;
       }
       let layerPosition = options.layerPosition;
       if (url.includes(".fgb")) {
-     
         this.addFGBLayerICGC(url, idLayer, options);
       } else {
         const response = await fetch(url);
@@ -596,10 +593,10 @@ options = opt
           menuGroup.appendChild(featureTreeTitle);
         } else {
         }
-        let type
-        if (options.type){
-          type = options.type
-        }else{
+        let type;
+        if (options.type) {
+          type = options.type;
+        } else {
           type = geojson.features[0].geometry.type;
         }
         if (filterField === "all") {
@@ -1377,11 +1374,9 @@ options = opt
 
       for (const url of basesArray) {
         for (const key of Object.keys(defaultOptions.baseStyles)) {
-        
           const item = defaultOptions.baseStyles[key];
-     
+
           if (url === item.url) {
-            
             const div = document.createElement("div");
             div.className = "basemap-item";
             div.title = item.key;
@@ -1548,7 +1543,7 @@ options = opt
           .setLngLat(options.coord)
           .addTo(this.map);
       } else {
-        popup = new maplibregl.Popup({ offset: options.textOffset }).setText(
+        popup = new maplibregl.Popup({ offset: options.textOffset }).setHTML(
           options.text
         );
         marker = new maplibregl.Marker()
@@ -1784,7 +1779,7 @@ options = opt
    * @param {string} idLayer - The user id for the  layer.
    * @param {object} options - Type, position,layout and paint options for the layer
    */
-  addImageLayerICGC(url,idLayer, options) {
+  addImageLayerICGC(url, idLayer, options) {
     try {
       let idName = null;
       let layerPosition;
@@ -1840,14 +1835,13 @@ options = opt
    */
   async addVectorLayerICGC(url, idLayer, options) {
     try {
-      
       let {
         type = "line",
         layerPosition = ORDER_LAYER_SYMBOL,
         layoutOptions = { visibility: "visible" },
         paintOption,
       } = options || {};
-      
+
       let keyLayer = this._dealOrderLayer(layerPosition);
 
       if (!url) {
@@ -1884,7 +1878,9 @@ options = opt
 
         if (layoutOptions.visibility === "visible") {
           let legendUrl = this._getLegendByName(sourceName);
-          map.addLegend(sourceName, legendUrl);
+          console.info("legendUrl",legendUrl);
+          console.info("sourceName",sourceName);
+          this.addLegend(legendUrl,sourceName,);
         }
       } else {
         let sourceLimits = idLayer;
@@ -1931,20 +1927,16 @@ options = opt
    *
    */
   async addFGBLayerICGC(url, idLayer, options) {
-
     try {
-
-  
-      if (!options){
-        options.layout = {'visibility' : true},
-        options.paint = {
-          "line-color": "#4832a8",
-          "line-opacity": 1,
-          "line-width": 1,
-        },
-        options.type = 'lines',
-        options.layerPosition = 'labels'
-
+      if (!options) {
+        (options.layout = { visibility: true }),
+          (options.paint = {
+            "line-color": "#4832a8",
+            "line-opacity": 1,
+            "line-width": 1,
+          }),
+          (options.type = "lines"),
+          (options.layerPosition = "labels");
       }
       let keyLayer = this._dealOrderLayer(options.layerPosition);
 
@@ -1993,10 +1985,9 @@ options = opt
           keyLayer
         );
       } else {
-        
         this.map.addLayer(
           {
-            id: idLayer ,
+            id: idLayer,
             type: options.type,
             source: src,
             layout: options.layout,
@@ -2004,7 +1995,6 @@ options = opt
           },
           keyLayer
         );
-    
       }
     } catch (error) {
       console.error(`Error adding ICGC FGB layer: ${error.message}`);
@@ -2060,18 +2050,16 @@ options = opt
         exaggeration: 1.5,
       });
       if (controlPosition === undefined || controlPosition === null) {
- 
-      }else{
-      this.map.addControl(
-            new Pitch3DToggleControl({
-              pitch: 90,
-              bearing: null,
-              minpitchzoom: null,
-            }),
-            controlPosition
-          );
+      } else {
+        this.map.addControl(
+          new Pitch3DToggleControl({
+            pitch: 90,
+            bearing: null,
+            minpitchzoom: null,
+          }),
+          controlPosition
+        );
       }
-   
     } catch (error) {
       console.error(`Error adding 3D terrain: ${error.message}`);
     }
@@ -2163,32 +2151,32 @@ options = opt
       return null;
     }
   }
-    /**
+  /**
    * Internal method to handle map styles.
    * @function _dealStyleMaps
    * @param {string} name - Name of the map style.
    * @returns {string} - URL of the map style.
    */
-    _dealStyleMaps(name) {
-      try {
-        if (name && name.indexOf("icgc.cat") != -1) {
-          for (const key in Styles) {
-            if (Styles.hasOwnProperty(key)) {
-              const style = Styles[key];
-              if (key === name) {
-                return style; //
-              }
+  _dealStyleMaps(name) {
+    try {
+      if (name && name.indexOf("icgc.cat") != -1) {
+        for (const key in Styles) {
+          if (Styles.hasOwnProperty(key)) {
+            const style = Styles[key];
+            if (key === name) {
+              return style; //
             }
           }
-          return Styles[0];
-        } else {
-          return name;
         }
-      } catch (error) {
-        console.error(`Error dealing with map styles: ${error.message}`);
-        return null;
+        return Styles[0];
+      } else {
+        return name;
       }
+    } catch (error) {
+      console.error(`Error dealing with map styles: ${error.message}`);
+      return null;
     }
+  }
   _dealOrto3dStyle(name) {
     try {
       if (name == "orto3d") {
@@ -2245,7 +2233,12 @@ options = opt
       const layers = this.map.getStyle().layers;
       let firstSymbolId;
       for (let i = 0; i < layers.length; i++) {
-        if (layers[i].type === "symbol") {
+        if (
+          layers[i].type === "symbol" &&
+          layers[i].id.indexOf("contour") === -1 &&
+          layers[i].id.indexOf("water") === -1
+        ) {
+          console.info(layers[i].id);
           firstSymbolId = layers[i].id;
           break;
         }

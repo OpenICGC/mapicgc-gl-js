@@ -2,7 +2,7 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>addVectorLayerICGC</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
@@ -20,71 +20,56 @@
             height: 100%
         }
 
-        /* personalitza el teu botó de llegenda: */
-        #toggleLegend {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #3f33eb;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        ;
     </style>
 </head>
 
 <body>
     <div id="map"></div>
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 7.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-        map.on("load", () => {
-            let optionsVectorAdmin = {
-                "type": "line",
-                "layout": {
-                    "visibility": "visible"
-                },
-                "paint": {
-                    "line-color": "#4832a8",
-                    "line-opacity": 1,
-                    "line-width": 1,
-                }, layerPosition: "top"
-            }
-
-
-
-
-            let optionsVector = {
-                "type": "fill",
-                "layout": {
-                    "visibility": "visible"
-                },
-                "paint": {
-                    "fill-color": "red"
-                }, layerPosition: "top"
-            };
-            map.addVectorLayerICGC(
-                mapicgcgl.Layers.Vector.cobertes2018,
-                "Cobertes",
-                optionsVector
-            );
-            map.addVectorLayerICGC(mapicgcgl.Layers.VectorAdmin.municipisVigent,
-                'municipisVigent', optionsVectorAdmin);
-        });
+        async function initMap() {
+            const data = await mapicgcgl.ConfigICGC;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.TOPO,
+                center: [2.1464, 41.306],
+                zoom: 7.4,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            map.on("load", () => {
+                let optionsVectorAdmin = {
+                    "type": "line",
+                    "layout": {
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                        "line-color": "#4832a8",
+                        "line-opacity": 1,
+                        "line-width": 1,
+                    },
+                    layerPosition: "top"
+                }
+                let optionsVector = {
+                    "type": "fill",
+                    "layout": {
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                        "fill-color": "red"
+                    },
+                    layerPosition: "top"
+                };
+                map.addVectorLayerICGC(
+                    data.Layers.Vector.cobertes2018,
+                    "Cobertes",
+                    optionsVector
+                );
+                map.addVectorLayerICGC(data.Layers.VectorAdmin.municipisVigent,
+                    'municipisVigent', optionsVectorAdmin);
+            });
+        }
+        initMap();
     </script>
 </body>
 

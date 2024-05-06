@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>addMouseCoordinateControl test </title>
+    <title>addMouseCoordinateControl</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
@@ -22,18 +22,22 @@
 <body>
     <div id="map" class="map"></div>
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 7.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-        map.on("load", () => {
-            map.addMouseCoordControl({width:'225px',utm:true,lonlat:true},"bottom-left");
-        });
+        async function initMap() {
+            const data = await mapicgcgl.ConfigICGC;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.TOPO,
+                center: [2.1464, 41.306],
+                zoom: 7.4,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            map.on("load", () => {
+                map.addMouseCoordControl({ width: '225px', utm: true, lonlat: true }, "bottom-left");
+            });
+        }
+        initMap();
     </script>
 </body>
 </html>

@@ -2,11 +2,10 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>fetchData</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
@@ -24,63 +23,58 @@
 </head>
 
 <body>
-
-
     <div id="map" class="map"></div>
     <nav id="menu-group" class="filter-group"></nav>
     <div id="basemap-group" class="basemap-group"></div>
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.LIGHT,
-            center: [1.808, 41.618],
-            zoom: 10,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-    
-        let paintOptions = {
-            "layout": {
-                "visibility": "visible",
-            },
-            "paint": {
-            "line-color": "green",
-            "line-width": 3,
-            "line-opacity": 1,
-            },
-            layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
-        };
-        let paintOptionsfgb = {
-            "type": "line",
-            "layout": {
-                "visibility": "visible",
-            },
-            "paint": {
-                'line-color': 'grey',
-                'line-width': 2
-            }, 
-            layerPosition : 'top'  // select: 'top', 'lines' or 'labels'
+        async function initMap() {
+            const data = await mapicgcgl.ConfigICGC;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.LIGHT,
+                center: [1.808, 41.618],
+                zoom: 10,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            let paintOptions = {
+                "layout": {
+                    "visibility": "visible",
+                },
+                "paint": {
+                    "line-color": "green",
+                    "line-width": 3,
+                    "line-opacity": 1,
+                },
+                layerPosition: 'top'  // select: 'top', 'lines' or 'labels'
             };
-
-        map.on("load", () => {          
-            map.fetchData(
-                mapicgcgl.Layers.FGBAdmin.comarquesVigent,
-                "Comarques", paintOptionsfgb);
-            map.fetchData( 
-                "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", paintOptions);
-            // try with FGB data:
-        
-  
-                
-            // map.fetchData(
-            //     "https://flatgeobuf.org/test/data/UScounties.fgb",
-            //     "UScounties", paintOptionsfgb
-            // );
-
-           
-        });
+            let paintOptionsfgb = {
+                "type": "line",
+                "layout": {
+                    "visibility": "visible",
+                },
+                "paint": {
+                    'line-color': 'grey',
+                    'line-width': 2
+                },
+                layerPosition: 'top'  // select: 'top', 'lines' or 'labels'
+            };
+            map.on("load", () => {
+                map.fetchData(
+                    data.Layers.FGBAdmin.comarquesVigent,
+                    "Comarques", paintOptionsfgb);
+                map.fetchData(
+                    "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
+                    "RutesMontserrat", paintOptions);
+                // try with FGB data:
+                // map.fetchData(
+                //     "https://....fgb",
+                //     "test", paintOptionsfgb
+                // );
+            });
+        }
+        initMap();
     </script>
 </body>
 

@@ -1,18 +1,15 @@
 <html>
-
 <head>
     <meta charset='utf-8' />
     <title>test mapicgc-gl-js</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
             padding: 0;
         }
-
         #map {
             position: absolute;
             top: 0;
@@ -20,45 +17,37 @@
             width: 100%;
             height: 100%
         }
-
         #menu-group {
             position: absolute;
             top: 10px;
             left: 10px;
             color: #000000;
         }
-
         #menu-group input[type='checkbox']+label {
             background-color: #ffffff !important;
         }
-
         #titleDivMenu {
             background-color: rgb(213 212 212);
         }
-
         #titleDivMenuSub {
             background-color: #e9e9e9;
         }
     </style>
 </head>
-
 <body>
-
-
     <div id="map" class="map"></div>
-
     <script>
+        async function initMap() {
+ const data = await mapicgcgl.ConfigICGC;
         const map = new mapicgcgl.Map({
             container: "map",
-            style: mapicgcgl.Styles.TOPO,
+            style: data.Styles.TOPO,
             center: [1.808, 41.618],
             zoom: 10,
             maxZoom: 19,
             hash: true,
             pitch: 0,
         });
-       
-    
         let filterField = 'municipi' // select 'all' for view all the features as a single layer
         let optionsLayer = {
             "layout": {
@@ -71,8 +60,7 @@
             },
             layerPosition: "labels"
         }
-
-        let filterFGBField = 'NOMPROV' // select 'all' for view all the features as a single layer
+        let filterFGBField = 'NOMCOMAR' // select 'all' for view all the features as a single layer
           let optionsLayerfgb = {
             "type": 'line',
             "layout": {
@@ -85,32 +73,23 @@
             },
             layerPosition: "labels"
         }
-
-
         map.on("load", () => {
-
             map.fetchDataAndMenu(
                 "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
                 "RutesMontserrat", filterField, optionsLayer);
-
             //     map.fetchDataAndMenu(
             //     "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
             //     "RutesMontserrat", filterField, layerPosition, paintOptions);
-
             // map.fetchDataAndMenu(
-            //     mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
+            //     data.Layers.FGBAdmin.comarquesVigent, "Comarques",
             //     filterFGBField, layerPosition, paintOptionsfgb
             // );
                map.fetchDataAndMenu(
-            mapicgcgl.Layers.FGBAdmin.provinciesVigent, "Provincies",
+            data.Layers.FGBAdmin.comarquesVigent, "Comarques",
             filterFGBField, optionsLayerfgb );
-
-
         });
-
-
-
+    }
+        initMap();
     </script>
 </body>
-
 </html>

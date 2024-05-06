@@ -2,11 +2,10 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>addLayerTree</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
@@ -24,75 +23,74 @@
 </head>
 
 <body>
-
-
     <div id="map" class="map"></div>
     <nav id="filter-group" class="filter-group"></nav>
-
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 6.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-
-        let options = {
-            features: {
-                type: "FeatureCollection",
-                features: [
-                    {
-                        type: "Feature",
-                        properties: {
-                            icon: "Rubí",
+        async function initMap() {
+            const data = await mapicgcgl.ConfigICGC;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.TOPO,
+                center: [2.1464, 41.306],
+                zoom: 6.4,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            let options = {
+                features: {
+                    type: "FeatureCollection",
+                    features: [
+                        {
+                            type: "Feature",
+                            properties: {
+                                icon: "Rubí",
+                            },
+                            geometry: {
+                                type: "Point",
+                                coordinates: [2.0119, 41.489],
+                            },
                         },
-                        geometry: {
-                            type: "Point",
-                            coordinates: [2.0119, 41.489],
+                        {
+                            type: "Feature",
+                            properties: {
+                                icon: "Moià",
+                            },
+                            geometry: {
+                                type: "Point",
+                                coordinates: [2.119, 41.87],
+                            },
                         },
-                    },
-
-                    {
-                        type: "Feature",
-                        properties: {
-                            icon: "Moià",
+                        {
+                            type: "Feature",
+                            properties: {
+                                icon: "Les Borges Blanques",
+                            },
+                            geometry: {
+                                type: "Point",
+                                coordinates: [0.97319, 41.4589],
+                            },
                         },
-                        geometry: {
-                            type: "Point",
-                            coordinates: [2.119, 41.87],
+                        {
+                            type: "Feature",
+                            properties: {
+                                icon: "Berga",
+                            },
+                            geometry: {
+                                type: "Point",
+                                coordinates: [1.83, 42.163],
+                            },
                         },
-                    },
-                    {
-                        type: "Feature",
-                        properties: {
-                            icon: "Les Borges Blanques",
-                        },
-                        geometry: {
-                            type: "Point",
-                            coordinates: [0.97319, 41.4589],
-                        },
-                    },
-                    {
-                        type: "Feature",
-                        properties: {
-                            icon: "Berga",
-                        },
-                        geometry: {
-                            type: "Point",
-                            coordinates: [1.83, 42.163],
-                        },
-                    },
-                ],
-            },
-            id: "testLayer",
-            type: "geojson",
-        };
-        map.on("load", () => {
-            map.addLayerTree(options);
-        });
+                    ],
+                },
+                id: "testLayer",
+                type: "geojson",
+            };
+            map.on("load", () => {
+                map.addLayerTree(options);
+            });
+        }
+        initMap();
     </script>
 </body>
 
