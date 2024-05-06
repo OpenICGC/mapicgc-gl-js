@@ -22,7 +22,7 @@ import Config from "../constants/ConfigICGC.js";
 import Legends from "../constants/Legends.js";
 import mapicgcConfig from "../mapicgc-config.json";
 
-const ORDER_LAYER_TOP = "top";
+const ORDER_LAYER_TOP = "top"; // default
 const ORDER_LAYER_LINE = "lines";
 const ORDER_LAYER_SYMBOL = "labels";
 let Styles, Terrains, Layers, defaultOptions;
