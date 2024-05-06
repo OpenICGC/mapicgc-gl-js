@@ -2,13 +2,10 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>advancedExemple</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
-
-
     <style>
         body {
             margin: 0;
@@ -46,103 +43,89 @@
 </head>
 
 <body>
-
-
     <div id="map" class="map"></div>
     <nav id="menu-group" class="filter-group"></nav>
-
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.ORTO,
-            center: [1.808, 41.618],
-            zoom: 10,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-
-        map.on("load", () => {
-
-            map.addGeocoderICGC();
-            map.addGeolocateControl(
-                {
-                    positionOptions: {
-                        enableHighAccuracy: true,
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.ORTO,
+                center: [1.808, 41.618],
+                zoom: 10,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            map.on("load", () => {
+                map.addGeocoderICGC();
+                map.addGeolocateControl(
+                    {
+                        positionOptions: {
+                            enableHighAccuracy: true,
+                        },
+                        trackUserLocation: true,
                     },
-                    trackUserLocation: true,
-                },
-                "bottom-right"
-            );
-            map.addFullscreenControl()
-            map.addExportControl();
-
-            map.addTerrainICGC(mapicgcgl.Terrains.ICGC5M, "bottom-right");
-            let optionsLayer = {
-                "type": "raster",
-                "layout": {
-                    "visibility": "visible",
-                },
-                "paint": {
-                    "raster-opacity": 1
-                }, position: "labels"
-            }
-
-            // map.addImageLayerICGC("orto2013",mapicgcgl.Layers.Orto.ortofotoColor2013, optionsLayer);
-
-            //add vector icgc
-            let optionsLayerVector = {
-                "type": "line",
-                "layout": {
-                    "visibility": "visible"
-                },
-                "paint": {
-                    "line-color": "red",
-                    "line-width": 0.2,
-                }, position: "lines"
-            };
-
-
-            map.addVectorLayerICGC(
-                "Municipis", //ID
-                mapicgcgl.Layers.VectorAdmin.municipisVigent, //Layer
-                optionsLayerVector //options
-            );
-
-
-
-            let paintOptions = {
-                'point-color': 'yellow',
-                'point-width': 3
-            };
-            let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
-            let filterFieldRutes = 'municipi' // select 'all' for view all the features as a single layer
-        let optionsLayerRutes = {
-            "layout": {
-                "visibility": "visible",
-            },
-            "paint": {
-                "line-color": "white",
-                "line-width": 3,
-                "line-opacity": 1,
-            },
-            layerPosition: "labels"
+                    "bottom-right"
+                );
+                map.addFullscreenControl()
+                map.addExportControl();
+                map.addTerrainICGC(data.Terrains.ICGC5M, "bottom-right");
+                let optionsLayer = {
+                    "type": "raster",
+                    "layout": {
+                        "visibility": "visible",
+                    },
+                    "paint": {
+                        "raster-opacity": 1
+                    }, position: "labels"
+                }
+                // map.addImageLayerICGC("orto2013",data.Layers.Orto.ortofotoColor2013, optionsLayer);
+                //add vector icgc
+                let optionsLayerVector = {
+                    "type": "line",
+                    "layout": {
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                        "line-color": "red",
+                        "line-width": 0.2,
+                    }, position: "lines"
+                };
+                map.addVectorLayerICGC(
+                    "Municipis", //ID
+                    data.Layers.VectorAdmin.municipisVigent, //Layer
+                    optionsLayerVector //options
+                );
+                let paintOptions = {
+                    'point-color': 'yellow',
+                    'point-width': 3
+                };
+                let layerPosition = 'top' // select: 'top', 'lines' or 'labels'
+                let filterFieldRutes = 'municipi' // select 'all' for view all the features as a single layer
+                let optionsLayerRutes = {
+                    "layout": {
+                        "visibility": "visible",
+                    },
+                    "paint": {
+                        "line-color": "white",
+                        "line-width": 3,
+                        "line-opacity": 1,
+                    },
+                    layerPosition: "labels"
+                }
+                map.fetchDataAndMenu(
+                    "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
+                    "RutesMontserrat", filterFieldRutes, optionsLayerRutes);
+                let popupStyle = {
+                    title: 'Informació:',
+                    image: 'https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png'
+                };
+                let queryFields = ['nom', 'municipi']; // [] for query all the properties
+                map.addFeatureQuery("RutesMontserrat", queryFields, popupStyle);
+            });
         }
-
-            map.fetchDataAndMenu(
-                "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",
-                "RutesMontserrat", filterFieldRutes, optionsLayerRutes);
-
-            let popupStyle = {
-                title: 'Informació:',
-                image: 'https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png'
-            };
-            let queryFields = ['nom', 'municipi']; // [] for query all the properties
-            map.addFeatureQuery("RutesMontserrat", queryFields, popupStyle);
-
-
-        });
-
+        initMap();
     </script>
 </body>
 

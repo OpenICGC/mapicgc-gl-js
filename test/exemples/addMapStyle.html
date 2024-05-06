@@ -2,11 +2,10 @@
 
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>addMapStyle</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
@@ -24,21 +23,20 @@
 </head>
 
 <body>
-
-
     <div id="map" class="map"></div>
-
     <script>
-
-        const map = new mapicgcgl.Map({
-            container: 'map',
-            style: mapicgcgl.Styles.ORTO,
-            center: [1.1464, 41.706],
-            zoom: 7.4,
-            hash: true,
-            pitch: 0,
-        });
-
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();;
+            const map = new mapicgcgl.Map({
+                container: 'map',
+                style: data.Styles.ORTO,
+                center: [1.1464, 41.706],
+                zoom: 7.4,
+                hash: true,
+                pitch: 0,
+            });
+        }
+        initMap();
     </script>
 </body>
 

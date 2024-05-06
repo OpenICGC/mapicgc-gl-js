@@ -1,14 +1,14 @@
 export default class LegendControl {
   constructor(options) {
     this.options = options || {};
-    console.info(this.options);
+   
   }
   onAdd(map) {
     this._map = map;
     let _this = this;
 
     this._img1 = document.createElement("img");
-    this._img1.src = this.options.legendUrl;
+    this._img1.src = this.options.url;
 
     this._img1.width = 150;
     this._img1.title = 300;
@@ -39,7 +39,7 @@ export default class LegendControl {
     this.legendContainer.appendChild(this.closeButton);
     const legendLabel = document.createElement("label");
     legendLabel.classList.add("maplibregl-legend-title-label");
-    legendLabel.textContent = this.options.name || "Llegenda";
+    legendLabel.textContent = this.options.idLayer || "Llegenda";
     this.legendContainer.appendChild(legendLabel);
     this.legendContainer.appendChild(document.createElement("br"));
     this.legendContainer.appendChild(this._img1);

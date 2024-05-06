@@ -708,6 +708,7 @@ a.maplibregl-ctrl-logo.maplibregl-compact {
   margin-right: 3px; /* Espai entre elements, ajusta segons necessitat */
   cursor: pointer;
   border-radius: 25px;
+  margin: 6px;
 }
 .basemap-item:hover{
   outline-width: 1px;

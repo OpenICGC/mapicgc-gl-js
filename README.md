@@ -47,14 +47,22 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
 2. Import the library:
     ```html
     <script>
-      import { Map,Styles } from 'mapicgc-gl-js'; 
-
-      const map = Map({
-        container: 'map',
-        style:  Styles.LIGHT, 
-        center: [2.1464, 41.306], 
-        zoom: 7.4, 
-      });
+     import { Map, Config } from "mapicgc-gl-js";
+    //import * as mapicgcgl from  "mapicgc-gl-js";
+ 
+      async function initMap() {
+          const data = await Config.getConfigICGC(); //load config
+          const map = new Map({
+            container: "map",
+            style: data.Styles.LIGHT,
+            center: [1.808, 41.618],
+            zoom: 10,
+            maxZoom: 19,
+            hash: true,
+            pitch: 0,
+          });
+      }
+      initMap();
     </script>
    ```
 ### CDN
@@ -70,12 +78,17 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
    ```html
     <div id="map"></div>
     <script>
-      const map = mapicgcgl.Map({
-        container: 'map',
-        style:  mapicgcgl.Styles.LIGHT, 
-        center: [2.1464, 41.306], 
-        zoom: 7.4, 
-      });
+      async function initMap() {
+        const data = await  mapicgcgl.Config.getConfigICGC();
+        const map = new mapicgcgl.Map({
+          container: "map",
+          style: data.Styles.TOPO, // <-- add style basemap here
+          center: [2.1464, 41.306],
+          zoom: 7.4,
+          maxZoom: 19,
+          hash: true,
+          pitch: 0,
+        });
     </script>
    ```
 

@@ -1,11 +1,12 @@
 {
   "name": "mapicgc-gl-js",
-  "homepage": "https://autogitlab.icgc.local/geostarters/icgc/mapicgc/mapicgc-gl-js",
-  "version": "0.0.64",
+  "homepage": "https://openicgc.github.io/mapicgc-doc/",
+  "version": "0.0.76",
   "description": "mapicgc-gl-js library",
-  "author": "ICGC",
+  "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
-   "keywords": [
+  "type": "commonjs",
+  "keywords": [
     "map",
     "js",
     "webmap",
@@ -15,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpenICGC/mapicgc-gl-js.git"
+    "url": "git+https://github.com/OpenICGC/mapicgc-gl-js.git"
   },
   "contributors": [
     {
@@ -23,12 +24,12 @@
       "email": "geostart@icgc.cat"
     }
   ],
-  "main": "dist/mapicgc-gl.js",
+  "main": "dist/mapicgc-gl.mjs",
   "module": "dist/mapicgc-gl.js",
   "exports": {
     ".": {
-      "import": "./dist/mapicgc-gl.js",
-      "require": "./dist/mapicgc-gl.js"
+      "import": "./dist/mapicgc-gl.mjs",
+      "require": "./dist/mapicgc-gl.mjs"
     }
   },
   "scripts": {
@@ -36,7 +37,7 @@
     "build-all": "npm-run-all build && node nodeDeploy.js",
     "build": "vite build",
     "preview": "vite preview",
-    "publish": "npm publish --access public", 
+    "publish": "npm publish --access public",
     "setConfig": "node nodeSetConfig.js"
   },
   "devDependencies": {

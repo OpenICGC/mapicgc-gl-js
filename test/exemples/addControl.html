@@ -29,33 +29,37 @@
     <div id="map" class="map"></div>
 
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 7.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-        });
-        map.on("load", () => {
-            // mapicgc-gl-js library:
-            map.addGeolocateControl(
-                {
-                    positionOptions: {
-                        enableHighAccuracy: true,
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.TOPO,
+                center: [2.1464, 41.306],
+                zoom: 7.4,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            map.on("load", () => {
+                // mapicgc-gl-js library:
+                map.addGeolocateControl(
+                    {
+                        positionOptions: {
+                            enableHighAccuracy: true,
+                        },
+                        trackUserLocation: true,
                     },
-                    trackUserLocation: true,
-                },
-                "bottom-right"
-            );
-            map.addNavigationControl();
-            map.addExportControl();
-            map.addMouseCoordControl();
-            map.addFullscreenControl({},'top-right')
-            // from other library
-            map.addControl(new maplibregl.NavigationControl(), "bottom-right");
-        });
+                    "bottom-right"
+                );
+                map.addNavigationControl();
+                map.addExportControl();
+                map.addMouseCoordControl();
+                map.addFullscreenControl({}, 'top-right')
+                // direct from  maplibregl control
+                map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+            });
+        }
+        initMap()
     </script>
 </body>
 

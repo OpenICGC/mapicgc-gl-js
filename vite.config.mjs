@@ -11,7 +11,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.js',
       fileName: 'mapicgc-gl',
-      formats:['umd'],
+      formats: ['es','umd'],
       name: 'mapicgcgl',
     },
     rollupOptions: {

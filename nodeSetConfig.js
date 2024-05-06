@@ -192,7 +192,7 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
+            { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
             { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
             { key: "ORTO3D", url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
             { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},

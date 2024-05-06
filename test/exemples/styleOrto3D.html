@@ -1,16 +1,17 @@
 <html>
+
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>styleOrto3D</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-    
     <style>
         body {
             margin: 0;
             padding: 0;
         }
+
         .map {
             position: absolute;
             top: 0;
@@ -18,6 +19,7 @@
             width: 100%;
             height: 100%
         }
+
         #menu {
             position: absolute;
             z-index: 1000;
@@ -31,54 +33,53 @@
             -moz-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
             box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.75);
         }
-       
     </style>
 </head>
+
 <body>
     <div id='menu'>
         <input id='TOPO' type='radio' name='rtoggle' value="TOPO">
-        <label for='topografic'>TOPO</label><br>
-        <input id='ORTO' type='radio' name='rtoggle'  value='ORTO'>
-        <label for='ortofoto'>ORTO</label><br>
+        <label for='TOPO'>TOPO</label><br>
+        <input id='LIGTH' type='radio' name='rtoggle' value="LIGTH">
+        <label for='LIGTH'>LIGTH</label><br>
+        <input id='ORTO' type='radio' name='rtoggle' value='ORTO'>
+        <label for='ORTO'>ORTO</label><br>
         <input id='ORTO3D' type='radio' name='rtoggle' checked='checked' value='ORTO3D'>
-        <label for='ortofoto'>ORTO3D</label><br>
+        <label for='ORTO3D'>ORTO3D</label><br>
         <input id='ADMIN' type='radio' name='rtoggle' value='ADMIN'>
-        <label for='limits'>ADMIN</label><br>
+        <label for='ADMIN'>ADMIN</label><br>
         <input id='DARK' type='radio' name='rtoggle' value='DARK'>
-        <label for='fosc'>DARK</label>
+        <label for='DARK'>DARK</label>
     </div>
-    
-        <div id="map" class="map"></div>
-       
+    <div id="map" class="map"></div>
     <script>
-       
-        const map = new mapicgcgl.Map({
-            container: 'map',
-            style: mapicgcgl.Styles.ORTO3D,
-            center: [2.3090, 41.9800],
-            zoom: 18,
-            maxZoom: 19,
-            hash: true,
-            bearing: 45,
-            attributionControl: false
-        });
-
-        map.on("load", ()=>{
-
-        
-        })
-  
-        const layerList = document.getElementById('menu');
-        const inputs = layerList.getElementsByTagName('input');
-        function switchLayer(layer) {
-
-            console.info(mapicgcgl.Styles[layer.target.id]);
-            const layerId = mapicgcgl.Styles[layer.target.id];
-            map.setStyle(layerId);
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();;
+            const map = new mapicgcgl.Map({
+                container: 'map',
+                style: data.Styles.ORTO3D,
+                center: [2.3090, 41.9800],
+                zoom: 18,
+                maxZoom: 19,
+                hash: true,
+                bearing: 45,
+                attributionControl: false
+            });
+            map.on("load", () => {
+            })
+            const layerList = document.getElementById('menu');
+            const inputs = layerList.getElementsByTagName('input');
+            function switchLayer(layer) {
+                console.info(data.Styles[layer.target.id]);
+                const layerId = data.Styles[layer.target.id];
+                map.setStyle(layerId);
+            }
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].onclick = switchLayer;
+            }
         }
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].onclick = switchLayer;
-        }
+        initMap();
     </script>
 </body>
+
 </html>

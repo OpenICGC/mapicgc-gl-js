@@ -1,18 +1,15 @@
 <html>
-
 <head>
     <meta charset='utf-8' />
-    <title>test mapicgc-gl-js</title>
+    <title>addMarker</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="../../dist/mapicgc-gl.umd.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
-
     <style>
         body {
             margin: 0;
             padding: 0;
         }
-
         #map {
             position: absolute;
             top: 0;
@@ -21,37 +18,35 @@
             height: 100%
         }
         .maplibregl-popup-close-button {
-        color: blue;
+            color: blue;
         }
     </style>
 </head>
-
 <body>
-
-
     <div id="map" class="map"></div>
-
     <script>
-        const map = new mapicgcgl.Map({
-            container: "map",
-            style: mapicgcgl.Styles.TOPO,
-            center: [2.1464, 41.306],
-            zoom: 7.4,
-            maxZoom: 19,
-            hash: true,
-            pitch: 0,
-
-        });
-        let optionsMarker = {
-            coord: [2.119, 41.87],
-            text: "Hola Test",
-            textOffset: 25,
-            options: {},
-        };
-        map.on("load", () => {
-            map.addMarker(optionsMarker);
-        })
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();;
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: data.Styles.TOPO,
+                center: [2.1464, 41.306],
+                zoom: 7.4,
+                maxZoom: 19,
+                hash: true,
+                pitch: 0,
+            });
+            let optionsMarker = {
+                coord: [2.119, 41.87],
+                text: "<h3>Hola Test</h3>",
+                textOffset: 25,
+                options: {},
+            };
+            map.on("load", () => {
+                map.addMarker(optionsMarker);
+            })
+        }
+        initMap();
     </script>
 </body>
-
 </html>
