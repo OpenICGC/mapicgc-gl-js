@@ -58910,7 +58910,7 @@ function(n) {
 */
 function(n) {
   function e() {
-    return (Fn.canvg ? Promise.resolve(Fn.canvg) : import("./index.es-BR8y8uSW-D6xEGnjs.mjs")).catch(function(t) {
+    return (Fn.canvg ? Promise.resolve(Fn.canvg) : import("./index.es-BR8y8uSW-DnpcExlo.mjs")).catch(function(t) {
       return Promise.reject(new Error("Could not load canvg: " + t));
     }).then(function(t) {
       return t.default ? t.default : t;
@@ -61402,7 +61402,7 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
     bearing: 0,
     pitch: 0,
     hash: !1,
-    style: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
+    style: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json.json",
     maxZoom: 18,
     maxPitch: 85
   },
@@ -61438,7 +61438,7 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
   baseStyles: [
     {
       key: "TOPO",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
+      url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png"
     },
     {
@@ -61845,6 +61845,10 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
       key: "districtes_censals_2022"
     },
     {
+      name: "districtesCensals2023",
+      key: "districtes_censals_2023"
+    },
+    {
       name: "districtesCensalsVigent",
       key: "districtes_censals_vigent"
     },
@@ -61951,6 +61955,10 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
     {
       name: "seccionsCensals2022",
       key: "seccions_censals_2022"
+    },
+    {
+      name: "seccionsCensals2023",
+      key: "seccions_censals_2023"
     },
     {
       name: "seccionsCensalsVigent",
@@ -62190,7 +62198,7 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
     }
   ]
 }, Aq = {
-  TOPO: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
+  TOPO: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
   ORTO: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
   ORTO3D: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
   ADMIN: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
@@ -62282,6 +62290,7 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
     districtesCensals2020: "districtes_censals_2020",
     districtesCensals2021: "districtes_censals_2021",
     districtesCensals2022: "districtes_censals_2022",
+    districtesCensals2023: "districtes_censals_2023",
     districtesCensalsVigent: "districtes_censals_vigent",
     districtesCensalsVigentText: "districtes_censals_vigent_text",
     incendisForestalsVigent: "incendis_forestals_vigent",
@@ -62309,6 +62318,7 @@ const xq = /* @__PURE__ */ fp(bq), wq = {
     seccionsCensals2020: "seccions_censals_2020",
     seccionsCensals2021: "seccions_censals_2021",
     seccionsCensals2022: "seccions_censals_2022",
+    seccionsCensals2023: "seccions_censals_2023",
     seccionsCensalsVigent: "seccions_censals_vigent",
     seccionsCensalsVigentText: "seccions_censals_vigent_text",
     sectorsSanitarisVigent: "sectors_sanitaris_vigent",

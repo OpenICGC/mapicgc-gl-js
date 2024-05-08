@@ -15,7 +15,7 @@
       "bearing": 0,
       "pitch": 0,
       "hash": false,
-      "style": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
+      "style": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json.json",
       "maxZoom": 18,
       "maxPitch": 85
     },
@@ -51,7 +51,7 @@
     "baseStyles": [
       {
         "key": "TOPO",
-        "url": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
+        "url": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
         "image": "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png"
       },
       {
@@ -458,6 +458,10 @@
         "key": "districtes_censals_2022"
       },
       {
+        "name": "districtesCensals2023",
+        "key": "districtes_censals_2023"
+      },
+      {
         "name": "districtesCensalsVigent",
         "key": "districtes_censals_vigent"
       },
@@ -564,6 +568,10 @@
       {
         "name": "seccionsCensals2022",
         "key": "seccions_censals_2022"
+      },
+      {
+        "name": "seccionsCensals2023",
+        "key": "seccions_censals_2023"
       },
       {
         "name": "seccionsCensalsVigent",
@@ -804,7 +812,7 @@
     ]
   },
   "Styles": {
-    "TOPO": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
+    "TOPO": "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
     "ORTO": "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
     "ORTO3D": "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
     "ADMIN": "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
@@ -898,6 +906,7 @@
       "districtesCensals2020": "districtes_censals_2020",
       "districtesCensals2021": "districtes_censals_2021",
       "districtesCensals2022": "districtes_censals_2022",
+      "districtesCensals2023": "districtes_censals_2023",
       "districtesCensalsVigent": "districtes_censals_vigent",
       "districtesCensalsVigentText": "districtes_censals_vigent_text",
       "incendisForestalsVigent": "incendis_forestals_vigent",
@@ -925,6 +934,7 @@
       "seccionsCensals2020": "seccions_censals_2020",
       "seccionsCensals2021": "seccions_censals_2021",
       "seccionsCensals2022": "seccions_censals_2022",
+      "seccionsCensals2023": "seccions_censals_2023",
       "seccionsCensalsVigent": "seccions_censals_vigent",
       "seccionsCensalsVigentText": "seccions_censals_vigent_text",
       "sectorsSanitarisVigent": "sectors_sanitaris_vigent",
