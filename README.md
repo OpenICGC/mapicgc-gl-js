@@ -1,5 +1,7 @@
 <div style="text-align:center">
+<p>
   <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png"  alt="MapICGC Logo" width="400px">
+</p>
 </div>
 
 <div style="text-align:center">
