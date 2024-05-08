@@ -1,7 +1,7 @@
 <div style="text-align:center">
   <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png"  alt="MapICGC Logo" width="400px">
 </div>
-<hr/>
+
 <div style="text-align:center">
 
   [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=flat)](LICENSE.txt) 
@@ -9,7 +9,7 @@
   [![X](https://img.shields.io/twitter/follow/icgcat?style=social)](https://twitter.com/icgcat) 
   <img src="https://tilemaps.icgc.cat/cdn/images/JS-logo.svg" width="20px"/>
 </div>
-<hr/>
+
 
 # MapICGC GL JS
 
