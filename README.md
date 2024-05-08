@@ -51,7 +51,7 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
     <script>
      import { Map, Config } from "mapicgc-gl-js";
     //import * as mapicgcgl from  "mapicgc-gl-js";
-    import "../node_modules/mapicgc-gl-js/dist/mapicgc-gl.css";
+   
  
       async function initMap() {
           const data = await Config.getConfigICGC(); //load config
