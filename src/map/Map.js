@@ -93,6 +93,7 @@ export default class Map {
   /**
    * Add geocoder.
    * @function addGeocoderICGC
+   * @param {string} [position='top-right'] - Position to add the control on the map.
    * @returns {Object} - The current position of the search result.
    */
   addGeocoderICGC(position) {
@@ -1340,6 +1341,12 @@ export default class Map {
    */
   addLogo(options) {
     try {
+      let mapId = document.getElementById("map");
+      let logosDiv;
+      logosDiv = document.createElement("div");
+      logosDiv.id = "logos";
+      mapId.appendChild(logosDiv);
+
       const img = document.createElement("img");
       img.src = options.url;
       img.style.height = options.height;
@@ -1405,6 +1412,13 @@ export default class Map {
       const handleClick = (base) => {
         map.setStyle(base.url);
       };
+      let mapId = document.getElementById("map");
+      let menuGroup;
+      menuGroup = document.createElement("div");
+      menuGroup.id = "basemap-group";
+      menuGroup.classList.add = "basemap-group";
+      mapId.appendChild(menuGroup);
+
       const basemapGroup = document.getElementById("basemap-group");
       baseLayers.forEach((base) => {
         const div = document.createElement("div");
@@ -1451,7 +1465,7 @@ export default class Map {
                 text = text + `<h4>${pr}</h4>`;
               });
               description = text;
-              map.addPopup(coordinates, description, popupStyle);
+              this.addPopup(coordinates, description, popupStyle);
             }
           } else {
             let text = "";
@@ -1460,7 +1474,7 @@ export default class Map {
                 "<b>" + key + "</b>:" + features[0].properties[key] + "<br>";
             }
             description = text;
-            map.addPopup(coordinates, description, popupStyle);
+            this.addPopup(coordinates, description, popupStyle);
           }
         }
       });
@@ -1512,20 +1526,7 @@ export default class Map {
       console.error(`Error adding export control: ${error.message}`);
     }
   }
-  /**
-   * Adds a popup to the map.
-   * @function addPopup
-   * @param {array} coordinates - Coordinates of the popup .
-   * @param {string} text - Text content for the popup.
-   */
-  addPopup(coordinates, text) {
-    try {
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(text)
-        .addTo(this.map);
-    } catch (error) {}
-  }
+
   /**
    * Adds a marker to the map.
    * @function addMarker
@@ -1681,6 +1682,10 @@ export default class Map {
   addLayerTree(options) {
     try {
       let places = options.features;
+      let mapId = document.getElementById("map");
+      let menuGroup = document.createElement("nav");
+      menuGroup.id = "filter-group";
+      mapId.appendChild(menuGroup);
       const filterGroup = document.getElementById("filter-group");
       this.map.addSource(`${options.id}`, {
         type: options.type,
@@ -2081,6 +2086,16 @@ export default class Map {
   }
 
   //Internal methods
+    /**
+   * Finds the type of image based on the provided URL and specified vectors.
+   * @function _findImageType
+   * @param {string} url - The URL of the image to find the type for.
+   * @param {Object} var1 - The first vector object containing key-value pairs.
+   * @param {Object} var2 - The second vector object containing key-value pairs.
+   * @param {Object} var3 - The third vector object containing key-value pairs.
+   * @param {Object} var4 - The fourth vector object containing key-value pairs.
+   * @returns {string|null} - The type of image if found, otherwise null.
+   */
   _findImageType(url, var1, var2, var3, var4) {
     const vectors = [var1, var2, var3, var4];
     for (const vector of vectors) {
@@ -2092,6 +2107,12 @@ export default class Map {
     }
     return null;
   }
+    /**
+   * Gets the key by URL from the FGBAdmin layers.
+   * @function _getKeyByUrlFGB
+   * @param {string} url - The URL to find the key for in the FGBAdmin layers.
+   * @returns {string|null} - The key if found, otherwise null.
+   */
   _getKeyByUrlFGB(url) {
     for (const key in Layers.FGBAdmin) {
       if (Layers.FGBAdmin.hasOwnProperty(key) && Layers.FGBAdmin[key] === url) {
@@ -2100,6 +2121,12 @@ export default class Map {
     }
     return null;
   }
+    /**
+   * Gets the legend by name from the default vector layers.
+   * @function _getLegendByName
+   * @param {string} name - The name of the vector layer to get the legend for.
+   * @returns {string|null} - The legend if found, otherwise null.
+   */
   _getLegendByName(name) {
     for (const layerKey in defaultOptions.vectorLayers) {
       const layer = defaultOptions.vectorLayers[layerKey];
@@ -2109,6 +2136,12 @@ export default class Map {
     }
     return null;
   }
+    /**
+   * Gets the key by URL from the Vector layers.
+   * @function _getKeyByUrlVector
+   * @param {string} url - The URL to find the key for in the Vector layers.
+   * @returns {string|null} - The key if found, otherwise null.
+   */
   _getKeyByUrlVector(url) {
     for (const key in Layers.Vector) {
       if (Layers.Vector.hasOwnProperty(key) && Layers.Vector[key] === url) {
@@ -2117,6 +2150,12 @@ export default class Map {
     }
     return null;
   }
+    /**
+   * Raises text 3D style on the map.
+   * @function _raiseText3DStyle
+   * @async
+   * @returns {Promise<void>} - A promise that resolves after updating the text 3D style on the map.
+   */
   async _raiseText3DStyle() {
     try {
       const image = await this.map.loadImage(
@@ -2153,11 +2192,12 @@ export default class Map {
       return null;
     }
   }
+  
   /**
-   * Internal method to handle map styles.
+   * Deals with map styles based on the name.
    * @function _dealStyleMaps
-   * @param {string} name - Name of the map style.
-   * @returns {string} - URL of the map style.
+   * @param {string} name - The name of the map style.
+   * @returns {Object|string|null} - The map style object if found, or the input name if not found, or null if an error occurs.
    */
   _dealStyleMaps(name) {
     try {
@@ -2179,6 +2219,12 @@ export default class Map {
       return null;
     }
   }
+    /**
+   * Deals with the 3D ortho style based on the name.
+   * @function _dealOrto3dStyle
+   * @param {string} name - The name of the orto3D style.
+   * @returns {void|null} - Returns null if an error occurs.
+   */
   _dealOrto3dStyle(name) {
     try {
       if (name == "orto3d") {
@@ -2221,6 +2267,12 @@ export default class Map {
       return null;
     }
   }
+    /**
+   * Deals with the order of the layer.
+   * @function _dealOrderLayer
+   * @param {string} order - The order of the layer.
+   * @returns {string} - The id of the first symbol layer if the order is 'symbol', the id of the first line layer if the order is 'line', otherwise an empty string.
+   */
   _dealOrderLayer(order) {
     if (order === ORDER_LAYER_SYMBOL) {
       return this._firstSymbolLayer();
@@ -2230,6 +2282,11 @@ export default class Map {
       return "";
     }
   }
+    /**
+   * Retrieves the id of the first symbol layer.
+   * @function _firstSymbolLayer
+   * @returns {string|undefined} - The id of the first symbol layer if found, otherwise undefined.
+   */
   _firstSymbolLayer() {
     try {
       const layers = this.map.getStyle().layers;
@@ -2250,6 +2307,11 @@ export default class Map {
       console.error(`Error getting first symbol layer: ${error.message}`);
     }
   }
+    /**
+   * Retrieves the id of the first line layer.
+   * @function _firstLineLayer
+   * @returns {string|undefined} - The id of the first line layer if found, otherwise undefined.
+   */
   _firstLineLayer() {
     try {
       const layers = this.map.getStyle().layers;
@@ -2265,6 +2327,11 @@ export default class Map {
       console.error(`Error getting first symbol layer: ${error.message}`);
     }
   }
+    /**
+   * Creates a Mapbox layer for displaying cities in 3D.
+   * @function _createCitiesMapboxLayer
+   * @returns {MapboxLayer|null} - The Mapbox layer for displaying cities in 3D if created successfully, otherwise null.
+   */
   _createCitiesMapboxLayer() {
     try {
       const citiesMapboxLayer = new MapboxLayer({
