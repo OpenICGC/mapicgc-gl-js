@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://openicgc.github.io/mapicgc-doc/",
-  "version": "0.0.78",
+  "version": "0.0.79",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
@@ -62,7 +62,7 @@
     "@loaders.gl/3d-tiles": "~3.4.14",
     "@maplibre/maplibre-gl-compare": "^0.5.0",
     "@maplibre/maplibre-gl-geocoder": "^1.5.0",
-    "@watergis/maplibre-gl-export": "^3.4.1",
+    "@watergis/maplibre-gl-export": "^3.7.0",
     "axios": "^1.6.7",
     "flatgeobuf": "^3.31.1",
     "maplibre-gl": "^4.1.3",

@@ -70,7 +70,7 @@ function X(e, A, r, t) {
     function a(Q) {
       Q.done ? n(Q.value) : B(Q.value).then(i, o);
     }
-    a((t = t.apply(e, A || [])).next());
+    a((t = t.apply(e, [])).next());
   });
 }
 function N(e, A) {
@@ -154,7 +154,7 @@ function N(e, A) {
   }
 }
 function le(e, A, r) {
-  if (r || arguments.length === 2)
+  if (arguments.length === 2)
     for (var t = 0, B = A.length, n; t < B; t++)
       (n || !(t in A)) && (n || (n = Array.prototype.slice.call(A, 0, t)), n[t] = A[t]);
   return e.concat(n || A);

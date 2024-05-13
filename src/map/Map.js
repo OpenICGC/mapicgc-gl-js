@@ -1517,6 +1517,7 @@ export default class Map {
           DPI: DPI[300],
           Crosshair: true,
           PrintableArea: true,
+          Local: 'ca'
         };
         position = "top-right";
       }
