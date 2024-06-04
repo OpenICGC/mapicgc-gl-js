@@ -58725,7 +58725,7 @@ function(n) {
 */
 function(n) {
   function e() {
-    return (On.canvg ? Promise.resolve(On.canvg) : import("./index.es-BWyxJuJN-BMkqIbwq.mjs")).catch(function(t) {
+    return (On.canvg ? Promise.resolve(On.canvg) : import("./index.es-BWyxJuJN-CymjIt7T.mjs")).catch(function(t) {
       return Promise.reject(new Error("Could not load canvg: " + t));
     }).then(function(t) {
       return t.default ? t.default : t;
@@ -63947,9 +63947,9 @@ let yh, qf, Ci, _r, nW = class {
                   type: "Point",
                   coordinates: C
                 },
-                place_name: A.properties.label,
+                place_name: A.properties.etiqueta,
                 properties: A.properties,
-                text: A.properties.label,
+                text: A.properties.etiqueta,
                 place_type: ["place"],
                 center: C
               };

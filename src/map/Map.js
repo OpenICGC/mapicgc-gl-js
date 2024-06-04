@@ -128,9 +128,9 @@ export default class Map {
                   type: "Point",
                   coordinates: center,
                 },
-                place_name: feature.properties.label,
+                place_name: feature.properties.etiqueta,
                 properties: feature.properties,
-                text: feature.properties.label,
+                text: feature.properties.etiqueta,
                 place_type: ["place"],
                 center,
               };
