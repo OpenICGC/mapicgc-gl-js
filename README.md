@@ -118,6 +118,5 @@ MapICGC GL JS integrates the following libraries:
  <a href="https://www.icgc.cat/" target="_blank"><img src="https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
 
 
-
 ## License
 **MAPICGC GL JS** is licensed under the [3-Clause BSD license](./LICENSE.txt).
