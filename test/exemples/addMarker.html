@@ -18,7 +18,7 @@
             height: 100%
         }
         .maplibregl-popup-close-button {
-            color: blue;
+            color: "#D08288";
         }
     </style>
 </head>
@@ -40,7 +40,9 @@
                 coord: [2.119, 41.87],
                 text: "<h3>Hola Test</h3>",
                 textOffset: 25,
-                options: {},
+                options: {
+                    color:"#D08288"
+                },
             };
             map.on("load", () => {
                 map.addMarker(optionsMarker);

@@ -32,21 +32,22 @@ export default class Map {
    * @param {Object} options - Options to initialize the map.
    */
   constructor(options) {
-    
-    Config.getConfigICGC().then((data) => {
-      Styles = { ...data.Styles };
-      Layers = { ...data.Layers };
-      Terrains = { ...data.Terrains };
-      defaultOptions = { ...data.defaultOptions };
-      this.initTheMap(options);
-    }).catch((err) => {
-      console.info("Configuracio per defecte", err);
-      Styles = { ...mapicgcConfig.Styles };
-      Layers = { ...mapicgcConfig.Layers };
-      Terrains = { ...mapicgcConfig.Terrains };
-      defaultOptions = { ...mapicgcConfig.defaultOptions };
-      this.initTheMap(options);
-    });
+    Config.getConfigICGC()
+      .then((data) => {
+        Styles = { ...data.Styles };
+        Layers = { ...data.Layers };
+        Terrains = { ...data.Terrains };
+        defaultOptions = { ...data.defaultOptions };
+        this.initTheMap(options);
+      })
+      .catch((err) => {
+        console.info("Configuracio per defecte", err);
+        Styles = { ...mapicgcConfig.Styles };
+        Layers = { ...mapicgcConfig.Layers };
+        Terrains = { ...mapicgcConfig.Terrains };
+        defaultOptions = { ...mapicgcConfig.defaultOptions };
+        this.initTheMap(options);
+      });
   }
   initTheMap(options) {
     if (!options) {
@@ -159,24 +160,7 @@ export default class Map {
     }
   }
   //geocoder ends
-  /**
-   * Retrieves the current style of the map.
-   * @function getStyle
-   * @returns {Object} - The current style of the map.
-   */
-  getStyle() {
-    try {
-      return this.map.getStyle();
-    } catch (error) {
-      console.error(`Error getting style: ${error.message}`);
-    }
-  }
-  /**
-   * Load image to layer symbol as icon-image.
-   * @function loadImage
-   * @param {string} urlImage - The url image png or jpep.
-   * @returns {image} - The image.
-   */
+
   async loadImage(urlImage) {
     try {
       return this.map.loadImage(urlImage);
@@ -184,20 +168,7 @@ export default class Map {
       console.error(`Error getting loadImage: ${error.message}`);
     }
   }
-  /**
-   * Add image to mapstyle.
-   * @function addImage
-   * @param {string} imageName - The url image png or jpep.
-   * @param {image} imageData - The image.data from return of loadImage function.
-   * @returns {image} - The image.
-   */
-  addImage(imageName, imageData) {
-    try {
-      return this.map.addImage(imageName, imageData);
-    } catch (error) {
-      console.error(`Error getting addImage: ${error.message}`);
-    }
-  }
+
   /**
    * Retrieves the available base styles from default options.
    * @function getConfigStyles
@@ -902,31 +873,7 @@ export default class Map {
       }
     }, 500);
   }
-  /**
-   * Retrieves the specified source from the map.
-   * @function getSource
-   * @param {string} source - The ID of the source to retrieve.
-   */
-  getSource(source) {
-    try {
-      return this.map.getSource(source);
-    } catch (error) {
-      console.error(`Error getting source: ${error.message}`);
-    }
-  }
-  /**
-   * Adds a source to the map.
-   * @function addSource
-   * @param {string} source - The ID of the source to add.
-   * @param {object} options - The source options.
-   */
-  addSource(source, options) {
-    try {
-      this.map.addSource(source, options);
-    } catch (error) {
-      console.error(`Error adding source: ${error.message}`);
-    }
-  }
+
   /**
    * Sets the style of the map.
    * @function setStyle
@@ -953,72 +900,7 @@ export default class Map {
       console.error(`Error setting style: ${error.message}`);
     }
   }
-  /**
-   * Retrieves the layer with the specified ID from the map.
-   * @function getLayer
-   * @param {string} layerId - The ID of the layer to retrieve.
-   */
-  getLayer(layerId) {
-    try {
-      return this.map.getLayer(layerId);
-    } catch (error) {
-      console.error(`Error getting layer: ${error.message}`);
-    }
-  }
-  /**
-   * Set filter for specified style layer.
-   * @function setFilter
-   * @param {string} layerId - The ID of the layer to retrieve.
-   * @param {array} filter - The filter.
-   * @param {string} options - Options object.
-   */
-  setFilter(layerId, filter, options) {
-    try {
-      return this.map.setFilter(layerId, filter, options);
-    } catch (error) {
-      console.error(`Error setting filter: ${error.message}`);
-    }
-  }
-  /**
-   * Jumps to the specified coordinates and zoom on the map.
-   * @function jumpTo
-   * @param {Object} options - Coordinates and options to jump to: { center: [coordx, coordy], zoom: zoom, essential: true }.
-   */
-  jumpTo(options) {
-    try {
-      this.map.jumpTo(options);
-    } catch (error) {
-      console.error(`Error jumping to ${options}: ${error.message}`);
-    }
-  }
-  /**
-   * Sets layout property for a layer on the map.
-   * @function setLayoutProperty
-   * @param {Object} object - Object containing layer ID.
-   * @param {Object} property - Object containing property to set.
-   * @param {Object} value - Object containing value.
-   */
-  setLayoutProperty(object, property, value) {
-    try {
-      this.map.setLayoutProperty(object, property, value);
-    } catch (error) {
-      console.error(`Error setting layout property: ${error.message}`);
-    }
-  }
-  /**
-   * Sets layout property for a layer on the map.
-   * @function setPaintProperty
-   * @param {Object} object - Object containing layer ID.
-   * @param {Object} property - Object containing property to set.
-   * @param {Object} value - Object containing value.
-   */
-  setPaintProperty(object, property, value) {
-    try {
-      this.map.setPaintProperty(object, property, value);
-    } catch (error) {
-      console.error(`Error setting paint property: ${error.message}`);
-    }
-  }
+
   /**
    * Adds a control to the map with the specified position.
    * @function addControl
@@ -1035,18 +917,7 @@ export default class Map {
       console.error(`Error adding control: ${error.message}`);
     }
   }
-  /**
-   * Retrieves the current zoom level of the map.
-   * @function getZoom
-   * @returns {number} - The current zoom level.
-   */
-  getZoom() {
-    try {
-      return this.map.getZoom();
-    } catch (error) {
-      console.error(`Error getting zoom level: ${error.message}`);
-    }
-  }
+
   /**
    * Adds a mouse coordinate control to the map.
    * @function addMouseCoordControl
@@ -1118,79 +989,7 @@ export default class Map {
       console.error(`Error adding fullscreen control: ${error.message}`);
     }
   }
-  /**
-   * Retrieves the bounds of the map.
-   * @function getBounds
-   */
-  getBounds() {
-    try {
-      return this.map.getBounds();
-    } catch (error) {
-      console.error(`Error getting bounds: ${error.message}`);
-    }
-  }
-  /**
-   * Retrieves the center coordinates of the map.
-   * @function getCenter
-   * @returns {LngLat} - The center coordinates of the map.
-   */
-  getCenter() {
-    try {
-      return this.map.getCenter();
-    } catch (error) {
-      console.error(`Error getting center: ${error.message}`);
-    }
-  }
-  /**
-   * Sets terrain options for the map.
-   * @function setTerrain
-   * @param {Object} options - Options for the terrain.
-   * @returns {Object} - Result of setting the terrain options.
-   */
-  setTerrain(options) {
-    try {
-      return this.map.setTerrain(options);
-    } catch (error) {
-      console.error(`Error setting terrain: ${error.message}`);
-    }
-  }
-  /**
-   * Sets the zoom range for a specific layer on the map.
-   * @function setLayerZoomRange
-   * @param {string} layerId - The ID of the layer to set the zoom range for.
-   * @param {number} minZoom - The minimum zoom level.
-   * @param {number} maxZoom - The maximum zoom level.
-   */
-  setLayerZoomRange(layerId, minZoom, maxZoom) {
-    try {
-      return this.map.setLayerZoomRange(layerId, minZoom, maxZoom);
-    } catch (error) {
-      console.error(`Error setting terrain: ${error.message}`);
-    }
-  }
-  /**
-   * Retrieves the canvas of the map.
-   * @function getCanvas
-   */
-  getCanvas() {
-    try {
-      return this.map.getCanvas();
-    } catch (error) {
-      console.error(`Error getting canvas: ${error.message}`);
-    }
-  }
-  /**
-   * Sets the center of the map to the provided coordinates.
-   * @function setCenter
-   * @param {Array} coordinates - Coordinates to center the map: [1.3119, 41.489]
-   */
-  setCenter(coordinates) {
-    try {
-      return this.map.setCenter(coordinates);
-    } catch (error) {
-      console.error(`Error setting center: ${error.message}`);
-    }
-  }
+
   /**
    * Adds a layer to the map.
    * @function addLayer
@@ -1204,14 +1003,1155 @@ export default class Map {
       console.error(`Error adding layer: ${error.message}`);
     }
   }
+  //add maplibre methods
+  /**
+   * Adds an image to the map.
+   * @function addImage
+   * @param {string} id - The ID of the image.
+   * @param {ImageBitmap | HTMLImageElement | ImageData | StyleImageInterface | object} image - The image object to add.
+   * @param {Partial<StyleImageMetadata>} options - Optional metadata for the image.
+   * @returns {this}
+   */
+  addImage(id, image, options) {
+    try {
+      this.map.addImage(id, image, options);
+    } catch (error) {
+      console.error(`Error adding image: ${error.message}`);
+    }
+    return this;
+  }
+
+  /**
+   * Adds a source to the map.
+   * @function addSource
+   * @param {string} id - The ID of the source.
+   * @param {SourceSpecification} source - The source object to add.
+   * @returns {this}
+   */
+  addSource(id, source) {
+    try {
+      this.map.addSource(id, source);
+    } catch (error) {
+      console.error(`Error adding source: ${error.message}`);
+    }
+    return this;
+  }
+
+  /**
+   * Adds a sprite to the map.
+   * @function addSprite
+   * @param {string} id - The ID of the sprite.
+   * @param {string} url - The URL to load the sprite from.
+   * @param {StyleSetterOptions} options - Options object.
+   * @returns {this}
+   */
+  addSprite(id, url, options) {
+    try {
+      this.map.addSprite(id, url, options);
+    } catch (error) {
+      console.error(`Error adding sprite: ${error.message}`);
+    }
+    return this;
+  }
+
+  /**
+   * Checks if all tiles in the viewport are loaded.
+   * @function areTilesLoaded
+   * @returns {boolean}
+   */
+  areTilesLoaded() {
+    return this.map.areTilesLoaded();
+  }
+
+  /**
+   * Calculates the camera position for given bounds.
+   * @function cameraForBounds
+   * @param {LngLatBoundsLike} bounds - The geographical bounds to fit.
+   * @param {CameraForBoundsOptions} options - Options object.
+   * @returns {CenterZoomBearing | undefined}
+   */
+  cameraForBounds(bounds, options) {
+    return this.map.cameraForBounds(bounds, options);
+  }
+
+  /**
+   * Eases the camera to a new position.
+   * @function easeTo
+   * @param {object} options - Options describing the animation.
+   * @param {any} eventData - Additional properties for event objects.
+   * @returns {this}
+   */
+  easeTo(options, eventData) {
+    this.map.easeTo(options, eventData);
+    return this;
+  }
+
+  /**
+   * Fits the map to the given geographical bounds.
+   * @function fitBounds
+   * @param {LngLatBoundsLike} bounds - The geographical bounds to fit.
+   * @param {FitBoundsOptions} options - Options object.
+   * @param {any} eventData - Additional properties for event objects.
+   * @returns {this}
+   */
+  fitBounds(bounds, options, eventData) {
+    this.map.fitBounds(bounds, options, eventData);
+    return this;
+  }
+
+  /**
+   * Fits the map to the given screen coordinates.
+   * @function fitScreenCoordinates
+   * @param {PointLike} p0 - First point on screen, in pixel coordinates.
+   * @param {PointLike} p1 - Second point on screen, in pixel coordinates.
+   * @param {number} bearing - Desired map bearing at end of animation, in degrees.
+   * @param {FitBoundsOptions} options - Options object.
+   * @param {any} eventData - Additional properties for event objects.
+   * @returns {this}
+   */
+  fitScreenCoordinates(p0, p1, bearing, options, eventData) {
+    this.map.fitScreenCoordinates(p0, p1, bearing, options, eventData);
+    return this;
+  }
+
+  /**
+   * Flies the camera to a new position.
+   * @function flyTo
+   * @param {FlyToOptions} options - Options describing the flight.
+   * @param {any} eventData - Additional properties for event objects.
+   * @returns {this}
+   */
+  flyTo(options, eventData) {
+    this.map.flyTo(options, eventData);
+    return this;
+  }
+
+  /**
+   * Gets the current bearing of the map.
+   * @function getBearing
+   * @returns {number}
+   */
+  getBearing() {
+    return this.map.getBearing();
+  }
+
+  /**
+   * Gets the current geographical bounds of the map.
+   * @function getBounds
+   * @returns {LngLatBounds}
+   */
+  getBounds() {
+    return this.map.getBounds();
+  }
+
+  /**
+   * Gets the elevation for the point where the camera is looking.
+   * @function getCameraTargetElevation
+   * @returns {number}
+   */
+  getCameraTargetElevation() {
+    return this.map.getCameraTargetElevation();
+  }
+
+  /**
+   * Gets the map's <canvas> element.
+   * @function getCanvas
+   * @returns {HTMLCanvasElement}
+   */
+  getCanvas() {
+    return this.map.getCanvas();
+  }
+
+  /**
+   * Gets the HTML element containing the map's <canvas> element.
+   * @function getCanvasContainer
+   * @returns {HTMLElement}
+   */
+  getCanvasContainer() {
+    return this.map.getCanvasContainer();
+  }
+
+  /**
+   * Returns the map's geographical centerpoint.
+   * @function getCenter
+   * @returns {LngLat} The map's geographical centerpoint.
+   */
+  getCenter() {
+    return this.map.getCenter();
+  }
+
+  /**
+   * Returns the map's containing HTML element.
+   * @function getContainer
+   * @returns {HTMLElement} The map's container.
+   */
+  getContainer() {
+    return this.map.getContainer();
+  }
+
+  /**
+   * Gets the state of a feature.
+   * @function getFeatureState
+   * @param {FeatureIdentifier} feature - Feature identifier.
+   * @returns {any} The state of the feature.
+   */
+  getFeatureState(feature) {
+    return this.map.getFeatureState(feature);
+  }
+
+  /**
+   * Returns the filter applied to the specified style layer.
+   * @function getFilter
+   * @param {string} layerId - The ID of the style layer.
+   * @returns {void | FilterSpecification} The layer's filter.
+   */
+  getFilter(layerId) {
+    return this.map.getFilter(layerId);
+  }
+
+  /**
+   * Returns the value of the style's glyphs URL.
+   * @function getGlyphs
+   * @returns {string} The glyphs Style's glyphs URL.
+   */
+  getGlyphs() {
+    return this.map.getGlyphs();
+  }
+
+  /**
+   * Returns an image currently available in the map.
+   * @function getImage
+   * @param {string} id - The ID of the image.
+   * @returns {StyleImage} An image in the map with the specified ID.
+   */
+  getImage(id) {
+    return this.map.getImage(id);
+  }
+
+  /**
+   * Returns the layer with the specified ID in the map's style.
+   * @function getLayer
+   * @param {string} id - The ID of the layer to get.
+   * @returns {StyleLayer} The layer with the specified ID.
+   */
+  getLayer(id) {
+    return this.map.getLayer(id);
+  }
+
+  /**
+   * Return the ids of all layers currently in the style, including custom layers, in order.
+   * @function getLayersOrder
+   * @returns {string[]} Ids of layers, in order.
+   */
+  getLayersOrder() {
+    return this.map.getLayersOrder();
+  }
+
+  /**
+   * Returns the value of a layout property in the specified style layer.
+   * @function getLayoutProperty
+   * @param {string} layerId - The ID of the layer.
+   * @param {string} name - The name of the layout property.
+   * @returns {any} The value of the specified layout property.
+   */
+  getLayoutProperty(layerId, name) {
+    return this.map.getLayoutProperty(layerId, name);
+  }
+
+  /**
+   * Returns the value of the light object.
+   * @function getLight
+   * @returns {LightSpecification} Light properties of the style.
+   */
+  getLight() {
+    return this.map.getLight();
+  }
+
+  /**
+   * Returns the maximum geographical bounds the map is constrained to.
+   * @function getMaxBounds
+   * @returns {LngLatBounds} The map's maximum geographical bounds.
+   */
+  getMaxBounds() {
+    return this.map.getMaxBounds();
+  }
+
+  /**
+   * Returns the map's maximum allowable pitch.
+   * @function getMaxPitch
+   * @returns {number} The maxPitch.
+   */
+  getMaxPitch() {
+    return this.map.getMaxPitch();
+  }
+
+  /**
+   * Returns the map's maximum allowable zoom level.
+   * @function getMaxZoom
+   * @returns {number} The maxZoom.
+   */
+  getMaxZoom() {
+    return this.map.getMaxZoom();
+  }
+
+  /**
+   * Returns the map's minimum allowable pitch.
+   * @function getMinPitch
+   * @returns {number} The minPitch.
+   */
+  getMinPitch() {
+    return this.map.getMinPitch();
+  }
+
+  /**
+   * Returns the map's minimum allowable zoom level.
+   * @function getMinZoom
+   * @returns {number} The minZoom.
+   */
+  getMinZoom() {
+    return this.map.getMinZoom();
+  }
+
+  /**
+   * Returns the current padding applied around the map viewport.
+   * @function getPadding
+   * @returns {PaddingOptions} The current padding around the map viewport.
+   */
+  getPadding() {
+    return this.map.getPadding();
+  }
+
+  /**
+   * Returns the value of a paint property in the specified style layer.
+   * @function getPaintProperty
+   * @param {string} layerId - The ID of the layer.
+   * @param {string} name - The name of a paint property.
+   * @returns {unknown} The value of the specified paint property.
+   */
+  getPaintProperty(layerId, name) {
+    return this.map.getPaintProperty(layerId, name);
+  }
+
+  /**
+   * Returns the map's current pitch (tilt).
+   * @function getPitch
+   * @returns {number} The map's current pitch, measured in degrees away from the plane of the screen.
+   */
+  getPitch() {
+    return this.map.getPitch();
+  }
+
+  /**
+   * Returns the map's pixel ratio.
+   * @function getPixelRatio
+   * @returns {number} The pixel ratio.
+   */
+  getPixelRatio() {
+    return this.map.getPixelRatio();
+  }
+
+  /**
+   * Returns the state of renderWorldCopies.
+   * @function getRenderWorldCopies
+   * @returns {boolean} The renderWorldCopies.
+   */
+  getRenderWorldCopies() {
+    return this.map.getRenderWorldCopies();
+  }
+
+  /**
+   * Returns the source with the specified ID in the map's style.
+   * @function getSource
+   * @param {string} id - The ID of the source to get.
+   * @returns {Source} The style source with the specified ID.
+   */
+  getSource(id) {
+    return this.map.getSource(id);
+  }
+
+  /**
+   * Returns the as-is value of the style's sprite.
+   * @function getSprite
+   * @returns {object[]} Style's sprite list of id-url pairs.
+   */
+  getSprite() {
+    return this.map.getSprite();
+  }
+
+  /**
+   * Returns the map's MapLibre style object.
+   * @function getStyle
+   * @returns {StyleSpecification} The map's style JSON object.
+   */
+  getStyle() {
+    return this.map.getStyle();
+  }
+
+  /**
+   * Get the terrain-options if terrain is loaded.
+   * @function getTerrain
+   * @returns {TerrainSpecification} The TerrainSpecification passed to setTerrain.
+   */
+  getTerrain() {
+    return this.map.getTerrain();
+  }
+
+  //  Function getZoom()
+  /**
+   * Returns the map's current zoom level.
+   * @function getZoom
+   * @returns {number} The map's current zoom level.
+   */
+  getZoom() {
+    return this.map.getZoom();
+  }
+
+  //  Function hasControl()
+  /**
+   * Checks if a control exists on the map.
+   * @function hasControl
+   * @param {IControl} control - The IControl to check.
+   * @returns {boolean} true if map contains control.
+   */
+  hasControl(control) {
+    return this.map.hasControl(control);
+  }
+
+  //  Function hasImage()
+  /**
+   * Check whether or not an image with a specific ID exists in the style.
+   * @function hasImage
+   * @param {string} id - The ID of the image.
+   * @returns {boolean} A Boolean indicating whether the image exists.
+   */
+  hasImage(id) {
+    return this.map.hasImage(id);
+  }
+
+  //  Function isMoving()
+  /**
+   * Returns true if the map is panning, zooming, rotating, or pitching due to a camera animation or user gesture.
+   * @function isMoving
+   * @returns {boolean} true if the map is moving.
+   */
+  isMoving() {
+    return this.map.isMoving();
+  }
+
+  //  Function isRotating()
+  /**
+   * Returns true if the map is rotating due to a camera animation or user gesture.
+   * @function isRotating
+   * @returns {boolean} true if the map is rotating.
+   */
+  isRotating() {
+    return this.map.isRotating();
+  }
+
+  //  Function isSourceLoaded()
+  /**
+   * Returns a Boolean indicating whether the source is loaded.
+   * @function isSourceLoaded
+   * @param {string} id - The ID of the source to be checked.
+   * @returns {boolean} A Boolean indicating whether the source is loaded.
+   */
+  isSourceLoaded(id) {
+    return this.map.isSourceLoaded(id);
+  }
+
+  //  Function isStyleLoaded()
+  /**
+   * Returns a Boolean indicating whether the map's style is fully loaded.
+   * @function isStyleLoaded
+   * @returns {boolean | void} A Boolean indicating whether the style is fully loaded.
+   */
+  isStyleLoaded() {
+    return this.map.isStyleLoaded();
+  }
+
+  //  Function isZooming()
+  /**
+   * Returns true if the map is zooming due to a camera animation or user gesture.
+   * @function isZooming
+   * @returns {boolean} true if the map is zooming.
+   */
+  isZooming() {
+    return this.map.isZooming();
+  }
+
+  //  Function jumpTo()
+  /**
+   * Changes any combination of center, zoom, bearing, and pitch, without an animated transition.
+   * @function jumpTo
+   * @param {JumpToOptions} options - Options object
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  jumpTo(options, eventData) {
+    return this.map.jumpTo(options, eventData);
+  }
+
+  //  Function listImages()
+  /**
+   * Returns an Array of strings containing the IDs of all images currently available in the map.
+   * @function listImages
+   * @returns {string[]} An Array of strings containing the names of all sprites/images currently available in the map.
+   */
+  listImages() {
+    return this.map.listImages();
+  }
+
+  //  Function listens()
+  /**
+   * Returns a true if this instance of Evented or any forwardeed instances of Evented have a listener for the specified type.
+   * @function listens
+   * @param {string} type - The event type.
+   * @returns {boolean} true if there is at least one registered listener for specified event type, false otherwise.
+   */
+  listens(type) {
+    return this.map.listens(type);
+  }
+
+  //  Function loadImage()
+  /**
+   * Load an image from an external URL to be used with Map#addImage.
+   * @function loadImage
+   * @param {string} url - The URL of the image file. Image file must be in png, webp, or jpg format.
+   * @returns {Promise<GetResourceResponse<ImageBitmap | HTMLImageElement>>} A promise that is resolved when the image is loaded.
+   */
+  loadImage(url) {
+    return this.map.loadImage(url);
+  }
+
+  //  Function loaded()
+  /**
+   * Returns a Boolean indicating whether the map is fully loaded.
+   * @function loaded
+   * @returns {boolean} A Boolean indicating whether the map is fully loaded.
+   */
+  loaded() {
+    return this.map.loaded();
+  }
+  //  Function new LngLatBounds()
+  /**
+   * Constructs a new LngLatBounds object representing a geographical bounding box.
+   * @class LngLatBounds
+   * @constructor
+   * @param {LngLatLike} [sw] - The southwest corner of the bounding box. Can be specified as an array of 4 numbers in the order of west, south, east, north, or an array of 2 LngLatLike representing [sw,ne].
+   * @param {LngLatLike} [ne] - The northeast corner of the bounding box.
+   */
+  LngLatBounds(sw, ne) {
+    return new maplibregl.LngLatBounds(sw, ne);
+  }
+
+  //  Function addProtocol()
+  /**
+   * Adds a custom load resource function that will be called when using a URL that starts with a custom URL schema.
+   * @function addProtocol
+   * @param {string} customProtocol - The protocol to hook, for example 'custom'.
+   * @param {AddProtocolAction} loadFn - The function to use when trying to fetch a resource specified by the customProtocol.
+   * @returns {void}
+   */
+  addProtocol(customProtocol, loadFn) {
+    return this.map.addProtocol(customProtocol, loadFn);
+  }
+
+  //  Function moveLayer()
+  /**
+   * Moves a layer to a different z-position.
+   * @function moveLayer
+   * @param {string} id - The ID of the layer to move.
+   * @param {string} [beforeId] - The ID of an existing layer to insert the new layer before.
+   * @returns {this}
+   */
+  moveLayer(id, beforeId) {
+    return this.map.moveLayer(id, beforeId);
+  }
+
+  //  Function panBy()
+  /**
+   * Pans the map by the specified offset.
+   * @function panBy
+   * @param {PointLike} offset - x and y coordinates by which to pan the map.
+   * @param {AnimationOptions} [options] - Options object.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  panBy(offset, options, eventData) {
+    return this.map.panBy(offset, options, eventData);
+  }
+
+  //  Function panTo()
+  /**
+   * Pans the map to the specified location with an animated transition.
+   * @function panTo
+   * @param {LngLatLike} lnglat - The location to pan the map to.
+   * @param {AnimationOptions} [options] - Options describing the destination and animation of the transition.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  panTo(lnglat, options, eventData) {
+    return this.map.panTo(lnglat, options, eventData);
+  }
+
+  //  Function project()
+  /**
+   * Returns a Point representing pixel coordinates, relative to the map's container, that correspond to the specified geographical location.
+   * @function project
+   * @param {LngLatLike} lnglat - The geographical location to project.
+   * @returns {Point} The Point corresponding to lnglat, relative to the map's container.
+   */
+  project(lnglat) {
+    return this.map.project(lnglat);
+  }
+  //  Function queryRenderedFeatures()
+  /**
+   * Queries rendered features within a specified geometry or bounding box.
+   * @function queryRenderedFeatures
+   * @param {GeometryLike | Array | Object} [geometryOrOptions] - The geometry or options for the query.
+   * @param {Object} [options] - Options for the query.
+   * @returns {Array} An array of GeoJSON Feature objects representing the features that intersect the query geometry.
+   */
+  queryRenderedFeatures(geometryOrOptions, options) {
+    return this.map.queryRenderedFeatures(geometryOrOptions, options);
+  }
+
+  //  Function querySourceFeatures()
+  /**
+   * Queries source features within a specified source.
+   * @function querySourceFeatures
+   * @param {string} sourceId - The ID of the source to query.
+   * @param {Object} parameters - Parameters for the query.
+   * @returns {Array} An array of GeoJSON Feature objects representing the features in the source that satisfy the query parameters.
+   */
+  querySourceFeatures(sourceId, parameters) {
+    return this.map.querySourceFeatures(sourceId, parameters);
+  }
+
+  //  Function queryTerrainElevation()
+  /**
+   * Queries the terrain elevation at a specified geographical location.
+   * @function queryTerrainElevation
+   * @param {LngLatLike} lngLatLike - The geographical location to query.
+   * @returns {number} The elevation (in meters) at the specified location.
+   */
+  queryTerrainElevation(lngLatLike) {
+    return this.map.queryTerrainElevation(lngLatLike);
+  }
+
+  //  Function redraw()
+  /**
+   * Redraws the map.
+   * @function redraw
+   * @returns {this}
+   */
+  redraw() {
+    return this.map.redraw();
+  }
+
+  //  Function remove()
+  /**
+   * Removes the map from the DOM.
+   * @function remove
+   * @returns {this}
+   */
+  remove() {
+    return this.map.remove();
+  }
+
+  //  Function removeControl()
+  /**
+   * Removes a control from the map.
+   * @function removeControl
+   * @param {Object} control - The control to remove.
+   * @returns {this}
+   */
+  removeControl(control) {
+    return this.map.removeControl(control);
+  }
+
+  //  Function removeFeatureState()
+  /**
+   * Removes the state of a feature.
+   * @function removeFeatureState
+   * @param {Object} target - The target feature.
+   * @param {string} [key] - The key of the state to remove.
+   * @returns {this}
+   */
+  removeFeatureState(target, key) {
+    return this.map.removeFeatureState(target, key);
+  }
+
+  //  Function removeImage()
+  /**
+   * Removes an image from the style's sprite.
+   * @function removeImage
+   * @param {string} id - The ID of the image to remove.
+   * @returns {this}
+   */
+  removeImage(id) {
+    return this.map.removeImage(id);
+  }
+
+  /**
+   * Removes a layer from the map.
+   * @function removeLayer
+   * @param {string} idLayer - Identifier of the layer to remove.
+   */
+  removeLayer(idLayer) {
+    try {
+      this.map.removeLayer(idLayer);
+    } catch (error) {
+      console.error(`Error removing layer: ${error.message}`);
+    }
+  }
+
+  /**
+   * Removes a source from the map.
+   * @function removeSource
+   * @param {string} idLayer - Identifier of the source to remove.
+   */
+  removeSource(sourceId) {
+    try {
+      this.map.removeSource(sourceId);
+    } catch (error) {
+      console.error(`Error removing source: ${error.message}`);
+    }
+  }
+
+  //  Function removeSprite()
+  /**
+   * Removes a sprite from the style.
+   * @function removeSprite
+   * @param {string} id - The ID of the sprite to remove.
+   * @returns {this}
+   */
+  removeSprite(id) {
+    return this.map.removeSprite(id);
+  }
+
+  //  Function resetNorth()
+  /**
+   * Resets the map orientation so that north is up.
+   * @function resetNorth
+   * @param {Object} [options] - Options for the reset.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  resetNorth(options, eventData) {
+    return this.map.resetNorth(options, eventData);
+  }
+
+  //  Function resetNorthPitch()
+  /**
+   * Resets the map orientation so that north is up and pitch is set to 0°.
+   * @function resetNorthPitch
+   * @param {Object} [options] - Options for the reset.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  resetNorthPitch(options, eventData) {
+    return this.map.resetNorthPitch(options, eventData);
+  }
+
+  //  Function resize()
+  /**
+   * Resizes the map to fit its container.
+   * @function resize
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  resize(eventData) {
+    return this.map.resize(eventData);
+  }
+
+  //  Function rotateTo()
+  /**
+   * Rotates the map to the specified bearing with an animated transition.
+   * @function rotateTo
+   * @param {number} bearing - The desired bearing (in degrees) to rotate the map to.
+   * @param {Object} [options] - Options for the rotation.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  rotateTo(bearing, options, eventData) {
+    return this.map.rotateTo(bearing, options, eventData);
+  }
+
+  //  Function setBearing()
+  /**
+   * Sets the map's bearing with an optional animated transition.
+   * @function setBearing
+   * @param {number} bearing - The desired bearing (in degrees) to set for the map.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  setBearing(bearing, eventData) {
+    return this.map.setBearing(bearing, eventData);
+  }
+
+  //  Function setCenter()
+  /**
+   * Sets the map's center coordinates with an optional animated transition.
+   * @function setCenter
+   * @param {LngLatLike} center - The desired center coordinates to set for the map.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  setCenter(center, eventData) {
+    return this.map.setCenter(center, eventData);
+  }
+
+  //  Function setEventedParent()
+  /**
+   * Sets the parent of the map's event emitter.
+   * @function setEventedParent
+   * @param {any} [parent] - The parent object to set for the event emitter.
+   * @param {any} [data] - Additional data to pass to the parent.
+   * @returns {this}
+   */
+  setEventedParent(parent, data) {
+    return this.map.setEventedParent(parent, data);
+  }
+
+  //  Function setFeatureState()
+  /**
+   * Sets the state of a feature.
+   * @function setFeatureState
+   * @param {Object} feature - The feature to set the state for.
+   * @param {Object} state - The state object to set for the feature.
+   * @returns {this}
+   */
+  setFeatureState(feature, state) {
+    return this.map.setFeatureState(feature, state);
+  }
+
+  //  Function setFilter()
+  /**
+   * Sets the filter for a specified layer.
+   * @function setFilter
+   * @param {string} layerId - The ID of the layer to set the filter for.
+   * @param {Array} [filter] - The filter array to apply to the layer.
+   * @param {Object} [options] - Options for the filter.
+   * @returns {this}
+   */
+  setFilter(layerId, filter, options) {
+    return this.map.setFilter(layerId, filter, options);
+  }
+
+  //  Function setGlyphs()
+  /**
+   * Sets the glyphs for the map's style.
+   * @function setGlyphs
+   * @param {string} glyphsUrl - The URL to the glyphs.
+   * @param {Object} [options] - Options for setting the glyphs.
+   * @returns {this}
+   */
+  setGlyphs(glyphsUrl, options) {
+    return this.map.setGlyphs(glyphsUrl, options);
+  }
+
+  //  Function setLayerZoomRange()
+  /**
+   * Sets the zoom range for a specified layer.
+   * @function setLayerZoomRange
+   * @param {string} layerId - The ID of the layer to set the zoom range for.
+   * @param {number} minzoom - The minimum zoom level for the layer.
+   * @param {number} maxzoom - The maximum zoom level for the layer.
+   * @returns {this}
+   */
+  setLayerZoomRange(layerId, minzoom, maxzoom) {
+    return this.map.setLayerZoomRange(layerId, minzoom, maxzoom);
+  }
+
+  //  Function setLayoutProperty()
+  /**
+   * Sets a layout property for a specified layer.
+   * @function setLayoutProperty
+   * @param {string} layerId - The ID of the layer to set the layout property for.
+   * @param {string} name - The name of the layout property to set.
+   * @param {any} value - The value to set for the layout property.
+   * @param {Object} [options] - Options for setting the layout property.
+   * @returns {this}
+   */
+  setLayoutProperty(layerId, name, value, options) {
+    return this.map.setLayoutProperty(layerId, name, value, options);
+  }
+
+  //  Function setLight()
+  /**
+   * Sets the light for the map's style.
+   * @function setLight
+   * @param {Object} light - The light object to set for the map.
+   * @param {Object} [options] - Options for setting the light.
+   * @returns {this}
+   */
+  setLight(light, options) {
+    return this.map.setLight(light, options);
+  }
+
+  //  Function setMaxBounds()
+  /**
+   * Sets the maximum bounds for the map.
+   * @function setMaxBounds
+   * @param {Array} bounds - The maximum bounds for the map.
+   * @returns {this}
+   */
+  setMaxBounds(bounds) {
+    return this.map.setMaxBounds(bounds);
+  }
+
+  //  Function setMaxPitch()
+  /**
+   * Sets the maximum pitch for the map.
+   * @function setMaxPitch
+   * @param {number} maxPitch - The maximum pitch (in degrees) for the map.
+   * @returns {this}
+   */
+  setMaxPitch(maxPitch) {
+    return this.map.setMaxPitch(maxPitch);
+  }
+
+  //  Function setMaxZoom()
+  /**
+   * Sets the maximum zoom level for the map.
+   * @function setMaxZoom
+   * @param {number} maxZoom - The maximum zoom level for the map.
+   * @returns {this}
+   */
+  setMaxZoom(maxZoom) {
+    return this.map.setMaxZoom(maxZoom);
+  }
+
+  //  Function setMinPitch()
+  /**
+   * Sets the minimum pitch for the map.
+   * @function setMinPitch
+   * @param {number} minPitch - The minimum pitch (in degrees) for the map.
+   * @returns {this}
+   */
+  setMinPitch(minPitch) {
+    return this.map.setMinPitch(minPitch);
+  }
+
+  //  Function setMinZoom()
+  /**
+   * Sets the minimum zoom level for the map.
+   * @function setMinZoom
+   * @param {number} minZoom - The minimum zoom level for the map.
+   * @returns {this}
+   */
+  setMinZoom(minZoom) {
+    return this.map.setMinZoom(minZoom);
+  }
+
+  //  Function setPadding()
+  /**
+   * Sets padding for the map's container.
+   * @function setPadding
+   * @param {Object} padding - The padding object to set for the map's container.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  setPadding(padding, eventData) {
+    return this.map.setPadding(padding, eventData);
+  }
+
+  //  Function setPaintProperty()
+  /**
+   * Sets a paint property for a specified layer.
+   * @function setPaintProperty
+   * @param {string} layerId - The ID of the layer to set the paint property for.
+   * @param {string} name - The name of the paint property to set.
+   * @param {any} value - The value to set for the paint property.
+   * @param {Object} [options] - Options for setting the paint property.
+   * @returns {this}
+   */
+  setPaintProperty(layerId, name, value, options) {
+    return this.map.setPaintProperty(layerId, name, value, options);
+  }
+
+  //  Function setPitch()
+  /**
+   * Sets the map's pitch angle with an optional animated transition.
+   * @function setPitch
+   * @param {number} pitch - The desired pitch angle (in degrees) to set for the map.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  setPitch(pitch, eventData) {
+    return this.map.setPitch(pitch, eventData);
+  }
+
+  //  Function setPixelRatio()
+  /**
+   * Sets the pixel ratio for the map.
+   * @function setPixelRatio
+   * @param {number} pixelRatio - The desired pixel ratio for the map.
+   * @returns {this}
+   */
+  setPixelRatio(pixelRatio) {
+    return this.map.setPixelRatio(pixelRatio);
+  }
+
+  //  Function setRenderWorldCopies()
+  /**
+   * Sets whether the map should render world copies when the center longitude is greater than or less than ±180 degrees.
+   * @function setRenderWorldCopies
+   * @param {boolean} renderWorldCopies - A boolean indicating whether to render world copies.
+   * @returns {this}
+   */
+  setRenderWorldCopies(renderWorldCopies) {
+    return this.map.setRenderWorldCopies(renderWorldCopies);
+  }
+
+  //  Function setSprite()
+  /**
+   * Sets the sprite for the map's style.
+   * @function setSprite
+   * @param {string} spriteUrl - The URL to the sprite.
+   * @param {Object} [options] - Options for setting the sprite.
+   * @returns {this}
+   */
+  setSprite(spriteUrl, options) {
+    return this.map.setSprite(spriteUrl, options);
+  }
+
+  //  Function setTerrain()
+  /**
+   * Loads a 3D terrain mesh based on a "raster-dem" source.
+   * @function setTerrain
+   * @param {TerrainSpecification} options - Options object specifying the terrain source.
+   * @returns {this}
+   */
+  setTerrain(options) {
+    return this.map.setTerrain(options);
+  }
+
+  //  Function setTransformRequest()
+  /**
+   * Updates the requestManager's transform request with a new function.
+   * @function setTransformRequest
+   * @param {RequestTransformFunction} transformRequest - The callback function to update the transform request.
+   * @returns {this}
+   */
+  setTransformRequest(transformRequest) {
+    return this.map.setTransformRequest(transformRequest);
+  }
+
+  //  Function setZoom()
+  /**
+   * Sets the map's zoom level.
+   * @function setZoom
+   * @param {number} zoom - The zoom level to set (0-20).
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  setZoom(zoom, eventData) {
+    return this.map.setZoom(zoom, eventData);
+  }
+
+  //  Function snapToNorth()
+  /**
+   * Snaps the map so that north is up (0° bearing), if the current bearing is close enough to it.
+   * @function snapToNorth
+   * @param {Object} [options] - Options for snapping to north.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  snapToNorth(options, eventData) {
+    return this.map.snapToNorth(options, eventData);
+  }
+
+  //  Function stop()
+  /**
+   * Stops any animated transition underway.
+   * @function stop
+   * @returns {this}
+   */
+  stop() {
+    return this.map.stop();
+  }
+
+  //  Function triggerRepaint()
+  /**
+   * Triggers the rendering of a single frame.
+   * @function triggerRepaint
+   * @returns {void}
+   */
+  triggerRepaint() {
+    return this.map.triggerRepaint();
+  }
+
+  //  Function unproject()
+  /**
+   * Returns geographical coordinates corresponding to the specified pixel coordinates.
+   * @function unproject
+   * @param {PointLike} point - The pixel coordinates to unproject.
+   * @returns {LngLat} The geographical coordinates corresponding to the specified pixel coordinates.
+   */
+  unproject(point) {
+    return this.map.unproject(point);
+  }
+
+  //  Function updateImage()
+  /**
+   * Updates an existing image in the style's sprite.
+   * @function updateImage
+   * @param {string} id - The ID of the image to update.
+   * @param {ImageBitmap | HTMLImageElement | ImageData | StyleImageInterface | object} image - The new image data.
+   * @returns {this}
+   */
+  updateImage(id, image) {
+    return this.map.updateImage(id, image);
+  }
+
+  //  Function zoomIn()
+  /**
+   * Increases the map's zoom level by 1.
+   * @function zoomIn
+   * @param {Object} [options] - Options for zooming in.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  zoomIn(options, eventData) {
+    return this.map.zoomIn(options, eventData);
+  }
+
+  //  Function zoomOut()
+  /**
+   * Decreases the map's zoom level by 1.
+   * @function zoomOut
+   * @param {Object} [options] - Options for zooming out.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  zoomOut(options, eventData) {
+    return this.map.zoomOut(options, eventData);
+  }
+
+  //  Function zoomTo()
+  /**
+   * Zooms the map to the specified zoom level with an animated transition.
+   * @function zoomTo
+   * @param {number} zoom - The zoom level to transition to.
+   * @param {Object} [options] - Options for zooming to.
+   * @param {any} [eventData] - Additional properties to be added to event objects of events triggered by this method.
+   * @returns {this}
+   */
+  zoomTo(zoom, options, eventData) {
+    return this.map.zoomTo(zoom, options, eventData);
+  }
+
+  // end maplibre methods
+
   /**
    * Adds a GeoJSON layer to the map.
    * @function addLayerGeoJSON
    * @param {Object} layer - Options for the GeoJSON layer to add.
    * @param {string} layer.id - Unique identifier for the layer.
-   * @param {string} layer.type - Type of layer ('geojson').
    * @param {Object} layer.data - GeoJSON data for the layer.
-   * @param {string} layer.layerType - Map layer type (e.g., 'symbol', 'circle', 'fill').
+   * @param {string} layer.type - Map layer type (e.g., 'symbol', 'circle', 'fill').   *
    * @param {Object} layer.layout - Layer layout configuration.
    * @param {Object} layer.paint - Layer paint configuration.
    * @param {string} layerPosition - Position of the layer: 'top', below 'labels' or below 'lines'.
@@ -1226,7 +2166,7 @@ export default class Map {
       this.map.addLayer(
         {
           id: `${layer.id}-layerIcgcMap`,
-          type: layer.layerType,
+          type: layer.type,
           source: `${layer.id}`,
           layout: layer.layout,
           paint: layer.paint,
@@ -1294,42 +2234,7 @@ export default class Map {
       console.error(`Error adding WMS layer: ${error.message}`);
     }
   }
-  /**
-   * Removes a control from the map.
-   * @function removeControl
-   * @param {Object} control - The control to remove.
-   */
-  removeControl(control) {
-    try {
-      this.map.removeControl(control);
-    } catch (error) {
-      console.error(`Error removing control: ${error.message}`);
-    }
-  }
-  /**
-   * Removes a layer from the map.
-   * @function removeLayer
-   * @param {string} idLayer - Identifier of the layer to remove.
-   */
-  removeLayer(idLayer) {
-    try {
-      this.map.removeLayer(idLayer);
-    } catch (error) {
-      console.error(`Error removing layer: ${error.message}`);
-    }
-  }
-  /**
-   * Removes a source from the map.
-   * @function removeSource
-   * @param {string} idLayer - Identifier of the source to remove.
-   */
-  removeSource(sourceId) {
-    try {
-      this.map.removeSource(sourceId);
-    } catch (error) {
-      console.error(`Error removing source: ${error.message}`);
-    }
-  }
+
   /**
    * Adds a logo to the map.
    * @function addLogo
@@ -1517,7 +2422,7 @@ export default class Map {
           DPI: DPI[300],
           Crosshair: true,
           PrintableArea: true,
-          Local: 'ca'
+          Local: "ca",
         };
         position = "top-right";
       }
@@ -1550,7 +2455,7 @@ export default class Map {
         popup = new maplibregl.Popup({ offset: options.textOffset }).setHTML(
           options.text
         );
-        marker = new maplibregl.Marker()
+        marker = new maplibregl.Marker(options.options)
           .setLngLat(options.coord)
           .setPopup(popup)
           .addTo(this.map);
@@ -1886,9 +2791,9 @@ export default class Map {
 
         if (layoutOptions.visibility === "visible") {
           let legendUrl = this._getLegendByName(sourceName);
-          console.info("legendUrl",legendUrl);
-          console.info("sourceName",sourceName);
-          this.addLegend(legendUrl,sourceName,);
+          console.info("legendUrl", legendUrl);
+          console.info("sourceName", sourceName);
+          this.addLegend(legendUrl, sourceName);
         }
       } else {
         let sourceLimits = idLayer;
@@ -2087,7 +2992,7 @@ export default class Map {
   }
 
   //Internal methods
-    /**
+  /**
    * Finds the type of image based on the provided URL and specified vectors.
    * @function _findImageType
    * @param {string} url - The URL of the image to find the type for.
@@ -2108,7 +3013,7 @@ export default class Map {
     }
     return null;
   }
-    /**
+  /**
    * Gets the key by URL from the FGBAdmin layers.
    * @function _getKeyByUrlFGB
    * @param {string} url - The URL to find the key for in the FGBAdmin layers.
@@ -2122,7 +3027,7 @@ export default class Map {
     }
     return null;
   }
-    /**
+  /**
    * Gets the legend by name from the default vector layers.
    * @function _getLegendByName
    * @param {string} name - The name of the vector layer to get the legend for.
@@ -2137,7 +3042,7 @@ export default class Map {
     }
     return null;
   }
-    /**
+  /**
    * Gets the key by URL from the Vector layers.
    * @function _getKeyByUrlVector
    * @param {string} url - The URL to find the key for in the Vector layers.
@@ -2151,7 +3056,7 @@ export default class Map {
     }
     return null;
   }
-    /**
+  /**
    * Raises text 3D style on the map.
    * @function _raiseText3DStyle
    * @async
@@ -2193,7 +3098,7 @@ export default class Map {
       return null;
     }
   }
-  
+
   /**
    * Deals with map styles based on the name.
    * @function _dealStyleMaps
@@ -2220,7 +3125,7 @@ export default class Map {
       return null;
     }
   }
-    /**
+  /**
    * Deals with the 3D ortho style based on the name.
    * @function _dealOrto3dStyle
    * @param {string} name - The name of the orto3D style.
@@ -2268,7 +3173,7 @@ export default class Map {
       return null;
     }
   }
-    /**
+  /**
    * Deals with the order of the layer.
    * @function _dealOrderLayer
    * @param {string} order - The order of the layer.
@@ -2283,7 +3188,7 @@ export default class Map {
       return "";
     }
   }
-    /**
+  /**
    * Retrieves the id of the first symbol layer.
    * @function _firstSymbolLayer
    * @returns {string|undefined} - The id of the first symbol layer if found, otherwise undefined.
@@ -2308,7 +3213,7 @@ export default class Map {
       console.error(`Error getting first symbol layer: ${error.message}`);
     }
   }
-    /**
+  /**
    * Retrieves the id of the first line layer.
    * @function _firstLineLayer
    * @returns {string|undefined} - The id of the first line layer if found, otherwise undefined.
@@ -2328,7 +3233,7 @@ export default class Map {
       console.error(`Error getting first symbol layer: ${error.message}`);
     }
   }
-    /**
+  /**
    * Creates a Mapbox layer for displaying cities in 3D.
    * @function _createCitiesMapboxLayer
    * @returns {MapboxLayer|null} - The Mapbox layer for displaying cities in 3D if created successfully, otherwise null.
