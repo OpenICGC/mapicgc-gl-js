@@ -934,12 +934,12 @@ setSky(options) {
     if (options === undefined) {
       if (this.map.options.style.includes("orto")) {
         options = {
-          "sky-color": "#37709e",
-          "sky-horizon-blend": 0.3,
-          "horizon-color": "#e1e3e3",
-          "horizon-fog-blend": 0.9,
-          "fog-ground-blend": 0.85,
-          "fog-color": "#c5d6d6",
+          'sky-color': '#86bbd5',
+          'sky-horizon-blend': 0.3,
+          'horizon-color': '#ffffff33',
+          'horizon-fog-blend': 0.1,
+          'fog-ground-blend': 0.75,
+          'fog-color': '#c5d6d6'
         };
       }
       if (this.map.options.style.includes("mapa_estandard_general")) {
@@ -3217,6 +3217,14 @@ setSky(options) {
           });
           this._raiseText3DStyle();
         }
+        this.map.setSky({
+          'sky-color': '#86bbd5',
+          'sky-horizon-blend': 0.3,
+          'horizon-color': '#ffffff33',
+          'horizon-fog-blend': 0.1,
+          'fog-ground-blend': 0.75,
+          'fog-color': '#c5d6d6'
+        });
       } else {
         if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
           this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);

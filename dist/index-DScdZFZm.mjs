@@ -58966,7 +58966,7 @@ function(n) {
 */
 function(n) {
   function e() {
-    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-C4muY-Eb.mjs")).catch(function(t) {
+    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-B8aWB3kW.mjs")).catch(function(t) {
       return Promise.reject(new Error("Could not load canvg: " + t));
     }).then(function(t) {
       return t.default ? t.default : t;
@@ -62308,6 +62308,7 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
   TOPO: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
   ORTO: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
   ORTO3D: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
+  ORTOHYBRID: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
   ADMIN: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
   DARK: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
   LIGHT: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
@@ -62318,6 +62319,7 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
 }, Sq = {
   Orto: {
     ortofotoColorProvisional: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_provisional",
+    ortofotoColor2023: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2023",
     ortofotoColor2022: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2022",
     ortofotoColor2021: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2021",
     ortofotoColor2020: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2020",
@@ -62345,6 +62347,7 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
     ortofotoBlancINegre1945: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1945",
     ortofotoColorSerieAnual: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_serie_anual",
     ortofotoInfraroigProvisional: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_provisional",
+    ortofotoInfraroig2023: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2023",
     ortofotoInfraroig2022: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2022",
     ortofotoInfraroig2021: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2021",
     ortofotoInfraroig2020: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2020",
@@ -64778,11 +64781,11 @@ let Ah, $f, Sr, gi, oW = class {
   setSky(e) {
     try {
       e === void 0 && (this.map.options.style.includes("orto") && (e = {
-        "sky-color": "#37709e",
+        "sky-color": "#86bbd5",
         "sky-horizon-blend": 0.3,
-        "horizon-color": "#e1e3e3",
-        "horizon-fog-blend": 0.9,
-        "fog-ground-blend": 0.85,
+        "horizon-color": "#ffffff33",
+        "horizon-fog-blend": 0.1,
+        "fog-ground-blend": 0.75,
         "fog-color": "#c5d6d6"
       }), this.map.options.style.includes("mapa_estandard_general") && (e = {
         "sky-color": "#a5f0f0",
@@ -66624,7 +66627,14 @@ let Ah, $f, Sr, gi, oW = class {
         const r = this._createCitiesMapboxLayer();
         this.map.getLayer(gi.map3dOptions.layerId3d) || (this.map.addLayer(r, gi.map3dOptions.layerIdOrder), this.map.setLayerZoomRange(gi.map3dOptions.layerId3d, gi.map3dOptions.minZoomRange, gi.map3dOptions.maxZoomRange), r.deck.setProps({
           effects: [i]
-        }), this._raiseText3DStyle());
+        }), this._raiseText3DStyle()), this.map.setSky({
+          "sky-color": "#86bbd5",
+          "sky-horizon-blend": 0.3,
+          "horizon-color": "#ffffff33",
+          "horizon-fog-blend": 0.1,
+          "fog-ground-blend": 0.75,
+          "fog-color": "#c5d6d6"
+        });
       } else
         this.map.getLayer(gi.map3dOptions.layerId3d) && (this.map.removeLayer(gi.map3dOptions.layerId3d), this.map.setTerrain(null));
     } catch (t) {

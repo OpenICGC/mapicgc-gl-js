@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://openicgc.github.io/mapicgc-doc/",
-  "version": "0.0.84",
+  "version": "0.0.85",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
