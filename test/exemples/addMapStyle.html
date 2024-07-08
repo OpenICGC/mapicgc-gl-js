@@ -26,7 +26,8 @@
     <div id="map" class="map"></div>
     <script>
         async function initMap() {
-            const data = await mapicgcgl.Config.getConfigICGC();;
+            const data = await mapicgcgl.Config.getConfigICGC();
+            console.log('d', data)
             const map = new mapicgcgl.Map({
                 container: 'map',
                 style: data.Styles.ORTO,
@@ -35,6 +36,15 @@
                 hash: true,
                 pitch: 0,
             });
+            
+            map.on("load", () => {
+                map.flyTo({
+  center: [2.812786, 41.98559],
+  zoom: 14,
+
+});
+
+      });
         }
         initMap();
     </script>
