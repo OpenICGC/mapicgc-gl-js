@@ -9,6 +9,7 @@ class Config {
     try {
       const response = await axios.get(urlConfigICGC, { timeout: timeOut });
       if (response.data) {
+ 
         return response.data;
       } else {
         console.log("Resposta sense dades:", response);
@@ -23,7 +24,7 @@ class Config {
       } else {
         console.error("Error:", error.message);
       }
-      return mapicgcConfig;
+      return mapicgcConfig; 
     }
   }
 }

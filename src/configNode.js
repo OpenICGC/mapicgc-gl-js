@@ -59,29 +59,34 @@ baseStyles: {
   1: {
     key: "ORTO",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
-    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
+    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png",
   },
   2: {
     key: "ORTO3D",
     url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
-    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
+    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png",
   },
   3: {
+    key: "ORTOHYBRID",
+    url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+    image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
+  },
+  4: {
     key: "ADMIN",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png",
   },
-  4: {
+  5: {
     key: "DARK",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png",
   },
-  5: {
+  6: {
     key: "LIGHT",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png",
   },
-  6: {
+  7: {
     key: "GEOLOGY",
     url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png",
@@ -105,226 +110,236 @@ ortoLayersICGC: {
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_provisional",
   },
   1: {
+    name: "ortofotoColor2023",
+    key: "ortofoto_color_2023",
+    url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2023",
+  },
+  2: {
     name: "ortofotoColor2022",
     key: "ortofoto_color_2022",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2022",
   },
-  2: {
+  3: {
     name: "ortofotoColor2021",
     key: "ortofoto_color_2021",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2021",
   },
-  3: {
+  4: {
     name: "ortofotoColor2020",
     key: "ortofoto_color_2020",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2020",
   },
-  4: {
+  5: {
     name: "ortofotoColor2019",
     key: "ortofoto_color_2019",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2019",
   },
-  5: {
+  6: {
     name: "ortofotoColor2018",
     key: "ortofoto_color_2018",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2018",
   },
-  6: {
+  7: {
     name: "ortofotoColor2017",
     key: "ortofoto_color_2017",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2017",
   },
-  7: {
+  8: {
     name: "ortofotoColor2016",
     key: "ortofoto_color_2016",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2016",
   },
-  8: {
+  9: {
     name: "ortofotoColor2015",
     key: "ortofoto_color_2015",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2015",
   },
-  9: {
+  10: {
     name: "ortofotoColor2014",
     key: "ortofoto_color_2014",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2014",
   },
-  10: {
+  11: {
     name: "ortofotoColor2013",
     key: "ortofoto_color_2013",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2013",
   },
-  11: {
+  12: {
     name: "ortofotoColor2012",
     key: "ortofoto_color_2012",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2012",
   },
-  12: {
+  13: {
     name: "ortofotoColor2011",
     key: "ortofoto_color_2011",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2011",
   },
-  13: {
+  14: {
     name: "ortofotoColor2010",
     key: "ortofoto_color_2010",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2010",
   },
-  14: {
+  15: {
     name: "ortofotoColor2009",
     key: "ortofoto_color_2009",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2009",
   },
-  15: {
+  16: {
     name: "ortofotoColor2008",
     key: "ortofoto_color_2008",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2008",
   },
-  16: {
+  17: {
     name: "ortofotoColor20062007",
     key: "ortofoto_color_2006-2007",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2006-2007",
   },
-  17: {
+  18: {
     name: "ortofotoColor20042005",
     key: "ortofoto_color_2004-2005",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2004-2005",
   },
-  18: {
+  19: {
     name: "ortofotoColor20002003",
     key: "ortofoto_color_2000-2003",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_2000-2003",
   },
-  19: {
+  20: {
     name: "ortofotoBlancINegre1998",
     key: "ortofoto_blanc_i_negre_1998",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1998",
   },
-  20: {
+  21: {
     name: "ortofotoBlancINegre19941997",
     key: "ortofoto_blanc_i_negre_1994-1997",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1994-1997",
   },
-  21: {
+  22: {
     name: "ortofotoColor1993",
     key: "ortofoto_color_1993",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_1993",
   },
-  22: {
+  23: {
     name: "ortofotoBlancINegre19831992",
     key: "ortofoto_blanc_i_negre_1983-1992",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1983-1992",
   },
-  23: {
+  24: {
     name: "ortofotoBlancINegre19701977",
     key: "ortofoto_blanc_i_negre_1970-1977",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1970-1977",
   },
-  24: {
+  25: {
     name: "ortofotoBlancINegre1956",
     key: "ortofoto_blanc_i_negre_1956",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1956",
   },
-  25: {
+  26: {
     name: "ortofotoBlancINegre1945",
     key: "ortofoto_blanc_i_negre_1945",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_blanc_i_negre_1945",
   },
-  26: {
+  27: {
     name: "ortofotoColorSerieAnual",
     key: "ortofoto_color_serie_anual",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_color_serie_anual",
   },
-  27: {
+  28: {
     name: "ortofotoInfraroigProvisional",
     key: "ortofoto_infraroig_provisional",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_provisional",
   },
-  28: {
+  29: {
+    name: "ortofotoInfraroig2023",
+    key: "ortofoto_infraroig_2023",
+    url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2023",
+  },
+  30: {
     name: "ortofotoInfraroig2022",
     key: "ortofoto_infraroig_2022",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2022",
   },
-  29: {
+  31: {
     name: "ortofotoInfraroig2021",
     key: "ortofoto_infraroig_2021",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2021",
   },
-  30: {
+  32: {
     name: "ortofotoInfraroig2020",
     key: "ortofoto_infraroig_2020",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2020",
   },
-  31: {
+  33: {
     name: "ortofotoInfraroig2019",
     key: "ortofoto_infraroig_2019",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2019",
   },
-  32: {
+  34: {
     name: "ortofotoInfraroig2018",
     key: "ortofoto_infraroig_2018",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2018",
   },
-  33: {
+  35: {
     name: "ortofotoInfraroig2017",
     key: "ortofoto_infraroig_2017",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2017",
   },
-  34: {
+  36: {
     name: "ortofotoInfraroig2016",
     key: "ortofoto_infraroig_2016",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2016",
   },
-  35: {
+  37: {
     name: "ortofotoInfraroig2015",
     key: "ortofoto_infraroig_2015",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2015",
   },
-  36: {
+  38: {
     name: "ortofotoInfraroig2014",
     key: "ortofoto_infraroig_2014",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2014",
   },
-  37: {
+  39: {
     name: "ortofotoInfraroig2013",
     key: "ortofoto_infraroig_2013",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2013",
   },
-  38: {
+  40: {
     name: "ortofotoInfraroig2012",
     key: "ortofoto_infraroig_2012",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2012",
   },
-  39: {
+  41: {
     name: "ortofotoInfraroig2011",
     key: "ortofoto_infraroig_2011",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2011",
   },
-  40: {
+  42: {
     name: "ortofotoInfraroig2010",
     key: "ortofoto_infraroig_2010",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2010",
   },
-  41: {
+  43: {
     name: "ortofotoInfraroig2009",
     key: "ortofoto_infraroig_2009",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2009",
   },
-  42: {
+  44: {
     name: "ortofotoInfraroig2008",
     key: "ortofoto_infraroig_2008",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2008",
   },
-  43: {
+  45: {
     name: "ortofotoInfraroig20062007",
     key: "ortofoto_infraroig_2006-2007",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_2006-2007",
   },
-  44: {
+  46: {
     name: "ortofotoInfraroig19961997",
     key: "ortofoto_infraroig_1996-1997",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_1996-1997",
   },
-  45: {
+  47: {
     name: "ortofotoInfraroigSerieAnual",
     key: "ortofoto_infraroig_serie_anual",
     url: "https://geoserveis.icgc.cat/servei/catalunya/orto-territorial/wms?&bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&STYLES=&srs=EPSG:3857&transparent=true&width=256&height=256&layers=ortofoto_infraroig_serie_anual",
@@ -460,130 +475,154 @@ vectorLayersICGC: {
     key: "districtes_censals_2022",
   },
   32: {
+    name: "districtesCensals2023",
+    key: "districtes_censals_2023",
+  },
+  33: {
     name: "districtesCensalsVigent",
     key: "districtes_censals_vigent",
   },
-  33: {
+  34: {
     name: "districtesCensalsVigentText",
     key: "districtes_censals_vigent_text",
   },
-  34: {
+  35: {
+    name: "espaisNaturalsEnpeVigent",
+    key: "espais_naturals_enpe_vigent",
+  },
+  36: {
+    name: "espaisNaturalsEnpeVigentText",
+    key: "espais_naturals_enpe_vigent_text",
+  },
+  37: {
+    name: "espaisNaturalsPeinVigent",
+    key: "espais_naturals_pein_vigent",
+  },
+  38: {
+    name: "espaisNaturalsPeinVigentText",
+    key: "espais_naturals_pein_vigent_text",
+  },
+  39: {
     name: "incendisForestalsVigent",
     key: "incendis_forestals_vigent",
   },
-  35: {
+  40: {
     name: "incendisForestalsVigentText",
     key: "incendis_forestals_vigent_text",
   },
-  36: {
+  41: {
     name: "municipis2022",
     key: "municipis_2022",
   },
-  37: {
+  42: {
     name: "municipis2022Text",
     key: "municipis_2022_text",
   },
-  38: {
+  43: {
     name: "municipisVigent",
     key: "municipis_vigent",
   },
-  39: {
+  44: {
     name: "municipisVigentText",
     key: "municipis_vigent_text",
   },
-  40: {
+  45: {
     name: "partitsJudicialsVigent",
     key: "partits_judicials_vigent",
   },
-  41: {
+  46: {
     name: "partitsJudicialsVigentText",
     key: "partits_judicials_vigent_text",
   },
-  42: {
+  47: {
     name: "plaTerritorial2015",
     key: "pla_territorial_2015",
   },
-  43: {
+  48: {
     name: "plaTerritorialVigent",
     key: "pla_territorial_vigent",
   },
-  44: {
+  49: {
     name: "plaTerritorialVigentText",
     key: "pla_territorial_vigent_text",
   },
-  45: {
+  50: {
     name: "provinciesVigent",
     key: "provincies_vigent",
   },
-  46: {
+  51: {
     name: "provinciesVigentText",
     key: "provincies_vigent_text",
   },
-  47: {
+  52: {
     name: "regionsPolicialsVigent",
     key: "regions_policials_vigent",
   },
-  48: {
+  53: {
     name: "regionsPolicialsVigentText",
     key: "regions_policials_vigent_text",
   },
-  49: {
+  54: {
     name: "regionsSanitariesVigent",
     key: "regions_sanitaries_vigent",
   },
-  50: {
+  55: {
     name: "regionsSanitariesVigentText",
     key: "regions_sanitaries_vigent_text",
   },
-  51: {
+  56: {
     name: "seccionsCensals2015",
     key: "seccions_censals_2015",
   },
-  52: {
+  57: {
     name: "seccionsCensals2016",
     key: "seccions_censals_2016",
   },
-  53: {
+  58: {
     name: "seccionsCensals2017",
     key: "seccions_censals_2017",
   },
-  54: {
+  59: {
     name: "seccionsCensals2018",
     key: "seccions_censals_2018",
   },
-  55: {
+  60: {
     name: "seccionsCensals2019",
     key: "seccions_censals_2019",
   },
-  56: {
+  61: {
     name: "seccionsCensals2020",
     key: "seccions_censals_2020",
   },
-  57: {
+  62: {
     name: "seccionsCensals2021",
     key: "seccions_censals_2021",
   },
-  58: {
+  63: {
     name: "seccionsCensals2022",
     key: "seccions_censals_2022",
   },
-  59: {
+  64: {
+    name: "seccionsCensals2023",
+    key: "seccions_censals_2023",
+  },
+  65: {
     name: "seccionsCensalsVigent",
     key: "seccions_censals_vigent",
   },
-  60: {
+  66: {
     name: "seccionsCensalsVigentText",
     key: "seccions_censals_vigent_text",
   },
-  61: {
+  67: {
     name: "sectorsSanitarisVigent",
     key: "sectors_sanitaris_vigent",
   },
-  62: {
+  68: {
     name: "vegueriesVigent",
     key: "vegueries_vigent",
   },
-  63: {
+  69: {
     name: "vegueriesVigentText",
     key: "vegueries_vigent_text",
   },
@@ -709,96 +748,116 @@ fgbLayers: {
     url: "https://tilemaps.icgc.cat/vector/fgb/districtes_censals_vigent_text.fgb",
   },
   15: {
+    name: "espaisNaturalsEnpeVigent",
+    key: "espais_naturals_enpe_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/espais_naturals_enpe_vigent.fgb",
+  },
+  16: {
+    name: "espaisNaturalsEnpeVigentText",
+    key: "espais_naturals_enpe_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/espais_naturals_enpe_vigent_text.fgb",
+  },
+  17: {
+    name: "espaisNaturalsPeinVigent",
+    key: "espais_naturals_pein_vigent",
+    url: "https://tilemaps.icgc.cat/vector/fgb/espais_naturals_pein_vigent.fgb",
+  },
+  18: {
+    name: "espaisNaturalsPeinVigentText",
+    key: "espais_naturals_pein_vigent_text",
+    url: "https://tilemaps.icgc.cat/vector/fgb/espais_naturals_pein_vigent_text.fgb",
+  },
+  19: {
     name: "incendisForestalsVigent",
     key: "incendis_forestals_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent.fgb",
   },
-  16: {
+  20: {
     name: "incendisForestalsVigentText",
     key: "incendis_forestals_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/incendis_forestals_vigent_text.fgb",
   },
-  17: {
+  21: {
     name: "municipisVigent",
     key: "municipis_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent.fgb",
   },
-  18: {
+  22: {
     name: "municipisVigentText",
     key: "municipis_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/municipis_vigent_text.fgb",
   },
-  19: {
+  23: {
     name: "partitsJudicialsVigent",
     key: "partits_judicials_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent.fgb",
   },
-  20: {
+  24: {
     name: "partitsJudicialsVigentText",
     key: "partits_judicials_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/partits_judicials_vigent_text.fgb",
   },
-  21: {
+  25: {
     name: "plaTerritorialVigent",
     key: "pla_territorial_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent.fgb",
   },
-  22: {
+  26: {
     name: "plaTerritorialVigentText",
     key: "pla_territorial_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/pla_territorial_vigent_text.fgb",
   },
-  23: {
+  27: {
     name: "provinciesVigent",
     key: "provincies_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent.fgb",
   },
-  24: {
+  28: {
     name: "provinciesVigentText",
     key: "provincies_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/provincies_vigent_text.fgb",
   },
-  25: {
+  29: {
     name: "regionsPolicialsVigent",
     key: "regions_policials_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent.fgb",
   },
-  26: {
+  30: {
     name: "regionsPolicialsVigentText",
     key: "regions_policials_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_policials_vigent_text.fgb",
   },
-  27: {
+  31: {
     name: "regionsSanitariesVigent",
     key: "regions_sanitaries_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent.fgb",
   },
-  28: {
+  32: {
     name: "regionsSanitariesVigentText",
     key: "regions_sanitaries_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/regions_sanitaries_vigent_text.fgb",
   },
-  29: {
+  33: {
     name: "seccionsCensalsVigent",
     key: "seccions_censals_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent.fgb",
   },
-  30: {
+  34: {
     name: "seccionsCensalsVigentText",
     key: "seccions_censals_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/seccions_censals_vigent_text.fgb",
   },
-  31: {
+  35: {
     name: "sectorsSanitarisVigent",
     key: "sectors_sanitaris_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/sectors_sanitaris_vigent.fgb",
   },
-  32: {
+  36: {
     name: "vegueriesVigent",
     key: "vegueries_vigent",
     url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent.fgb",
   },
-  33: {
+  37: {
     name: "vegueriesVigentText",
     key: "vegueries_vigent_text",
     url: "https://tilemaps.icgc.cat/vector/fgb/vegueries_vigent_text.fgb",

@@ -67,6 +67,7 @@ export default class Map {
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
+  
     this.map = new maplibregl.Map(options);
     this.map.options = options;
     this.map.addControl(
@@ -917,6 +918,60 @@ export default class Map {
       console.error(`Error adding control: ${error.message}`);
     }
   }
+/**
+ * Sets the sky properties of the map.
+ * @function setSky
+ * @param {Object} options - Options to set the sky properties.
+ * @param {string} [options.skyType='gradient'] - Type of sky to set (e.g., 'gradient', 'atmosphere').
+ * @param {string} [options.color='lightblue'] - Color of the sky.
+ * @param {Number} [options.horizonBlend=0.03] - Blend horizon value.
+ * @param {Number} [options.starIntensity=0.5] - Intensity of stars in the sky.
+ * @param {Number} [options.sunIntensity=0.1] - Intensity of the sun in the sky.
+ * @param {Array<Number>} [options.sunPosition=[0, 0]] - Position of the sun in the sky.
+ */
+setSky(options) {
+  try {
+    if (options === undefined) {
+      if (this.map.options.style.includes("orto")) {
+        options = {
+          'sky-color': '#86bbd5',
+          'sky-horizon-blend': 0.3,
+          'horizon-color': '#ffffff33',
+          'horizon-fog-blend': 0.1,
+          'fog-ground-blend': 0.75,
+          'fog-color': '#c5d6d6'
+        };
+      }
+      if (this.map.options.style.includes("mapa_estandard_general")) {
+        options = {
+          "sky-color": "#a5f0f0",
+          "sky-horizon-blend": 0.3,
+          "horizon-color": "#e1e3e3",
+          "horizon-fog-blend": 0.9,
+          "fog-ground-blend": 0.85,
+          "fog-color": "#c5d6d6",
+        };
+      }
+      if (this.map.options.style.includes("fosc")) {
+        options = {
+          "sky-color": "#232423",
+          "sky-horizon-blend": 0.3,
+          "horizon-color": "#969996",
+          "horizon-fog-blend": 0.9,
+          "fog-ground-blend": 0.85,
+          "fog-color": "#383838",
+        };
+      }
+    }
+
+
+
+
+    this.map.setSky(options);
+  } catch (error) {
+    console.error(`Error setting sky properties: ${error.message}`);
+  }
+}
 
   /**
    * Adds a mouse coordinate control to the map.
@@ -3162,6 +3217,14 @@ export default class Map {
           });
           this._raiseText3DStyle();
         }
+        this.map.setSky({
+          'sky-color': '#86bbd5',
+          'sky-horizon-blend': 0.3,
+          'horizon-color': '#ffffff33',
+          'horizon-fog-blend': 0.1,
+          'fog-ground-blend': 0.75,
+          'fog-color': '#c5d6d6'
+        });
       } else {
         if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
           this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);

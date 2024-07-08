@@ -26,15 +26,25 @@
     <div id="map" class="map"></div>
     <script>
         async function initMap() {
-            const data = await mapicgcgl.Config.getConfigICGC();;
+            const data = await mapicgcgl.Config.getConfigICGC();
+    
             const map = new mapicgcgl.Map({
                 container: 'map',
-                style: data.Styles.ORTO,
+                style: data.Styles.ORTO3D,
                 center: [1.1464, 41.706],
                 zoom: 7.4,
                 hash: true,
                 pitch: 0,
             });
+            
+            map.on("load", () => {
+                map.flyTo({
+  center: [2.812786, 41.98559],
+  zoom: 14,
+
+});
+
+      });
         }
         initMap();
     </script>
