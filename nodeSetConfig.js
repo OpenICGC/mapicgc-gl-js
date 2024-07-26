@@ -192,14 +192,14 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            { key: "TOPO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
-            { key: "ORTO", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
+            { key: "TOPO", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
+            { key: "ORTO", url: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
             { key: "ORTO3D", url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
-            { key: "ORTOHYBRID", url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
-            { key: "ADMIN", url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
-            { key: "DARK", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
-            { key: "LIGHT", url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
-            { key: "GEOLOGY", url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png" },
+            { key: "ORTOHYBRID", url: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
+            { key: "ADMIN", url: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
+            { key: "DARK", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
+            { key: "LIGHT", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
+            { key: "GEOLOGY", url: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png" },
                 
           ]
           stylesOptions = test
