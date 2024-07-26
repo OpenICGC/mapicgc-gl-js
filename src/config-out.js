@@ -17,7 +17,7 @@ mapOptions: {
   bearing: 0,
   pitch: 0,
   hash: false,
-  style: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json.json",
+  style: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json.json",
   maxZoom: 18,
   maxPitch: 85,
 },
@@ -53,12 +53,12 @@ map3dOptions: {
 baseStyles: {
   0: {
     key: "TOPO",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png",
   },
   1: {
     key: "ORTO",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png",
   },
   2: {
@@ -68,27 +68,27 @@ baseStyles: {
   },
   3: {
     key: "ORTOHYBRID",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
   },
   4: {
     key: "ADMIN",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png",
   },
   5: {
     key: "DARK",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png",
   },
   6: {
     key: "LIGHT",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png",
   },
   7: {
     key: "GEOLOGY",
-    url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json",
+    url: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png",
   },
 },

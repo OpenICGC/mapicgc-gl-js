@@ -58966,7 +58966,7 @@ function(n) {
 */
 function(n) {
   function e() {
-    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-B8aWB3kW.mjs")).catch(function(t) {
+    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-FEZKbvRu.mjs")).catch(function(t) {
       return Promise.reject(new Error("Could not load canvg: " + t));
     }).then(function(t) {
       return t.default ? t.default : t;
@@ -61494,7 +61494,7 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
     bearing: 0,
     pitch: 0,
     hash: !1,
-    style: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json.json",
+    style: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json.json",
     maxZoom: 18,
     maxPitch: 85
   },
@@ -61530,42 +61530,42 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
   baseStyles: [
     {
       key: "TOPO",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png"
     },
     {
       key: "ORTO",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
-      image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"
+      url: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json",
+      image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"
     },
     {
       key: "ORTO3D",
       url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
-      image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"
+      image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"
     },
     {
       key: "ORTOHYBRID",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"
     },
     {
       key: "ADMIN",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"
     },
     {
       key: "DARK",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"
     },
     {
       key: "LIGHT",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png"
     },
     {
       key: "GEOLOGY",
-      url: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json",
+      url: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json",
       image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png"
     }
   ],
@@ -62305,14 +62305,14 @@ const xq = /* @__PURE__ */ Ap(bq), wq = {
     }
   ]
 }, Aq = {
-  TOPO: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard_general.json",
-  ORTO: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_estandard.json",
+  TOPO: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",
+  ORTO: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json",
   ORTO3D: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
-  ORTOHYBRID: "https://geoserveis.icgc.cat/contextmaps/icgc_orto_hibrida.json",
-  ADMIN: "https://geoserveis.icgc.cat/contextmaps/icgc_delimitacio_limits_administratius.json",
-  DARK: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_fosc.json",
-  LIGHT: "https://geoserveis.icgc.cat/contextmaps/icgc_mapa_base_gris.json",
-  GEOLOGY: "https://geoserveis.icgc.cat/contextmaps/icgc_geologic_informacio.json"
+  ORTOHYBRID: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json",
+  ADMIN: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
+  DARK: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",
+  LIGHT: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json",
+  GEOLOGY: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json"
 }, Eq = {
   ICGC5M: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
   WORLD30M: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
