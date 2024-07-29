@@ -868,11 +868,11 @@ export default class Map {
   on(type, func) {
     setTimeout(() => {
       try {
-        this.map.on(type, func);
+        return this.map.on(type, func);
       } catch (error) {
         console.error(`Error adding event ON listener: ${error.message}`);
       }
-    }, 500);
+    }, 100);
   }
 
   /**
