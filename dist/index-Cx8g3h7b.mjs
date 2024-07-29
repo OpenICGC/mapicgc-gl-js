@@ -58966,7 +58966,7 @@ function(n) {
 */
 function(n) {
   function e() {
-    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-FEZKbvRu.mjs")).catch(function(t) {
+    return (Rn.canvg ? Promise.resolve(Rn.canvg) : import("./index.es-BWyxJuJN-DdIdVRyF.mjs")).catch(function(t) {
       return Promise.reject(new Error("Could not load canvg: " + t));
     }).then(function(t) {
       return t.default ? t.default : t;
@@ -64729,11 +64729,11 @@ let Ah, $f, Sr, gi, oW = class {
   on(e, t) {
     setTimeout(() => {
       try {
-        this.map.on(e, t);
+        return this.map.on(e, t);
       } catch (i) {
         console.error(`Error adding event ON listener: ${i.message}`);
       }
-    }, 500);
+    }, 100);
   }
   /**
    * Sets the style of the map.
