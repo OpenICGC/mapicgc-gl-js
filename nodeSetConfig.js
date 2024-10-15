@@ -148,7 +148,7 @@ async function getVectorLimitsLayers() {
 
 
           let test= [
-            { key: 'cobertes2018', url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json", legend: "https://autogitlab.icgc.local/geostarters/icgc/recursos/-/raw/master//images/llegendaCobertesSol2018.jpg"}
+            { key: 'cobertes2018', url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json", legend: "https://eines.icgc.cat/recursos//images/llegendaCobertesSol2018.jpg"}
              ]
              vectorLayersOptions = test
              console.info('Dades vector Layers actualitzats' )
@@ -194,7 +194,7 @@ async function getVectorLimitsLayers() {
           let test= [
             { key: "TOPO", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_estandard.png" },
             { key: "ORTO", url: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json" , image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
-            { key: "ORTO3D", url: "https://autogitlab.icgc.local/geostarters/icgc/recursos/-/raw/master//styles/icgc_orto_3d.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
+            { key: "ORTO3D", url: "https://eines.icgc.cat/recursos//styles/icgc_orto_3d.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png"},
             { key: "ORTOHYBRID", url: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png"},
             { key: "ADMIN", url: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_delimitacio_limits_administratius.png"},
             { key: "DARK", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},

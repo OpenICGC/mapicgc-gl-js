@@ -2,7 +2,7 @@
 const Styles = {
 TOPO: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",
 ORTO: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json",
-ORTO3D: "https://autogitlab.icgc.local/geostarters/icgc/recursos/-/raw/master//styles/icgc_orto_3d.json",
+ORTO3D: "https://eines.icgc.cat/recursos//styles/icgc_orto_3d.json",
 ORTOHYBRID: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json",
 ADMIN: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
 DARK: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",

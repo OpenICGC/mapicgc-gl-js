@@ -1,7 +1,7 @@
 import axios from "axios";
 import mapicgcConfig from "../mapicgc-config.json";
 
-const urlConfigICGC = "https://autogitlab.icgc.local/geostarters/icgc/recursos/-/raw/master/mapicgc-gl-js/mapicgc-config.json";
+const urlConfigICGC = "https://eines.icgc.cat/recursos/mapicgc-gl-js/mapicgc-config.json";
 const timeOut = 5000;
 
 class Config {
