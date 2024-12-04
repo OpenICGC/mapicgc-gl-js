@@ -2846,8 +2846,8 @@ setSky(options) {
 
         if (layoutOptions.visibility === "visible") {
           let legendUrl = this._getLegendByName(sourceName);
-          console.info("legendUrl", legendUrl);
-          console.info("sourceName", sourceName);
+          // console.info("legendUrl", legendUrl);
+          // console.info("sourceName", sourceName);
           this.addLegend(legendUrl, sourceName);
         }
       } else {
@@ -3266,7 +3266,7 @@ setSky(options) {
           layers[i].id.indexOf("contour") === -1 &&
           layers[i].id.indexOf("water") === -1
         ) {
-          console.info(layers[i].id);
+          // console.info(layers[i].id);
           firstSymbolId = layers[i].id;
           break;
         }

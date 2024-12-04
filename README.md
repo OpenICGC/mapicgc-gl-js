@@ -1,6 +1,6 @@
 <div style="text-align:center">
 <p>
-  <img src="https://tilemaps.icgc.cat/cdn/images/logo2.png"  alt="MapICGC Logo" width="400px">
+  <img src="https://eines.icgc.cat/recursos//images/logo2.png"  alt="MapICGC Logo" width="400px">
 </p>
 </div>
 
@@ -9,7 +9,7 @@
   [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=flat)](LICENSE.txt) 
   [![Version](https://img.shields.io/npm/v/mapicgc-gl-js?style=flat)](https://www.npmjs.com/package/mapicgc-gl-js) 
   [![X](https://img.shields.io/twitter/follow/icgcat?style=social)](https://twitter.com/icgcat) 
-  <img src="https://tilemaps.icgc.cat/cdn/images/JS-logo.svg" width="20px"/>
+  <img src="https://eines.icgc.cat/recursos//images/JS-logo.svg" width="20px"/>
 </div>
 
 
@@ -72,8 +72,8 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
 
 1. Include the JavaScript and CSS files in the `<head>` of your HTML file.:
    ```html
-   <script src="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.js"></script>
-   <link href="https://tilemaps.icgc.cat/cdn/mapicgc-gl-js/mapicgc-gl.css" rel="stylesheet" />
+   <script src="https://eines.icgc.cat/recursos//mapicgc-gl-js/mapicgc-gl.js"></script>
+   <link href="https://eines.icgc.cat/recursos//mapicgc-gl-js/mapicgc-gl.css" rel="stylesheet" />
    ```
 
 2. Include the following code in the `<body>` of your HTML file.:
@@ -98,7 +98,7 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
 Result: 
 
    <div align="center">
-    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://tilemaps.icgc.cat/cdn//images/map1.png"></img></a></div>
+    <a title="Link to CodePen" href="https://codepen.io/unitatgeostart/pen/eYXWyqd" target="_blank"><img  src="https://eines.icgc.cat/recursos///images/map1.png"></img></a></div>
 <br>
 
 
@@ -115,7 +115,7 @@ MapICGC GL JS integrates the following libraries:
 
 ## Developed by:
 
- <a href="https://www.icgc.cat/" target="_blank"><img src="https://tilemaps.icgc.cat/cdn/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
+ <a href="https://www.icgc.cat/" target="_blank"><img src="https://eines.icgc.cat/recursos/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
 
 
 ## License

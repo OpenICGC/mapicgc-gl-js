@@ -22,15 +22,15 @@ mapOptions: {
   maxPitch: 85,
 },
 logoIcgcOptions: {
-  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_color.png",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_blanc.svg",
+  logoUrlColor: "https://eines.icgc.cat/recursos/logos/icgc_logo_color.png",
+  logoUrlWhite: "https://eines.icgc.cat/recursos/logos/icgc_logo_blanc.svg",
   logoLink: "https://www.icgc.cat",
   logoTitle: "Institut Cartogràfic i Geològic de Catalunya",
   logoWidth: 100,
 },
 logoGencatOptions: {
-  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_blanc.png",
+  logoUrlColor: "https://eines.icgc.cat/recursos/logos/gencat_logo_color.png",
+  logoUrlWhite: "https://eines.icgc.cat/recursos/logos/gencat_logo_blanc.png",
   logoLink: "https://web.gencat.cat/",
   logoTitle: "Generalitat de Catalunya",
   logoWidth: 100,
@@ -48,7 +48,7 @@ map3dOptions: {
   layerId3d: "edificisMapboxLayer",
   terrainSource: "ICGC5M",
   style3dName: "orto3d",
-  imageIcon: "https://tilemaps.icgc.cat/cdn/images/stick.png",
+  imageIcon: "https://eines.icgc.cat/recursos//images/stick.png",
 },
 baseStyles: {
   0: {
@@ -63,7 +63,7 @@ baseStyles: {
   },
   2: {
     key: "ORTO3D",
-    url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
+    url: "https://eines.icgc.cat/recursos//styles/icgc_orto_3d.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_estandard.png",
   },
   3: {
@@ -631,7 +631,7 @@ vectorLayers: {
   0: {
     key: "cobertes2018",
     url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
-    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg",
+    legend: "https://eines.icgc.cat/recursos//images/llegendaCobertesSol2018.jpg",
   },
 },
 wmsLayers: {

@@ -13,10 +13,8 @@ function It(n, o) {
   }, It(n, o);
 }
 function je() {
-  if (typeof Reflect > "u" || !Reflect.construct || Reflect.construct.sham)
-    return !1;
-  if (typeof Proxy == "function")
-    return !0;
+  if (typeof Reflect > "u" || !Reflect.construct || Reflect.construct.sham) return !1;
+  if (typeof Proxy == "function") return !0;
   try {
     return Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
     })), !0;
@@ -36,28 +34,22 @@ function w(n) {
   return Be(n) || Ge(n) || We(n) || qe();
 }
 function Be(n) {
-  if (Array.isArray(n))
-    return Ft(n);
+  if (Array.isArray(n)) return Ft(n);
 }
 function Ge(n) {
-  if (typeof Symbol < "u" && n[Symbol.iterator] != null || n["@@iterator"] != null)
-    return Array.from(n);
+  if (typeof Symbol < "u" && n[Symbol.iterator] != null || n["@@iterator"] != null) return Array.from(n);
 }
 function We(n, o) {
   if (n) {
-    if (typeof n == "string")
-      return Ft(n, o);
+    if (typeof n == "string") return Ft(n, o);
     var a = Object.prototype.toString.call(n).slice(8, -1);
-    if (a === "Object" && n.constructor && (a = n.constructor.name), a === "Map" || a === "Set")
-      return Array.from(n);
-    if (a === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(a))
-      return Ft(n, o);
+    if (a === "Object" && n.constructor && (a = n.constructor.name), a === "Map" || a === "Set") return Array.from(n);
+    if (a === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(a)) return Ft(n, o);
   }
 }
 function Ft(n, o) {
   (o == null || o > n.length) && (o = n.length);
-  for (var a = 0, c = new Array(o); a < o; a++)
-    c[a] = n[a];
+  for (var a = 0, c = new Array(o); a < o; a++) c[a] = n[a];
   return c;
 }
 function qe() {
@@ -80,15 +72,13 @@ Ht || (Ht = function(n, o) {
 var Ze = T(Array.prototype.forEach), se = T(Array.prototype.pop), V = T(Array.prototype.push), ut = T(String.prototype.toLowerCase), xt = T(String.prototype.toString), me = T(String.prototype.match), S = T(String.prototype.replace), Je = T(String.prototype.indexOf), Qe = T(String.prototype.trim), g = T(RegExp.prototype.test), Lt = tn(TypeError), pe = T(Number.isNaN);
 function T(n) {
   return function(o) {
-    for (var a = arguments.length, c = new Array(a > 1 ? a - 1 : 0), p = 1; p < a; p++)
-      c[p - 1] = arguments[p];
+    for (var a = arguments.length, c = new Array(a > 1 ? a - 1 : 0), p = 1; p < a; p++) c[p - 1] = arguments[p];
     return st(n, o, c);
   };
 }
 function tn(n) {
   return function() {
-    for (var o = arguments.length, a = new Array(o), c = 0; c < o; c++)
-      a[c] = arguments[c];
+    for (var o = arguments.length, a = new Array(o), c = 0; c < o; c++) a[c] = arguments[c];
     return Ht(n, a);
   };
 }
@@ -107,18 +97,15 @@ function i(n, o, a) {
 }
 function U(n) {
   var o = Xe(null), a;
-  for (a in n)
-    st(Ye, n, [a]) === !0 && (o[a] = n[a]);
+  for (a in n) st(Ye, n, [a]) === !0 && (o[a] = n[a]);
   return o;
 }
 function it(n, o) {
   for (; n !== null; ) {
     var a = Ve(n, o);
     if (a) {
-      if (a.get)
-        return T(a.get);
-      if (typeof a.value == "function")
-        return T(a.value);
+      if (a.get) return T(a.get);
+      if (typeof a.value == "function") return T(a.value);
     }
     n = Ke(n);
   }
@@ -136,8 +123,7 @@ var fe = y(["a", "abbr", "acronym", "address", "area", "article", "aside", "audi
 ), pn = N(/^html$/i), fn = N(/^[a-z][.\w]*(-[.\w]+)+$/i), dn = function() {
   return typeof window > "u" ? null : window;
 }, hn = function(n, o) {
-  if (O(n) !== "object" || typeof n.createPolicy != "function")
-    return null;
+  if (O(n) !== "object" || typeof n.createPolicy != "function") return null;
   var a = null, c = "data-tt-policy-suffix";
   o.currentScript && o.currentScript.hasAttribute(c) && (a = o.currentScript.getAttribute(c));
   var p = "dompurify" + (a ? "#" + a : "");
@@ -158,8 +144,7 @@ function _e() {
   var n = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : dn(), o = function(t) {
     return _e(t);
   };
-  if (o.version = "2.5.3", o.removed = [], !n || !n.document || n.document.nodeType !== 9)
-    return o.isSupported = !1, o;
+  if (o.version = "2.5.3", o.removed = [], !n || !n.document || n.document.nodeType !== 9) return o.isSupported = !1, o;
   var a = n.document, c = n.document, p = n.DocumentFragment, _ = n.HTMLTemplateElement, E = n.Node, X = n.Element, R = n.NodeFilter, Ut = n.NamedNodeMap, be = Ut === void 0 ? n.NamedNodeMap || n.MozNamedAttrMap : Ut, ve = n.HTMLFormElement, Te = n.DOMParser, Z = n.trustedTypes, J = X.prototype, Ne = it(J, "cloneNode"), Ee = it(J, "nextSibling"), Ae = it(J, "childNodes"), q = it(J, "parentNode");
   if (typeof _ == "function") {
     var mt = c.createElement("template");
@@ -247,32 +232,27 @@ function _e() {
         from: r
       });
     }
-    if (r.removeAttribute(t), t === "is" && !d[t])
-      if (P || tt)
-        try {
-          L(r);
-        } catch {
-        }
-      else
-        try {
-          r.setAttribute(t, "");
-        } catch {
-        }
+    if (r.removeAttribute(t), t === "is" && !d[t]) if (P || tt) try {
+      L(r);
+    } catch {
+    }
+    else try {
+      r.setAttribute(t, "");
+    } catch {
+    }
   }, ne = function(t) {
     var r, e;
-    if (Nt)
-      t = "<remove></remove>" + t;
+    if (Nt) t = "<remove></remove>" + t;
     else {
       var u = me(t, /^[\r\n\t ]+/);
       e = u && u[0];
     }
     F === "application/xhtml+xml" && G === x && (t = '<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>' + t + "</body></html>");
     var l = A ? A.createHTML(t) : t;
-    if (G === x)
-      try {
-        r = new Te().parseFromString(l, F);
-      } catch {
-      }
+    if (G === x) try {
+      r = new Te().parseFromString(l, F);
+    } catch {
+    }
     if (!r || !r.documentElement) {
       r = ft.createDocument(G, "template", null);
       try {
@@ -301,24 +281,20 @@ function _e() {
     });
   }, ae = function(t) {
     var r;
-    if (D("beforeSanitizeElements", t, null), oe(t) || g(/[\u0080-\uFFFF]/, t.nodeName))
-      return L(t), !0;
+    if (D("beforeSanitizeElements", t, null), oe(t) || g(/[\u0080-\uFFFF]/, t.nodeName)) return L(t), !0;
     var e = h(t.nodeName);
     if (D("uponSanitizeElement", t, {
       tagName: e,
       allowedTags: f
-    }), t.hasChildNodes() && !K(t.firstElementChild) && (!K(t.content) || !K(t.content.firstElementChild)) && g(/<[/\w]/g, t.innerHTML) && g(/<[/\w]/g, t.textContent) || e === "select" && g(/<template/i, t.innerHTML) || t.nodeType === 7 || vt && t.nodeType === 8 && g(/<[/\w]/g, t.data))
-      return L(t), !0;
+    }), t.hasChildNodes() && !K(t.firstElementChild) && (!K(t.content) || !K(t.content.firstElementChild)) && g(/<[/\w]/g, t.innerHTML) && g(/<[/\w]/g, t.textContent) || e === "select" && g(/<template/i, t.innerHTML) || t.nodeType === 7 || vt && t.nodeType === 8 && g(/<[/\w]/g, t.data)) return L(t), !0;
     if (!f[e] || Y[e]) {
-      if (!Y[e] && le(e) && (s.tagNameCheck instanceof RegExp && g(s.tagNameCheck, e) || s.tagNameCheck instanceof Function && s.tagNameCheck(e)))
-        return !1;
+      if (!Y[e] && le(e) && (s.tagNameCheck instanceof RegExp && g(s.tagNameCheck, e) || s.tagNameCheck instanceof Function && s.tagNameCheck(e))) return !1;
       if (Et && !B[e]) {
         var u = q(t) || t.parentNode, l = Ae(t) || t.childNodes;
-        if (l && u)
-          for (var b = l.length, m = b - 1; m >= 0; --m) {
-            var M = Ne(l[m], !0);
-            M.__removalCount = (t.__removalCount || 0) + 1, u.insertBefore(M, Ee(t));
-          }
+        if (l && u) for (var b = l.length, m = b - 1; m >= 0; --m) {
+          var M = Ne(l[m], !0);
+          M.__removalCount = (t.__removalCount || 0) + 1, u.insertBefore(M, Ee(t));
+        }
       }
       return L(t), !0;
     }
@@ -326,8 +302,7 @@ function _e() {
       element: t.cloneNode()
     }), t.textContent = r)), D("afterSanitizeElements", t, null), !1);
   }, ie = function(t, r, e) {
-    if (Yt && (r === "id" || r === "name") && (e in c || e in He || e === "__depth" || e === "__removalCount"))
-      return !1;
+    if (Yt && (r === "id" || r === "name") && (e in c || e in He || e === "__depth" || e === "__removalCount")) return !1;
     if (!(bt && !_t[r] && g(xe, r)) && !(Gt && g(Le, r))) {
       if (!d[r] || _t[r]) {
         if (
@@ -337,8 +312,7 @@ function _e() {
           !(le(t) && (s.tagNameCheck instanceof RegExp && g(s.tagNameCheck, t) || s.tagNameCheck instanceof Function && s.tagNameCheck(t)) && (s.attributeNameCheck instanceof RegExp && g(s.attributeNameCheck, r) || s.attributeNameCheck instanceof Function && s.attributeNameCheck(r)) || // Alternative, second condition checks if it's an `is`-attribute, AND
           // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
           r === "is" && s.allowCustomizedBuiltInElements && (s.tagNameCheck instanceof RegExp && g(s.tagNameCheck, e) || s.tagNameCheck instanceof Function && s.tagNameCheck(e)))
-        )
-          return !1;
+        ) return !1;
       } else if (!At[r] && !g(yt, S(e, Pt, "")) && !((r === "src" || r === "xlink:href" || r === "href") && t !== "script" && Je(e, "data:") === 0 && Vt[t]) && !(Wt && !g(De, S(e, Pt, ""))) && e)
         return !1;
     }
@@ -371,17 +345,16 @@ function _e() {
           z && (e = S(e, dt, " "), e = S(e, ht, " "), e = S(e, gt, " "));
           var v = h(t.nodeName);
           if (ie(v, u, e)) {
-            if ($t && (u === "id" || u === "name") && (at(C, t), e = Me + e), A && O(Z) === "object" && typeof Z.getAttributeType == "function" && !H)
-              switch (Z.getAttributeType(v, u)) {
-                case "TrustedHTML": {
-                  e = A.createHTML(e);
-                  break;
-                }
-                case "TrustedScriptURL": {
-                  e = A.createScriptURL(e);
-                  break;
-                }
+            if ($t && (u === "id" || u === "name") && (at(C, t), e = Me + e), A && O(Z) === "object" && typeof Z.getAttributeType == "function" && !H) switch (Z.getAttributeType(v, u)) {
+              case "TrustedHTML": {
+                e = A.createHTML(e);
+                break;
               }
+              case "TrustedScriptURL": {
+                e = A.createScriptURL(e);
+                break;
+              }
+            }
             try {
               H ? t.setAttributeNS(H, C, e) : t.setAttribute(C, e), oe(t) ? L(t) : se(o.removed);
             } catch {
@@ -393,59 +366,44 @@ function _e() {
     }
   }, Pe = function t(r) {
     var e, u = re(r);
-    for (D("beforeSanitizeShadowDOM", r, null); e = u.nextNode(); )
-      if (D("uponSanitizeShadowNode", e, null), !ae(e)) {
-        var l = q(e);
-        e.nodeType === 1 && (l && l.__depth ? e.__depth = (e.__removalCount || 0) + l.__depth + 1 : e.__depth = 1), (e.__depth >= Jt || pe(e.__depth)) && L(e), e.content instanceof p && (e.content.__depth = e.__depth, t(e.content)), ce(e);
-      }
+    for (D("beforeSanitizeShadowDOM", r, null); e = u.nextNode(); ) if (D("uponSanitizeShadowNode", e, null), !ae(e)) {
+      var l = q(e);
+      e.nodeType === 1 && (l && l.__depth ? e.__depth = (e.__removalCount || 0) + l.__depth + 1 : e.__depth = 1), (e.__depth >= Jt || pe(e.__depth)) && L(e), e.content instanceof p && (e.content.__depth = e.__depth, t(e.content)), ce(e);
+    }
     D("afterSanitizeShadowDOM", r, null);
   };
   return o.sanitize = function(t) {
     var r = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, e, u, l, b, m;
-    if (St = !t, St && (t = "<!-->"), typeof t != "string" && !K(t))
-      if (typeof t.toString == "function") {
-        if (t = t.toString(), typeof t != "string")
-          throw Lt("dirty is not a string, aborting");
-      } else
-        throw Lt("toString is not a function");
+    if (St = !t, St && (t = "<!-->"), typeof t != "string" && !K(t)) if (typeof t.toString == "function") {
+      if (t = t.toString(), typeof t != "string") throw Lt("dirty is not a string, aborting");
+    } else throw Lt("toString is not a function");
     if (!o.isSupported) {
       if (O(n.toStaticHTML) === "object" || typeof n.toStaticHTML == "function") {
-        if (typeof t == "string")
-          return n.toStaticHTML(t);
-        if (K(t))
-          return n.toStaticHTML(t.outerHTML);
+        if (typeof t == "string") return n.toStaticHTML(t);
+        if (K(t)) return n.toStaticHTML(t.outerHTML);
       }
       return t;
     }
     if (Tt || kt(r), o.removed = [], typeof t == "string" && ($ = !1), $) {
       if (t.nodeName) {
         var M = h(t.nodeName);
-        if (!f[M] || Y[M])
-          throw Lt("root node is forbidden and cannot be sanitized in-place");
+        if (!f[M] || Y[M]) throw Lt("root node is forbidden and cannot be sanitized in-place");
       }
-    } else if (t instanceof E)
-      e = ne("<!---->"), u = e.ownerDocument.importNode(t, !0), u.nodeType === 1 && u.nodeName === "BODY" || u.nodeName === "HTML" ? e = u : e.appendChild(u);
+    } else if (t instanceof E) e = ne("<!---->"), u = e.ownerDocument.importNode(t, !0), u.nodeType === 1 && u.nodeName === "BODY" || u.nodeName === "HTML" ? e = u : e.appendChild(u);
     else {
       if (!P && !z && !I && // eslint-disable-next-line unicorn/prefer-includes
-      t.indexOf("<") === -1)
-        return A && et ? A.createHTML(t) : t;
-      if (e = ne(t), !e)
-        return P ? null : et ? pt : "";
+      t.indexOf("<") === -1) return A && et ? A.createHTML(t) : t;
+      if (e = ne(t), !e) return P ? null : et ? pt : "";
     }
     e && Nt && L(e.firstChild);
-    for (var C = re($ ? t : e); l = C.nextNode(); )
-      if (!(l.nodeType === 3 && l === b) && !ae(l)) {
-        var H = q(l);
-        l.nodeType === 1 && (H && H.__depth ? l.__depth = (l.__removalCount || 0) + H.__depth + 1 : l.__depth = 1), (l.__depth >= Jt || pe(l.__depth)) && L(l), l.content instanceof p && (l.content.__depth = l.__depth, Pe(l.content)), ce(l), b = l;
-      }
-    if (b = null, $)
-      return t;
+    for (var C = re($ ? t : e); l = C.nextNode(); ) if (!(l.nodeType === 3 && l === b) && !ae(l)) {
+      var H = q(l);
+      l.nodeType === 1 && (H && H.__depth ? l.__depth = (l.__removalCount || 0) + H.__depth + 1 : l.__depth = 1), (l.__depth >= Jt || pe(l.__depth)) && L(l), l.content instanceof p && (l.content.__depth = l.__depth, Pe(l.content)), ce(l), b = l;
+    }
+    if (b = null, $) return t;
     if (P) {
-      if (tt)
-        for (m = we.call(e.ownerDocument); e.firstChild; )
-          m.appendChild(e.firstChild);
-      else
-        m = e;
+      if (tt) for (m = we.call(e.ownerDocument); e.firstChild; ) m.appendChild(e.firstChild);
+      else m = e;
       return (d.shadowroot || d.shadowrootmod) && (m = Ce.call(a, m, !0)), m;
     }
     var v = I ? e.outerHTML : e.innerHTML;
@@ -462,8 +420,7 @@ function _e() {
   }, o.addHook = function(t, r) {
     typeof r == "function" && (k[t] = k[t] || [], V(k[t], r));
   }, o.removeHook = function(t) {
-    if (k[t])
-      return se(k[t]);
+    if (k[t]) return se(k[t]);
   }, o.removeHooks = function(t) {
     k[t] && (k[t] = []);
   }, o.removeAllHooks = function() {
