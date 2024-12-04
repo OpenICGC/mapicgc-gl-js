@@ -11,7 +11,7 @@ export default class Pitch3DToggle {
         let _this = this;
 
         this._btn = document.createElement('button');
-        this._btn.className = 'maplibregl-ctrl-icon maplibregl-ctrl-pitchtoggle-3d';
+        this._btn.className = 'maplibregl-ctrl-icon maplibregl-ctrl-pitchtoggle-2d';
         this._btn.id = 'bt3D';
 
         this._btn.type = 'button';
@@ -30,7 +30,7 @@ export default class Pitch3DToggle {
 
                 if (map.getZoom() < 10) {
                     map.setTerrain({
-                        'source': 'terrainMapZen',
+                        'source': 'terrainICGC',
                         'exaggeration': 1.5
                     });
                 } else if (longitude >= x0 && longitude <= x1 && latitude >= y0 && latitude <= y1) {
@@ -40,7 +40,7 @@ export default class Pitch3DToggle {
                     });
                 } else {
                     map.setTerrain({
-                        'source': 'terrainMapZen',
+                        'source': 'terrainICGC',
                         'exaggeration': 1.5
                     });
                 }

@@ -27,7 +27,7 @@
             const data = await mapicgcgl.Config.getConfigICGC();
             const map = new mapicgcgl.Map({
                 container: "map",
-                style: data.Styles.ORTO,
+                style: "icgc_orto_histo.json",
                 center: [0.959, 42.201],
                 zoom: 13,
                 maxZoom: 19,
@@ -37,7 +37,7 @@
             });
             let controlPosition = "bottom-right" // set null for no button 
             map.on("load", () => {
-                map.addTerrainICGC(data.Terrains.ICGC5M, controlPosition);
+                map.addTerrainICGC(data.Terrains.WORLD30M, controlPosition);
             });
         }
         initMap();
