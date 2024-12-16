@@ -27,6 +27,7 @@ logoIcgcOptions: {
   logoLink: "https://www.icgc.cat",
   logoTitle: "Institut Cartogràfic i Geològic de Catalunya",
   logoWidth: 100,
+  logoOpacity: 0.6
 },
 logoGencatOptions: {
   logoUrlColor: "https://eines.icgc.cat/recursos/logos/gencat_logo_color.png",
@@ -34,6 +35,7 @@ logoGencatOptions: {
   logoLink: "https://web.gencat.cat/",
   logoTitle: "Generalitat de Catalunya",
   logoWidth: 100,
+  logoOpacity: 0.6
 },
 map3dOptions: {
   spaceErrorFactor: 2,
@@ -41,7 +43,7 @@ map3dOptions: {
   zfactor: 48,
   minZoomRange: 15.5,
   maxZoomRange: 22,
-  urlTilesetCities: "https://tilemaps.icgc.cat/vector/3dtiles/ciutats/v1/tilesetV1.0.json",
+  urlTilesetCities: "https://geoserveis.icgc.cat/servei/catalunya/ciutats/3dtiles/v1/tilesetV1.0.json",
   layerIdOrder: "place-isolated",
   sourceLayerFilterId: "place",
   minZoomFilter: 14,

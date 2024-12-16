@@ -18,6 +18,7 @@ export default class LogoControl {
 
     this._img1.width = defaultOptions.logoIcgcOptions.logoWidth;
     this._img1.title = defaultOptions.logoIcgcOptions.logoTitle;
+    this._img1.style.opacity = defaultOptions.logoIcgcOptions.logoOpacity;
     
     
     this.link1 = document.createElement("a");
@@ -36,6 +37,7 @@ export default class LogoControl {
     this._img2.src = this.options.color ? defaultOptions.logoGencatOptions.logoUrlColor : defaultOptions.logoGencatOptions.logoUrlWhite;  
     this._img2.width = defaultOptions.logoGencatOptions.logoWidth;
     this._img2.title = defaultOptions.logoGencatOptions.logoTitle;
+    this._img2.style.opacity = defaultOptions.logoGencatOptions.logoOpacity;
     
     
     this.link2 = document.createElement("a");

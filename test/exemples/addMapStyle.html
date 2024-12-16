@@ -27,10 +27,10 @@
     <script>
         async function initMap() {
             const data = await mapicgcgl.Config.getConfigICGC();
-    
+
             const map = new mapicgcgl.Map({
                 container: 'map',
-                style: data.Styles.ORTO3D,
+                style: data.Styles.ORTO,
                 center: [1.1464, 41.706],
                 zoom: 7.4,
                 hash: true,

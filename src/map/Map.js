@@ -64,33 +64,65 @@ export default class Map {
         }
       }
     }
+  
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
   
-    this.map = new maplibregl.Map(options);
-    this.map.options = options;
-    this.map.addControl(
-      new maplibregl.AttributionControl({
-        compact: true,
-      })
-    );
-    this.map.on("load", async () => {
-      const nameStyle = this.map.getStyle().name;
-      const urlName = this.map.options.style;
-      if (window.document.querySelector(".maplibregl-compact-show")) {
-        var element = window.document.querySelector(".maplibregl-compact-show");
-        element.classList.remove("maplibregl-compact-show");
+    // Detectar si options.style es una URL de raster PNG
+    const isRaster = options.style.includes("https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/");
+  
+    if (isRaster) {
+      // Inicializar mapa sin estilo (vacío)
+      this.map = new maplibregl.Map({
+        container: options.container,
+        center: options.center,
+        zoom: options.zoom,
+        pitch: options.pitch || 0,
+        hash: options.hash || false,
+        style: {
+          version: 8,
+          sources: {},
+          layers: []
+        }
+      });
+  
+      this.map.on("load", () => {
+        // Añadir fuente y capa raster
+        this.map.addSource("raster-source", {
+          type: "raster",
+          tiles: [options.style], // URL del raster
+          tileSize: 256,
+        });
+  
+        this.map.addLayer({
+          id: "raster-layer",
+          type: "raster",
+          source: "raster-source",
+        });
+      });
+    } else {
+      // Inicializar mapa con estilo JSON como de costumbre
+      this.map = new maplibregl.Map(options);
+    }
+  
+  
+  
+    this.map.on("load", () => {
+      if (!isRaster) {
+        const nameStyle = this.map.getStyle().name;
+        const urlName = this.map.options.style;
+        this.map.addControl(
+          new LogoControl({
+            color: urlName.indexOf("orto") === -1 ? true : false,
+            defaultOptions: defaultOptions,
+          }),
+          "bottom-left"
+        );
+        this._dealOrto3dStyle(nameStyle);
       }
-      this.map.addControl(
-        new LogoControl({
-          color: urlName.indexOf("orto") === -1 ? true : false,
-          defaultOptions: defaultOptions,
-        }),
-        "bottom-left"
-      );
-      this._dealOrto3dStyle(nameStyle);
     });
+  
   }
   /**
    * Add geocoder.
@@ -882,6 +914,7 @@ export default class Map {
    * @param {Object} [options] - Options for setting the style.
    */
   setStyle(style, options) {
+    console.log('style', style, options)
     try {
       if (options !== undefined) {
         this.map.setStyle(style, options);
@@ -2330,6 +2363,7 @@ setSky(options) {
    */
   addBasemapsICGC(basesArray) {
     try {
+     
       const handleClick = (base) => {
         this.map.setStyle(base);
       };
@@ -3161,7 +3195,9 @@ setSky(options) {
    * @returns {Object|string|null} - The map style object if found, or the input name if not found, or null if an error occurs.
    */
   _dealStyleMaps(name) {
+    console.log('****')
     try {
+      console.log('name', name)
       if (name && name.indexOf("icgc.cat") != -1) {
         for (const key in Styles) {
           if (Styles.hasOwnProperty(key)) {
