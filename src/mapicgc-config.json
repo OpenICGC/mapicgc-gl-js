@@ -24,14 +24,16 @@
       "logoUrlWhite": "https://eines.icgc.cat/recursos/logos/icgc_logo_blanc.svg",
       "logoLink": "https://www.icgc.cat",
       "logoTitle": "Institut Cartogràfic i Geològic de Catalunya",
-      "logoWidth": 100
+      "logoWidth": 100,
+      "logoOpacity": 0.6
     },
     "logoGencatOptions": {
       "logoUrlColor": "https://eines.icgc.cat/recursos/logos/gencat_logo_color.png",
       "logoUrlWhite": "https://eines.icgc.cat/recursos/logos/gencat_logo_blanc.png",
       "logoLink": "https://web.gencat.cat/",
       "logoTitle": "Generalitat de Catalunya",
-      "logoWidth": 100
+      "logoWidth": 100,
+      "logoOpacity": 0.6
     },
     "map3dOptions": {
       "spaceErrorFactor": 2,
@@ -39,7 +41,7 @@
       "zfactor": 48,
       "minZoomRange": 15.5,
       "maxZoomRange": 22,
-      "urlTilesetCities": "https://tilemaps.icgc.cat/vector/3dtiles/ciutats/v1/tilesetV1.0.json",
+      "urlTilesetCities": "https://geoserveis.icgc.cat/servei/catalunya/ciutats/3dtiles/v1/tilesetV1.0.json",
       "layerIdOrder": "place-isolated",
       "sourceLayerFilterId": "place",
       "minZoomFilter": 14,
@@ -88,6 +90,44 @@
         "key": "GEOLOGY",
         "url": "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json",
         "image": "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png"
+      },
+      {
+        "key": "RASTER",
+        "substyles": {
+          "TOPO": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_topo.jpg"
+          },
+          "ADMIN": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_administratiu.jpg"
+          },
+          "LIGHT": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic-gris/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_topo_gris.jpg"
+          },
+          "STANDARD": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/estandard/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_estandard_0.jpg"
+          },
+          "Simplified": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_simplificat.jpg"
+          },
+          "ORTO": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto.jpg"
+          },
+          "ORTOGREY": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-gris/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto_gris.jpg"
+          },
+          "ORTOHYBRID": {
+            "url": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-hibrida/MON3857NW/{z}/{x}/{y}.png",
+            "image": "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto_hibida.jpg"
+          }
+          
+        }
       }
     ],
     "urlTerrainICGC": [
@@ -834,7 +874,18 @@
     "ADMIN": "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
     "DARK": "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",
     "LIGHT": "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json",
-    "GEOLOGY": "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json"
+    "GEOLOGY": "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json",
+    "RASTER": {
+      "TOPO": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic/MON3857NW/{z}/{x}/{y}.png",
+      "ADMIN": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png",
+      "LIGHT": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic-gris/MON3857NW/{z}/{x}/{y}.png",
+      "STANDARD": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/estandard/MON3857NW/{z}/{x}/{y}.png",
+      "SIMPLIFIED": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png",
+      "ORTO": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto/MON3857NW/{z}/{x}/{y}.png",
+      "ORTOGREY": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-gris/MON3857NW/{z}/{x}/{y}.png",
+      "ORTOHYBRID": "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-hibrida/MON3857NW/{z}/{x}/{y}.png"
+    }
+    
   },
   "Terrains": {
     "ICGC5M": "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",

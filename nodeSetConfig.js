@@ -200,7 +200,44 @@ async function getVectorLimitsLayers() {
             { key: "DARK", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json" ,  image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_fosc.png"},
             { key: "LIGHT", url: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_mapa_base_gris.png" },
             { key: "GEOLOGY", url: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json", image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_geologic_informacio.png" },
-                
+            {
+              key: "RASTER",
+              substyles: {
+                TOPO: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_topo.jpg" 
+                },
+                ADMIN: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/administratiu/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_administratiu.jpg" 
+                },
+                LIGHT: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic-gris/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_topo_gris.jpg" 
+                },
+                STANDARD: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/estandard/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_estandard_0.jpg" 
+                },
+                SIMPLIFIED: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/simplificat/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_simplificat.jpg" 
+                },
+                ORTO: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto.jpg" 
+                },
+                ORTOGREY: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-gris/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto_gris.jpg" 
+                },
+                ORTOHYBRID: { 
+                  url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/orto-hibrida/MON3857NW/{z}/{x}/{y}.png", 
+                  image: "https://icgc-web-pro.s3.eu-central-1.amazonaws.com/produccio/s3fs-public/2024-10/mapabase_orto_hibida.jpg" 
+                }
+              }
+            
+          } 
           ]
           stylesOptions = test
           console.info('Dades styles actualitzats' );
@@ -240,7 +277,7 @@ function replace(){
   defaultOptions.fgbLayers = fgbLayersOptions
   defaultOptions.ortoLayersICGC = ortoLayersOptions
   defaultOptions.wmsLayers = wmsLayersOptions
-  defaultOptions.baseStyles = stylesOptions
+  defaultOptions.baseStyles = stylesOptions 
   defaultOptions.urlTerrainICGC = terrainOptions
 
   function stringifyWithoutQuotes(obj, indent = 0) {
@@ -248,11 +285,11 @@ function replace(){
     let result = '';
     for (let key in obj) {
         const value = obj[key];
-        key = camelize(key)
-        const formattedValue = typeof value === 'object'
+        const formattedKey = /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key) ? key : `"${key}"`; // Asegura claves válidas
+        const formattedValue = typeof value === 'object' && !Array.isArray(value)
             ? stringifyWithoutQuotes(value, indent + 2)
             : JSON.stringify(value);
-        result += `${padding}${key}: ${formattedValue},\n`;
+        result += `${padding}${formattedKey}: ${formattedValue},\n`;
     }
     return `{\n${result}${' '.repeat(Math.max(indent - 2, 0))}}`;
 }
@@ -287,37 +324,44 @@ console.log('Variables actualitzades correctament a config.js');
 
 function replaceConstants(){
 // console.log('replaceeee')
-
 function stringifyWithoutQuotes(obj, indent = 0) {
   const padding = ' '.repeat(indent);
   let result = '';
   for (let key in obj) {
-      let value = obj[key];
-//start camelize 
-key = camelize(key)
-// console.log('v', key)
-//end camelize
-      const formattedValue = typeof value === 'object'
-          ? stringifyWithoutQuotes(value, indent + 2)
-          : JSON.stringify(value);
-      result += `${padding}${key}: ${formattedValue},\n`;
+    const value = obj[key];
+    const formattedKey = /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key) ? key : `"${key}"`; // Asegura claves válidas
+    const formattedValue = 
+      typeof value === 'object' && !Array.isArray(value) && value !== null
+        ? stringifyWithoutQuotes(value, indent + 2)
+        : JSON.stringify(value ?? null); // Convierte undefined a null explícitamente
+    result += `${padding}${formattedKey}: ${formattedValue},\n`;
   }
   return `{\n${result}${' '.repeat(Math.max(indent - 2, 0))}}`;
 }
-//baseStyles
+
+// Conversión del objeto baseStyles
 const convertedObject = {};
-let originalObject = defaultOptions.baseStyles
+let originalObject = defaultOptions.baseStyles;
+
 for (const key in originalObject) {
   if (originalObject.hasOwnProperty(key)) {
     const item = originalObject[key];
-    convertedObject[item.key] = item.url;
+    // Si el item tiene una propiedad substyles (como RASTER), las añadimos a la conversión
+    if (item.key === 'RASTER' && item.substyles) {
+      // No agregar con índice, sino directamente a la propiedad RASTER
+      convertedObject.RASTER = item.substyles;
+    } else {
+      // Usa null si item.url no existe
+      convertedObject[item.key] = item.url || null;
+    }
   }
 }
+
+// Genera el archivo de estilos con valores consistentes
 const stylesConfig = `
-const Styles = ${stringifyWithoutQuotes(convertedObject, null, 2)};
+const Styles = ${stringifyWithoutQuotes(convertedObject, 2)};
 \nexport default Styles;
 `;
-
 // Escribe el contenido actualizado en el archivo config.js
 fs.writeFileSync(stylePath, stylesConfig);
 

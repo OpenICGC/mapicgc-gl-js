@@ -9,7 +9,7 @@ class Config {
     try {
       const response = await axios.get(urlConfigICGC, { timeout: timeOut });
       if (response.data) {
- 
+        // return mapicgcConfig;
         return response.data;
       } else {
         console.log("Resposta sense dades:", response);
@@ -28,5 +28,5 @@ class Config {
     }
   }
 }
-
+  
 export default Config;
