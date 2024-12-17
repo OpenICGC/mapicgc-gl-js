@@ -72,7 +72,8 @@ export default class Map {
     // Detectar si options.style es una URL de raster PNG
     const isRaster = options.style.includes("https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/");
   
-    if (isRaster) {
+    if (isRaster) {       
+     
       // Inicializar mapa sin estilo (vacío)
       this.map = new maplibregl.Map({
         container: options.container,
@@ -102,6 +103,7 @@ export default class Map {
         });
       });
     } else {
+  
       // Inicializar mapa con estilo JSON como de costumbre
       this.map = new maplibregl.Map(options);
     }
@@ -109,9 +111,13 @@ export default class Map {
   
   
     this.map.on("load", () => {
+ 
       if (!isRaster) {
+       
         const nameStyle = this.map.getStyle().name;
-        const urlName = this.map.options.style;
+      
+        const urlName = options.style;
+   
         this.map.addControl(
           new LogoControl({
             color: urlName.indexOf("orto") === -1 ? true : false,
@@ -119,10 +125,11 @@ export default class Map {
           }),
           "bottom-left"
         );
+     
         this._dealOrto3dStyle(nameStyle);
       }
     });
-  
+   
   }
   /**
    * Add geocoder.
@@ -914,7 +921,7 @@ export default class Map {
    * @param {Object} [options] - Options for setting the style.
    */
   setStyle(style, options) {
-    console.log('style', style, options)
+   
     try {
       if (options !== undefined) {
         this.map.setStyle(style, options);
@@ -965,7 +972,8 @@ export default class Map {
 setSky(options) {
   try {
     if (options === undefined) {
-      if (this.map.options.style.includes("orto")) {
+      
+      if (this.map.style.stylesheet.id.includes("orto")) {
         options = {
           'sky-color': '#86bbd5',
           'sky-horizon-blend': 0.3,
@@ -975,7 +983,7 @@ setSky(options) {
           'fog-color': '#c5d6d6'
         };
       }
-      if (this.map.options.style.includes("mapa_estandard_general")) {
+      else if (this.map.style.stylesheet.id.includes("mapa_estandard_general")) {
         options = {
           "sky-color": "#a5f0f0",
           "sky-horizon-blend": 0.3,
@@ -985,7 +993,17 @@ setSky(options) {
           "fog-color": "#c5d6d6",
         };
       }
-      if (this.map.options.style.includes("fosc")) {
+     else if (this.map.style.stylesheet.id.includes("icgc_mapa_vissir")) {
+        options = {
+          "sky-color": "#a5f0f0",
+          "sky-horizon-blend": 0.3,
+          "horizon-color": "#e1e3e3",
+          "horizon-fog-blend": 0.9,
+          "fog-ground-blend": 0.85,
+          "fog-color": "#c5d6d6",
+        };
+      }
+      else if (this.map.style.stylesheet.id.includes("fosc")) {
         options = {
           "sky-color": "#232423",
           "sky-horizon-blend": 0.3,
@@ -993,6 +1011,16 @@ setSky(options) {
           "horizon-fog-blend": 0.9,
           "fog-ground-blend": 0.85,
           "fog-color": "#383838",
+        };
+      }
+      else{
+        options = {
+          'sky-color': '#86bbd5',
+          'sky-horizon-blend': 0.3,
+          'horizon-color': '#ffffff33',
+          'horizon-fog-blend': 0.1,
+          'fog-ground-blend': 0.75,
+          'fog-color': '#c5d6d6'
         };
       }
     }
@@ -3195,9 +3223,9 @@ setSky(options) {
    * @returns {Object|string|null} - The map style object if found, or the input name if not found, or null if an error occurs.
    */
   _dealStyleMaps(name) {
-    console.log('****')
+ 
     try {
-      console.log('name', name)
+
       if (name && name.indexOf("icgc.cat") != -1) {
         for (const key in Styles) {
           if (Styles.hasOwnProperty(key)) {
@@ -3224,7 +3252,9 @@ setSky(options) {
    */
   _dealOrto3dStyle(name) {
     try {
+     
       if (name == "orto3d") {
+      
         this.map.setMaxZoom(18.8);
         this.map.easeTo({ pitch: 45 });
         const ambientLight = new AmbientLight({
@@ -3262,6 +3292,7 @@ setSky(options) {
           'fog-color': '#c5d6d6'
         });
       } else {
+      
         if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
           this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
           this.map.setTerrain(null);

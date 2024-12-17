@@ -42,7 +42,7 @@
         const data = await  mapicgcgl.Config.getConfigICGC();
         const map = new mapicgcgl.Map({
           container: "map",
-          style: data.Styles.TOPO, // <-- add style basemap here
+          style: data.Styles.ORTO, // <-- add style basemap here
           center: [2.1464, 41.306],
           zoom: 7.4,
           maxZoom: 19,
@@ -50,7 +50,9 @@
           pitch: 0,
         });
         map.on("load", () => {
+         
           //add multiple ICGC basemaps and get a style menu component
+       
           map.addFullscreenControl();
           let basemapsicgc = [data.Styles.ORTO, data.Styles.TOPO];
           map.addBasemapsICGC(basemapsicgc);
