@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://openicgc.github.io/mapicgc-doc/",
-  "version": "0.0.95",
+  "version": "0.0.96",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
@@ -44,6 +44,7 @@
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@rollup/plugin-babel": "^6.0.4",
+    "axios": "^1.7.9",
     "dotenv": "^16.3.1",
     "jest": "29.7.0",
     "jsdoc": "^4.0.2",
@@ -53,7 +54,8 @@
     "rollup-plugin-polyfill": "^4.2.0",
     "ssh2-sftp-client": "^9.0.4",
     "vite": "^5.2.10",
-    "vite-plugin-node-polyfills": "^0.21.0"
+    "vite-plugin-node-polyfills": "^0.21.0",
+    "xml2js": "^0.6.2"
   },
   "dependencies": {
     "@deck.gl/core": "~8.9.35",
@@ -63,10 +65,9 @@
     "@maplibre/maplibre-gl-compare": "^0.5.0",
     "@maplibre/maplibre-gl-geocoder": "^1.5.0",
     "@watergis/maplibre-gl-export": "^3.7.0",
-    "axios": "^1.6.7",
     "flatgeobuf": "^3.31.1",
     "maplibre-gl": "^4.7.1",
-    "utm-latlng": "^1.0.8",
-    "xml2js": "^0.6.2"
+    "utm-latlng": "^1.0.8"
+   
   }
 }

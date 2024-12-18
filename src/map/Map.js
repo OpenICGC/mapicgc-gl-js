@@ -132,25 +132,29 @@ export default class Map {
    
   }
   /**
-   * Add geocoder.
+   * Add geocoder with customizable options.
    * @function addGeocoderICGC
-   * @param {string} [position='top-right'] - Position to add the control on the map.
-   * @returns {Object} - The current position of the search result.
+   * @param {Object} [options={}] - Optional configuration options for the geocoder. Defaults to an empty object.
+   * @param {string} [position='top-right'] - Position to add the geocoder control on the map. Defaults to 'top-right'.
+   * @returns {Object} - The merged configuration options for the geocoder, including the position.
+   * 
    */
-  addGeocoderICGC(position) {
+  addGeocoderICGC(options = {}, position = "top-right") {
     try {
-      if (position === undefined) {
-        position = "top-right";
-      }
-      let options = {
+   
+      const defOptions = {
         collapsed: true,
         marker: true,
+        zoom: 16,
         popup: true,
         showResultMarkers: true,
         maplibregl: maplibregl,
         showResultsWhileTyping: true,
         minLength: 2,
       };
+      options = { ...defOptions, ...options };
+
+
       const geocoderApi = {
         forwardGeocode: async (config) => {
           const features = [];
