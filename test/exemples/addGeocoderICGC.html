@@ -34,7 +34,8 @@
                 pitch: 0,
             });
             map.on("load", () => {
-                map.addGeocoderICGC();
+                let options = { zoom: 10 };
+                map.addGeocoderICGC(options);
             });
         }
         initMap();		    
