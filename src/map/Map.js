@@ -3258,7 +3258,7 @@ setSky(options) {
     try {
      
       if (name == "orto3d") {
-      
+
         this.map.setMaxZoom(18.8);
         this.map.easeTo({ pitch: 45 });
         const ambientLight = new AmbientLight({
