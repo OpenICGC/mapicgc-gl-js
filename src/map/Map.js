@@ -3188,7 +3188,10 @@ setSky(options) {
       const image = await this.map.loadImage(
         defaultOptions.map3dOptions.imageIcon
       );
-      this.map.addImage("stick", image.data);
+      if (!this.map.hasImage("stick")) {
+         this.map.addImage("stick", image.data);
+      }
+     
       this.map.getStyle().layers.forEach((layer) => {
         if (
           layer["source-layer"] ===
@@ -3258,7 +3261,7 @@ setSky(options) {
     try {
      
       if (name == "orto3d") {
-
+console.log('map')
         this.map.setMaxZoom(18.8);
         this.map.easeTo({ pitch: 45 });
         const ambientLight = new AmbientLight({

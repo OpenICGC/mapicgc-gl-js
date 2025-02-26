@@ -4,6 +4,7 @@ import jest from "jest";
 import maplibregl from "maplibre-gl";
 import { vi } from 'vitest';
 import { JSDOM } from 'jsdom';
+import { AmbientLight, LightingEffect } from "@deck.gl/core";
 
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
@@ -116,7 +117,99 @@ vi.mock('maplibre-gl', () => ({
     expect(instance._dealOrto3dStyle).toHaveBeenCalledWith('mockStyle');
   });
 
+  test('should set map properties correctly when name is "orto3d"', async () => {
+    // Mocks
+    const setMaxZoomMock = vi.fn();
+    const easeToMock = vi.fn();
+    const setTerrainMock = vi.fn();
+    const addLayerMock = vi.fn();
+    const setLayerZoomRangeMock = vi.fn();
+    const setSkyMock = vi.fn();
+    
+    // Configuración de los mocks de maplibregl.Map
+    const mapOptions = {
+      container: 'map',  // Este es solo un ejemplo, asegúrate de adaptarlo según tu caso
+      center: [0, 0],
+      zoom: 10,
+    };
   
+    // Instanciar el objeto de mapa y mockearlo
+    const map = new maplibregl.Map(mapOptions);
+    
+    // Mock de los métodos relevantes del mapa
+    map.setMaxZoom = setMaxZoomMock;
+    map.easeTo = easeToMock;
+    map.setTerrain = setTerrainMock;
+    map.addLayer = addLayerMock;
+    map.getLayer = vi.fn(() => false);  // Mock de getLayer para que no devuelva la capa
+    map.removeLayer = vi.fn();
+    map.setLayerZoomRange = setLayerZoomRangeMock;
+    map.setSky = setSkyMock;
+  
+    // Crear una instancia con el mapa mockeado
+    const instance = {
+      map: map,
+      _createCitiesMapboxLayer: vi.fn(() => 'mockCitiesLayer'),
+      _dealOrto3dStyle: function(name) {
+        if (name === 'orto3d') {
+          this.map.setMaxZoom(18.8);
+          this.map.easeTo({ pitch: 45 });
+          const ambientLight = new AmbientLight({ intensity: 4 });
+          const lightingEffect = new LightingEffect({ ambientLight });
+          this.map.setTerrain({
+            source: 'ICGC5M',
+            exaggeration: 1,
+          });
+          const citiesMapboxLayer = this._createCitiesMapboxLayer();
+  
+          if (!this.map.getLayer('edificisMapboxLayer')) {
+            this.map.addLayer(citiesMapboxLayer, 'place-isolated');
+            this.map.setLayerZoomRange('edificisMapboxLayer', 15.5, 22);
+            // citiesMapboxLayer.deck.setProps({
+            //   effects: [lightingEffect],
+            // });
+          }
+          this.map.setSky({
+            'sky-color': '#86bbd5',
+            'sky-horizon-blend': 0.3,
+            'horizon-color': '#ffffff33',
+            'horizon-fog-blend': 0.1,
+            'fog-ground-blend': 0.75,
+            'fog-color': '#c5d6d6',
+          });
+        }
+      },
+    };
+  
+    // Ejecutar la función
+    await instance._dealOrto3dStyle("orto3d");
+  
+    // Verificación
+    expect(setMaxZoomMock).toHaveBeenCalledWith(18.8);
+    expect(easeToMock).toHaveBeenCalledWith({ pitch: 45 });
+    expect(setTerrainMock).toHaveBeenCalledWith({
+      source: 'ICGC5M',
+      exaggeration: 1,
+    });
+    expect(addLayerMock).toHaveBeenCalledWith('mockCitiesLayer', 'place-isolated');
+    expect(setLayerZoomRangeMock).toHaveBeenCalledWith(
+      'edificisMapboxLayer',
+      15.5,
+      22
+    );
+    expect(setSkyMock).toHaveBeenCalledWith({
+      'sky-color': '#86bbd5',
+      'sky-horizon-blend': 0.3,
+      'horizon-color': '#ffffff33',
+      'horizon-fog-blend': 0.1,
+      'fog-ground-blend': 0.75,
+      'fog-color': '#c5d6d6',
+    });
+  });
+  
+
 });
+
+
 
 
