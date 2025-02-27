@@ -3074,8 +3074,9 @@ setSky(options) {
           this.map.addSource("terrainICGC", {
             type: "raster-dem",
             tiles: [urlTerrainICGC],
-            tileSize: 512,
-            maxzoom: 16,
+            tileSize: 256,
+            maxzoom: 14,
+            minzoom:7
           });
         }
       }
