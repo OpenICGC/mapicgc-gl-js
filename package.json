@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://openicgc.github.io/mapicgc-doc/",
-  "version": "0.0.99",
+  "version": "1.0.0",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
@@ -58,31 +58,19 @@
     "ssh2-sftp-client": "^9.0.4",
     "vite": "^6.2.0",
     "vite-plugin-node-polyfills": "^0.23.0",
-    "vitest": "^2.1.8",
+   "vitest": "^3.0.7",
     "xml2js": "^0.6.2"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@deck.gl/core": "^9.1.4",
     "@deck.gl/geo-layers": "^9.1.4",
     "@deck.gl/mapbox": "^9.1.4",
     "@loaders.gl/3d-tiles": "~4.3.3",
     "@maplibre/maplibre-gl-compare": "^0.5.0",
-    "@maplibre/maplibre-gl-geocoder": "^1.5.0",
-    "@watergis/maplibre-gl-export": "^3.7.0",
-   "flatgeobuf": "^3.37.1",
-    "maplibre-gl": "^5.1.1",
-=======
-    "@deck.gl/core": "~8.9.35",
-    "@deck.gl/geo-layers": "~8.9.35",
-    "@deck.gl/mapbox": "~8.9.35",
-    "@loaders.gl/3d-tiles": "~3.4.14",
-    "@maplibre/maplibre-gl-compare": "^0.5.0",
     "@maplibre/maplibre-gl-geocoder": "^1.8.0",
     "@watergis/maplibre-gl-export": "^4.0.0",
-    "flatgeobuf": "^3.31.1",
-    "maplibre-gl": "^5.1.0",
->>>>>>> master
+    "flatgeobuf": "^3.37.1",
+    "maplibre-gl": "^5.1.1",
     "utm-latlng": "^1.0.8"
   }
 }
