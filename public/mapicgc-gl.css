@@ -1610,11 +1610,11 @@ h4::selection {
 }
 
 .maplibre-ctrl-geocoder--result-icon {
-  min-width: 30px;
-  min-height: 24px;
-  max-width: 30px;
-  max-height: 24px;
-  padding-right: 12px;
+  min-width: 30px !important;
+  min-height: 24px !important;
+  max-width: 30px !important;
+  max-height: 24px !important;
+  padding-right: 12px !important;
 }
 
 .maplibregl-ctrl-geocoder--result-title {
@@ -1941,4 +1941,8 @@ td.legend-table-td>svg {
 
 td.legend-table-td>label {
   color: #1c1c1c
+}
+.maplibregl-ctrl-geocoder--result-icon {
+  width: 30px !important;
+  height: 24px !important;
 }
