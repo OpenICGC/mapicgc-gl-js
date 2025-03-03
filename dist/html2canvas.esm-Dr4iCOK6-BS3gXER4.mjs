@@ -843,6 +843,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
     case "rem":
     case "em":
       return 16 * e.number;
+    // TODO use correct font-size
     case "px":
     default:
       return e.number;

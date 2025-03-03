@@ -3,7 +3,7 @@ import "../../public/mapicgc-gl.css";
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import { deserialize } from "flatgeobuf/lib/mjs/geojson.js";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
-import { MapboxLayer } from "@deck.gl/mapbox";
+import { MapboxOverlay } from "@deck.gl/mapbox";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
 import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
 import { AmbientLight, LightingEffect } from "@deck.gl/core";
@@ -25,6 +25,7 @@ import mapicgcConfig from "../mapicgc-config.json";
 const ORDER_LAYER_TOP = "top"; // default
 const ORDER_LAYER_LINE = "lines";
 const ORDER_LAYER_SYMBOL = "labels";
+let citiesMapboxLayer;
 let Styles, Terrains, Layers, defaultOptions;
 export default class Map {
   /**
@@ -64,16 +65,17 @@ export default class Map {
         }
       }
     }
-  
+
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
-  
+
     // Detectar si options.style es una URL de raster PNG
-    const isRaster = options.style.includes("https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/");
-  
-    if (isRaster) {       
-     
+    const isRaster = options.style.includes(
+      "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/"
+    );
+
+    if (isRaster) {
       // Inicializar mapa sin estilo (vacío)
       this.map = new maplibregl.Map({
         container: options.container,
@@ -84,10 +86,10 @@ export default class Map {
         style: {
           version: 8,
           sources: {},
-          layers: []
-        }
+          layers: [],
+        },
       });
-  
+
       this.map.on("load", () => {
         // Añadir fuente y capa raster
         this.map.addSource("raster-source", {
@@ -95,7 +97,7 @@ export default class Map {
           tiles: [options.style], // URL del raster
           tileSize: 256,
         });
-  
+
         this.map.addLayer({
           id: "raster-layer",
           type: "raster",
@@ -103,21 +105,16 @@ export default class Map {
         });
       });
     } else {
-  
       // Inicializar mapa con estilo JSON como de costumbre
       this.map = new maplibregl.Map(options);
     }
-  
-  
-  
+
     this.map.on("load", () => {
- 
       if (!isRaster) {
-       
         const nameStyle = this.map.getStyle().name;
-      
+
         const urlName = options.style;
-   
+
         this.map.addControl(
           new LogoControl({
             color: urlName.indexOf("orto") === -1 ? true : false,
@@ -125,11 +122,10 @@ export default class Map {
           }),
           "bottom-left"
         );
-     
+
         this._dealOrto3dStyle(nameStyle);
       }
     });
-   
   }
   /**
    * Add geocoder with customizable options.
@@ -137,11 +133,10 @@ export default class Map {
    * @param {Object} [options={}] - Optional configuration options for the geocoder. Defaults to an empty object.
    * @param {string} [position='top-right'] - Position to add the geocoder control on the map. Defaults to 'top-right'.
    * @returns {Object} - The merged configuration options for the geocoder, including the position.
-   * 
+   *
    */
   addGeocoderICGC(options = {}, position = "top-right") {
     try {
-   
       const defOptions = {
         collapsed: true,
         marker: true,
@@ -153,7 +148,6 @@ export default class Map {
         minLength: 2,
       };
       options = { ...defOptions, ...options };
-
 
       const geocoderApi = {
         forwardGeocode: async (config) => {
@@ -925,7 +919,6 @@ export default class Map {
    * @param {Object} [options] - Options for setting the style.
    */
   setStyle(style, options) {
-   
     try {
       if (options !== undefined) {
         this.map.setStyle(style, options);
@@ -962,81 +955,75 @@ export default class Map {
       console.error(`Error adding control: ${error.message}`);
     }
   }
-/**
- * Sets the sky properties of the map.
- * @function setSky
- * @param {Object} options - Options to set the sky properties.
- * @param {string} [options.skyType='gradient'] - Type of sky to set (e.g., 'gradient', 'atmosphere').
- * @param {string} [options.color='lightblue'] - Color of the sky.
- * @param {Number} [options.horizonBlend=0.03] - Blend horizon value.
- * @param {Number} [options.starIntensity=0.5] - Intensity of stars in the sky.
- * @param {Number} [options.sunIntensity=0.1] - Intensity of the sun in the sky.
- * @param {Array<Number>} [options.sunPosition=[0, 0]] - Position of the sun in the sky.
- */
-setSky(options) {
-  try {
-    if (options === undefined) {
-      
-      if (this.map.style.stylesheet.id.includes("orto")) {
-        options = {
-          'sky-color': '#86bbd5',
-          'sky-horizon-blend': 0.3,
-          'horizon-color': '#ffffff33',
-          'horizon-fog-blend': 0.1,
-          'fog-ground-blend': 0.75,
-          'fog-color': '#c5d6d6'
-        };
+  /**
+   * Sets the sky properties of the map.
+   * @function setSky
+   * @param {Object} options - Options to set the sky properties.
+   * @param {string} [options.skyType='gradient'] - Type of sky to set (e.g., 'gradient', 'atmosphere').
+   * @param {string} [options.color='lightblue'] - Color of the sky.
+   * @param {Number} [options.horizonBlend=0.03] - Blend horizon value.
+   * @param {Number} [options.starIntensity=0.5] - Intensity of stars in the sky.
+   * @param {Number} [options.sunIntensity=0.1] - Intensity of the sun in the sky.
+   * @param {Array<Number>} [options.sunPosition=[0, 0]] - Position of the sun in the sky.
+   */
+  setSky(options) {
+    try {
+      if (options === undefined) {
+        if (this.map.style.stylesheet.id.includes("orto")) {
+          options = {
+            "sky-color": "#86bbd5",
+            "sky-horizon-blend": 0.3,
+            "horizon-color": "#ffffff33",
+            "horizon-fog-blend": 0.1,
+            "fog-ground-blend": 0.75,
+            "fog-color": "#c5d6d6",
+          };
+        } else if (
+          this.map.style.stylesheet.id.includes("mapa_estandard_general")
+        ) {
+          options = {
+            "sky-color": "#a5f0f0",
+            "sky-horizon-blend": 0.3,
+            "horizon-color": "#e1e3e3",
+            "horizon-fog-blend": 0.9,
+            "fog-ground-blend": 0.85,
+            "fog-color": "#c5d6d6",
+          };
+        } else if (this.map.style.stylesheet.id.includes("icgc_mapa_vissir")) {
+          options = {
+            "sky-color": "#a5f0f0",
+            "sky-horizon-blend": 0.3,
+            "horizon-color": "#e1e3e3",
+            "horizon-fog-blend": 0.9,
+            "fog-ground-blend": 0.85,
+            "fog-color": "#c5d6d6",
+          };
+        } else if (this.map.style.stylesheet.id.includes("fosc")) {
+          options = {
+            "sky-color": "#232423",
+            "sky-horizon-blend": 0.3,
+            "horizon-color": "#969996",
+            "horizon-fog-blend": 0.9,
+            "fog-ground-blend": 0.85,
+            "fog-color": "#383838",
+          };
+        } else {
+          options = {
+            "sky-color": "#86bbd5",
+            "sky-horizon-blend": 0.3,
+            "horizon-color": "#ffffff33",
+            "horizon-fog-blend": 0.1,
+            "fog-ground-blend": 0.75,
+            "fog-color": "#c5d6d6",
+          };
+        }
       }
-      else if (this.map.style.stylesheet.id.includes("mapa_estandard_general")) {
-        options = {
-          "sky-color": "#a5f0f0",
-          "sky-horizon-blend": 0.3,
-          "horizon-color": "#e1e3e3",
-          "horizon-fog-blend": 0.9,
-          "fog-ground-blend": 0.85,
-          "fog-color": "#c5d6d6",
-        };
-      }
-     else if (this.map.style.stylesheet.id.includes("icgc_mapa_vissir")) {
-        options = {
-          "sky-color": "#a5f0f0",
-          "sky-horizon-blend": 0.3,
-          "horizon-color": "#e1e3e3",
-          "horizon-fog-blend": 0.9,
-          "fog-ground-blend": 0.85,
-          "fog-color": "#c5d6d6",
-        };
-      }
-      else if (this.map.style.stylesheet.id.includes("fosc")) {
-        options = {
-          "sky-color": "#232423",
-          "sky-horizon-blend": 0.3,
-          "horizon-color": "#969996",
-          "horizon-fog-blend": 0.9,
-          "fog-ground-blend": 0.85,
-          "fog-color": "#383838",
-        };
-      }
-      else{
-        options = {
-          'sky-color': '#86bbd5',
-          'sky-horizon-blend': 0.3,
-          'horizon-color': '#ffffff33',
-          'horizon-fog-blend': 0.1,
-          'fog-ground-blend': 0.75,
-          'fog-color': '#c5d6d6'
-        };
-      }
+
+      this.map.setSky(options);
+    } catch (error) {
+      console.error(`Error setting sky properties: ${error.message}`);
     }
-
-
-
-
-    this.map.setSky(options);
-  } catch (error) {
-    console.error(`Error setting sky properties: ${error.message}`);
   }
-}
 
   /**
    * Adds a mouse coordinate control to the map.
@@ -2395,7 +2382,6 @@ setSky(options) {
    */
   addBasemapsICGC(basesArray) {
     try {
-     
       const handleClick = (base) => {
         this.map.setStyle(base);
       };
@@ -3076,7 +3062,7 @@ setSky(options) {
             tiles: [urlTerrainICGC],
             tileSize: 256,
             maxzoom: 14,
-            minzoom:7
+            minzoom: 7,
           });
         }
       }
@@ -3190,9 +3176,9 @@ setSky(options) {
         defaultOptions.map3dOptions.imageIcon
       );
       if (!this.map.hasImage("stick")) {
-         this.map.addImage("stick", image.data);
+        this.map.addImage("stick", image.data);
       }
-     
+
       this.map.getStyle().layers.forEach((layer) => {
         if (
           layer["source-layer"] ===
@@ -3231,9 +3217,7 @@ setSky(options) {
    * @returns {Object|string|null} - The map style object if found, or the input name if not found, or null if an error occurs.
    */
   _dealStyleMaps(name) {
- 
     try {
-
       if (name && name.indexOf("icgc.cat") != -1) {
         for (const key in Styles) {
           if (Styles.hasOwnProperty(key)) {
@@ -3260,9 +3244,8 @@ setSky(options) {
    */
   _dealOrto3dStyle(name) {
     try {
-     
+      //let citiesMapboxLayer;
       if (name == "orto3d") {
-console.log('map')
         this.map.setMaxZoom(18.8);
         this.map.easeTo({ pitch: 45 });
         const ambientLight = new AmbientLight({
@@ -3275,34 +3258,59 @@ console.log('map')
           source: defaultOptions.map3dOptions.terrainSource,
           exaggeration: defaultOptions.map3dOptions.exaggeration,
         });
-        const citiesMapboxLayer = this._createCitiesMapboxLayer();
-        if (!this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.addLayer(
-            citiesMapboxLayer,
-            defaultOptions.map3dOptions.layerIdOrder
-          );
-          this.map.setLayerZoomRange(
-            defaultOptions.map3dOptions.layerId3d,
-            defaultOptions.map3dOptions.minZoomRange,
-            defaultOptions.map3dOptions.maxZoomRange
-          );
-          citiesMapboxLayer.deck.setProps({
-            effects: [lightingEffect],
-          });
+
+        citiesMapboxLayer = new MapboxOverlay({
+          interleaved: true,
+          layers: [this._createCitiesMapboxLayer(false)], // Inicialment invisible
+          effects: [lightingEffect],
+          onAfterRender: () => {
+            try {
+              const zoom = this.map.getZoom();
+              const isVisible =
+                zoom >= defaultOptions.map3dOptions.minZoomRange;
+              citiesMapboxLayer.setProps({
+                layers: [this._createCitiesMapboxLayer(isVisible)],
+              });
+            } catch (er) {
+              console.log("No render 3D Mesh");
+            }
+          },
+        });
+
+        if (!this.map.hasControl(citiesMapboxLayer)) {
+          this.map.addControl(citiesMapboxLayer);
+
           this._raiseText3DStyle();
         }
         this.map.setSky({
-          'sky-color': '#86bbd5',
-          'sky-horizon-blend': 0.3,
-          'horizon-color': '#ffffff33',
-          'horizon-fog-blend': 0.1,
-          'fog-ground-blend': 0.75,
-          'fog-color': '#c5d6d6'
+          "sky-color": "#86bbd5",
+          "sky-horizon-blend": 0.3,
+          "horizon-color": "#ffffff33",
+          "horizon-fog-blend": 0.1,
+          "fog-ground-blend": 0.75,
+          "fog-color": "#c5d6d6",
+        });
+        this.map.on("zoomend", () => {
+          if (!this.map.getStyle().name == "orto3d") {
+            if (this.map.hasControl(citiesMapboxLayer)) {
+              this.map.removeControl(citiesMapboxLayer);
+              citiesMapboxLayer.setProps({
+                layers: [],
+              });
+              this.map.setTerrain(null);
+            }
+          }
         });
       } else {
-      
-        if (this.map.getLayer(defaultOptions.map3dOptions.layerId3d)) {
-          this.map.removeLayer(defaultOptions.map3dOptions.layerId3d);
+        citiesMapboxLayer?.setProps({
+          layers: [],
+        });
+
+        if (this.map.hasControl(citiesMapboxLayer)) {
+          this.map.removeControl(citiesMapboxLayer);
+          citiesMapboxLayer.setProps({
+            layers: [],
+          });
           this.map.setTerrain(null);
         }
       }
@@ -3311,6 +3319,7 @@ console.log('map')
       return null;
     }
   }
+
   /**
    * Deals with the order of the layer.
    * @function _dealOrderLayer
@@ -3376,23 +3385,28 @@ console.log('map')
    * @function _createCitiesMapboxLayer
    * @returns {MapboxLayer|null} - The Mapbox layer for displaying cities in 3D if created successfully, otherwise null.
    */
-  _createCitiesMapboxLayer() {
+  _createCitiesMapboxLayer(vis = false) {
     try {
-      const citiesMapboxLayer = new MapboxLayer({
+      return new Tile3DLayer({
         id: defaultOptions.map3dOptions.layerId3d,
-        type: Tile3DLayer,
         data: defaultOptions.map3dOptions.urlTilesetCities,
         loader: Tiles3DLoader,
+        beforeId: defaultOptions.map3dOptions.layerIdOrder,
+        visible: vis,
         loadOptions: {
           tileset: {
             viewDistanceScale: 1,
-            updateTransforms: true,
-            maximumScreenSpaceError:
+            memoryAdjustedScreenSpaceError:
               defaultOptions.map3dOptions.spaceErrorFactor,
+            updateTransforms: true,
+            adjustScreenSpaceError:
+              defaultOptions.map3dOptions.spaceErrorFactor, // Aplicació inicial
           },
         },
         onTilesetLoad: (tileset3d) => {
-          tileset3d.options.maximumScreenSpaceError =
+          tileset3d.adjustScreenSpaceError =
+            defaultOptions.map3dOptions.spaceErrorFactor;
+          tileset3d.memoryAdjustedScreenSpaceError =
             defaultOptions.map3dOptions.spaceErrorFactor;
         },
         onTileLoad: (tileHeader) => {
@@ -3400,10 +3414,10 @@ console.log('map')
             defaultOptions.map3dOptions.zfactor;
         },
         operation: "terrain+draw",
+        pickable: false,
       });
-      return citiesMapboxLayer;
     } catch (error) {
-      console.error(`Error adding MapboxLayer: ${error.message}`);
+      console.error(`Error adding MapboxOverlay: ${error.message}`);
       return null;
     }
   }
