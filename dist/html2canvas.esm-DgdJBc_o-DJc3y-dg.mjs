@@ -193,9 +193,9 @@ var gA = (
   }
   return n;
 }, Br = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", an = typeof Uint8Array > "u" ? [] : new Uint8Array(256);
-for (var Ue = 0; Ue < Br.length; Ue++) an[Br.charCodeAt(Ue)] = Ue;
+for (var Ce = 0; Ce < Br.length; Ce++) an[Br.charCodeAt(Ce)] = Ce;
 var nr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", zA = typeof Uint8Array > "u" ? [] : new Uint8Array(256);
-for (var Ce = 0; Ce < nr.length; Ce++) zA[nr.charCodeAt(Ce)] = Ce;
+for (var Ue = 0; Ue < nr.length; Ue++) zA[nr.charCodeAt(Ue)] = Ue;
 var Qn = function(e) {
   var A = e.length * 0.75, r = e.length, t, B = 0, n, s, i, o;
   e[e.length - 1] === "=" && (A--, e[e.length - 2] === "=" && A--);
@@ -208,7 +208,7 @@ var Qn = function(e) {
 }, gn = function(e) {
   for (var A = e.length, r = [], t = 0; t < A; t += 4) r.push(e[t + 3] << 24 | e[t + 2] << 16 | e[t + 1] << 8 | e[t]);
   return r;
-}, bA = 5, jt = 11, it = 2, wn = jt - bA, BB = 65536 >> bA, un = 1 << bA, at = un - 1, ln = 1024 >> bA, Un = BB + ln, Cn = Un, Fn = 32, hn = Cn + Fn, dn = 65536 >> jt, fn = 1 << wn, pn = fn - 1, sr = function(e, A, r) {
+}, bA = 5, jt = 11, it = 2, wn = jt - bA, BB = 65536 >> bA, un = 1 << bA, at = un - 1, ln = 1024 >> bA, Cn = BB + ln, Un = Cn, Fn = 32, hn = Un + Fn, dn = 65536 >> jt, fn = 1 << wn, pn = fn - 1, sr = function(e, A, r) {
   return e.slice ? e.slice(A, r) : new Uint16Array(Array.prototype.slice.call(e, A, r));
 }, Hn = function(e, A, r) {
   return e.slice ? e.slice(A, r) : new Uint32Array(Array.prototype.slice.call(e, A, r));
@@ -308,7 +308,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
   }
   if (Gt === o && [Gt, Oe, Mt, St].indexOf(Q) !== -1 || [Oe, Mt].indexOf(o) !== -1 && [Oe, Ve].indexOf(Q) !== -1 || [Ve, St].indexOf(o) !== -1 && Q === Ve || ur.indexOf(o) !== -1 && [gr, Ae].indexOf(Q) !== -1 || ur.indexOf(Q) !== -1 && o === ee || aA.indexOf(o) !== -1 && aA.indexOf(Q) !== -1 || o === MA && aA.indexOf(Q) !== -1 || aA.concat(j).indexOf(o) !== -1 && Q === _A && Tn.indexOf(e[i]) === -1 || aA.concat(j).indexOf(Q) !== -1 && o === ZA) return P;
   if (o === ct && Q === ct) {
-    for (var C = r[n], w = 1; C > 0 && (C--, A[C] === ct); ) w++;
+    for (var U = r[n], w = 1; U > 0 && (U--, A[U] === ct); ) w++;
     if (w % 2 !== 0) return P;
   }
   return o === de && Q === fe ? P : pe;
@@ -357,12 +357,12 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
       };
     }
   };
-}, Xn = 1, Jn = 2, we = 4, Ur = 8, Ne = 10, Cr = 47, ne = 92, Yn = 9, Wn = 32, He = 34, qA = 61, Zn = 35, _n = 36, qn = 37, Ee = 39, Ie = 40, jA = 41, jn = 95, _ = 45, zn = 33, $n = 60, As = 62, es = 64, ts = 91, rs = 93, Bs = 61, ns = 123, ye = 63, ss = 125, Fr = 124, os = 126, is = 128, hr = 65533, wt = 42, LA = 43, as = 44, Qs = 58, cs = 59, ce = 46, gs = 0, ws = 8, us = 11, ls = 14, Us = 31, Cs = 127, BA = -1, cB = 48, gB = 97, wB = 101, Fs = 102, hs = 117, ds = 122, uB = 65, lB = 69, UB = 70, fs = 85, ps = 90, J = function(e) {
+}, Xn = 1, Jn = 2, we = 4, Cr = 8, Ne = 10, Ur = 47, ne = 92, Yn = 9, Wn = 32, He = 34, qA = 61, Zn = 35, _n = 36, qn = 37, Ee = 39, Ie = 40, jA = 41, jn = 95, _ = 45, zn = 33, $n = 60, As = 62, es = 64, ts = 91, rs = 93, Bs = 61, ns = 123, ye = 63, ss = 125, Fr = 124, os = 126, is = 128, hr = 65533, wt = 42, LA = 43, as = 44, Qs = 58, cs = 59, ce = 46, gs = 0, ws = 8, us = 11, ls = 14, Cs = 31, Us = 127, BA = -1, cB = 48, gB = 97, wB = 101, Fs = 102, hs = 117, ds = 122, uB = 65, lB = 69, CB = 70, fs = 85, ps = 90, J = function(e) {
   return e >= cB && e <= 57;
 }, Hs = function(e) {
   return e >= 55296 && e <= 57343;
 }, TA = function(e) {
-  return J(e) || e >= uB && e <= UB || e >= gB && e <= Fs;
+  return J(e) || e >= uB && e <= CB || e >= gB && e <= Fs;
 }, Es = function(e) {
   return e >= gB && e <= ds;
 }, Is = function(e) {
@@ -378,11 +378,11 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
 }, dr = function(e) {
   return Pe(e) || J(e) || e === _;
 }, ms = function(e) {
-  return e >= gs && e <= ws || e === us || e >= ls && e <= Us || e === Cs;
-}, CA = function(e, A) {
+  return e >= gs && e <= ws || e === us || e >= ls && e <= Cs || e === Us;
+}, UA = function(e, A) {
   return e !== ne ? !1 : A !== Ne;
 }, me = function(e, A, r) {
-  return e === _ ? Pe(A) || CA(A, r) : Pe(e) ? !0 : !!(e === ne && CA(e, A));
+  return e === _ ? Pe(A) || UA(A, r) : Pe(e) ? !0 : !!(e === ne && UA(e, A));
 }, ut = function(e, A, r) {
   return e === LA || e === _ ? J(A) ? !0 : A === ce && J(r) : J(e === ce ? A : e);
 }, Ls = function(e) {
@@ -462,7 +462,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
 }, kt = {
   type: 32
   /* EOF_TOKEN */
-}, CB = (
+}, UB = (
   /** @class */
   function() {
     function e() {
@@ -480,7 +480,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
           return this.consumeStringToken(He);
         case Zn:
           var r = this.peekCodePoint(0), t = this.peekCodePoint(1), B = this.peekCodePoint(2);
-          if (dr(r) || CA(t, B)) {
+          if (dr(r) || UA(t, B)) {
             var n = me(r, t, B) ? Jn : Xn, s = this.consumeName();
             return {
               type: 5,
@@ -515,10 +515,10 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
         case ce:
           if (ut(A, this.peekCodePoint(0), this.peekCodePoint(1))) return this.reconsumeCodePoint(A), this.consumeNumericToken();
           break;
-        case Cr:
+        case Ur:
           if (this.peekCodePoint(0) === wt) for (this.consumeCodePoint(); ; ) {
             var Q = this.consumeCodePoint();
-            if (Q === wt && (Q = this.consumeCodePoint(), Q === Cr)) return this.consumeToken();
+            if (Q === wt && (Q = this.consumeCodePoint(), Q === Ur)) return this.consumeToken();
             if (Q === BA) return this.consumeToken();
           }
           break;
@@ -530,8 +530,8 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
           if (this.peekCodePoint(0) === zn && this.peekCodePoint(1) === _ && this.peekCodePoint(2) === _) return this.consumeCodePoint(), this.consumeCodePoint(), Ns;
           break;
         case es:
-          var c = this.peekCodePoint(0), g = this.peekCodePoint(1), C = this.peekCodePoint(2);
-          if (me(c, g, C)) {
+          var c = this.peekCodePoint(0), g = this.peekCodePoint(1), U = this.peekCodePoint(2);
+          if (me(c, g, U)) {
             var s = this.consumeName();
             return {
               type: 7,
@@ -542,7 +542,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
         case ts:
           return Ys;
         case ne:
-          if (CA(A, this.peekCodePoint(0))) return this.reconsumeCodePoint(A), this.consumeIdentLikeToken();
+          if (UA(A, this.peekCodePoint(0))) return this.reconsumeCodePoint(A), this.consumeIdentLikeToken();
           break;
         case rs:
           return Ws;
@@ -585,7 +585,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
         var B = parseInt(M.apply(void 0, A.map(function(o) {
           return o === ye ? cB : o;
         })), 16), n = parseInt(M.apply(void 0, A.map(function(o) {
-          return o === ye ? UB : o;
+          return o === ye ? CB : o;
         })), 16);
         return {
           type: 30,
@@ -643,7 +643,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
         }) : (this.consumeBadUrlRemnants(), Le);
         if (B === He || B === Ee || B === Ie || ms(B)) return this.consumeBadUrlRemnants(), Le;
         if (B === ne)
-          if (CA(B, this.peekCodePoint(0))) A.push(this.consumeEscapedCodePoint());
+          if (UA(B, this.peekCodePoint(0))) A.push(this.consumeEscapedCodePoint());
           else return this.consumeBadUrlRemnants(), Le;
         else A.push(B);
       }
@@ -653,7 +653,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
       for (; ; ) {
         var A = this.consumeCodePoint();
         if (A === jA || A === BA) return;
-        CA(A, this.peekCodePoint(0)) && this.consumeEscapedCodePoint();
+        UA(A, this.peekCodePoint(0)) && this.consumeEscapedCodePoint();
       }
     }, e.prototype.consumeStringSlice = function(A) {
       for (var r = 5e4, t = ""; A > 0; ) {
@@ -672,7 +672,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
         if (B === Ne) return this._value.splice(0, t), Rs;
         if (B === ne) {
           var n = this._value[t + 1];
-          n !== BA && n !== void 0 && (n === Ne ? (r += this.consumeStringSlice(t), t = -1, this._value.shift()) : CA(B, n) && (r += this.consumeStringSlice(t), r += M(this.consumeEscapedCodePoint()), t = -1));
+          n !== BA && n !== void 0 && (n === Ne ? (r += this.consumeStringSlice(t), t = -1, this._value.shift()) : UA(B, n) && (r += this.consumeStringSlice(t), r += M(this.consumeEscapedCodePoint()), t = -1));
         }
         t++;
       } while (!0);
@@ -681,10 +681,10 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
       for ((t === LA || t === _) && A.push(this.consumeCodePoint()); J(this.peekCodePoint(0)); ) A.push(this.consumeCodePoint());
       t = this.peekCodePoint(0);
       var B = this.peekCodePoint(1);
-      if (t === ce && J(B)) for (A.push(this.consumeCodePoint(), this.consumeCodePoint()), r = Ur; J(this.peekCodePoint(0)); ) A.push(this.consumeCodePoint());
+      if (t === ce && J(B)) for (A.push(this.consumeCodePoint(), this.consumeCodePoint()), r = Cr; J(this.peekCodePoint(0)); ) A.push(this.consumeCodePoint());
       t = this.peekCodePoint(0), B = this.peekCodePoint(1);
       var n = this.peekCodePoint(2);
-      if ((t === lB || t === wB) && ((B === LA || B === _) && J(n) || J(B))) for (A.push(this.consumeCodePoint(), this.consumeCodePoint()), r = Ur; J(this.peekCodePoint(0)); ) A.push(this.consumeCodePoint());
+      if ((t === lB || t === wB) && ((B === LA || B === _) && J(n) || J(B))) for (A.push(this.consumeCodePoint(), this.consumeCodePoint()), r = Cr; J(this.peekCodePoint(0)); ) A.push(this.consumeCodePoint());
       return [Ls(A), r];
     }, e.prototype.consumeNumericToken = function() {
       var A = this.consumeNumber(), r = A[0], t = A[1], B = this.peekCodePoint(0), n = this.peekCodePoint(1), s = this.peekCodePoint(2);
@@ -719,7 +719,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
       for (var A = ""; ; ) {
         var r = this.consumeCodePoint();
         if (dr(r)) A += M(r);
-        else if (CA(r, this.peekCodePoint(0))) A += M(this.consumeEscapedCodePoint());
+        else if (UA(r, this.peekCodePoint(0))) A += M(this.consumeEscapedCodePoint());
         else return this.reconsumeCodePoint(r), A;
       }
     }, e;
@@ -731,7 +731,7 @@ var Kn = "KwAAAAAAAAAACA4AUD0AADAgAAACAAAAAAAIABAAGABAAEgAUABYAGAAaABgAGgAYgBqAF
       this._tokens = A;
     }
     return e.create = function(A) {
-      var r = new CB();
+      var r = new UB();
       return r.write(A), new e(r.read());
     }, e.parseValue = function(A) {
       return e.create(A).parseComponentValue();
@@ -971,8 +971,8 @@ function lt(e, A, r) {
 var Hr = function(e, A) {
   var r = A.filter(JA), t = r[0], B = r[1], n = r[2], s = r[3], i = (t.type === 17 ? $(t.number) : At.parse(e, t)) / (Math.PI * 2), o = T(B) ? B.number / 100 : 0, a = T(n) ? n.number / 100 : 0, Q = typeof s < "u" && T(s) ? b(s, 1) : 1;
   if (o === 0) return dA(a * 255, a * 255, a * 255, 1);
-  var c = a <= 0.5 ? a * (o + 1) : a + o - a * o, g = a * 2 - c, C = lt(g, c, i + 1 / 3), w = lt(g, c, i), u = lt(g, c, i - 1 / 3);
-  return dA(C * 255, w * 255, u * 255, Q);
+  var c = a <= 0.5 ? a * (o + 1) : a + o - a * o, g = a * 2 - c, U = lt(g, c, i + 1 / 3), w = lt(g, c, i), u = lt(g, c, i - 1 / 3);
+  return dA(U * 255, w * 255, u * 255, Q);
 }, js = {
   hsl: Hr,
   hsla: Hr,
@@ -1175,7 +1175,7 @@ var Hr = function(e, A) {
     var Q = B[s];
     if (Q === null) a === null && (a = s);
     else if (a !== null) {
-      for (var c = s - a, g = B[a - 1], C = (Q - g) / (c + 1), w = 1; w <= c; w++) B[a + w - 1] = C * w;
+      for (var c = s - a, g = B[a - 1], U = (Q - g) / (c + 1), w = 1; w <= c; w++) B[a + w - 1] = U * w;
       a = null;
     }
   }
@@ -1302,12 +1302,12 @@ var Hr = function(e, A) {
       } else if (Q.name === "color-stop") {
         var g = Q.values.filter(JA);
         if (g.length === 2) {
-          var c = fA.parse(e, g[1]), C = g[0];
-          YA(C) && t.push({
+          var c = fA.parse(e, g[1]), U = g[0];
+          YA(U) && t.push({
             stop: {
               type: 16,
-              number: C.number * 100,
-              flags: C.flags
+              number: U.number * 100,
+              flags: U.flags
             },
             color: c
           });
@@ -1554,7 +1554,7 @@ var uo = {
     type: 3,
     format: "color"
   };
-}, Uo = tt("top"), Co = tt("right"), Fo = tt("bottom"), ho = tt("left"), rt = function(e) {
+}, Co = tt("top"), Uo = tt("right"), Fo = tt("bottom"), ho = tt("left"), rt = function(e) {
   return {
     name: "border-radius-" + e,
     initialValue: "0 0",
@@ -2178,13 +2178,13 @@ var Qi = {
       return B.indexOf(" ") === -1 ? B : "'" + B + "'";
     });
   }
-}, Ui = {
+}, Ci = {
   name: "font-size",
   initialValue: "0",
   prefix: !1,
   type: 3,
   format: "length"
-}, Ci = {
+}, Ui = {
   name: "font-weight",
   initialValue: "normal",
   type: 0,
@@ -2389,7 +2389,7 @@ var Qi = {
   function() {
     function e(A, r) {
       var t, B;
-      this.animationDuration = F(A, Hi, r.animationDuration), this.backgroundClip = F(A, zs, r.backgroundClip), this.backgroundColor = F(A, $s, r.backgroundColor), this.backgroundImage = F(A, ao, r.backgroundImage), this.backgroundOrigin = F(A, Qo, r.backgroundOrigin), this.backgroundPosition = F(A, co, r.backgroundPosition), this.backgroundRepeat = F(A, go, r.backgroundRepeat), this.backgroundSize = F(A, uo, r.backgroundSize), this.borderTopColor = F(A, Uo, r.borderTopColor), this.borderRightColor = F(A, Co, r.borderRightColor), this.borderBottomColor = F(A, Fo, r.borderBottomColor), this.borderLeftColor = F(A, ho, r.borderLeftColor), this.borderTopLeftRadius = F(A, fo, r.borderTopLeftRadius), this.borderTopRightRadius = F(A, po, r.borderTopRightRadius), this.borderBottomRightRadius = F(A, Ho, r.borderBottomRightRadius), this.borderBottomLeftRadius = F(A, Eo, r.borderBottomLeftRadius), this.borderTopStyle = F(A, Io, r.borderTopStyle), this.borderRightStyle = F(A, yo, r.borderRightStyle), this.borderBottomStyle = F(A, Ko, r.borderBottomStyle), this.borderLeftStyle = F(A, mo, r.borderLeftStyle), this.borderTopWidth = F(A, Lo, r.borderTopWidth), this.borderRightWidth = F(A, vo, r.borderRightWidth), this.borderBottomWidth = F(A, bo, r.borderBottomWidth), this.borderLeftWidth = F(A, Do, r.borderLeftWidth), this.boxShadow = F(A, Ii, r.boxShadow), this.color = F(A, xo, r.color), this.direction = F(A, Mo, r.direction), this.display = F(A, So, r.display), this.float = F(A, Go, r.cssFloat), this.fontFamily = F(A, li, r.fontFamily), this.fontSize = F(A, Ui, r.fontSize), this.fontStyle = F(A, hi, r.fontStyle), this.fontVariant = F(A, Fi, r.fontVariant), this.fontWeight = F(A, Ci, r.fontWeight), this.letterSpacing = F(A, Oo, r.letterSpacing), this.lineBreak = F(A, Vo, r.lineBreak), this.lineHeight = F(A, ko, r.lineHeight), this.listStyleImage = F(A, Ro, r.listStyleImage), this.listStylePosition = F(A, No, r.listStylePosition), this.listStyleType = F(A, Nt, r.listStyleType), this.marginTop = F(A, Po, r.marginTop), this.marginRight = F(A, Xo, r.marginRight), this.marginBottom = F(A, Jo, r.marginBottom), this.marginLeft = F(A, Yo, r.marginLeft), this.opacity = F(A, gi, r.opacity);
+      this.animationDuration = F(A, Hi, r.animationDuration), this.backgroundClip = F(A, zs, r.backgroundClip), this.backgroundColor = F(A, $s, r.backgroundColor), this.backgroundImage = F(A, ao, r.backgroundImage), this.backgroundOrigin = F(A, Qo, r.backgroundOrigin), this.backgroundPosition = F(A, co, r.backgroundPosition), this.backgroundRepeat = F(A, go, r.backgroundRepeat), this.backgroundSize = F(A, uo, r.backgroundSize), this.borderTopColor = F(A, Co, r.borderTopColor), this.borderRightColor = F(A, Uo, r.borderRightColor), this.borderBottomColor = F(A, Fo, r.borderBottomColor), this.borderLeftColor = F(A, ho, r.borderLeftColor), this.borderTopLeftRadius = F(A, fo, r.borderTopLeftRadius), this.borderTopRightRadius = F(A, po, r.borderTopRightRadius), this.borderBottomRightRadius = F(A, Ho, r.borderBottomRightRadius), this.borderBottomLeftRadius = F(A, Eo, r.borderBottomLeftRadius), this.borderTopStyle = F(A, Io, r.borderTopStyle), this.borderRightStyle = F(A, yo, r.borderRightStyle), this.borderBottomStyle = F(A, Ko, r.borderBottomStyle), this.borderLeftStyle = F(A, mo, r.borderLeftStyle), this.borderTopWidth = F(A, Lo, r.borderTopWidth), this.borderRightWidth = F(A, vo, r.borderRightWidth), this.borderBottomWidth = F(A, bo, r.borderBottomWidth), this.borderLeftWidth = F(A, Do, r.borderLeftWidth), this.boxShadow = F(A, Ii, r.boxShadow), this.color = F(A, xo, r.color), this.direction = F(A, Mo, r.direction), this.display = F(A, So, r.display), this.float = F(A, Go, r.cssFloat), this.fontFamily = F(A, li, r.fontFamily), this.fontSize = F(A, Ci, r.fontSize), this.fontStyle = F(A, hi, r.fontStyle), this.fontVariant = F(A, Fi, r.fontVariant), this.fontWeight = F(A, Ui, r.fontWeight), this.letterSpacing = F(A, Oo, r.letterSpacing), this.lineBreak = F(A, Vo, r.lineBreak), this.lineHeight = F(A, ko, r.lineHeight), this.listStyleImage = F(A, Ro, r.listStyleImage), this.listStylePosition = F(A, No, r.listStylePosition), this.listStyleType = F(A, Nt, r.listStyleType), this.marginTop = F(A, Po, r.marginTop), this.marginRight = F(A, Xo, r.marginRight), this.marginBottom = F(A, Jo, r.marginBottom), this.marginLeft = F(A, Yo, r.marginLeft), this.opacity = F(A, gi, r.opacity);
       var n = F(A, Wo, r.overflow);
       this.overflowX = n[0], this.overflowY = n[n.length > 1 ? 1 : 0], this.overflowWrap = F(A, Zo, r.overflowWrap), this.paddingTop = F(A, _o, r.paddingTop), this.paddingRight = F(A, qo, r.paddingRight), this.paddingBottom = F(A, jo, r.paddingBottom), this.paddingLeft = F(A, zo, r.paddingLeft), this.paintOrder = F(A, yi, r.paintOrder), this.position = F(A, Ai, r.position), this.textAlign = F(A, $o, r.textAlign), this.textDecorationColor = F(A, wi, (t = r.textDecorationColor) !== null && t !== void 0 ? t : r.color), this.textDecorationLine = F(A, ui, (B = r.textDecorationLine) !== null && B !== void 0 ? B : r.textDecoration), this.textShadow = F(A, ei, r.textShadow), this.textTransform = F(A, ti, r.textTransform), this.transform = F(A, ri, r.transform), this.transformOrigin = F(A, ii, r.transformOrigin), this.visibility = F(A, ai, r.visibility), this.webkitTextStrokeColor = F(A, Ki, r.webkitTextStrokeColor), this.webkitTextStrokeWidth = F(A, mi, r.webkitTextStrokeWidth), this.wordBreak = F(A, Qi, r.wordBreak), this.zIndex = F(A, ci, r.zIndex);
     }
@@ -2450,7 +2450,7 @@ var Qi = {
     return e;
   }()
 ), F = function(e, A, r) {
-  var t = new CB(), B = r !== null && typeof r < "u" ? r.toString() : A.initialValue;
+  var t = new UB(), B = r !== null && typeof r < "u" ? r.toString() : A.initialValue;
   t.write(B);
   var n = new FB(t.read());
   switch (A.type) {
@@ -2532,7 +2532,7 @@ var Mi = function(e) {
 }, Ti = function(e) {
   for (var A = e.length, r = [], t = 0; t < A; t += 4) r.push(e[t + 3] << 24 | e[t + 2] << 16 | e[t + 1] << 8 | e[t]);
   return r;
-}, DA = 5, Ar = 11, Ut = 2, Gi = Ar - DA, GB = 65536 >> DA, Oi = 1 << DA, Ct = Oi - 1, Vi = 1024 >> DA, ki = GB + Vi, Ri = ki, Ni = 32, Pi = Ri + Ni, Xi = 65536 >> Ar, Ji = 1 << Gi, Yi = Ji - 1, br = function(e, A, r) {
+}, DA = 5, Ar = 11, Ct = 2, Gi = Ar - DA, GB = 65536 >> DA, Oi = 1 << DA, Ut = Oi - 1, Vi = 1024 >> DA, ki = GB + Vi, Ri = ki, Ni = 32, Pi = Ri + Ni, Xi = 65536 >> Ar, Ji = 1 << Gi, Yi = Ji - 1, br = function(e, A, r) {
   return e.slice ? e.slice(A, r) : new Uint16Array(Array.prototype.slice.call(e, A, r));
 }, Wi = function(e, A, r) {
   return e.slice ? e.slice(A, r) : new Uint32Array(Array.prototype.slice.call(e, A, r));
@@ -2548,9 +2548,9 @@ var Mi = function(e) {
     return e.prototype.get = function(A) {
       var r;
       if (A >= 0) {
-        if (A < 55296 || A > 56319 && A <= 65535) return r = this.index[A >> DA], r = (r << Ut) + (A & Ct), this.data[r];
-        if (A <= 65535) return r = this.index[GB + (A - 55296 >> DA)], r = (r << Ut) + (A & Ct), this.data[r];
-        if (A < this.highStart) return r = Pi - Xi + (A >> Ar), r = this.index[r], r += A >> DA & Yi, r = this.index[r], r = (r << Ut) + (A & Ct), this.data[r];
+        if (A < 55296 || A > 56319 && A <= 65535) return r = this.index[A >> DA], r = (r << Ct) + (A & Ut), this.data[r];
+        if (A <= 65535) return r = this.index[GB + (A - 55296 >> DA)], r = (r << Ct) + (A & Ut), this.data[r];
+        if (A < this.highStart) return r = Pi - Xi + (A >> Ar), r = this.index[r], r += A >> DA & Yi, r = this.index[r], r = (r << Ct) + (A & Ut), this.data[r];
         if (A <= 1114111) return this.data[this.highValueIndex];
       }
       return this.errorValue;
@@ -2804,10 +2804,10 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
       return t.segment;
     });
   }
-  return Ca(e, A);
+  return Ua(e, A);
 }, la = function(e, A) {
   return A.letterSpacing !== 0 ? er(e) : ua(e, A);
-}, Ua = [32, 160, 4961, 65792, 65793, 4153, 4241], Ca = function(e, A) {
+}, Ca = [32, 160, 4961, 65792, 65793, 4153, 4241], Ua = function(e, A) {
   for (var r = Pn(e, {
     lineBreak: A.lineBreak,
     wordBreak: A.overflowWrap === "break-word" ? "break-word" : A.wordBreak
@@ -2815,7 +2815,7 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
     if (B.value) {
       var s = B.value.slice(), i = $e(s), o = "";
       i.forEach(function(a) {
-        Ua.indexOf(a) === -1 ? o += M(a) : (o.length && t.push(o), t.push(M(a)), o = "");
+        Ca.indexOf(a) === -1 ? o += M(a) : (o.length && t.push(o), t.push(M(a)), o = "");
       }), o.length && t.push(o);
     }
   }; !(B = r.next()).done; ) n();
@@ -3090,13 +3090,13 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
   return zB(Math.abs(e), t, !1, function(B) {
     return A[Math.floor(B % t)];
   }) + r;
-}, kA = 1, lA = 2, UA = 4, Be = 8, QA = function(e, A, r, t, B, n) {
+}, kA = 1, lA = 2, CA = 4, Be = 8, QA = function(e, A, r, t, B, n) {
   if (e < -9999 || e > 9999) return ge(e, 4, B.length > 0);
   var s = Math.abs(e), i = B;
   if (s === 0) return A[0] + i;
   for (var o = 0; s > 0 && o <= 4; o++) {
     var a = s % 10;
-    a === 0 && G(n, kA) && i !== "" ? i = A[a] + i : a > 1 || a === 1 && o === 0 || a === 1 && o === 1 && G(n, lA) || a === 1 && o === 1 && G(n, UA) && e > 100 || a === 1 && o > 1 && G(n, Be) ? i = A[a] + (o > 0 ? r[o - 1] : "") + i : a === 1 && o > 0 && (i = r[o - 1] + i), s = Math.floor(s / 10);
+    a === 0 && G(n, kA) && i !== "" ? i = A[a] + i : a > 1 || a === 1 && o === 0 || a === 1 && o === 1 && G(n, lA) || a === 1 && o === 1 && G(n, CA) && e > 100 || a === 1 && o > 1 && G(n, Be) ? i = A[a] + (o > 0 ? r[o - 1] : "") + i : a === 1 && o > 0 && (i = r[o - 1] + i), s = Math.floor(s / 10);
   }
   return (e < 0 ? t : "") + i;
 }, qr = "十百千萬", jr = "拾佰仟萬", zr = "マイナス", Ht = "마이너스", ge = function(e, A, r) {
@@ -3141,23 +3141,23 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
       return mA(e, "甲乙丙丁戊己庚辛壬癸", B);
     case 17:
     case 48:
-      return QA(e, "零一二三四五六七八九", qr, "負", B, lA | UA | Be);
+      return QA(e, "零一二三四五六七八九", qr, "負", B, lA | CA | Be);
     case 47:
-      return QA(e, "零壹貳參肆伍陸柒捌玖", jr, "負", B, kA | lA | UA | Be);
+      return QA(e, "零壹貳參肆伍陸柒捌玖", jr, "負", B, kA | lA | CA | Be);
     case 42:
-      return QA(e, "零一二三四五六七八九", qr, "负", B, lA | UA | Be);
+      return QA(e, "零一二三四五六七八九", qr, "负", B, lA | CA | Be);
     case 41:
-      return QA(e, "零壹贰叁肆伍陆柒捌玖", jr, "负", B, kA | lA | UA | Be);
+      return QA(e, "零壹贰叁肆伍陆柒捌玖", jr, "负", B, kA | lA | CA | Be);
     case 26:
       return QA(e, "〇一二三四五六七八九", "十百千万", zr, B, 0);
     case 25:
-      return QA(e, "零壱弐参四伍六七八九", "拾百千万", zr, B, kA | lA | UA);
+      return QA(e, "零壱弐参四伍六七八九", "拾百千万", zr, B, kA | lA | CA);
     case 31:
-      return QA(e, "영일이삼사오육칠팔구", "십백천만", Ht, n, kA | lA | UA);
+      return QA(e, "영일이삼사오육칠팔구", "십백천만", Ht, n, kA | lA | CA);
     case 33:
       return QA(e, "零一二三四五六七八九", "十百千萬", Ht, n, 0);
     case 32:
-      return QA(e, "零壹貳參四五六七八九", "拾百千", Ht, n, kA | lA | UA);
+      return QA(e, "零壹貳參四五六七八九", "拾百千", Ht, n, kA | lA | CA);
     case 18:
       return x(e, 2406, 2415, !0, t);
     case 20:
@@ -3338,8 +3338,8 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
               g.src = c.value, g.style.opacity = "1", a.appendChild(g);
             } else if (c.type === 18) {
               if (c.name === "attr") {
-                var C = c.values.filter(v);
-                C.length && a.appendChild(i.createTextNode(A.getAttribute(C[0].value) || ""));
+                var U = c.values.filter(v);
+                U.length && a.appendChild(i.createTextNode(A.getAttribute(U[0].value) || ""));
               } else if (c.name === "counter") {
                 var w = c.values.filter(JA), u = w[0], H = w[1];
                 if (u && v(u)) {
@@ -3349,8 +3349,8 @@ var ji = 1, Ft = 2, ht = 3, xr = 4, Mr = 5, zi = 7, Sr = 8, dt = 9, ft = 10, Tr 
               } else if (c.name === "counters") {
                 var K = c.values.filter(JA), u = K[0], E = K[1], H = K[2];
                 if (u && v(u)) {
-                  var f = n.counters.getCounterValues(u.value), U = H && v(H) ? Nt.parse(n.context, H.value) : 3, I = E && E.type === 0 ? E.value : "", y = f.map(function(Y) {
-                    return ge(Y, U, !1);
+                  var f = n.counters.getCounterValues(u.value), C = H && v(H) ? Nt.parse(n.context, H.value) : 3, I = E && E.type === 0 ? E.value : "", y = f.map(function(Y) {
+                    return ge(Y, C, !1);
                   }).join(I);
                   a.appendChild(i.createTextNode(y));
                 }
@@ -3569,12 +3569,12 @@ var Oa = function(e, A) {
   /** @class */
   /* @__PURE__ */ function() {
     function e(A) {
-      var r = A.styles, t = A.bounds, B = te(r.borderTopLeftRadius, t.width, t.height), n = B[0], s = B[1], i = te(r.borderTopRightRadius, t.width, t.height), o = i[0], a = i[1], Q = te(r.borderBottomRightRadius, t.width, t.height), c = Q[0], g = Q[1], C = te(r.borderBottomLeftRadius, t.width, t.height), w = C[0], u = C[1], H = [];
+      var r = A.styles, t = A.bounds, B = te(r.borderTopLeftRadius, t.width, t.height), n = B[0], s = B[1], i = te(r.borderTopRightRadius, t.width, t.height), o = i[0], a = i[1], Q = te(r.borderBottomRightRadius, t.width, t.height), c = Q[0], g = Q[1], U = te(r.borderBottomLeftRadius, t.width, t.height), w = U[0], u = U[1], H = [];
       H.push((n + o) / t.width), H.push((w + c) / t.width), H.push((s + u) / t.height), H.push((a + g) / t.height);
       var d = Math.max.apply(Math, H);
       d > 1 && (n /= d, s /= d, o /= d, a /= d, c /= d, g /= d, w /= d, u /= d);
-      var h = t.width - o, K = t.height - g, E = t.width - c, f = t.height - u, U = r.borderTopWidth, I = r.borderRightWidth, y = r.borderBottomWidth, p = r.borderLeftWidth, S = b(r.paddingTop, A.bounds.width), Y = b(r.paddingRight, A.bounds.width), q = b(r.paddingBottom, A.bounds.width), L = b(r.paddingLeft, A.bounds.width);
-      this.topLeftBorderDoubleOuterBox = n > 0 || s > 0 ? D(t.left + p / 3, t.top + U / 3, n - p / 3, s - U / 3, m.TOP_LEFT) : new l(t.left + p / 3, t.top + U / 3), this.topRightBorderDoubleOuterBox = n > 0 || s > 0 ? D(t.left + h, t.top + U / 3, o - I / 3, a - U / 3, m.TOP_RIGHT) : new l(t.left + t.width - I / 3, t.top + U / 3), this.bottomRightBorderDoubleOuterBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I / 3, g - y / 3, m.BOTTOM_RIGHT) : new l(t.left + t.width - I / 3, t.top + t.height - y / 3), this.bottomLeftBorderDoubleOuterBox = w > 0 || u > 0 ? D(t.left + p / 3, t.top + f, w - p / 3, u - y / 3, m.BOTTOM_LEFT) : new l(t.left + p / 3, t.top + t.height - y / 3), this.topLeftBorderDoubleInnerBox = n > 0 || s > 0 ? D(t.left + p * 2 / 3, t.top + U * 2 / 3, n - p * 2 / 3, s - U * 2 / 3, m.TOP_LEFT) : new l(t.left + p * 2 / 3, t.top + U * 2 / 3), this.topRightBorderDoubleInnerBox = n > 0 || s > 0 ? D(t.left + h, t.top + U * 2 / 3, o - I * 2 / 3, a - U * 2 / 3, m.TOP_RIGHT) : new l(t.left + t.width - I * 2 / 3, t.top + U * 2 / 3), this.bottomRightBorderDoubleInnerBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I * 2 / 3, g - y * 2 / 3, m.BOTTOM_RIGHT) : new l(t.left + t.width - I * 2 / 3, t.top + t.height - y * 2 / 3), this.bottomLeftBorderDoubleInnerBox = w > 0 || u > 0 ? D(t.left + p * 2 / 3, t.top + f, w - p * 2 / 3, u - y * 2 / 3, m.BOTTOM_LEFT) : new l(t.left + p * 2 / 3, t.top + t.height - y * 2 / 3), this.topLeftBorderStroke = n > 0 || s > 0 ? D(t.left + p / 2, t.top + U / 2, n - p / 2, s - U / 2, m.TOP_LEFT) : new l(t.left + p / 2, t.top + U / 2), this.topRightBorderStroke = n > 0 || s > 0 ? D(t.left + h, t.top + U / 2, o - I / 2, a - U / 2, m.TOP_RIGHT) : new l(t.left + t.width - I / 2, t.top + U / 2), this.bottomRightBorderStroke = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I / 2, g - y / 2, m.BOTTOM_RIGHT) : new l(t.left + t.width - I / 2, t.top + t.height - y / 2), this.bottomLeftBorderStroke = w > 0 || u > 0 ? D(t.left + p / 2, t.top + f, w - p / 2, u - y / 2, m.BOTTOM_LEFT) : new l(t.left + p / 2, t.top + t.height - y / 2), this.topLeftBorderBox = n > 0 || s > 0 ? D(t.left, t.top, n, s, m.TOP_LEFT) : new l(t.left, t.top), this.topRightBorderBox = o > 0 || a > 0 ? D(t.left + h, t.top, o, a, m.TOP_RIGHT) : new l(t.left + t.width, t.top), this.bottomRightBorderBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c, g, m.BOTTOM_RIGHT) : new l(t.left + t.width, t.top + t.height), this.bottomLeftBorderBox = w > 0 || u > 0 ? D(t.left, t.top + f, w, u, m.BOTTOM_LEFT) : new l(t.left, t.top + t.height), this.topLeftPaddingBox = n > 0 || s > 0 ? D(t.left + p, t.top + U, Math.max(0, n - p), Math.max(0, s - U), m.TOP_LEFT) : new l(t.left + p, t.top + U), this.topRightPaddingBox = o > 0 || a > 0 ? D(t.left + Math.min(h, t.width - I), t.top + U, h > t.width + I ? 0 : Math.max(0, o - I), Math.max(0, a - U), m.TOP_RIGHT) : new l(t.left + t.width - I, t.top + U), this.bottomRightPaddingBox = c > 0 || g > 0 ? D(t.left + Math.min(E, t.width - p), t.top + Math.min(K, t.height - y), Math.max(0, c - I), Math.max(0, g - y), m.BOTTOM_RIGHT) : new l(t.left + t.width - I, t.top + t.height - y), this.bottomLeftPaddingBox = w > 0 || u > 0 ? D(t.left + p, t.top + Math.min(f, t.height - y), Math.max(0, w - p), Math.max(0, u - y), m.BOTTOM_LEFT) : new l(t.left + p, t.top + t.height - y), this.topLeftContentBox = n > 0 || s > 0 ? D(t.left + p + L, t.top + U + S, Math.max(0, n - (p + L)), Math.max(0, s - (U + S)), m.TOP_LEFT) : new l(t.left + p + L, t.top + U + S), this.topRightContentBox = o > 0 || a > 0 ? D(t.left + Math.min(h, t.width + p + L), t.top + U + S, h > t.width + p + L ? 0 : o - p + L, a - (U + S), m.TOP_RIGHT) : new l(t.left + t.width - (I + Y), t.top + U + S), this.bottomRightContentBox = c > 0 || g > 0 ? D(t.left + Math.min(E, t.width - (p + L)), t.top + Math.min(K, t.height + U + S), Math.max(0, c - (I + Y)), g - (y + q), m.BOTTOM_RIGHT) : new l(t.left + t.width - (I + Y), t.top + t.height - (y + q)), this.bottomLeftContentBox = w > 0 || u > 0 ? D(t.left + p + L, t.top + f, Math.max(0, w - (p + L)), u - (y + q), m.BOTTOM_LEFT) : new l(t.left + p + L, t.top + t.height - (y + q));
+      var h = t.width - o, K = t.height - g, E = t.width - c, f = t.height - u, C = r.borderTopWidth, I = r.borderRightWidth, y = r.borderBottomWidth, p = r.borderLeftWidth, S = b(r.paddingTop, A.bounds.width), Y = b(r.paddingRight, A.bounds.width), q = b(r.paddingBottom, A.bounds.width), L = b(r.paddingLeft, A.bounds.width);
+      this.topLeftBorderDoubleOuterBox = n > 0 || s > 0 ? D(t.left + p / 3, t.top + C / 3, n - p / 3, s - C / 3, m.TOP_LEFT) : new l(t.left + p / 3, t.top + C / 3), this.topRightBorderDoubleOuterBox = n > 0 || s > 0 ? D(t.left + h, t.top + C / 3, o - I / 3, a - C / 3, m.TOP_RIGHT) : new l(t.left + t.width - I / 3, t.top + C / 3), this.bottomRightBorderDoubleOuterBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I / 3, g - y / 3, m.BOTTOM_RIGHT) : new l(t.left + t.width - I / 3, t.top + t.height - y / 3), this.bottomLeftBorderDoubleOuterBox = w > 0 || u > 0 ? D(t.left + p / 3, t.top + f, w - p / 3, u - y / 3, m.BOTTOM_LEFT) : new l(t.left + p / 3, t.top + t.height - y / 3), this.topLeftBorderDoubleInnerBox = n > 0 || s > 0 ? D(t.left + p * 2 / 3, t.top + C * 2 / 3, n - p * 2 / 3, s - C * 2 / 3, m.TOP_LEFT) : new l(t.left + p * 2 / 3, t.top + C * 2 / 3), this.topRightBorderDoubleInnerBox = n > 0 || s > 0 ? D(t.left + h, t.top + C * 2 / 3, o - I * 2 / 3, a - C * 2 / 3, m.TOP_RIGHT) : new l(t.left + t.width - I * 2 / 3, t.top + C * 2 / 3), this.bottomRightBorderDoubleInnerBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I * 2 / 3, g - y * 2 / 3, m.BOTTOM_RIGHT) : new l(t.left + t.width - I * 2 / 3, t.top + t.height - y * 2 / 3), this.bottomLeftBorderDoubleInnerBox = w > 0 || u > 0 ? D(t.left + p * 2 / 3, t.top + f, w - p * 2 / 3, u - y * 2 / 3, m.BOTTOM_LEFT) : new l(t.left + p * 2 / 3, t.top + t.height - y * 2 / 3), this.topLeftBorderStroke = n > 0 || s > 0 ? D(t.left + p / 2, t.top + C / 2, n - p / 2, s - C / 2, m.TOP_LEFT) : new l(t.left + p / 2, t.top + C / 2), this.topRightBorderStroke = n > 0 || s > 0 ? D(t.left + h, t.top + C / 2, o - I / 2, a - C / 2, m.TOP_RIGHT) : new l(t.left + t.width - I / 2, t.top + C / 2), this.bottomRightBorderStroke = c > 0 || g > 0 ? D(t.left + E, t.top + K, c - I / 2, g - y / 2, m.BOTTOM_RIGHT) : new l(t.left + t.width - I / 2, t.top + t.height - y / 2), this.bottomLeftBorderStroke = w > 0 || u > 0 ? D(t.left + p / 2, t.top + f, w - p / 2, u - y / 2, m.BOTTOM_LEFT) : new l(t.left + p / 2, t.top + t.height - y / 2), this.topLeftBorderBox = n > 0 || s > 0 ? D(t.left, t.top, n, s, m.TOP_LEFT) : new l(t.left, t.top), this.topRightBorderBox = o > 0 || a > 0 ? D(t.left + h, t.top, o, a, m.TOP_RIGHT) : new l(t.left + t.width, t.top), this.bottomRightBorderBox = c > 0 || g > 0 ? D(t.left + E, t.top + K, c, g, m.BOTTOM_RIGHT) : new l(t.left + t.width, t.top + t.height), this.bottomLeftBorderBox = w > 0 || u > 0 ? D(t.left, t.top + f, w, u, m.BOTTOM_LEFT) : new l(t.left, t.top + t.height), this.topLeftPaddingBox = n > 0 || s > 0 ? D(t.left + p, t.top + C, Math.max(0, n - p), Math.max(0, s - C), m.TOP_LEFT) : new l(t.left + p, t.top + C), this.topRightPaddingBox = o > 0 || a > 0 ? D(t.left + Math.min(h, t.width - I), t.top + C, h > t.width + I ? 0 : Math.max(0, o - I), Math.max(0, a - C), m.TOP_RIGHT) : new l(t.left + t.width - I, t.top + C), this.bottomRightPaddingBox = c > 0 || g > 0 ? D(t.left + Math.min(E, t.width - p), t.top + Math.min(K, t.height - y), Math.max(0, c - I), Math.max(0, g - y), m.BOTTOM_RIGHT) : new l(t.left + t.width - I, t.top + t.height - y), this.bottomLeftPaddingBox = w > 0 || u > 0 ? D(t.left + p, t.top + Math.min(f, t.height - y), Math.max(0, w - p), Math.max(0, u - y), m.BOTTOM_LEFT) : new l(t.left + p, t.top + t.height - y), this.topLeftContentBox = n > 0 || s > 0 ? D(t.left + p + L, t.top + C + S, Math.max(0, n - (p + L)), Math.max(0, s - (C + S)), m.TOP_LEFT) : new l(t.left + p + L, t.top + C + S), this.topRightContentBox = o > 0 || a > 0 ? D(t.left + Math.min(h, t.width + p + L), t.top + C + S, h > t.width + p + L ? 0 : o - p + L, a - (C + S), m.TOP_RIGHT) : new l(t.left + t.width - (I + Y), t.top + C + S), this.bottomRightContentBox = c > 0 || g > 0 ? D(t.left + Math.min(E, t.width - (p + L)), t.top + Math.min(K, t.height + C + S), Math.max(0, c - (I + Y)), g - (y + q), m.BOTTOM_RIGHT) : new l(t.left + t.width - (I + Y), t.top + t.height - (y + q)), this.bottomLeftContentBox = w > 0 || u > 0 ? D(t.left + p + L, t.top + f, Math.max(0, w - (p + L)), u - (y + q), m.BOTTOM_LEFT) : new l(t.left + p + L, t.top + t.height - (y + q));
     }
     return e;
   }()
@@ -3743,10 +3743,10 @@ var D = function(e, A, r, t, B) {
             return c > w.element.container.styles.zIndex.order ? (g = u, !1) : g > 0;
           }), a.negativeZIndex.splice(g, 0, Q);
         } else if (c > 0) {
-          var C = 0;
+          var U = 0;
           a.positiveZIndex.some(function(w, u) {
-            return c >= w.element.container.styles.zIndex.order ? (C = u + 1, !1) : C > 0;
-          }), a.positiveZIndex.splice(C, 0, Q);
+            return c >= w.element.container.styles.zIndex.order ? (U = u + 1, !1) : U > 0;
+          }), a.positiveZIndex.splice(U, 0, Q);
         } else a.zeroOrAutoZIndexOrTransformedOrOpacity.push(Q);
       } else B.styles.isFloating() ? a.nonPositionedFloats.push(Q) : a.nonPositionedInlineLevel.push(Q);
       qt(i, Q, n ? Q : r, o);
@@ -3830,13 +3830,13 @@ var D = function(e, A, r, t, B) {
 }, lQ = function(e, A) {
   return e === 0 ? A.bounds : e === 2 ? je(A) : nn(A);
 }, Kt = function(e, A, r) {
-  var t = uQ(RA(e.styles.backgroundOrigin, A), e), B = lQ(RA(e.styles.backgroundClip, A), e), n = UQ(RA(e.styles.backgroundSize, A), r, t), s = n[0], i = n[1], o = te(RA(e.styles.backgroundPosition, A), t.width - s, t.height - i), a = CQ(RA(e.styles.backgroundRepeat, A), o, n, t, B), Q = Math.round(t.left + o[0]), c = Math.round(t.top + o[1]);
+  var t = uQ(RA(e.styles.backgroundOrigin, A), e), B = lQ(RA(e.styles.backgroundClip, A), e), n = CQ(RA(e.styles.backgroundSize, A), r, t), s = n[0], i = n[1], o = te(RA(e.styles.backgroundPosition, A), t.width - s, t.height - i), a = UQ(RA(e.styles.backgroundRepeat, A), o, n, t, B), Q = Math.round(t.left + o[0]), c = Math.round(t.top + o[1]);
   return [a, Q, c, s, i];
 }, VA = function(e) {
   return v(e) && e.value === XA.AUTO;
 }, Ge = function(e) {
   return typeof e == "number";
-}, UQ = function(e, A, r) {
+}, CQ = function(e, A, r) {
   var t = A[0], B = A[1], n = A[2], s = e[0], i = e[1];
   if (!s) return [0, 0];
   if (T(s) && i && T(i)) return [b(s, r.width), b(i, r.height)];
@@ -3853,8 +3853,8 @@ var D = function(e, A, r, t, B) {
     if (Q && c) return [t, B];
     if (!o && !g) return [r.width, r.height];
     if (g && o) {
-      var C = Q ? t : B * n, w = c ? B : t / n;
-      return [C, w];
+      var U = Q ? t : B * n, w = c ? B : t / n;
+      return [U, w];
     }
     var u = Q ? t : r.width, H = c ? B : r.height;
     return [u, H];
@@ -3869,7 +3869,7 @@ var D = function(e, A, r, t, B) {
 }, RA = function(e, A) {
   var r = e[A];
   return typeof r > "u" ? e[0] : r;
-}, CQ = function(e, A, r, t, B) {
+}, UQ = function(e, A, r, t, B) {
   var n = A[0], s = A[1], i = r[0], o = r[1];
   switch (e) {
     case 2:
@@ -3984,7 +3984,7 @@ var D = function(e, A, r, t, B) {
     }, A.prototype.renderTextNode = function(r, t) {
       return X(this, void 0, void 0, function() {
         var B, n, s, i, o, a, Q, c, g = this;
-        return N(this, function(C) {
+        return N(this, function(U) {
           return B = this.createFontStyle(t), n = B[0], s = B[1], i = B[2], this.ctx.font = n, this.ctx.direction = t.direction === 1 ? "rtl" : "ltr", this.ctx.textAlign = "left", this.ctx.textBaseline = "alphabetic", o = this.fontMetrics.getMetrics(s, i), a = o.baseline, Q = o.middle, c = t.paintOrder, r.textBounds.forEach(function(w) {
             c.forEach(function(u) {
               switch (u) {
@@ -4025,38 +4025,38 @@ var D = function(e, A, r, t, B) {
       }
     }, A.prototype.renderNodeContent = function(r) {
       return X(this, void 0, void 0, function() {
-        var t, B, n, s, i, o, h, h, a, Q, c, g, E, C, w, f, u, H, d, h, K, E, f;
-        return N(this, function(U) {
-          switch (U.label) {
+        var t, B, n, s, i, o, h, h, a, Q, c, g, E, U, w, f, u, H, d, h, K, E, f;
+        return N(this, function(C) {
+          switch (C.label) {
             case 0:
               this.applyEffects(r.getEffects(
                 4
                 /* CONTENT */
-              )), t = r.container, B = r.curves, n = t.styles, s = 0, i = t.textNodes, U.label = 1;
+              )), t = r.container, B = r.curves, n = t.styles, s = 0, i = t.textNodes, C.label = 1;
             case 1:
               return s < i.length ? (o = i[s], [4, this.renderTextNode(o, n)]) : [3, 4];
             case 2:
-              U.sent(), U.label = 3;
+              C.sent(), C.label = 3;
             case 3:
               return s++, [3, 1];
             case 4:
               if (!(t instanceof OB)) return [3, 8];
-              U.label = 5;
+              C.label = 5;
             case 5:
-              return U.trys.push([5, 7, , 8]), [4, this.context.cache.match(t.src)];
+              return C.trys.push([5, 7, , 8]), [4, this.context.cache.match(t.src)];
             case 6:
-              return h = U.sent(), this.renderReplacedElement(t, B, h), [3, 8];
+              return h = C.sent(), this.renderReplacedElement(t, B, h), [3, 8];
             case 7:
-              return U.sent(), this.context.logger.error("Error loading image " + t.src), [3, 8];
+              return C.sent(), this.context.logger.error("Error loading image " + t.src), [3, 8];
             case 8:
               if (t instanceof VB && this.renderReplacedElement(t, B, t.canvas), !(t instanceof kB)) return [3, 12];
-              U.label = 9;
+              C.label = 9;
             case 9:
-              return U.trys.push([9, 11, , 12]), [4, this.context.cache.match(t.svg)];
+              return C.trys.push([9, 11, , 12]), [4, this.context.cache.match(t.svg)];
             case 10:
-              return h = U.sent(), this.renderReplacedElement(t, B, h), [3, 12];
+              return h = C.sent(), this.renderReplacedElement(t, B, h), [3, 12];
             case 11:
-              return U.sent(), this.context.logger.error("Error loading svg " + t.svg.substring(0, 255)), [3, 12];
+              return C.sent(), this.context.logger.error("Error loading svg " + t.svg.substring(0, 255)), [3, 12];
             case 12:
               return t instanceof XB && t.tree ? (a = new A(this.context, {
                 scale: this.options.scale,
@@ -4067,10 +4067,10 @@ var D = function(e, A, r, t, B) {
                 height: t.height
               }), [4, a.render(t.tree)]) : [3, 14];
             case 13:
-              Q = U.sent(), t.width && t.height && this.ctx.drawImage(Q, 0, 0, t.width, t.height, t.bounds.left, t.bounds.top, t.bounds.width, t.bounds.height), U.label = 14;
+              Q = C.sent(), t.width && t.height && this.ctx.drawImage(Q, 0, 0, t.width, t.height, t.bounds.left, t.bounds.top, t.bounds.width, t.bounds.height), C.label = 14;
             case 14:
               if (t instanceof tr && (c = Math.min(t.bounds.width, t.bounds.height), t.type === Je ? t.checked && (this.ctx.save(), this.path([new l(t.bounds.left + c * 0.39363, t.bounds.top + c * 0.79), new l(t.bounds.left + c * 0.16, t.bounds.top + c * 0.5549), new l(t.bounds.left + c * 0.27347, t.bounds.top + c * 0.44071), new l(t.bounds.left + c * 0.39694, t.bounds.top + c * 0.5649), new l(t.bounds.left + c * 0.72983, t.bounds.top + c * 0.23), new l(t.bounds.left + c * 0.84, t.bounds.top + c * 0.34085), new l(t.bounds.left + c * 0.39363, t.bounds.top + c * 0.79)]), this.ctx.fillStyle = O(Xr), this.ctx.fill(), this.ctx.restore()) : t.type === Ye && t.checked && (this.ctx.save(), this.ctx.beginPath(), this.ctx.arc(t.bounds.left + c / 2, t.bounds.top + c / 2, c / 4, 0, Math.PI * 2, !0), this.ctx.fillStyle = O(Xr), this.ctx.fill(), this.ctx.restore())), pQ(t) && t.value.length) {
-                switch (g = this.createFontStyle(n), E = g[0], C = g[1], w = this.fontMetrics.getMetrics(E, C).baseline, this.ctx.font = E, this.ctx.fillStyle = O(n.color), this.ctx.textBaseline = "alphabetic", this.ctx.textAlign = EQ(t.styles.textAlign), f = je(t), u = 0, t.styles.textAlign) {
+                switch (g = this.createFontStyle(n), E = g[0], U = g[1], w = this.fontMetrics.getMetrics(E, U).baseline, this.ctx.font = E, this.ctx.fillStyle = O(n.color), this.ctx.textBaseline = "alphabetic", this.ctx.textAlign = EQ(t.styles.textAlign), f = je(t), u = 0, t.styles.textAlign) {
                   case 1:
                     u += f.width / 2;
                     break;
@@ -4087,17 +4087,17 @@ var D = function(e, A, r, t, B) {
               )) return [3, 20];
               if (t.styles.listStyleImage === null) return [3, 19];
               if (d = t.styles.listStyleImage, d.type !== 0) return [3, 18];
-              h = void 0, K = d.url, U.label = 15;
+              h = void 0, K = d.url, C.label = 15;
             case 15:
-              return U.trys.push([15, 17, , 18]), [4, this.context.cache.match(K)];
+              return C.trys.push([15, 17, , 18]), [4, this.context.cache.match(K)];
             case 16:
-              return h = U.sent(), this.ctx.drawImage(h, t.bounds.left - (h.width + 10), t.bounds.top), [3, 18];
+              return h = C.sent(), this.ctx.drawImage(h, t.bounds.left - (h.width + 10), t.bounds.top), [3, 18];
             case 17:
-              return U.sent(), this.context.logger.error("Error loading list-style-image " + K), [3, 18];
+              return C.sent(), this.context.logger.error("Error loading list-style-image " + K), [3, 18];
             case 18:
               return [3, 20];
             case 19:
-              r.listValue && t.styles.listStyleType !== -1 && (E = this.createFontStyle(n)[0], this.ctx.font = E, this.ctx.fillStyle = O(n.color), this.ctx.textBaseline = "middle", this.ctx.textAlign = "right", f = new gA(t.bounds.left, t.bounds.top + b(t.styles.paddingTop, t.bounds.width), t.bounds.width, yr(n.lineHeight, n.fontSize.number) / 2 + 1), this.renderTextWithLetterSpacing(new ie(r.listValue, f), n.letterSpacing, yr(n.lineHeight, n.fontSize.number) / 2 + 2), this.ctx.textBaseline = "bottom", this.ctx.textAlign = "left"), U.label = 20;
+              r.listValue && t.styles.listStyleType !== -1 && (E = this.createFontStyle(n)[0], this.ctx.font = E, this.ctx.fillStyle = O(n.color), this.ctx.textBaseline = "middle", this.ctx.textAlign = "right", f = new gA(t.bounds.left, t.bounds.top + b(t.styles.paddingTop, t.bounds.width), t.bounds.width, yr(n.lineHeight, n.fontSize.number) / 2 + 1), this.renderTextWithLetterSpacing(new ie(r.listValue, f), n.letterSpacing, yr(n.lineHeight, n.fontSize.number) / 2 + 2), this.ctx.textBaseline = "bottom", this.ctx.textAlign = "left"), C.label = 20;
             case 20:
               return [
                 2
@@ -4108,7 +4108,7 @@ var D = function(e, A, r, t, B) {
       });
     }, A.prototype.renderStackContent = function(r) {
       return X(this, void 0, void 0, function() {
-        var t, B, d, n, s, d, i, o, d, a, Q, d, c, g, d, C, w, d, u, H, d;
+        var t, B, d, n, s, d, i, o, d, a, Q, d, c, g, d, U, w, d, u, H, d;
         return N(this, function(h) {
           switch (h.label) {
             case 0:
@@ -4161,13 +4161,13 @@ var D = function(e, A, r, t, B) {
             case 21:
               return c++, [3, 19];
             case 22:
-              C = 0, w = r.zeroOrAutoZIndexOrTransformedOrOpacity, h.label = 23;
+              U = 0, w = r.zeroOrAutoZIndexOrTransformedOrOpacity, h.label = 23;
             case 23:
-              return C < w.length ? (d = w[C], [4, this.renderStack(d)]) : [3, 26];
+              return U < w.length ? (d = w[U], [4, this.renderStack(d)]) : [3, 26];
             case 24:
               h.sent(), h.label = 25;
             case 25:
-              return C++, [3, 23];
+              return U++, [3, 23];
             case 26:
               u = 0, H = r.positiveZIndex, h.label = 27;
             case 27:
@@ -4210,7 +4210,7 @@ var D = function(e, A, r, t, B) {
           switch (a.label) {
             case 0:
               t = r.styles.backgroundImage.length - 1, B = function(Q) {
-                var c, g, C, S, W, Z, L, V, y, w, S, W, Z, L, V, u, H, d, h, K, E, f, U, I, y, p, S, Y, q, L, V, wA, W, Z, EA, rA, uA, IA, yA, oA, KA, iA;
+                var c, g, U, S, W, Z, L, V, y, w, S, W, Z, L, V, u, H, d, h, K, E, f, C, I, y, p, S, Y, q, L, V, wA, W, Z, EA, rA, uA, IA, yA, oA, KA, iA;
                 return N(this, function(xA) {
                   switch (xA.label) {
                     case 0:
@@ -4223,11 +4223,11 @@ var D = function(e, A, r, t, B) {
                     case 3:
                       return xA.sent(), n.context.logger.error("Error loading background-image " + g), [3, 4];
                     case 4:
-                      return c && (C = Kt(r, t, [c.width, c.height, c.width / c.height]), S = C[0], W = C[1], Z = C[2], L = C[3], V = C[4], y = n.ctx.createPattern(n.resizeImage(c, L, V), "repeat"), n.renderRepeat(S, y, W, Z)), [3, 6];
+                      return c && (U = Kt(r, t, [c.width, c.height, c.width / c.height]), S = U[0], W = U[1], Z = U[2], L = U[3], V = U[4], y = n.ctx.createPattern(n.resizeImage(c, L, V), "repeat"), n.renderRepeat(S, y, W, Z)), [3, 6];
                     case 5:
-                      so(Q) ? (w = Kt(r, t, [null, null, null]), S = w[0], W = w[1], Z = w[2], L = w[3], V = w[4], u = eo(Q.angle, L, V), H = u[0], d = u[1], h = u[2], K = u[3], E = u[4], f = document.createElement("canvas"), f.width = L, f.height = V, U = f.getContext("2d"), I = U.createLinearGradient(d, K, h, E), Er(Q.stops, H).forEach(function(WA) {
+                      so(Q) ? (w = Kt(r, t, [null, null, null]), S = w[0], W = w[1], Z = w[2], L = w[3], V = w[4], u = eo(Q.angle, L, V), H = u[0], d = u[1], h = u[2], K = u[3], E = u[4], f = document.createElement("canvas"), f.width = L, f.height = V, C = f.getContext("2d"), I = C.createLinearGradient(d, K, h, E), Er(Q.stops, H).forEach(function(WA) {
                         return I.addColorStop(WA.stop, O(WA.color));
-                      }), U.fillStyle = I, U.fillRect(0, 0, L, V), L > 0 && V > 0 && (y = n.ctx.createPattern(f, "repeat"), n.renderRepeat(S, y, W, Z))) : oo(Q) && (p = Kt(r, t, [null, null, null]), S = p[0], Y = p[1], q = p[2], L = p[3], V = p[4], wA = Q.position.length === 0 ? [zt] : Q.position, W = b(wA[0], L), Z = b(wA[wA.length - 1], V), EA = to(Q, W, Z, L, V), rA = EA[0], uA = EA[1], rA > 0 && uA > 0 && (IA = n.ctx.createRadialGradient(Y + W, q + Z, 0, Y + W, q + Z, rA), Er(Q.stops, rA * 2).forEach(function(WA) {
+                      }), C.fillStyle = I, C.fillRect(0, 0, L, V), L > 0 && V > 0 && (y = n.ctx.createPattern(f, "repeat"), n.renderRepeat(S, y, W, Z))) : oo(Q) && (p = Kt(r, t, [null, null, null]), S = p[0], Y = p[1], q = p[2], L = p[3], V = p[4], wA = Q.position.length === 0 ? [zt] : Q.position, W = b(wA[0], L), Z = b(wA[wA.length - 1], V), EA = to(Q, W, Z, L, V), rA = EA[0], uA = EA[1], rA > 0 && uA > 0 && (IA = n.ctx.createRadialGradient(Y + W, q + Z, 0, Y + W, q + Z, rA), Er(Q.stops, rA * 2).forEach(function(WA) {
                         return IA.addColorStop(WA.stop, O(WA.color));
                       }), n.path(S), n.ctx.fillStyle = IA, rA !== uA ? (yA = r.bounds.left + 0.5 * r.bounds.width, oA = r.bounds.top + 0.5 * r.bounds.height, KA = uA / rA, iA = 1 / KA, n.ctx.save(), n.ctx.translate(yA, oA), n.ctx.transform(1, 0, 0, KA, 0, 0), n.ctx.translate(-yA, -oA), n.ctx.fillRect(Y, iA * (q - oA) + oA, L, V * iA), n.ctx.restore()) : n.ctx.fill())), xA.label = 6;
                     case 6:
@@ -4308,10 +4308,10 @@ var D = function(e, A, r, t, B) {
                 width: t.borderLeftWidth
               }], s = HQ(RA(t.backgroundClip, 0), r.curves), B || t.boxShadow.length ? (this.ctx.save(), this.path(s), this.ctx.clip(), pA(t.backgroundColor) || (this.ctx.fillStyle = O(t.backgroundColor), this.ctx.fill()), [4, this.renderBackgroundImage(r.container)]) : [3, 2];
             case 1:
-              g.sent(), this.ctx.restore(), t.boxShadow.slice(0).reverse().forEach(function(C) {
+              g.sent(), this.ctx.restore(), t.boxShadow.slice(0).reverse().forEach(function(U) {
                 c.ctx.save();
-                var w = _e(r.curves), u = C.inset ? 0 : dQ, H = aQ(w, -u + (C.inset ? 1 : -1) * C.spread.number, (C.inset ? 1 : -1) * C.spread.number, C.spread.number * (C.inset ? -2 : 2), C.spread.number * (C.inset ? -2 : 2));
-                C.inset ? (c.path(w), c.ctx.clip(), c.mask(H)) : (c.mask(w), c.ctx.clip(), c.path(H)), c.ctx.shadowOffsetX = C.offsetX.number + u, c.ctx.shadowOffsetY = C.offsetY.number, c.ctx.shadowColor = O(C.color), c.ctx.shadowBlur = C.blur.number, c.ctx.fillStyle = C.inset ? O(C.color) : "rgba(0,0,0,1)", c.ctx.fill(), c.ctx.restore();
+                var w = _e(r.curves), u = U.inset ? 0 : dQ, H = aQ(w, -u + (U.inset ? 1 : -1) * U.spread.number, (U.inset ? 1 : -1) * U.spread.number, U.spread.number * (U.inset ? -2 : 2), U.spread.number * (U.inset ? -2 : 2));
+                U.inset ? (c.path(w), c.ctx.clip(), c.mask(H)) : (c.mask(w), c.ctx.clip(), c.path(H)), c.ctx.shadowOffsetX = U.offsetX.number + u, c.ctx.shadowOffsetY = U.offsetY.number, c.ctx.shadowColor = O(U.color), c.ctx.shadowBlur = U.blur.number, c.ctx.fillStyle = U.inset ? O(U.color) : "rgba(0,0,0,1)", c.ctx.fill(), c.ctx.restore();
               }), g.label = 2;
             case 2:
               i = 0, o = 0, a = n, g.label = 3;
@@ -4359,9 +4359,9 @@ var D = function(e, A, r, t, B) {
       });
     }, A.prototype.renderDashedDottedBorder = function(r, t, B, n, s) {
       return X(this, void 0, void 0, function() {
-        var i, o, a, Q, c, g, C, w, u, H, d, h, K, E, f, U, f, U;
+        var i, o, a, Q, c, g, U, w, u, H, d, h, K, E, f, C, f, C;
         return N(this, function(I) {
-          return this.ctx.save(), i = wQ(n, B), o = tB(n, B), s === 2 && (this.path(o), this.ctx.clip()), z(o[0]) ? (a = o[0].start.x, Q = o[0].start.y) : (a = o[0].x, Q = o[0].y), z(o[1]) ? (c = o[1].end.x, g = o[1].end.y) : (c = o[1].x, g = o[1].y), B === 0 || B === 2 ? C = Math.abs(a - c) : C = Math.abs(Q - g), this.ctx.beginPath(), s === 3 ? this.formatPath(i) : this.formatPath(o.slice(0, 2)), w = t < 3 ? t * 3 : t * 2, u = t < 3 ? t * 2 : t, s === 3 && (w = t, u = t), H = !0, C <= w * 2 ? H = !1 : C <= w * 2 + u ? (d = C / (2 * w + u), w *= d, u *= d) : (h = Math.floor((C + u) / (w + u)), K = (C - h * w) / (h - 1), E = (C - (h + 1) * w) / h, u = E <= 0 || Math.abs(u - K) < Math.abs(u - E) ? K : E), H && (s === 3 ? this.ctx.setLineDash([0, w + u]) : this.ctx.setLineDash([w, u])), s === 3 ? (this.ctx.lineCap = "round", this.ctx.lineWidth = t) : this.ctx.lineWidth = t * 2 + 1.1, this.ctx.strokeStyle = O(r), this.ctx.stroke(), this.ctx.setLineDash([]), s === 2 && (z(o[0]) && (f = o[3], U = o[0], this.ctx.beginPath(), this.formatPath([new l(f.end.x, f.end.y), new l(U.start.x, U.start.y)]), this.ctx.stroke()), z(o[1]) && (f = o[1], U = o[2], this.ctx.beginPath(), this.formatPath([new l(f.end.x, f.end.y), new l(U.start.x, U.start.y)]), this.ctx.stroke())), this.ctx.restore(), [
+          return this.ctx.save(), i = wQ(n, B), o = tB(n, B), s === 2 && (this.path(o), this.ctx.clip()), z(o[0]) ? (a = o[0].start.x, Q = o[0].start.y) : (a = o[0].x, Q = o[0].y), z(o[1]) ? (c = o[1].end.x, g = o[1].end.y) : (c = o[1].x, g = o[1].y), B === 0 || B === 2 ? U = Math.abs(a - c) : U = Math.abs(Q - g), this.ctx.beginPath(), s === 3 ? this.formatPath(i) : this.formatPath(o.slice(0, 2)), w = t < 3 ? t * 3 : t * 2, u = t < 3 ? t * 2 : t, s === 3 && (w = t, u = t), H = !0, U <= w * 2 ? H = !1 : U <= w * 2 + u ? (d = U / (2 * w + u), w *= d, u *= d) : (h = Math.floor((U + u) / (w + u)), K = (U - h * w) / (h - 1), E = (U - (h + 1) * w) / h, u = E <= 0 || Math.abs(u - K) < Math.abs(u - E) ? K : E), H && (s === 3 ? this.ctx.setLineDash([0, w + u]) : this.ctx.setLineDash([w, u])), s === 3 ? (this.ctx.lineCap = "round", this.ctx.lineWidth = t) : this.ctx.lineWidth = t * 2 + 1.1, this.ctx.strokeStyle = O(r), this.ctx.stroke(), this.ctx.setLineDash([]), s === 2 && (z(o[0]) && (f = o[3], C = o[0], this.ctx.beginPath(), this.formatPath([new l(f.end.x, f.end.y), new l(C.start.x, C.start.y)]), this.ctx.stroke()), z(o[1]) && (f = o[1], C = o[2], this.ctx.beginPath(), this.formatPath([new l(f.end.x, f.end.y), new l(C.start.x, C.start.y)]), this.ctx.stroke())), this.ctx.restore(), [
             2
             /*return*/
           ];
@@ -4477,7 +4477,7 @@ var D = function(e, A, r, t, B) {
 typeof window < "u" && An.setContext(window);
 var bQ = function(e, A) {
   return X(void 0, void 0, void 0, function() {
-    var r, t, B, n, s, i, o, a, Q, c, g, C, w, u, H, d, h, K, E, f, I, U, I, y, p, S, Y, q, L, V, wA, W, Z, EA, rA, uA, IA, yA, oA, KA;
+    var r, t, B, n, s, i, o, a, Q, c, g, U, w, u, H, d, h, K, E, f, I, C, I, y, p, S, Y, q, L, V, wA, W, Z, EA, rA, uA, IA, yA, oA, KA;
     return N(this, function(iA) {
       switch (iA.label) {
         case 0:
@@ -4505,7 +4505,7 @@ var bQ = function(e, A) {
             copyStyles: a
           }, o.logger.debug("Starting document clone with size " + i.width + "x" + i.height + " scrolled to " + -i.left + "," + -i.top), c = new $r(o, e, Q), g = c.clonedReferenceElement, g ? [4, c.toIFrame(r, i)] : [2, Promise.reject("Unable to find element in cloned iframe")];
         case 1:
-          return C = iA.sent(), w = rr(g) || xa(g) ? on(g.ownerDocument) : ze(o, g), u = w.width, H = w.height, d = w.left, h = w.top, K = DQ(o, g, A.backgroundColor), E = {
+          return U = iA.sent(), w = rr(g) || xa(g) ? on(g.ownerDocument) : ze(o, g), u = w.width, H = w.height, d = w.left, h = w.top, K = DQ(o, g, A.backgroundColor), E = {
             canvas: A.canvas,
             backgroundColor: K,
             scale: (rA = (EA = A.scale) !== null && EA !== void 0 ? EA : t.devicePixelRatio) !== null && rA !== void 0 ? rA : 1,
@@ -4517,11 +4517,11 @@ var bQ = function(e, A) {
         case 2:
           return f = iA.sent(), [3, 5];
         case 3:
-          return o.logger.debug("Document cloned, element located at " + d + "," + h + " with size " + u + "x" + H + " using computed rendering"), o.logger.debug("Starting DOM parsing"), U = YB(o, g), K === U.styles.backgroundColor && (U.styles.backgroundColor = cA.TRANSPARENT), o.logger.debug("Starting renderer for element at " + E.x + "," + E.y + " with size " + E.width + "x" + E.height), I = new fQ(o, E), [4, I.render(U)];
+          return o.logger.debug("Document cloned, element located at " + d + "," + h + " with size " + u + "x" + H + " using computed rendering"), o.logger.debug("Starting DOM parsing"), C = YB(o, g), K === C.styles.backgroundColor && (C.styles.backgroundColor = cA.TRANSPARENT), o.logger.debug("Starting renderer for element at " + E.x + "," + E.y + " with size " + E.width + "x" + E.height), I = new fQ(o, E), [4, I.render(C)];
         case 4:
           f = iA.sent(), iA.label = 5;
         case 5:
-          return (!((KA = A.removeContainer) !== null && KA !== void 0) || KA) && ($r.destroy(C) || o.logger.error("Cannot detach cloned iframe as it is not in the DOM anymore")), o.logger.debug("Finished rendering"), [2, f];
+          return (!((KA = A.removeContainer) !== null && KA !== void 0) || KA) && ($r.destroy(U) || o.logger.error("Cannot detach cloned iframe as it is not in the DOM anymore")), o.logger.debug("Finished rendering"), [2, f];
       }
     });
   });
