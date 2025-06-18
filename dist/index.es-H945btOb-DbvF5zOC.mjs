@@ -1,4 +1,4 @@
-import { d as bi } from "./index-BA7WZz55.mjs";
+import { d as bi } from "./index-zWha-mdE.mjs";
 var wi = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
 function Zu(i) {
   return i && i.__esModule && Object.prototype.hasOwnProperty.call(i, "default") ? i.default : i;
@@ -295,10 +295,10 @@ function Mi() {
   Pa = 1;
   var i = Vt(), t = Z(), e = Ci(), r = "__core-js_shared__", n = br.exports = t[r] || e(r, {});
   return (n.versions || (n.versions = [])).push({
-    version: "3.40.0",
+    version: "3.41.0",
     mode: i ? "pure" : "global",
     copyright: "© 2014-2025 Denis Pushkarev (zloirock.ru)",
-    license: "https://github.com/zloirock/core-js/blob/v3.40.0/LICENSE",
+    license: "https://github.com/zloirock/core-js/blob/v3.41.0/LICENSE",
     source: "https://github.com/zloirock/core-js"
   }), br.exports;
 }
