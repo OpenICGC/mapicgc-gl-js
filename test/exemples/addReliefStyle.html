@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>addICGCTerrain.html</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="../../dist/mapicgc-gl.umd.js"></script>
+    <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #82addb 0%, #ebb2b1 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <script>
+        async function initMap() {
+            const data = await mapicgcgl.Config.getConfigICGC();
+
+            //     const map = new mapicgcgl.Map({
+            //         container: "map",
+            //         style: "RELIEF", // Simple string
+            //         center: [1.68, 42.46],
+            //         zoom: 10,
+            //         maxZoom: 19,
+            //         hash: true,
+            //         pitch: 0,
+            //         bearing: 0,
+            //     });
+            // }
+
+            //opció personalitzada:
+
+            const map = new mapicgcgl.Map({
+                container: "map",
+                style: {
+                    source: {
+                        type: 'raster-dem',
+                        tiles: ["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],
+                        encoding: "terrarium",
+                        tileSize: 256,
+                        maxzoom: 20,
+                    },
+                    colorRelief: [
+                        'interpolate',
+                        ['linear'],
+                        ['elevation'],
+                        -50, 'rgb(30, 70, 130)',
+                        0, 'rgb(120, 180, 210)',
+                        5, 'rgb(170, 220, 170)',
+                        100, 'rgb(180, 210, 140)',
+                        300, 'rgb(220, 220, 130)',
+                        500, 'rgb(245, 220, 110)',
+                        800, 'rgb(250, 200, 100)',
+                        1100, 'rgb(245, 170, 90)',
+                        1400, 'rgb(230, 140, 80)',
+                        1700, 'rgb(210, 130, 90)',
+                        2000, 'rgb(190, 130, 110)',
+                        2400, 'rgb(180, 150, 130)',
+                        2800, 'rgb(200, 190, 180)',
+                        3200, 'rgb(235, 235, 235)',
+                        3600, 'rgb(255, 255, 255)'
+                    ]
+                },
+                center: [1.3237, 42.1995],
+                zoom: 11.05,
+                maxZoom: 19,
+                hash: true,
+                pitch: 72,
+                bearing: 26.3,
+            });
+            map.on("load", () => {
+                map.addTerrainICGC(data.Terrains.WORLD30M);
+
+                let optionsLayer = {
+                    "type": "raster",
+                    "layout": {
+                        "visibility": "visible",
+                    },
+                    "paint": {
+                        "raster-opacity": 0.26
+                    },
+                    layerPosition: "labels"
+                }
+
+                map.addImageLayerICGC(data.Layers.Orto.ortofotoColor2014, "orto2014", optionsLayer);
+
+            });
+        }
+
+
+        initMap();
+    </script>
+</body>
+
+</html>

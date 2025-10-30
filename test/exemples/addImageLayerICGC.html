@@ -49,9 +49,38 @@
       }
       map.on("load", () => {
         map.addImageLayerICGC(data.Layers.Orto.ortofotoColor2014, "orto2014", optionsLayer);
+        addIconnn(map)
       });
     }
     initMap();
+    async function addIconnn(map){
+      image = await map.loadImage('https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png');
+        map.addImage('cat', image.data);
+        map.addSource('point', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [0, 0]
+                        }
+                    }
+                ]
+            }
+        });
+        map.addLayer({
+            'id': 'points',
+            'type': 'symbol',
+            'source': 'point',
+            'layout': {
+                'icon-image': 'cat',
+                'icon-size': 0.25
+            }
+        });
+    }
   </script>
 </body>
 

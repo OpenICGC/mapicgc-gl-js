@@ -65,17 +65,85 @@ export default class Map {
         }
       }
     }
-
+  
     options.maxPitch = 85;
     options.maplibreLogo = false;
     options.attributionControl = false;
-
+  
+    // Detectar si es un estilo RELIEF
+    const isRelief = options.style === 'RELIEF' || 
+                     (typeof options.style === 'object' && 
+                      options.style.hasOwnProperty('colorRelief'));
+    
     // Detectar si options.style es una URL de raster PNG
-    const isRaster = options.style.includes(
-      "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/"
-    );
-
-    if (isRaster) {
+    const isRaster = typeof options.style === 'string' && 
+                     options.style.includes("https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/");
+    
+   
+  
+    if (isRelief) {
+      // Configuración por defecto para relief
+      const reliefConfig = typeof options.style === 'object' ? options.style : {};
+      
+      // Source por defecto usando tiles PNG de ICGC
+      const terrainSource = reliefConfig.source || {
+        type: 'raster-dem',
+        tiles:  [Terrains.ICGC5M],
+        tileSize: 512,
+        maxzoom: 20,
+      };
+  
+      const colorReliefPaint = reliefConfig.colorRelief || [
+        'interpolate',
+        ['linear'],
+        ['elevation'],
+        -50, 'rgb(30, 70, 130)',       
+        0, 'rgb(120, 180, 210)',       
+        5, 'rgb(170, 220, 170)',      
+        100, 'rgb(180, 210, 140)',     
+        300, 'rgb(220, 220, 130)',    
+        500, 'rgb(245, 220, 110)',     
+        800, 'rgb(250, 200, 100)',    
+        1100, 'rgb(245, 170, 90)',     
+        1400, 'rgb(230, 140, 80)',     
+        1700, 'rgb(210, 130, 90)',     
+        2000, 'rgb(190, 130, 110)',    
+        2400, 'rgb(180, 150, 130)',    
+        2800, 'rgb(200, 190, 180)',    
+        3200, 'rgb(235, 235, 235)',    
+        3600, 'rgb(255, 255, 255)'   
+      ];
+  
+      // Inicializar mapa con estilo relief
+      this.map = new maplibregl.Map({
+        container: options.container,
+        center: options.center,
+        zoom: options.zoom,
+        pitch: options.pitch || 0,
+        bearing: options.bearing || 0,
+        hash: options.hash || false,
+        maxZoom: options.maxZoom || 18,
+        maxPitch: options.maxPitch || 85,
+        renderWorldCopies: false,
+        style: {
+          version: 8,
+          sources: {
+            terrainSource: terrainSource
+          },
+          layers: [
+            {
+              id: 'color-relief',
+              type: 'color-relief',
+              source: 'terrainSource',
+              paint: {
+                'color-relief-color': colorReliefPaint
+              }
+            }
+          ]
+        }
+      });
+  
+    } else if (isRaster) {
       // Inicializar mapa sin estilo (vacío)
       this.map = new maplibregl.Map({
         container: options.container,
@@ -89,15 +157,15 @@ export default class Map {
           layers: [],
         },
       });
-
+  
       this.map.on("load", () => {
         // Añadir fuente y capa raster
         this.map.addSource("raster-source", {
           type: "raster",
-          tiles: [options.style], // URL del raster
+          tiles: [options.style],
           tileSize: 256,
         });
-
+  
         this.map.addLayer({
           id: "raster-layer",
           type: "raster",
@@ -108,13 +176,12 @@ export default class Map {
       // Inicializar mapa con estilo JSON como de costumbre
       this.map = new maplibregl.Map(options);
     }
-
+  
     this.map.on("load", () => {
-      if (!isRaster) {
+      if (!isRaster && !isRelief) {
         const nameStyle = this.map.getStyle().name;
-
         const urlName = options.style;
-
+  
         this.map.addControl(
           new LogoControl({
             color: urlName.indexOf("orto") === -1 ? true : false,
@@ -122,7 +189,7 @@ export default class Map {
           }),
           "bottom-left"
         );
-
+  
         this._dealOrto3dStyle(nameStyle);
       }
     });
