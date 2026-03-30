@@ -113,9 +113,43 @@ MapICGC GL JS integrates the following libraries:
 
 <br>
 
+
+## Tests
+
+
+## Tests
+
+This project includes an automated test suite using [Vitest](https://vitest.dev/):
+
+- **test/vitest/MapFunctions.test.js**: Covers all public methods of the `Map` class, including:
+  - getConfigStyles, getConfigWMSLayers, getConfigOrtoLayers, getConfigVectorLayers
+  - addControl, addLayer, addSource, addMarker, addAttributionControl
+  - setStyle, setSky, setEventedParent, setFeatureState, hasControl, _dealOrto3dStyle
+  - And many other public methods and behaviors
+
+- **test/vitest/Config.test.js**: Tests configuration loading and structure (`ConfigICGC`):
+  - Remote and local config loading
+  - Fallback if the API call fails
+  - Validation of the `mapicgc-config.json` structure (default options, styles, layers, terrains, geocoder, logo, map3d, etc)
+
+All these tests pass successfully with:
+
+```bash
+npm run test
+```
+
+or directly with Vitest:
+
+```bash
+npx vitest run
+```
+
+---
 ## Developed by:
 
- <a href="https://www.icgc.cat/" target="_blank"><img src="https://eines.icgc.cat/recursos/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
+
+
+<a href="https://www.icgc.cat/" target="_blank"><img src="https://eines.icgc.cat/recursos/logos/ICGC_color_norma.svg"  alt="ICGC Logo" width="150"></img></a>
 
 
 ## License

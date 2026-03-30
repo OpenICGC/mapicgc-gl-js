@@ -11,7 +11,10 @@ export default defineConfig({
     extensions: ['.mjs', '.js', '.ts', '.json'], // Asegúrate de que Vitest pueda resolver módulos ESM.
   },
   define: {
-    'process.env': {}
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env': {},
+    'process.platform': JSON.stringify(''),
+    'process.version': JSON.stringify(''),
   },
   build: {
     commonjsOptions: {
