@@ -178,6 +178,7 @@ export default class Map {
     }
   
     this.map.on("load", () => {
+      this.addAttributionControl()
       if (!isRaster && !isRelief) {
         const nameStyle = this.map.getStyle().name;
         const urlName = options.style;
@@ -2846,14 +2847,43 @@ export default class Map {
     }
   }
   /**
-   * Adds an attribution control to the map with the provided options.
+   * Adds an attribution control to the map. Always includes "Fet amb MapICGC" attribution by default.
+   * If additional custom attributions are provided, they will be combined with the default one.
    * @function addAttributionControl
-   * @param {Object} options - Options for the attribution control.
+   * @param {Object} [options] - Options for the attribution control.
+   * @param {boolean} [options.compact=true] - If true, the attribution control will be compact.
+   * @param {string|string[]} [options.customAttribution] - Additional custom attribution(s) to display alongside "Fet amb MapICGC".
    * @param {string} [position='bottom-right'] - Position to add the control on the map.
+   * @example
+   * // Default usage: shows "Fet amb MapICGC" with compact mode
+   * map.addAttributionControl();
+   *
+   * // With additional custom attribution
+   * map.addAttributionControl({ customAttribution: '© El meu projecte' });
+   *
+   * // With multiple custom attributions
+   * map.addAttributionControl({ customAttribution: ['© Projecte A', '© Projecte B'] });
    */
   addAttributionControl(options, position) {
     try {
-      this.map.addControl(new maplibregl.AttributionControl(options), position);
+      const mapicgcAttribution = '<a style="font-weight: bold; color: #D97634;" href="https://www.icgc.cat/Eines-i-visors/Recursos-desenvolupadors/Biblioteca-MapICGC-GL-JS/" target="_blank">Fet amb MapICGC</a>';
+      const mergedOptions = Object.assign({}, { compact: true }, options);
+
+      if (mergedOptions.customAttribution) {
+        if (Array.isArray(mergedOptions.customAttribution)) {
+          if (!mergedOptions.customAttribution.includes(mapicgcAttribution)) {
+            mergedOptions.customAttribution = [mapicgcAttribution, ...mergedOptions.customAttribution];
+          }
+        } else {
+          if (mergedOptions.customAttribution !== mapicgcAttribution) {
+            mergedOptions.customAttribution = [mapicgcAttribution, mergedOptions.customAttribution];
+          }
+        }
+      } else {
+        mergedOptions.customAttribution = mapicgcAttribution;
+      }
+
+      this.map.addControl(new maplibregl.AttributionControl(mergedOptions), position);
     } catch (error) {
       console.error(`Error adding attribution control: ${error.message}`);
     }
