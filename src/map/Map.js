@@ -179,6 +179,12 @@ export default class Map {
   
     this.map.on("load", () => {
       this.addAttributionControl()
+         setTimeout(() => {
+        const attribBtn = document.querySelector('.maplibregl-ctrl-attrib-button');
+        if (attribBtn) {
+          attribBtn.click();
+        }
+      }, 1000);
       if (!isRaster && !isRelief) {
         const nameStyle = this.map.getStyle().name;
         const urlName = options.style;
@@ -2853,6 +2859,7 @@ export default class Map {
    * @param {Object} [options] - Options for the attribution control.
    * @param {boolean} [options.compact=true] - If true, the attribution control will be compact.
    * @param {string|string[]} [options.customAttribution] - Additional custom attribution(s) to display alongside "Fet amb MapICGC".
+   * @param {number} [options.autoCollapseDelay] - If set, the attribution will auto-collapse after this many milliseconds. E.g., 3000 for 3 seconds.
    * @param {string} [position='bottom-right'] - Position to add the control on the map.
    * @example
    * // Default usage: shows "Fet amb MapICGC" with compact mode
@@ -2863,11 +2870,18 @@ export default class Map {
    *
    * // With multiple custom attributions
    * map.addAttributionControl({ customAttribution: ['© Projecte A', '© Projecte B'] });
+   *
+   * // With auto-collapse after 3 seconds
+   * map.addAttributionControl({ autoCollapseDelay: 3000 });
    */
   addAttributionControl(options, position) {
     try {
       const mapicgcAttribution = '<a style="font-weight: bold; color: #D97634;" href="https://www.icgc.cat/Eines-i-visors/Recursos-desenvolupadors/Biblioteca-MapICGC-GL-JS/" target="_blank">Fet amb MapICGC</a>';
       const mergedOptions = Object.assign({}, { compact: true }, options);
+      const autoCollapseDelay = mergedOptions.autoCollapseDelay;
+      
+      // Remove autoCollapseDelay from options before passing to AttributionControl
+      delete mergedOptions.autoCollapseDelay;
 
       if (mergedOptions.customAttribution) {
         if (Array.isArray(mergedOptions.customAttribution)) {
@@ -2884,6 +2898,16 @@ export default class Map {
       }
 
       this.map.addControl(new maplibregl.AttributionControl(mergedOptions), position);
+      
+      // Auto-collapse after specified delay if autoCollapseDelay is set
+      if (autoCollapseDelay && typeof autoCollapseDelay === 'number' && autoCollapseDelay > 0) {
+        setTimeout(() => {
+          const attributionButton = document.querySelector('.maplibregl-ctrl-attrib-button');
+          if (attributionButton && attributionButton.getAttribute('aria-pressed') === 'true') {
+            attributionButton.click();
+          }
+        }, autoCollapseDelay);
+      }
     } catch (error) {
       console.error(`Error adding attribution control: ${error.message}`);
     }
@@ -3348,13 +3372,18 @@ export default class Map {
         const ambientLight = new AmbientLight({
           intensity: 4,
         });
-        const lightingEffect = new LightingEffect({
-          ambientLight,
-        });
+
+  if (this.map.getTerrain()) this.map.setTerrain(null);
         this.map.setTerrain({
           source: defaultOptions.map3dOptions.terrainSource,
           exaggeration: defaultOptions.map3dOptions.exaggeration,
         });
+
+        const lightingEffect = new LightingEffect({
+          ambientLight,
+        });
+
+      
 
         citiesMapboxLayer = new MapboxOverlay({
           interleaved: true,

@@ -86343,7 +86343,10 @@ var cK = "https://eines.icgc.cat/recursos/mapicgc-gl-js/mapicgc-config.json", lK
 			});
 		})) : this.map = new P.default.Map(e);
 		this.map.on("load", () => {
-			if (this.addAttributionControl(), !n && !t) {
+			if (this.addAttributionControl(), setTimeout(() => {
+				let e = document.querySelector(".maplibregl-ctrl-attrib-button");
+				e && e.click();
+			}, 1e3), !n && !t) {
 				let t = this.map.getStyle().name, n = e.style;
 				this.map.addControl(new lU({
 					color: n.indexOf("orto") === -1,
@@ -87519,8 +87522,11 @@ var cK = "https://eines.icgc.cat/recursos/mapicgc-gl-js/mapicgc-config.json", lK
 	}
 	addAttributionControl(e, t) {
 		try {
-			let n = "<a style=\"font-weight: bold; color: #D97634;\" href=\"https://www.icgc.cat/Eines-i-visors/Recursos-desenvolupadors/Biblioteca-MapICGC-GL-JS/\" target=\"_blank\">Fet amb MapICGC</a>", r = Object.assign({}, { compact: !0 }, e);
-			r.customAttribution ? Array.isArray(r.customAttribution) ? r.customAttribution.includes(n) || (r.customAttribution = [n, ...r.customAttribution]) : r.customAttribution !== n && (r.customAttribution = [n, r.customAttribution]) : r.customAttribution = n, this.map.addControl(new P.default.AttributionControl(r), t);
+			let n = "<a style=\"font-weight: bold; color: #D97634;\" href=\"https://www.icgc.cat/Eines-i-visors/Recursos-desenvolupadors/Biblioteca-MapICGC-GL-JS/\" target=\"_blank\">Fet amb MapICGC</a>", r = Object.assign({}, { compact: !0 }, e), i = r.autoCollapseDelay;
+			delete r.autoCollapseDelay, r.customAttribution ? Array.isArray(r.customAttribution) ? r.customAttribution.includes(n) || (r.customAttribution = [n, ...r.customAttribution]) : r.customAttribution !== n && (r.customAttribution = [n, r.customAttribution]) : r.customAttribution = n, this.map.addControl(new P.default.AttributionControl(r), t), i && typeof i == "number" && i > 0 && setTimeout(() => {
+				let e = document.querySelector(".maplibregl-ctrl-attrib-button");
+				e && e.getAttribute("aria-pressed") === "true" && e.click();
+			}, i);
 		} catch (e) {
 			console.error(`Error adding attribution control: ${e.message}`);
 		}
@@ -87748,14 +87754,16 @@ var cK = "https://eines.icgc.cat/recursos/mapicgc-gl-js/mapicgc-config.json", lK
 		try {
 			if (e == "orto3d") {
 				this.map.setMaxZoom(18.8), this.map.easeTo({ pitch: 45 });
-				let e = new xh({ ambientLight: new oh({ intensity: 4 }) });
-				this.map.setTerrain({
+				let e = new oh({ intensity: 4 });
+				this.map.getTerrain() && this.map.setTerrain(null), this.map.setTerrain({
 					source: vK.map3dOptions.terrainSource,
 					exaggeration: vK.map3dOptions.exaggeration
-				}), mK = new nx({
+				});
+				let t = new xh({ ambientLight: e });
+				mK = new nx({
 					interleaved: !0,
 					layers: [this._createCitiesMapboxLayer(!1)],
-					effects: [e],
+					effects: [t],
 					onAfterRender: () => {
 						try {
 							let e = this.map.getZoom() >= vK.map3dOptions.minZoomRange;
