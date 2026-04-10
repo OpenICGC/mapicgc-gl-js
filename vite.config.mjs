@@ -23,7 +23,9 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: 'src/index.js',
-      fileName: 'mapicgc-gl',
+      // Emit ES as .mjs and UMD as .js so consumers can reference
+      // `dist/mapicgc-gl.mjs` (ESM) and `dist/mapicgc-gl.js` (UMD)
+      fileName: (format) => format === 'es' ? 'mapicgc-gl.mjs' : 'mapicgc-gl.js',
       formats: ['es','umd'],
       name: 'mapicgcgl',
     },
