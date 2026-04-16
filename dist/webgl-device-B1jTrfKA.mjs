@@ -185,12 +185,12 @@ var _ = 10;
 function v(e) {
 	return typeof e == "string" ? (e = e.toUpperCase(), g[e] || g.WHITE) : e;
 }
-function ee(e, t, n) {
+function y(e, t, n) {
 	return !i && typeof e == "string" && (t && (e = `\u001b[${v(t)}m${e}\u001b[39m`), n && (e = `\u001b[${v(n) + _}m${e}\u001b[49m`)), e;
 }
 //#endregion
 //#region node_modules/@probe.gl/log/dist/utils/autobind.js
-function te(e, t = ["constructor"]) {
+function ee(e, t = ["constructor"]) {
 	let n = Object.getOwnPropertyNames(Object.getPrototypeOf(e)), r = e;
 	for (let i of n) {
 		let n = r[i];
@@ -199,7 +199,7 @@ function te(e, t = ["constructor"]) {
 }
 //#endregion
 //#region node_modules/@probe.gl/log/dist/utils/hi-res-timestamp.js
-function y() {
+function b() {
 	let n;
 	if (i() && e.performance) n = e?.performance?.now?.();
 	else if ("hrtime" in t) {
@@ -210,18 +210,18 @@ function y() {
 }
 //#endregion
 //#region node_modules/@probe.gl/log/dist/loggers/probe-log.js
-var b = {
+var x = {
 	debug: i() && console.debug || console.log,
 	log: console.log,
 	info: console.info,
 	warn: console.warn,
 	error: console.error
-}, ne = {
+}, te = {
 	enabled: !0,
 	level: 0
-}, x = class extends d {
+}, ne = class extends d {
 	constructor({ id: e } = { id: "" }) {
-		super({ level: 0 }), this.VERSION = o, this._startTs = y(), this._deltaTs = y(), this.userData = {}, this.LOG_THROTTLE_TIMEOUT = 0, this.id = e, this.userData = {}, this._storage = new p(`__probe-${this.id}__`, { [this.id]: ne }), this.timeStamp(`${this.id} started`), te(this), Object.seal(this);
+		super({ level: 0 }), this.VERSION = o, this._startTs = b(), this._deltaTs = b(), this.userData = {}, this.LOG_THROTTLE_TIMEOUT = 0, this.id = e, this.userData = {}, this._storage = new p(`__probe-${this.id}__`, { [this.id]: te }), this.timeStamp(`${this.id} started`), ee(this), Object.seal(this);
 	}
 	isEnabled() {
 		return this._getConfiguration().enabled;
@@ -230,10 +230,10 @@ var b = {
 		return this._getConfiguration().level;
 	}
 	getTotal() {
-		return Number((y() - this._startTs).toPrecision(10));
+		return Number((b() - this._startTs).toPrecision(10));
 	}
 	getDelta() {
-		return Number((y() - this._deltaTs).toPrecision(10));
+		return Number((b() - this._deltaTs).toPrecision(10));
 	}
 	set priority(e) {
 		this.level = e;
@@ -264,12 +264,12 @@ var b = {
 	}
 	warn(e, ...t) {
 		return this._log("warn", 0, e, t, {
-			method: b.warn,
+			method: x.warn,
 			once: !0
 		});
 	}
 	error(e, ...t) {
-		return this._log("error", 0, e, t, { method: b.error });
+		return this._log("error", 0, e, t, { method: x.error });
 	}
 	deprecated(e, t) {
 		return this.warn(`\`${e}\` is deprecated and will be removed \
@@ -280,20 +280,20 @@ in a later version. Use \`${t}\` instead`);
 	}
 	probe(e, t, ...n) {
 		return this._log("log", e, t, n, {
-			method: b.log,
+			method: x.log,
 			time: !0,
 			once: !0
 		});
 	}
 	log(e, t, ...n) {
-		return this._log("log", e, t, n, { method: b.debug });
+		return this._log("log", e, t, n, { method: x.debug });
 	}
 	info(e, t, ...n) {
 		return this._log("info", e, t, n, { method: console.info });
 	}
 	once(e, t, ...n) {
 		return this._log("once", e, t, n, {
-			method: b.debug || b.info,
+			method: x.debug || x.info,
 			once: !0
 		});
 	}
@@ -338,26 +338,26 @@ in a later version. Use \`${t}\` instead`);
 	}
 	_emit(e, t) {
 		let n = t.method;
-		s(n), t.total = this.getTotal(), t.delta = this.getDelta(), this._deltaTs = y();
+		s(n), t.total = this.getTotal(), t.delta = this.getDelta(), this._deltaTs = b();
 		let r = re(this.id, t.message, t);
 		return n.bind(console, r, ...t.args);
 	}
 	_getConfiguration() {
-		return this._storage.config[this.id] || this._updateConfiguration(ne), this._storage.config[this.id];
+		return this._storage.config[this.id] || this._updateConfiguration(te), this._storage.config[this.id];
 	}
 	_updateConfiguration(e) {
-		let t = this._storage.config[this.id] || { ...ne };
+		let t = this._storage.config[this.id] || { ...te };
 		this._storage.setConfiguration({ [this.id]: {
 			...t,
 			...e
 		} });
 	}
 };
-x.VERSION = o;
+ne.VERSION = o;
 function re(e, t, n) {
 	if (typeof t == "string") {
 		let r = n.time ? h(m(n.total)) : "";
-		t = n.time ? `${e}: ${r}  ${t}` : `${e}: ${t}`, t = ee(t, n.color, n.background);
+		t = n.time ? `${e}: ${r}  ${t}` : `${e}: ${t}`, t = y(t, n.color, n.background);
 	}
 	return t;
 }
@@ -370,7 +370,7 @@ function ie(e) {
 globalThis.probe = {};
 //#endregion
 //#region node_modules/@probe.gl/log/dist/index.js
-var ae = new x({ id: "@probe.gl/log" });
+var ae = new ne({ id: "@probe.gl/log" });
 //#endregion
 //#region node_modules/@probe.gl/stats/dist/utils/hi-res-timestamp.js
 function oe() {
@@ -474,21 +474,90 @@ var se = class {
 		let { name: t, type: n } = e, r = this.stats[t];
 		return r || (r = e instanceof se ? e : new se(t, n), this.stats[t] = r), r;
 	}
-}, le = new class {
+}, le = "GPU Time and Memory", ue = [
+	"Adapter",
+	"GPU",
+	"GPU Type",
+	"GPU Backend",
+	"Frame Rate",
+	"CPU Time",
+	"GPU Time",
+	"GPU Memory",
+	"Buffer Memory",
+	"Texture Memory",
+	"Referenced Buffer Memory",
+	"Referenced Texture Memory",
+	"Swap Chain Texture"
+], de = /* @__PURE__ */ new WeakMap(), fe = /* @__PURE__ */ new WeakMap(), pe = new class {
 	stats = /* @__PURE__ */ new Map();
 	getStats(e) {
 		return this.get(e);
 	}
 	get(e) {
-		return this.stats.has(e) || this.stats.set(e, new ce({ id: e })), this.stats.get(e);
+		this.stats.has(e) || this.stats.set(e, new ce({ id: e }));
+		let t = this.stats.get(e);
+		return e === le && me(t, ue), t;
 	}
-}(), S = new x({ id: "luma.gl" }), ue = {};
-function C(e = "id") {
-	return ue[e] = ue[e] || 1, `${e}-${ue[e]++}`;
+}();
+function me(e, t) {
+	let n = e.stats, r = !1;
+	for (let i of t) n[i] || (e.get(i), r = !0);
+	let i = Object.keys(n).length, a = de.get(e);
+	if (!r && a?.orderedStatNames === t && a.statCount === i) return;
+	let o = {}, s = fe.get(t);
+	s || (s = new Set(t), fe.set(t, s));
+	for (let e of t) n[e] && (o[e] = n[e]);
+	for (let [e, t] of Object.entries(n)) s.has(e) || (o[e] = t);
+	for (let e of Object.keys(n)) delete n[e];
+	Object.assign(n, o), de.set(e, {
+		orderedStatNames: t,
+		statCount: i
+	});
+}
+//#endregion
+//#region node_modules/@luma.gl/core/dist/utils/log.js
+var S = new ne({ id: "luma.gl" }), he = {};
+function ge(e = "id") {
+	return he[e] = he[e] || 1, `${e}-${he[e]++}`;
 }
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/resources/resource.js
-var w = class {
+var _e = "cpu-hotspot-profiler", ve = "GPU Resource Counts", ye = "Resource Counts", be = "GPU Time and Memory", xe = [
+	"Resources",
+	"Buffers",
+	"Textures",
+	"Samplers",
+	"TextureViews",
+	"Framebuffers",
+	"QuerySets",
+	"Shaders",
+	"RenderPipelines",
+	"ComputePipelines",
+	"PipelineLayouts",
+	"VertexArrays",
+	"RenderPasss",
+	"ComputePasss",
+	"CommandEncoders",
+	"CommandBuffers"
+], Se = [
+	"Resources",
+	"Buffers",
+	"Textures",
+	"Samplers",
+	"TextureViews",
+	"Framebuffers",
+	"QuerySets",
+	"Shaders",
+	"RenderPipelines",
+	"SharedRenderPipelines",
+	"ComputePipelines",
+	"PipelineLayouts",
+	"VertexArrays",
+	"RenderPasss",
+	"ComputePasss",
+	"CommandEncoders",
+	"CommandBuffers"
+], Ce = xe.flatMap((e) => [`${e} Created`, `${e} Active`]), we = Se.flatMap((e) => [`${e} Created`, `${e} Active`]), Te = /* @__PURE__ */ new WeakMap(), Ee = /* @__PURE__ */ new WeakMap(), C = class {
 	static defaultProps = {
 		id: "undefined",
 		handle: void 0,
@@ -503,15 +572,16 @@ var w = class {
 	_device;
 	destroyed = !1;
 	allocatedBytes = 0;
+	allocatedBytesName = null;
 	_attachedResources = /* @__PURE__ */ new Set();
 	constructor(e, t, n) {
 		if (!e) throw Error("no device");
-		this._device = e, this.props = de(t, n);
-		let r = this.props.id === "undefined" ? C(this[Symbol.toStringTag]) : this.props.id;
+		this._device = e, this.props = De(t, n);
+		let r = this.props.id === "undefined" ? ge(this[Symbol.toStringTag]) : this.props.id;
 		this.props.id = r, this.id = r, this.userData = this.props.userData || {}, this.addStats();
 	}
 	destroy() {
-		this.destroyResource();
+		this.destroyed || this.destroyResource();
 	}
 	delete() {
 		return this.destroy(), this;
@@ -529,37 +599,111 @@ var w = class {
 		this._attachedResources.delete(e) && e.destroy();
 	}
 	destroyAttachedResources() {
-		for (let e of Object.values(this._attachedResources)) e.destroy();
+		for (let e of this._attachedResources) e.destroy();
 		this._attachedResources = /* @__PURE__ */ new Set();
 	}
 	destroyResource() {
-		this.destroyAttachedResources(), this.removeStats(), this.destroyed = !0;
+		this.destroyed ||= (this.destroyAttachedResources(), this.removeStats(), !0);
 	}
 	removeStats() {
-		let e = this._device.statsManager.getStats("Resource Counts"), t = this[Symbol.toStringTag];
-		e.get(`${t}s Active`).decrementCount();
+		let e = w(this._device), t = e ? T() : 0, n = [this._device.statsManager.getStats(ve), this._device.statsManager.getStats(ye)], r = ke(this._device);
+		for (let e of n) Oe(e, r);
+		let i = this.getStatsName();
+		for (let e of n) e.get("Resources Active").decrementCount(), e.get(`${i}s Active`).decrementCount();
+		e && (e.statsBookkeepingCalls = (e.statsBookkeepingCalls || 0) + 1, e.statsBookkeepingTimeMs = (e.statsBookkeepingTimeMs || 0) + (T() - t));
 	}
-	trackAllocatedMemory(e, t = this[Symbol.toStringTag]) {
-		let n = this._device.statsManager.getStats("Resource Counts");
-		n.get("GPU Memory").addCount(e), n.get(`${t} Memory`).addCount(e), this.allocatedBytes = e;
+	trackAllocatedMemory(e, t = this.getStatsName()) {
+		let n = w(this._device), r = n ? T() : 0, i = this._device.statsManager.getStats(be);
+		this.allocatedBytes > 0 && this.allocatedBytesName && (i.get("GPU Memory").subtractCount(this.allocatedBytes), i.get(`${this.allocatedBytesName} Memory`).subtractCount(this.allocatedBytes)), i.get("GPU Memory").addCount(e), i.get(`${t} Memory`).addCount(e), n && (n.statsBookkeepingCalls = (n.statsBookkeepingCalls || 0) + 1, n.statsBookkeepingTimeMs = (n.statsBookkeepingTimeMs || 0) + (T() - r)), this.allocatedBytes = e, this.allocatedBytesName = t;
 	}
-	trackDeallocatedMemory(e = this[Symbol.toStringTag]) {
-		let t = this._device.statsManager.getStats("Resource Counts");
-		t.get("GPU Memory").subtractCount(this.allocatedBytes), t.get(`${e} Memory`).subtractCount(this.allocatedBytes), this.allocatedBytes = 0;
+	trackReferencedMemory(e, t = this.getStatsName()) {
+		this.trackAllocatedMemory(e, `Referenced ${t}`);
+	}
+	trackDeallocatedMemory(e = this.getStatsName()) {
+		if (this.allocatedBytes === 0) {
+			this.allocatedBytesName = null;
+			return;
+		}
+		let t = w(this._device), n = t ? T() : 0, r = this._device.statsManager.getStats(be);
+		r.get("GPU Memory").subtractCount(this.allocatedBytes), r.get(`${this.allocatedBytesName || e} Memory`).subtractCount(this.allocatedBytes), t && (t.statsBookkeepingCalls = (t.statsBookkeepingCalls || 0) + 1, t.statsBookkeepingTimeMs = (t.statsBookkeepingTimeMs || 0) + (T() - n)), this.allocatedBytes = 0, this.allocatedBytesName = null;
+	}
+	trackDeallocatedReferencedMemory(e = this.getStatsName()) {
+		this.trackDeallocatedMemory(`Referenced ${e}`);
 	}
 	addStats() {
-		let e = this._device.statsManager.getStats("Resource Counts"), t = this[Symbol.toStringTag];
-		e.get("Resources Created").incrementCount(), e.get(`${t}s Created`).incrementCount(), e.get(`${t}s Active`).incrementCount();
+		let e = this.getStatsName(), t = w(this._device), n = t ? T() : 0, r = [this._device.statsManager.getStats(ve), this._device.statsManager.getStats(ye)], i = ke(this._device);
+		for (let e of r) Oe(e, i);
+		for (let t of r) t.get("Resources Created").incrementCount(), t.get("Resources Active").incrementCount(), t.get(`${e}s Created`).incrementCount(), t.get(`${e}s Active`).incrementCount();
+		t && (t.statsBookkeepingCalls = (t.statsBookkeepingCalls || 0) + 1, t.statsBookkeepingTimeMs = (t.statsBookkeepingTimeMs || 0) + (T() - n)), Ae(this._device, e);
+	}
+	getStatsName() {
+		return je(this);
 	}
 };
-function de(e, t) {
+function De(e, t) {
 	let n = { ...t };
 	for (let t in e) e[t] !== void 0 && (n[t] = e[t]);
 	return n;
 }
+function Oe(e, t) {
+	let n = e.stats, r = !1;
+	for (let i of t) n[i] || (e.get(i), r = !0);
+	let i = Object.keys(n).length, a = Te.get(e);
+	if (!r && a?.orderedStatNames === t && a.statCount === i) return;
+	let o = {}, s = Ee.get(t);
+	s || (s = new Set(t), Ee.set(t, s));
+	for (let e of t) n[e] && (o[e] = n[e]);
+	for (let [e, t] of Object.entries(n)) s.has(e) || (o[e] = t);
+	for (let e of Object.keys(n)) delete n[e];
+	Object.assign(n, o), Te.set(e, {
+		orderedStatNames: t,
+		statCount: i
+	});
+}
+function ke(e) {
+	return e.type === "webgl" ? we : Ce;
+}
+function w(e) {
+	let t = e.userData[_e];
+	return t?.enabled ? t : null;
+}
+function T() {
+	return globalThis.performance?.now?.() ?? Date.now();
+}
+function Ae(e, t) {
+	let n = w(e);
+	if (!(!n || !n.activeDefaultFramebufferAcquireDepth)) switch (n.transientCanvasResourceCreates = (n.transientCanvasResourceCreates || 0) + 1, t) {
+		case "Texture":
+			n.transientCanvasTextureCreates = (n.transientCanvasTextureCreates || 0) + 1;
+			break;
+		case "TextureView":
+			n.transientCanvasTextureViewCreates = (n.transientCanvasTextureViewCreates || 0) + 1;
+			break;
+		case "Sampler":
+			n.transientCanvasSamplerCreates = (n.transientCanvasSamplerCreates || 0) + 1;
+			break;
+		case "Framebuffer":
+			n.transientCanvasFramebufferCreates = (n.transientCanvasFramebufferCreates || 0) + 1;
+			break;
+		default: break;
+	}
+}
+function je(e) {
+	let t = Object.getPrototypeOf(e);
+	for (; t;) {
+		let n = Object.getPrototypeOf(t);
+		if (!n || n === C.prototype) return Me(t) || e[Symbol.toStringTag] || e.constructor.name;
+		t = n;
+	}
+	return e[Symbol.toStringTag] || e.constructor.name;
+}
+function Me(e) {
+	let t = Object.getOwnPropertyDescriptor(e, Symbol.toStringTag);
+	return typeof t?.get == "function" ? t.get.call(e) : typeof t?.value == "string" ? t.value : null;
+}
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/resources/buffer.js
-var T = class e extends w {
+var E = class e extends C {
 	static INDEX = 16;
 	static VERTEX = 32;
 	static UNIFORM = 64;
@@ -589,11 +733,17 @@ var T = class e extends w {
 	static DEBUG_DATA_MAX_LENGTH = 32;
 	debugData = /* @__PURE__ */ new ArrayBuffer(0);
 	_setDebugData(t, n, r) {
-		let i = ArrayBuffer.isView(t) ? t.buffer : t, a = Math.min(t ? t.byteLength : r, e.DEBUG_DATA_MAX_LENGTH);
-		i === null ? this.debugData = new ArrayBuffer(a) : n === 0 && r === i.byteLength ? this.debugData = i.slice(0, a) : this.debugData = i.slice(n, n + a);
+		let i = null, a;
+		ArrayBuffer.isView(t) ? (i = t, a = t.buffer) : a = t;
+		let o = Math.min(t ? t.byteLength : r, e.DEBUG_DATA_MAX_LENGTH);
+		if (a === null) this.debugData = new ArrayBuffer(o);
+		else {
+			let e = Math.min(i?.byteOffset || 0, a.byteLength), t = Math.max(0, a.byteLength - e);
+			this.debugData = new Uint8Array(a, e, Math.min(o, t)).slice().buffer;
+		}
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		usage: 0,
 		byteLength: 0,
 		byteOffset: 0,
@@ -601,49 +751,47 @@ var T = class e extends w {
 		indexType: "uint16",
 		onMapped: void 0
 	};
-};
-//#endregion
-//#region node_modules/@luma.gl/core/dist/shadertypes/data-types/decode-data-types.js
-function fe(e) {
-	let [t, n, r] = _e[e], i = e.includes("norm");
-	return {
-		signedType: t,
-		primitiveType: n,
-		byteLength: r,
-		normalized: i,
-		integer: !i && !e.startsWith("float"),
-		signed: e.startsWith("s")
-	};
-}
-function pe(e) {
-	let t = e;
-	switch (t) {
-		case "uint8": return "unorm8";
-		case "sint8": return "snorm8";
-		case "uint16": return "unorm16";
-		case "sint16": return "snorm16";
-		default: return t;
+}, D = new class {
+	getDataTypeInfo(e) {
+		let [t, n, r] = Ne[e], i = e.includes("norm");
+		return {
+			signedType: t,
+			primitiveType: n,
+			byteLength: r,
+			normalized: i,
+			integer: !i && !e.startsWith("float"),
+			signed: e.startsWith("s")
+		};
 	}
-}
-function me(e, t) {
-	switch (t) {
-		case 1: return e;
-		case 2: return e + e % 2;
-		default: return e + (4 - e % 4) % 4;
+	getNormalizedDataType(e) {
+		let t = e;
+		switch (t) {
+			case "uint8": return "unorm8";
+			case "sint8": return "snorm8";
+			case "uint16": return "unorm16";
+			case "sint16": return "snorm16";
+			default: return t;
+		}
 	}
-}
-function he(e) {
-	let t = ArrayBuffer.isView(e) ? e.constructor : e;
-	if (t === Uint8ClampedArray) return "uint8";
-	let n = Object.values(_e).find((e) => t === e[4]);
-	if (!n) throw Error(t.name);
-	return n[0];
-}
-function ge(e) {
-	let [, , , , t] = _e[e];
-	return t;
-}
-var _e = {
+	alignTo(e, t) {
+		switch (t) {
+			case 1: return e;
+			case 2: return e + e % 2;
+			default: return e + (4 - e % 4) % 4;
+		}
+	}
+	getDataType(e) {
+		let t = ArrayBuffer.isView(e) ? e.constructor : e;
+		if (t === Uint8ClampedArray) return "uint8";
+		let n = Object.values(Ne).find((e) => t === e[4]);
+		if (!n) throw Error(t.name);
+		return n[0];
+	}
+	getTypedArrayConstructor(e) {
+		let [, , , , t] = Ne[e];
+		return t;
+	}
+}(), Ne = {
 	uint8: [
 		"uint8",
 		"u32",
@@ -728,78 +876,79 @@ var _e = {
 		!1,
 		Int32Array
 	]
-};
-//#endregion
-//#region node_modules/@luma.gl/core/dist/shadertypes/vertex-arrays/decode-vertex-format.js
-function ve(e) {
-	let t;
-	e.endsWith("-webgl") && (e.replace("-webgl", ""), t = !0);
-	let [n, r] = e.split("x"), i = n, a = r ? parseInt(r) : 1, o = fe(i), s = {
-		type: i,
-		components: a,
-		byteLength: o.byteLength * a,
-		integer: o.integer,
-		signed: o.signed,
-		normalized: o.normalized
-	};
-	return t && (s.webglOnly = !0), s;
-}
-function ye(e, t, n) {
-	let r = n ? pe(e) : e;
-	switch (r) {
-		case "unorm8": return t === 1 ? "unorm8" : t === 3 ? "unorm8x3-webgl" : `${r}x${t}`;
-		case "snorm8":
-		case "uint8":
-		case "sint8":
-		case "uint16":
-		case "sint16":
-		case "unorm16":
-		case "snorm16":
-		case "float16":
-			if (t === 1 || t === 3) throw Error(`size: ${t}`);
-			return `${r}x${t}`;
-		default: return t === 1 ? r : `${r}x${t}`;
+}, O = new class {
+	getVertexFormatInfo(e) {
+		let t;
+		e.endsWith("-webgl") && (e.replace("-webgl", ""), t = !0);
+		let [n, r] = e.split("x"), i = n, a = r ? parseInt(r) : 1, o = D.getDataTypeInfo(i), s = {
+			type: i,
+			components: a,
+			byteLength: o.byteLength * a,
+			integer: o.integer,
+			signed: o.signed,
+			normalized: o.normalized
+		};
+		return t && (s.webglOnly = !0), s;
 	}
-}
-function be(e, t, n) {
-	if (!t || t > 4) throw Error(`size ${t}`);
-	let r = t;
-	return ye(he(e), r, n);
-}
-function xe(e) {
-	let t;
-	switch (e.primitiveType) {
-		case "f32":
-			t = "float32";
-			break;
-		case "i32":
-			t = "sint32";
-			break;
-		case "u32":
-			t = "uint32";
-			break;
-		case "f16": return e.components <= 2 ? "float16x2" : "float16x4";
+	makeVertexFormat(e, t, n) {
+		let r = n ? D.getNormalizedDataType(e) : e;
+		switch (r) {
+			case "unorm8": return t === 1 ? "unorm8" : t === 3 ? "unorm8x3-webgl" : `${r}x${t}`;
+			case "snorm8": return t === 1 ? "snorm8" : t === 3 ? "snorm8x3-webgl" : `${r}x${t}`;
+			case "uint8":
+			case "sint8":
+				if (t === 1 || t === 3) throw Error(`size: ${t}`);
+				return `${r}x${t}`;
+			case "uint16": return t === 1 ? "uint16" : t === 3 ? "uint16x3-webgl" : `${r}x${t}`;
+			case "sint16": return t === 1 ? "sint16" : t === 3 ? "sint16x3-webgl" : `${r}x${t}`;
+			case "unorm16": return t === 1 ? "unorm16" : t === 3 ? "unorm16x3-webgl" : `${r}x${t}`;
+			case "snorm16": return t === 1 ? "snorm16" : t === 3 ? "snorm16x3-webgl" : `${r}x${t}`;
+			case "float16":
+				if (t === 1 || t === 3) throw Error(`size: ${t}`);
+				return `${r}x${t}`;
+			default: return t === 1 ? r : `${r}x${t}`;
+		}
 	}
-	return e.components === 1 ? t : `${t}x${e.components}`;
-}
-//#endregion
-//#region node_modules/@luma.gl/core/dist/shadertypes/textures/texture-format-table.js
-var E = "texture-compression-bc", D = "texture-compression-astc", O = "texture-compression-etc2", Se = "texture-compression-etc1-webgl", k = "texture-compression-pvrtc-webgl", Ce = "texture-compression-atc-webgl", A = "float32-renderable-webgl", we = "float16-renderable-webgl", Te = "rgb9e5ufloat-renderable-webgl", Ee = "snorm8-renderable-webgl", j = "norm16-renderable-webgl", De = "snorm16-renderable-webgl", Oe = "float32-filterable", ke = "float16-filterable-webgl";
-function Ae(e) {
-	let t = Ne[e];
+	getVertexFormatFromAttribute(e, t, n) {
+		if (!t || t > 4) throw Error(`size ${t}`);
+		let r = t, i = D.getDataType(e);
+		return this.makeVertexFormat(i, r, n);
+	}
+	getCompatibleVertexFormat(e) {
+		let t;
+		switch (e.primitiveType) {
+			case "f32":
+				t = "float32";
+				break;
+			case "i32":
+				t = "sint32";
+				break;
+			case "u32":
+				t = "uint32";
+				break;
+			case "f16": return e.components <= 2 ? "float16x2" : "float16x4";
+		}
+		return e.components === 1 ? t : `${t}x${e.components}`;
+	}
+}(), k = "texture-compression-bc", A = "texture-compression-astc", j = "texture-compression-etc2", Pe = "texture-compression-etc1-webgl", Fe = "texture-compression-pvrtc-webgl", Ie = "texture-compression-atc-webgl", Le = "float32-renderable-webgl", Re = "float16-renderable-webgl", ze = "rgb9e5ufloat-renderable-webgl", Be = "snorm8-renderable-webgl", M = "norm16-webgl", Ve = "norm16-renderable-webgl", He = "snorm16-renderable-webgl", Ue = "float32-filterable", We = "float16-filterable-webgl";
+function Ge(e) {
+	let t = Ye[e];
 	if (!t) throw Error(`Unsupported texture format ${e}`);
 	return t;
 }
-var je = {
+function Ke() {
+	return Ye;
+}
+var qe = {
 	r8unorm: {},
 	rg8unorm: {},
 	"rgb8unorm-webgl": {},
 	rgba8unorm: {},
 	"rgba8unorm-srgb": {},
-	r8snorm: { render: Ee },
-	rg8snorm: { render: Ee },
+	r8snorm: { render: Be },
+	rg8snorm: { render: Be },
 	"rgb8snorm-webgl": {},
-	rgba8snorm: { render: Ee },
+	rgba8snorm: { render: Be },
 	r8uint: {},
 	rg8uint: {},
 	rgba8uint: {},
@@ -808,14 +957,38 @@ var je = {
 	rgba8sint: {},
 	bgra8unorm: {},
 	"bgra8unorm-srgb": {},
-	r16unorm: { f: j },
-	rg16unorm: { render: j },
-	"rgb16unorm-webgl": { f: j },
-	rgba16unorm: { render: j },
-	r16snorm: { f: De },
-	rg16snorm: { render: De },
-	"rgb16snorm-webgl": { f: j },
-	rgba16snorm: { render: De },
+	r16unorm: {
+		f: M,
+		render: Ve
+	},
+	rg16unorm: {
+		f: M,
+		render: Ve
+	},
+	"rgb16unorm-webgl": {
+		f: M,
+		render: !1
+	},
+	rgba16unorm: {
+		f: M,
+		render: Ve
+	},
+	r16snorm: {
+		f: M,
+		render: He
+	},
+	rg16snorm: {
+		f: M,
+		render: He
+	},
+	"rgb16snorm-webgl": {
+		f: M,
+		render: !1
+	},
+	rgba16snorm: {
+		f: M,
+		render: He
+	},
 	r16uint: {},
 	rg16uint: {},
 	rgba16uint: {},
@@ -823,16 +996,16 @@ var je = {
 	rg16sint: {},
 	rgba16sint: {},
 	r16float: {
-		render: we,
+		render: Re,
 		filter: "float16-filterable-webgl"
 	},
 	rg16float: {
-		render: we,
-		filter: ke
+		render: Re,
+		filter: We
 	},
 	rgba16float: {
-		render: we,
-		filter: ke
+		render: Re,
+		filter: We
 	},
 	r32uint: {},
 	rg32uint: {},
@@ -841,20 +1014,20 @@ var je = {
 	rg32sint: {},
 	rgba32sint: {},
 	r32float: {
-		render: A,
-		filter: Oe
+		render: Le,
+		filter: Ue
 	},
 	rg32float: {
 		render: !1,
-		filter: Oe
+		filter: Ue
 	},
 	"rgb32float-webgl": {
-		render: A,
-		filter: Oe
+		render: Le,
+		filter: Ue
 	},
 	rgba32float: {
-		render: A,
-		filter: Oe
+		render: Le,
+		filter: Ue
 	},
 	"rgba4unorm-webgl": {
 		channels: "rgba",
@@ -889,7 +1062,7 @@ var je = {
 	rgb9e5ufloat: {
 		channels: "rgb",
 		packed: !0,
-		render: Te
+		render: ze
 	},
 	rg11b10ufloat: {
 		channels: "rgb",
@@ -901,7 +1074,7 @@ var je = {
 		],
 		packed: !0,
 		p: 1,
-		render: A
+		render: Le
 	},
 	rgb10a2unorm: {
 		channels: "rgba",
@@ -985,73 +1158,77 @@ var je = {
 		],
 		packed: !0
 	}
-}, Me = {
-	"bc1-rgb-unorm-webgl": { f: E },
-	"bc1-rgb-unorm-srgb-webgl": { f: E },
-	"bc1-rgba-unorm": { f: E },
-	"bc1-rgba-unorm-srgb": { f: E },
-	"bc2-rgba-unorm": { f: E },
-	"bc2-rgba-unorm-srgb": { f: E },
-	"bc3-rgba-unorm": { f: E },
-	"bc3-rgba-unorm-srgb": { f: E },
-	"bc4-r-unorm": { f: E },
-	"bc4-r-snorm": { f: E },
-	"bc5-rg-unorm": { f: E },
-	"bc5-rg-snorm": { f: E },
-	"bc6h-rgb-ufloat": { f: E },
-	"bc6h-rgb-float": { f: E },
-	"bc7-rgba-unorm": { f: E },
-	"bc7-rgba-unorm-srgb": { f: E },
-	"etc2-rgb8unorm": { f: O },
-	"etc2-rgb8unorm-srgb": { f: O },
-	"etc2-rgb8a1unorm": { f: O },
-	"etc2-rgb8a1unorm-srgb": { f: O },
-	"etc2-rgba8unorm": { f: O },
-	"etc2-rgba8unorm-srgb": { f: O },
-	"eac-r11unorm": { f: O },
-	"eac-r11snorm": { f: O },
-	"eac-rg11unorm": { f: O },
-	"eac-rg11snorm": { f: O },
-	"astc-4x4-unorm": { f: D },
-	"astc-4x4-unorm-srgb": { f: D },
-	"astc-5x4-unorm": { f: D },
-	"astc-5x4-unorm-srgb": { f: D },
-	"astc-5x5-unorm": { f: D },
-	"astc-5x5-unorm-srgb": { f: D },
-	"astc-6x5-unorm": { f: D },
-	"astc-6x5-unorm-srgb": { f: D },
-	"astc-6x6-unorm": { f: D },
-	"astc-6x6-unorm-srgb": { f: D },
-	"astc-8x5-unorm": { f: D },
-	"astc-8x5-unorm-srgb": { f: D },
-	"astc-8x6-unorm": { f: D },
-	"astc-8x6-unorm-srgb": { f: D },
-	"astc-8x8-unorm": { f: D },
-	"astc-8x8-unorm-srgb": { f: D },
-	"astc-10x5-unorm": { f: D },
-	"astc-10x5-unorm-srgb": { f: D },
-	"astc-10x6-unorm": { f: D },
-	"astc-10x6-unorm-srgb": { f: D },
-	"astc-10x8-unorm": { f: D },
-	"astc-10x8-unorm-srgb": { f: D },
-	"astc-10x10-unorm": { f: D },
-	"astc-10x10-unorm-srgb": { f: D },
-	"astc-12x10-unorm": { f: D },
-	"astc-12x10-unorm-srgb": { f: D },
-	"astc-12x12-unorm": { f: D },
-	"astc-12x12-unorm-srgb": { f: D },
-	"pvrtc-rgb4unorm-webgl": { f: k },
-	"pvrtc-rgba4unorm-webgl": { f: k },
-	"pvrtc-rbg2unorm-webgl": { f: k },
-	"pvrtc-rgba2unorm-webgl": { f: k },
-	"etc1-rbg-unorm-webgl": { f: Se },
-	"atc-rgb-unorm-webgl": { f: Ce },
-	"atc-rgba-unorm-webgl": { f: Ce },
-	"atc-rgbai-unorm-webgl": { f: Ce }
-}, Ne = {
-	...je,
-	...Me
-}, Pe = [
+}, Je = {
+	"bc1-rgb-unorm-webgl": { f: k },
+	"bc1-rgb-unorm-srgb-webgl": { f: k },
+	"bc1-rgba-unorm": { f: k },
+	"bc1-rgba-unorm-srgb": { f: k },
+	"bc2-rgba-unorm": { f: k },
+	"bc2-rgba-unorm-srgb": { f: k },
+	"bc3-rgba-unorm": { f: k },
+	"bc3-rgba-unorm-srgb": { f: k },
+	"bc4-r-unorm": { f: k },
+	"bc4-r-snorm": { f: k },
+	"bc5-rg-unorm": { f: k },
+	"bc5-rg-snorm": { f: k },
+	"bc6h-rgb-ufloat": { f: k },
+	"bc6h-rgb-float": { f: k },
+	"bc7-rgba-unorm": { f: k },
+	"bc7-rgba-unorm-srgb": { f: k },
+	"etc2-rgb8unorm": { f: j },
+	"etc2-rgb8unorm-srgb": { f: j },
+	"etc2-rgb8a1unorm": { f: j },
+	"etc2-rgb8a1unorm-srgb": { f: j },
+	"etc2-rgba8unorm": { f: j },
+	"etc2-rgba8unorm-srgb": { f: j },
+	"eac-r11unorm": { f: j },
+	"eac-r11snorm": { f: j },
+	"eac-rg11unorm": { f: j },
+	"eac-rg11snorm": { f: j },
+	"astc-4x4-unorm": { f: A },
+	"astc-4x4-unorm-srgb": { f: A },
+	"astc-5x4-unorm": { f: A },
+	"astc-5x4-unorm-srgb": { f: A },
+	"astc-5x5-unorm": { f: A },
+	"astc-5x5-unorm-srgb": { f: A },
+	"astc-6x5-unorm": { f: A },
+	"astc-6x5-unorm-srgb": { f: A },
+	"astc-6x6-unorm": { f: A },
+	"astc-6x6-unorm-srgb": { f: A },
+	"astc-8x5-unorm": { f: A },
+	"astc-8x5-unorm-srgb": { f: A },
+	"astc-8x6-unorm": { f: A },
+	"astc-8x6-unorm-srgb": { f: A },
+	"astc-8x8-unorm": { f: A },
+	"astc-8x8-unorm-srgb": { f: A },
+	"astc-10x5-unorm": { f: A },
+	"astc-10x5-unorm-srgb": { f: A },
+	"astc-10x6-unorm": { f: A },
+	"astc-10x6-unorm-srgb": { f: A },
+	"astc-10x8-unorm": { f: A },
+	"astc-10x8-unorm-srgb": { f: A },
+	"astc-10x10-unorm": { f: A },
+	"astc-10x10-unorm-srgb": { f: A },
+	"astc-12x10-unorm": { f: A },
+	"astc-12x10-unorm-srgb": { f: A },
+	"astc-12x12-unorm": { f: A },
+	"astc-12x12-unorm-srgb": { f: A },
+	"pvrtc-rgb4unorm-webgl": { f: Fe },
+	"pvrtc-rgba4unorm-webgl": { f: Fe },
+	"pvrtc-rgb2unorm-webgl": { f: Fe },
+	"pvrtc-rgba2unorm-webgl": { f: Fe },
+	"etc1-rbg-unorm-webgl": { f: Pe },
+	"atc-rgb-unorm-webgl": { f: Ie },
+	"atc-rgba-unorm-webgl": { f: Ie },
+	"atc-rgbai-unorm-webgl": { f: Ie }
+}, Ye = {
+	...qe,
+	...Je
+}, Xe = /^(r|rg|rgb|rgba|bgra)([0-9]*)([a-z]*)(-srgb)?(-webgl)?$/, Ze = [
+	"rgb",
+	"rgba",
+	"bgra"
+], Qe = ["depth", "stencil"], $e = [
 	"bc1",
 	"bc2",
 	"bc3",
@@ -1065,65 +1242,82 @@ var je = {
 	"atc",
 	"astc",
 	"pvrtc"
-], Fe = /^(r|rg|rgb|rgba|bgra)([0-9]*)([a-z]*)(-srgb)?(-webgl)?$/, M = new class {
-	getInfo(e) {
-		return Ie(e);
-	}
+], N = new class {
 	isColor(e) {
-		return e.startsWith("rgba") || e.startsWith("bgra") || e.startsWith("rgb");
+		return Ze.some((t) => e.startsWith(t));
 	}
 	isDepthStencil(e) {
-		return e.startsWith("depth") || e.startsWith("stencil");
+		return Qe.some((t) => e.startsWith(t));
 	}
 	isCompressed(e) {
-		return Pe.some((t) => e.startsWith(t));
+		return $e.some((t) => e.startsWith(t));
+	}
+	getInfo(e) {
+		return nt(e);
 	}
 	getCapabilities(e) {
-		let t = Ae(e), n = {
-			format: e,
-			create: t.f ?? !0,
-			render: t.render ?? !0,
-			filter: t.filter ?? !0,
-			blend: t.blend ?? !0,
-			store: t.store ?? !0
-		}, r = Ie(e), i = e.startsWith("depth") || e.startsWith("stencil"), a = r?.signed, o = r?.integer, s = r?.webgl;
-		return n.render &&= !a, n.filter &&= !i && !a && !o && !s, n;
+		return tt(e);
+	}
+	computeMemoryLayout(e) {
+		return et(e);
 	}
 }();
-function Ie(e) {
-	let t = Le(e);
-	if (M.isCompressed(e)) {
-		t.channels = "rgb", t.components = 3, t.bytesPerPixel = 1, t.srgb = !1, t.compressed = !0;
-		let n = Re(e);
+function et({ format: e, width: t, height: n, depth: r, byteAlignment: i }) {
+	let { bytesPerPixel: a, bytesPerBlock: o = a, blockWidth: s = 1, blockHeight: c = 1, compressed: l = !1 } = N.getInfo(e), u = l ? Math.ceil(t / s) : t, d = l ? Math.ceil(n / c) : n, f = u * o, p = Math.ceil(f / i) * i, m = d, h = p * m * r;
+	return {
+		bytesPerPixel: a,
+		bytesPerRow: p,
+		rowsPerImage: m,
+		depthOrArrayLayers: r,
+		bytesPerImage: p * m,
+		byteLength: h
+	};
+}
+function tt(e) {
+	let t = Ge(e), n = {
+		format: e,
+		create: t.f ?? !0,
+		render: t.render ?? !0,
+		filter: t.filter ?? !0,
+		blend: t.blend ?? !0,
+		store: t.store ?? !0
+	}, r = nt(e), i = e.startsWith("depth") || e.startsWith("stencil"), a = r?.signed, o = r?.integer, s = r?.webgl, c = !!r?.compressed;
+	return n.render &&= !i && !c, n.filter &&= !i && !a && !o && !s, n;
+}
+function nt(e) {
+	let t = rt(e);
+	if (N.isCompressed(e)) {
+		t.channels = "rgb", t.components = 3, t.bytesPerPixel = 1, t.srgb = !1, t.compressed = !0, t.bytesPerBlock = at(e);
+		let n = it(e);
 		n && (t.blockWidth = n.blockWidth, t.blockHeight = n.blockHeight);
 	}
-	let n = Fe.exec(e);
+	let n = t.packed ? null : Xe.exec(e);
 	if (n) {
-		let [, r, i, a, o, s] = n, c = fe(`${a}${i}`), l = c.byteLength * 8, u = r.length, d = [
-			l,
-			u >= 2 ? l : 0,
-			u >= 3 ? l : 0,
-			u >= 4 ? l : 0
+		let [, r, i, a, o, s] = n, c = `${a}${i}`, l = D.getDataTypeInfo(c), u = l.byteLength * 8, d = r?.length ?? 1, f = [
+			u,
+			d >= 2 ? u : 0,
+			d >= 3 ? u : 0,
+			d >= 4 ? u : 0
 		];
 		t = {
 			format: e,
 			attachment: t.attachment,
-			dataType: c.signedType,
-			components: u,
+			dataType: l.signedType,
+			components: d,
 			channels: r,
-			integer: c.integer,
-			signed: c.signed,
-			normalized: c.normalized,
-			bitsPerChannel: d,
-			bytesPerPixel: c.byteLength * r.length,
+			integer: l.integer,
+			signed: l.signed,
+			normalized: l.normalized,
+			bitsPerChannel: f,
+			bytesPerPixel: l.byteLength * d,
 			packed: t.packed,
 			srgb: t.srgb
 		}, s === "-webgl" && (t.webgl = !0), o === "-srgb" && (t.srgb = !0);
 	}
 	return e.endsWith("-webgl") && (t.webgl = !0), e.endsWith("-srgb") && (t.srgb = !0), t;
 }
-function Le(e) {
-	let t = Ae(e), n = t.bytesPerPixel || 1, r = t.bitsPerChannel || [
+function rt(e) {
+	let t = Ge(e), n = t.bytesPerPixel || 1, r = t.bitsPerChannel || [
 		8,
 		8,
 		8,
@@ -1147,7 +1341,7 @@ function Le(e) {
 		compressed: t.compressed ?? !1
 	};
 }
-function Re(e) {
+function it(e) {
 	let t = /.*-(\d+)x(\d+)-.*/.exec(e);
 	if (t) {
 		let [, e, n] = t;
@@ -1156,14 +1350,23 @@ function Re(e) {
 			blockHeight: Number(n)
 		};
 	}
-	return null;
+	return e.startsWith("bc") || e.startsWith("etc1") || e.startsWith("etc2") || e.startsWith("eac") || e.startsWith("atc") || e.startsWith("pvrtc-rgb4") || e.startsWith("pvrtc-rgba4") ? {
+		blockWidth: 4,
+		blockHeight: 4
+	} : e.startsWith("pvrtc-rgb2") || e.startsWith("pvrtc-rgba2") ? {
+		blockWidth: 8,
+		blockHeight: 4
+	} : null;
+}
+function at(e) {
+	return e.startsWith("bc1") || e.startsWith("bc4") || e.startsWith("etc1") || e.startsWith("etc2-rgb8") || e.startsWith("etc2-rgb8a1") || e.startsWith("eac-r11") || e === "atc-rgb-unorm-webgl" ? 8 : e.startsWith("bc2") || e.startsWith("bc3") || e.startsWith("bc5") || e.startsWith("bc6h") || e.startsWith("bc7") || e.startsWith("etc2-rgba8") || e.startsWith("eac-rg11") || e.startsWith("astc") || e === "atc-rgba-unorm-webgl" || e === "atc-rgbai-unorm-webgl" ? 16 : e.startsWith("pvrtc") ? 8 : 16;
 }
 //#endregion
-//#region node_modules/@luma.gl/core/dist/image-utils/image-types.js
-function ze(e) {
+//#region node_modules/@luma.gl/core/dist/shadertypes/image-types/image-types.js
+function ot(e) {
 	return typeof ImageData < "u" && e instanceof ImageData || typeof ImageBitmap < "u" && e instanceof ImageBitmap || typeof HTMLImageElement < "u" && e instanceof HTMLImageElement || typeof HTMLVideoElement < "u" && e instanceof HTMLVideoElement || typeof VideoFrame < "u" && e instanceof VideoFrame || typeof HTMLCanvasElement < "u" && e instanceof HTMLCanvasElement || typeof OffscreenCanvas < "u" && e instanceof OffscreenCanvas;
 }
-function Be(e) {
+function st(e) {
 	if (typeof ImageData < "u" && e instanceof ImageData || typeof ImageBitmap < "u" && e instanceof ImageBitmap || typeof HTMLCanvasElement < "u" && e instanceof HTMLCanvasElement || typeof OffscreenCanvas < "u" && e instanceof OffscreenCanvas) return {
 		width: e.width,
 		height: e.height
@@ -1184,7 +1387,36 @@ function Be(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/device.js
-var Ve = class {}, He = class {
+var ct = class {};
+function lt(e, t) {
+	return [ut(e), ...t.map(ut).filter((e) => e !== void 0)].filter((e) => e !== void 0);
+}
+function ut(e) {
+	if (e !== void 0) {
+		if (e === null || typeof e == "string" || typeof e == "number" || typeof e == "boolean") return e;
+		if (e instanceof Error) return e.message;
+		if (Array.isArray(e)) return e.map(ut);
+		if (typeof e == "object") {
+			if (dt(e)) {
+				let t = String(e);
+				if (t !== "[object Object]") return t;
+			}
+			return ft(e) ? pt(e) : e.constructor?.name || "Object";
+		}
+		return String(e);
+	}
+}
+function dt(e) {
+	return "toString" in e && typeof e.toString == "function" && e.toString !== Object.prototype.toString;
+}
+function ft(e) {
+	return "message" in e && "type" in e;
+}
+function pt(e) {
+	let t = typeof e.type == "string" ? e.type : "message", n = typeof e.message == "string" ? e.message : "", r = typeof e.lineNum == "number" ? e.lineNum : null, i = typeof e.linePos == "number" ? e.linePos : null;
+	return `${t}${r !== null && i !== null ? ` @ ${r}:${i}` : r === null ? "" : ` @ ${r}`}: ${n}`.trim();
+}
+var mt = class {
 	features;
 	disabledFeatures;
 	constructor(e = [], t) {
@@ -1196,7 +1428,7 @@ var Ve = class {}, He = class {
 	has(e) {
 		return !this.disabledFeatures?.[e] && this.features.has(e);
 	}
-}, Ue = class e {
+}, ht = class e {
 	static defaultProps = {
 		id: null,
 		powerPreference: "high-performance",
@@ -1214,7 +1446,8 @@ var Ve = class {}, He = class {
 		},
 		onVisibilityChange: (e) => S.log(1, `${e} Visibility changed ${e.isVisible}`)(),
 		onDevicePixelRatioChange: (e, t) => S.log(1, `${e} DPR changed ${t.oldRatio} => ${e.devicePixelRatio}`)(),
-		debug: S.get("debug") || void 0,
+		debug: _t(),
+		debugGPUTime: !1,
 		debugShaders: S.get("debug-shaders") || void 0,
 		debugFramebuffers: !!S.get("debug-framebuffers"),
 		debugFactories: !!S.get("debug-factories"),
@@ -1223,9 +1456,11 @@ var Ve = class {}, He = class {
 		debugSpectorJSUrl: void 0,
 		_reuseDevices: !1,
 		_requestMaxLimits: !0,
-		_cacheShaders: !1,
-		_cachePipelines: !1,
-		_cacheDestroyPolicy: "unused",
+		_cacheShaders: !0,
+		_destroyShaders: !1,
+		_cachePipelines: !0,
+		_sharePipelines: !0,
+		_destroyPipelines: !1,
 		_initializeFeatures: !0,
 		_disabledFeatures: { "compilation-status-async-webgl": !0 },
 		_handle: void 0
@@ -1239,25 +1474,27 @@ var Ve = class {}, He = class {
 	id;
 	props;
 	userData = {};
-	statsManager = le;
+	statsManager = pe;
+	_factories = {};
 	timestamp = 0;
 	_reused = !1;
-	_lumaData = {};
+	_moduleData = {};
 	_textureCaps = {};
+	_debugGPUTimeQuery = null;
 	constructor(t) {
 		this.props = {
 			...e.defaultProps,
 			...t
-		}, this.id = this.props.id || C(this[Symbol.toStringTag].toLowerCase());
+		}, this.id = this.props.id || ge(this[Symbol.toStringTag].toLowerCase());
 	}
 	getVertexFormatInfo(e) {
-		return ve(e);
+		return O.getVertexFormatInfo(e);
 	}
 	isVertexFormatSupported(e) {
 		return !0;
 	}
 	getTextureFormatInfo(e) {
-		return M.getInfo(e);
+		return N.getInfo(e);
 	}
 	getTextureFormatCapabilities(e) {
 		let t = this._textureCaps[e];
@@ -1271,10 +1508,10 @@ var Ve = class {}, He = class {
 		return 1 + Math.floor(Math.log2(Math.max(e, t, n)));
 	}
 	isExternalImage(e) {
-		return ze(e);
+		return ot(e);
 	}
 	getExternalImageSize(e) {
-		return Be(e);
+		return st(e);
 	}
 	isTextureFormatSupported(e) {
 		return this.getTextureFormatCapabilities(e).create;
@@ -1286,7 +1523,12 @@ var Ve = class {}, He = class {
 		return this.getTextureFormatCapabilities(e).render;
 	}
 	isTextureFormatCompressed(e) {
-		return M.isCompressed(e);
+		return N.isCompressed(e);
+	}
+	getSupportedCompressedTextureFormats() {
+		let e = [];
+		for (let t of Object.keys(Ke())) this.isTextureFormatCompressed(t) && this.isTextureFormatSupported(t) && e.push(t);
+		return e;
 	}
 	pushDebugGroup(e) {
 		this.commandEncoder.pushDebugGroup(e);
@@ -1304,7 +1546,11 @@ var Ve = class {}, He = class {
 		return this.timestamp++;
 	}
 	reportError(e, t, ...n) {
-		return this.props.onError(e, t) ? () => {} : S.error(e.message, t, ...n);
+		if (!this.props.onError(e, t)) {
+			let r = lt(t, n);
+			return S.error(this.type === "webgl" ? "%cWebGL" : "%cWebGPU", "color: white; background: red; padding: 2px 6px; border-radius: 3px;", e.message, ...r);
+		}
+		return () => {};
 	}
 	debug() {
 		if (this.props.debug) debugger;
@@ -1314,11 +1560,51 @@ var Ve = class {}, He = class {
 		if (!this.canvasContext) throw Error("Device has no default CanvasContext. See props.createCanvasContext");
 		return this.canvasContext;
 	}
+	createFence() {
+		throw Error("createFence() not implemented");
+	}
 	beginRenderPass(e) {
 		return this.commandEncoder.beginRenderPass(e);
 	}
 	beginComputePass(e) {
 		return this.commandEncoder.beginComputePass(e);
+	}
+	generateMipmapsWebGPU(e) {
+		throw Error("not implemented");
+	}
+	_createSharedRenderPipelineWebGL(e) {
+		throw Error("_createSharedRenderPipelineWebGL() not implemented");
+	}
+	_createBindGroupLayoutWebGPU(e, t) {
+		throw Error("_createBindGroupLayoutWebGPU() not implemented");
+	}
+	_createBindGroupWebGPU(e, t, n, r, i) {
+		throw Error("_createBindGroupWebGPU() not implemented");
+	}
+	_supportsDebugGPUTime() {
+		return this.features.has("timestamp-query") && !!(this.props.debug || this.props.debugGPUTime);
+	}
+	_enableDebugGPUTime(e = 256) {
+		if (!this._supportsDebugGPUTime()) return null;
+		if (this._debugGPUTimeQuery) return this._debugGPUTimeQuery;
+		try {
+			this._debugGPUTimeQuery = this.createQuerySet({
+				type: "timestamp",
+				count: e
+			}), this.commandEncoder = this.createCommandEncoder({
+				id: this.commandEncoder.props.id,
+				timeProfilingQuerySet: this._debugGPUTimeQuery
+			});
+		} catch {
+			this._debugGPUTimeQuery = null;
+		}
+		return this._debugGPUTimeQuery;
+	}
+	_disableDebugGPUTime() {
+		this._debugGPUTimeQuery &&= (this.commandEncoder.getTimeProfilingQuerySet() === this._debugGPUTimeQuery && (this.commandEncoder = this.createCommandEncoder({ id: this.commandEncoder.props.id })), this._debugGPUTimeQuery.destroy(), null);
+	}
+	_isDebugGPUTimeEnabled() {
+		return this._debugGPUTimeQuery !== null;
 	}
 	getCanvasContext() {
 		return this.getDefaultCanvasContext();
@@ -1344,11 +1630,14 @@ var Ve = class {}, He = class {
 	resetWebGL() {
 		throw Error("not implemented");
 	}
+	getModuleData(e) {
+		return this._moduleData[e] ||= {}, this._moduleData[e];
+	}
 	static _getCanvasContextProps(e) {
 		return e.createCanvasContext === !0 ? {} : e.createCanvasContext;
 	}
 	_getDeviceTextureFormatCapabilities(e) {
-		let t = M.getCapabilities(e), n = (e) => (typeof e == "string" ? this.features.has(e) : e) ?? !0, r = n(t.create);
+		let t = N.getCapabilities(e), n = (e) => (typeof e == "string" ? this.features.has(e) : e) ?? !0, r = n(t.create);
 		return {
 			format: e,
 			create: r,
@@ -1361,13 +1650,63 @@ var Ve = class {}, He = class {
 	_normalizeBufferProps(e) {
 		(e instanceof ArrayBuffer || ArrayBuffer.isView(e)) && (e = { data: e });
 		let t = { ...e };
-		if ((e.usage || 0) & T.INDEX && (e.indexType || (e.data instanceof Uint32Array ? t.indexType = "uint32" : e.data instanceof Uint16Array ? t.indexType = "uint16" : e.data instanceof Uint8Array && (t.data = new Uint16Array(e.data), t.indexType = "uint16")), !t.indexType)) throw Error("indices buffer content must be of type uint16 or uint32");
+		if ((e.usage || 0) & E.INDEX && (e.indexType || (e.data instanceof Uint32Array ? t.indexType = "uint32" : e.data instanceof Uint16Array ? t.indexType = "uint16" : e.data instanceof Uint8Array && (t.data = new Uint16Array(e.data), t.indexType = "uint16")), !t.indexType)) throw Error("indices buffer content must be of type uint16 or uint32");
 		return t;
+	}
+};
+function gt(e, t) {
+	return e == null ? t === void 0 ? !1 : t !== "production" : !!e;
+}
+function _t() {
+	return gt(S.get("debug"), vt());
+}
+function vt() {
+	let e = globalThis.process;
+	if (e?.env) return e.env.NODE_ENV;
+}
+//#endregion
+//#region node_modules/@luma.gl/core/dist/adapter/canvas-observer.js
+var yt = class {
+	props;
+	_resizeObserver;
+	_intersectionObserver;
+	_observeDevicePixelRatioTimeout = null;
+	_observeDevicePixelRatioMediaQuery = null;
+	_handleDevicePixelRatioChange = () => this._refreshDevicePixelRatio();
+	_trackPositionInterval = null;
+	_started = !1;
+	get started() {
+		return this._started;
+	}
+	constructor(e) {
+		this.props = e;
+	}
+	start() {
+		if (!(this._started || !this.props.canvas)) {
+			this._started = !0, this._intersectionObserver ||= new IntersectionObserver((e) => this.props.onIntersection(e)), this._resizeObserver ||= new ResizeObserver((e) => this.props.onResize(e)), this._intersectionObserver.observe(this.props.canvas);
+			try {
+				this._resizeObserver.observe(this.props.canvas, { box: "device-pixel-content-box" });
+			} catch {
+				this._resizeObserver.observe(this.props.canvas, { box: "content-box" });
+			}
+			this._observeDevicePixelRatioTimeout = setTimeout(() => this._refreshDevicePixelRatio(), 0), this.props.trackPosition && this._trackPosition();
+		}
+	}
+	stop() {
+		this._started && (this._started = !1, this._observeDevicePixelRatioTimeout &&= (clearTimeout(this._observeDevicePixelRatioTimeout), null), this._observeDevicePixelRatioMediaQuery &&= (this._observeDevicePixelRatioMediaQuery.removeEventListener("change", this._handleDevicePixelRatioChange), null), this._trackPositionInterval &&= (clearInterval(this._trackPositionInterval), null), this._resizeObserver?.disconnect(), this._intersectionObserver?.disconnect());
+	}
+	_refreshDevicePixelRatio() {
+		this._started && (this.props.onDevicePixelRatioChange(), this._observeDevicePixelRatioMediaQuery?.removeEventListener("change", this._handleDevicePixelRatioChange), this._observeDevicePixelRatioMediaQuery = matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`), this._observeDevicePixelRatioMediaQuery.addEventListener("change", this._handleDevicePixelRatioChange, { once: !0 }));
+	}
+	_trackPosition(e = 100) {
+		this._trackPositionInterval ||= setInterval(() => {
+			this._started ? this.props.onPositionChange() : this._trackPositionInterval &&= (clearInterval(this._trackPositionInterval), null);
+		}, e);
 	}
 };
 //#endregion
 //#region node_modules/@luma.gl/core/dist/utils/promise-utils.js
-function We() {
+function bt() {
 	let e, t;
 	return {
 		promise: new Promise((n, r) => {
@@ -1378,8 +1717,19 @@ function We() {
 	};
 }
 //#endregion
-//#region node_modules/@luma.gl/core/dist/adapter/canvas-context.js
-var Ge = class e {
+//#region node_modules/@luma.gl/core/dist/utils/assert.js
+function xt(e, t) {
+	if (!e) {
+		let e = Error(t ?? "luma.gl assertion failed.");
+		throw Error.captureStackTrace?.(e, xt), e;
+	}
+}
+function St(e, t) {
+	return xt(e, t), e;
+}
+//#endregion
+//#region node_modules/@luma.gl/core/dist/adapter/canvas-surface.js
+var Ct = class e {
 	static isHTMLCanvas(e) {
 		return typeof HTMLCanvasElement < "u" && e instanceof HTMLCanvasElement;
 	}
@@ -1415,36 +1765,38 @@ var Ge = class e {
 	devicePixelHeight;
 	drawingBufferWidth;
 	drawingBufferHeight;
-	_initializedResolvers = We();
-	_resizeObserver;
-	_intersectionObserver;
-	_position;
+	_initializedResolvers = bt();
+	_canvasObserver;
+	_position = [0, 0];
 	destroyed = !1;
+	_needsDrawingBufferResize = !0;
 	toString() {
 		return `${this[Symbol.toStringTag]}(${this.id})`;
 	}
 	constructor(t) {
-		if (this.props = {
+		this.props = {
 			...e.defaultProps,
 			...t
-		}, t = this.props, this.initialized = this._initializedResolvers.promise, i() ? t.canvas ? typeof t.canvas == "string" ? this.canvas = qe(t.canvas) : this.canvas = t.canvas : this.canvas = Je(t) : this.canvas = {
+		}, t = this.props, this.initialized = this._initializedResolvers.promise, i() ? t.canvas ? typeof t.canvas == "string" ? this.canvas = Tt(t.canvas) : this.canvas = t.canvas : this.canvas = Et(t) : this.canvas = {
 			width: t.width || 1,
 			height: t.height || 1
-		}, e.isHTMLCanvas(this.canvas) ? (this.id = t.id || this.canvas.id, this.type = "html-canvas", this.htmlCanvas = this.canvas) : e.isOffscreenCanvas(this.canvas) ? (this.id = t.id || "offscreen-canvas", this.type = "offscreen-canvas", this.offscreenCanvas = this.canvas) : (this.id = t.id || "node-canvas-context", this.type = "node"), this.cssWidth = this.htmlCanvas?.clientWidth || this.canvas.width, this.cssHeight = this.htmlCanvas?.clientHeight || this.canvas.height, this.devicePixelWidth = this.canvas.width, this.devicePixelHeight = this.canvas.height, this.drawingBufferWidth = this.canvas.width, this.drawingBufferHeight = this.canvas.height, this.devicePixelRatio = globalThis.devicePixelRatio || 1, this._position = [0, 0], e.isHTMLCanvas(this.canvas)) {
-			this._intersectionObserver = new IntersectionObserver((e) => this._handleIntersection(e)), this._intersectionObserver.observe(this.canvas), this._resizeObserver = new ResizeObserver((e) => this._handleResize(e));
-			try {
-				this._resizeObserver.observe(this.canvas, { box: "device-pixel-content-box" });
-			} catch {
-				this._resizeObserver.observe(this.canvas, { box: "content-box" });
-			}
-			setTimeout(() => this._observeDevicePixelRatio(), 0), this.props.trackPosition && this._trackPosition();
-		}
+		}, e.isHTMLCanvas(this.canvas) ? (this.id = t.id || this.canvas.id, this.type = "html-canvas", this.htmlCanvas = this.canvas) : e.isOffscreenCanvas(this.canvas) ? (this.id = t.id || "offscreen-canvas", this.type = "offscreen-canvas", this.offscreenCanvas = this.canvas) : (this.id = t.id || "node-canvas-context", this.type = "node"), this.cssWidth = this.htmlCanvas?.clientWidth || this.canvas.width, this.cssHeight = this.htmlCanvas?.clientHeight || this.canvas.height, this.devicePixelWidth = this.canvas.width, this.devicePixelHeight = this.canvas.height, this.drawingBufferWidth = this.canvas.width, this.drawingBufferHeight = this.canvas.height, this.devicePixelRatio = globalThis.devicePixelRatio || 1, this._position = [0, 0], this._canvasObserver = new yt({
+			canvas: this.htmlCanvas,
+			trackPosition: this.props.trackPosition,
+			onResize: (e) => this._handleResize(e),
+			onIntersection: (e) => this._handleIntersection(e),
+			onDevicePixelRatioChange: () => this._observeDevicePixelRatio(),
+			onPositionChange: () => this.updatePosition()
+		});
 	}
 	destroy() {
-		this.destroyed = !0;
+		this.destroyed || (this.destroyed = !0, this._stopObservers(), this.device = null);
 	}
 	setProps(e) {
 		return "useDevicePixels" in e && (this.props.useDevicePixels = e.useDevicePixels || !1, this._updateDrawingBufferSize()), this;
+	}
+	getCurrentFramebuffer(e) {
+		return this._resizeDrawingBufferIfNeeded(), this._getCurrentFramebuffer(e);
 	}
 	getCSSSize() {
 		return [this.cssWidth, this.cssHeight];
@@ -1463,21 +1815,21 @@ var Ge = class e {
 		return [e, e];
 	}
 	setDrawingBufferSize(e, t) {
-		this.canvas.width = e, this.canvas.height = t, this.drawingBufferWidth = e, this.drawingBufferHeight = t;
+		e = Math.floor(e), t = Math.floor(t), !(this.drawingBufferWidth === e && this.drawingBufferHeight === t) && (this.drawingBufferWidth = e, this.drawingBufferHeight = t, this._needsDrawingBufferResize = !0);
 	}
 	getDevicePixelRatio() {
 		return typeof window < "u" && window.devicePixelRatio || 1;
 	}
 	cssToDevicePixels(e, t = !0) {
 		let n = this.cssToDeviceRatio(), [r, i] = this.getDrawingBufferSize();
-		return Ye(e, n, r, i, t);
+		return Dt(e, n, r, i, t);
 	}
 	getPixelSize() {
 		return this.getDevicePixelSize();
 	}
 	getAspect() {
-		let [e, t] = this.getDevicePixelSize();
-		return e / t;
+		let [e, t] = this.getDrawingBufferSize();
+		return e > 0 && t > 0 ? e / t : 1;
 	}
 	cssToDeviceRatio() {
 		try {
@@ -1493,39 +1845,45 @@ var Ge = class e {
 	_setAutoCreatedCanvasId(e) {
 		this.htmlCanvas?.id === "lumagl-auto-created-canvas" && (this.htmlCanvas.id = e);
 	}
+	_startObservers() {
+		this.destroyed || this._canvasObserver.start();
+	}
+	_stopObservers() {
+		this._canvasObserver.stop();
+	}
 	_handleIntersection(e) {
+		if (this.destroyed) return;
 		let t = e.find((e) => e.target === this.canvas);
 		if (!t) return;
 		let n = t.isIntersecting;
 		this.isVisible !== n && (this.isVisible = n, this.device.props.onVisibilityChange(this));
 	}
 	_handleResize(e) {
+		if (this.destroyed) return;
 		let t = e.find((e) => e.target === this.canvas);
 		if (!t) return;
-		this.cssWidth = t.contentBoxSize[0].inlineSize, this.cssHeight = t.contentBoxSize[0].blockSize;
-		let n = this.getDevicePixelSize(), r = t.devicePixelContentBoxSize?.[0].inlineSize || t.contentBoxSize[0].inlineSize * devicePixelRatio, i = t.devicePixelContentBoxSize?.[0].blockSize || t.contentBoxSize[0].blockSize * devicePixelRatio, [a, o] = this.getMaxDrawingBufferSize();
-		this.devicePixelWidth = Math.max(1, Math.min(r, a)), this.devicePixelHeight = Math.max(1, Math.min(i, o)), this._updateDrawingBufferSize(), this.device.props.onResize(this, { oldPixelSize: n });
+		let n = St(t.contentBoxSize?.[0]);
+		this.cssWidth = n.inlineSize, this.cssHeight = n.blockSize;
+		let r = this.getDevicePixelSize(), i = t.devicePixelContentBoxSize?.[0]?.inlineSize || n.inlineSize * devicePixelRatio, a = t.devicePixelContentBoxSize?.[0]?.blockSize || n.blockSize * devicePixelRatio, [o, s] = this.getMaxDrawingBufferSize();
+		this.devicePixelWidth = Math.max(1, Math.min(i, o)), this.devicePixelHeight = Math.max(1, Math.min(a, s)), this._updateDrawingBufferSize(), this.device.props.onResize(this, { oldPixelSize: r });
 	}
 	_updateDrawingBufferSize() {
-		if (this.props.autoResize) {
-			if (typeof this.props.useDevicePixels == "number") {
-				let e = this.props.useDevicePixels;
-				this.setDrawingBufferSize(this.cssWidth * e, this.cssHeight * e);
-			} else this.props.useDevicePixels ? this.setDrawingBufferSize(this.devicePixelWidth, this.devicePixelHeight) : this.setDrawingBufferSize(this.cssWidth, this.cssHeight);
-			this._updateDevice();
-		}
+		if (this.props.autoResize) if (typeof this.props.useDevicePixels == "number") {
+			let e = this.props.useDevicePixels;
+			this.setDrawingBufferSize(this.cssWidth * e, this.cssHeight * e);
+		} else this.props.useDevicePixels ? this.setDrawingBufferSize(this.devicePixelWidth, this.devicePixelHeight) : this.setDrawingBufferSize(this.cssWidth, this.cssHeight);
 		this._initializedResolvers.resolve(), this.isInitialized = !0, this.updatePosition();
 	}
-	_observeDevicePixelRatio() {
-		let e = this.devicePixelRatio;
-		this.devicePixelRatio = window.devicePixelRatio, this.updatePosition(), this.device.props.onDevicePixelRatioChange(this, { oldRatio: e }), matchMedia(`(resolution: ${this.devicePixelRatio}dppx)`).addEventListener("change", () => this._observeDevicePixelRatio(), { once: !0 });
+	_resizeDrawingBufferIfNeeded() {
+		this._needsDrawingBufferResize && (this._needsDrawingBufferResize = !1, (this.drawingBufferWidth !== this.canvas.width || this.drawingBufferHeight !== this.canvas.height) && (this.canvas.width = this.drawingBufferWidth, this.canvas.height = this.drawingBufferHeight, this._configureDevice()));
 	}
-	_trackPosition(e = 100) {
-		let t = setInterval(() => {
-			this.destroyed ? clearInterval(t) : this.updatePosition();
-		}, e);
+	_observeDevicePixelRatio() {
+		if (this.destroyed || !this._canvasObserver.started) return;
+		let e = this.devicePixelRatio;
+		this.devicePixelRatio = window.devicePixelRatio, this.updatePosition(), this.device.props.onDevicePixelRatioChange?.(this, { oldRatio: e });
 	}
 	updatePosition() {
+		if (this.destroyed) return;
 		let e = this.htmlCanvas?.getBoundingClientRect();
 		if (e) {
 			let t = [e.left, e.top];
@@ -1536,7 +1894,7 @@ var Ge = class e {
 		}
 	}
 };
-function Ke(e) {
+function wt(e) {
 	if (typeof e == "string") {
 		let t = document.getElementById(e);
 		if (!t) throw Error(`${e} is not an HTML element`);
@@ -1544,20 +1902,20 @@ function Ke(e) {
 	}
 	return e || document.body;
 }
-function qe(e) {
+function Tt(e) {
 	let t = document.getElementById(e);
-	if (!Ge.isHTMLCanvas(t)) throw Error("Object is not a canvas element");
+	if (!Ct.isHTMLCanvas(t)) throw Error("Object is not a canvas element");
 	return t;
 }
-function Je(e) {
+function Et(e) {
 	let { width: t, height: n } = e, r = document.createElement("canvas");
-	r.id = C("lumagl-auto-created-canvas"), r.width = t || 1, r.height = n || 1, r.style.width = Number.isFinite(t) ? `${t}px` : "100%", r.style.height = Number.isFinite(n) ? `${n}px` : "100%", e?.visible || (r.style.visibility = "hidden");
-	let i = Ke(e?.container || null);
+	r.id = ge("lumagl-auto-created-canvas"), r.width = t || 1, r.height = n || 1, r.style.width = Number.isFinite(t) ? `${t}px` : "100%", r.style.height = Number.isFinite(n) ? `${n}px` : "100%", e?.visible || (r.style.visibility = "hidden");
+	let i = wt(e?.container || null);
 	return i.insertBefore(r, i.firstChild), r;
 }
-function Ye(e, t, n, r, i) {
-	let a = e, o = Xe(a[0], t, n), s = Ze(a[1], t, r, i), c = Xe(a[0] + 1, t, n), l = c === n - 1 ? c : c - 1;
-	c = Ze(a[1] + 1, t, r, i);
+function Dt(e, t, n, r, i) {
+	let a = e, o = Ot(a[0], t, n), s = kt(a[1], t, r, i), c = Ot(a[0] + 1, t, n), l = c === n - 1 ? c : c - 1;
+	c = kt(a[1] + 1, t, r, i);
 	let u;
 	return i ? (c = c === 0 ? c : c + 1, u = s, s = c) : u = c === r - 1 ? c : c - 1, {
 		x: o,
@@ -1566,17 +1924,19 @@ function Ye(e, t, n, r, i) {
 		height: Math.max(u - s + 1, 1)
 	};
 }
-function Xe(e, t, n) {
+function Ot(e, t, n) {
 	return Math.min(Math.round(e * t), n - 1);
 }
-function Ze(e, t, n, r) {
+function kt(e, t, n, r) {
 	return r ? Math.max(0, n - 1 - Math.round(e * t)) : Math.min(Math.round(e * t), n - 1);
 }
 //#endregion
-//#region node_modules/@luma.gl/core/dist/adapter/resources/sampler.js
-var Qe = class e extends w {
+//#region node_modules/@luma.gl/core/dist/adapter/canvas-context.js
+var At = class extends Ct {
+	static defaultProps = Ct.defaultProps;
+}, jt = class extends Ct {}, Mt = class e extends C {
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		type: "color-sampler",
 		addressModeU: "clamp-to-edge",
 		addressModeV: "clamp-to-edge",
@@ -1598,14 +1958,14 @@ var Qe = class e extends w {
 	static normalizeProps(e, t) {
 		return t;
 	}
-}, $e = {
+}, Nt = {
 	"1d": "1d",
 	"2d": "2d",
 	"2d-array": "2d",
 	cube: "2d",
 	"cube-array": "2d",
 	"3d": "3d"
-}, N = class e extends w {
+}, P = class e extends C {
 	static SAMPLE = 4;
 	static STORAGE = 8;
 	static RENDER = 16;
@@ -1620,6 +1980,10 @@ var Qe = class e extends w {
 	height;
 	depth;
 	mipLevels;
+	samples;
+	byteAlignment;
+	ready = Promise.resolve(this);
+	isReady = !0;
 	updateTimestamp;
 	get [Symbol.toStringTag]() {
 		return "Texture";
@@ -1627,21 +1991,56 @@ var Qe = class e extends w {
 	toString() {
 		return `Texture(${this.id},${this.format},${this.width}x${this.height})`;
 	}
-	constructor(t, n) {
-		if (n = e.normalizeProps(t, n), super(t, n, e.defaultProps), this.dimension = this.props.dimension, this.baseDimension = $e[this.dimension], this.format = this.props.format, this.width = this.props.width, this.height = this.props.height, this.depth = this.props.depth, this.mipLevels = this.props.mipLevels, this.props.width === void 0 || this.props.height === void 0) if (t.isExternalImage(n.data)) {
+	constructor(t, n, r) {
+		if (n = e.normalizeProps(t, n), super(t, n, e.defaultProps), this.dimension = this.props.dimension, this.baseDimension = Nt[this.dimension], this.format = this.props.format, this.width = this.props.width, this.height = this.props.height, this.depth = this.props.depth, this.mipLevels = this.props.mipLevels, this.samples = this.props.samples || 1, this.dimension === "cube" && (this.depth = 6), this.props.width === void 0 || this.props.height === void 0) if (t.isExternalImage(n.data)) {
 			let e = t.getExternalImageSize(n.data);
 			this.width = e?.width || 1, this.height = e?.height || 1;
-		} else this.width = 1, this.height = 1, (this.props.width === void 0 || this.props.height === void 0) && S.warn(`${this} created with undefined width or height. This is deprecated. Use AsyncTexture instead.`)();
-		this.updateTimestamp = t.incrementTimestamp();
-	}
-	setSampler(e) {
-		this.sampler = e instanceof Qe ? e : this.device.createSampler(e);
+		} else this.width = 1, this.height = 1, (this.props.width === void 0 || this.props.height === void 0) && S.warn(`${this} created with undefined width or height. This is deprecated. Use DynamicTexture instead.`)();
+		this.byteAlignment = r?.byteAlignment || 1, this.updateTimestamp = t.incrementTimestamp();
 	}
 	clone(e) {
 		return this.device.createTexture({
 			...this.props,
 			...e
 		});
+	}
+	setSampler(e) {
+		this.sampler = e instanceof Mt ? e : this.device.createSampler(e);
+	}
+	copyImageData(e) {
+		let { data: t, depth: n, ...r } = e;
+		this.writeData(t, {
+			...r,
+			depthOrArrayLayers: r.depthOrArrayLayers ?? n
+		});
+	}
+	computeMemoryLayout(e = {}) {
+		let { width: t = this.width, height: n = this.height, depthOrArrayLayers: r = this.depth } = this._normalizeTextureReadOptions(e), { format: i, byteAlignment: a } = this;
+		return N.computeMemoryLayout({
+			format: i,
+			width: t,
+			height: n,
+			depth: r,
+			byteAlignment: a
+		});
+	}
+	readBuffer(e, t) {
+		throw Error("readBuffer not implemented");
+	}
+	readDataAsync(e) {
+		throw Error("readBuffer not implemented");
+	}
+	writeBuffer(e, t) {
+		throw Error("readBuffer not implemented");
+	}
+	writeData(e, t) {
+		throw Error("readBuffer not implemented");
+	}
+	readDataSyncWebGL(e) {
+		throw Error("readDataSyncWebGL not available");
+	}
+	generateMipmapsWebGL() {
+		throw Error("generateMipmapsWebGL not available");
 	}
 	static normalizeProps(e, t) {
 		let n = { ...t }, { width: r, height: i } = n;
@@ -1670,31 +2069,108 @@ var Qe = class e extends w {
 			aspect: "all"
 		});
 	}
-	_normalizeCopyImageDataOptions(t) {
-		let { width: n, height: r, depth: i } = this, a = {
-			...e.defaultCopyDataOptions,
-			width: n,
-			height: r,
-			depth: i,
-			...t
-		}, o = this.device.getTextureFormatInfo(this.format);
-		if (!t.bytesPerRow && !o.bytesPerPixel) throw Error(`bytesPerRow must be provided for texture format ${this.format}`);
-		return a.bytesPerRow = t.bytesPerRow || n * (o.bytesPerPixel || 4), a.rowsPerImage = t.rowsPerImage || r, a;
+	_normalizeCopyImageDataOptions(e) {
+		let { data: t, depth: n, ...r } = e, i = this._normalizeTextureWriteOptions({
+			...r,
+			depthOrArrayLayers: r.depthOrArrayLayers ?? n
+		});
+		return {
+			data: t,
+			depth: i.depthOrArrayLayers,
+			...i
+		};
 	}
 	_normalizeCopyExternalImageOptions(t) {
-		let n = this.device.getExternalImageSize(t.image), r = {
+		let n = e._omitUndefined(t), r = n.mipLevel ?? 0, i = this._getMipLevelSize(r), a = this.device.getExternalImageSize(t.image), o = {
 			...e.defaultCopyExternalImageOptions,
-			...n,
-			...t
+			...i,
+			...a,
+			...n
 		};
-		return r.width = Math.min(r.width, this.width - r.x), r.height = Math.min(r.height, this.height - r.y), r;
+		return o.width = Math.min(o.width, i.width - o.x), o.height = Math.min(o.height, i.height - o.y), o.depth = Math.min(o.depth, i.depthOrArrayLayers - o.z), o;
+	}
+	_normalizeTextureReadOptions(t) {
+		let n = e._omitUndefined(t), r = n.mipLevel ?? 0, i = this._getMipLevelSize(r), a = {
+			...e.defaultTextureReadOptions,
+			...i,
+			...n
+		};
+		return a.width = Math.min(a.width, i.width - a.x), a.height = Math.min(a.height, i.height - a.y), a.depthOrArrayLayers = Math.min(a.depthOrArrayLayers, i.depthOrArrayLayers - a.z), a;
+	}
+	_getSupportedColorReadOptions(e) {
+		let t = this._normalizeTextureReadOptions(e), n = N.getInfo(this.format);
+		switch (this._validateColorReadAspect(t), this._validateColorReadFormat(n), this.dimension) {
+			case "2d":
+			case "cube":
+			case "cube-array":
+			case "2d-array":
+			case "3d": return t;
+			default: throw Error(`${this} color readback does not support ${this.dimension} textures`);
+		}
+	}
+	_validateColorReadAspect(e) {
+		if (e.aspect !== "all") throw Error(`${this} color readback only supports aspect 'all'`);
+	}
+	_validateColorReadFormat(e) {
+		if (e.compressed) throw Error(`${this} color readback does not support compressed formats (${this.format})`);
+		switch (e.attachment) {
+			case "color": return;
+			case "depth": throw Error(`${this} color readback does not support depth formats (${this.format})`);
+			case "stencil": throw Error(`${this} color readback does not support stencil formats (${this.format})`);
+			case "depth-stencil": throw Error(`${this} color readback does not support depth-stencil formats (${this.format})`);
+			default: throw Error(`${this} color readback does not support format ${this.format}`);
+		}
+	}
+	_normalizeTextureWriteOptions(t) {
+		let n = e._omitUndefined(t), r = n.mipLevel ?? 0, i = this._getMipLevelSize(r), a = {
+			...e.defaultTextureWriteOptions,
+			...i,
+			...n
+		};
+		a.width = Math.min(a.width, i.width - a.x), a.height = Math.min(a.height, i.height - a.y), a.depthOrArrayLayers = Math.min(a.depthOrArrayLayers, i.depthOrArrayLayers - a.z);
+		let o = N.computeMemoryLayout({
+			format: this.format,
+			width: a.width,
+			height: a.height,
+			depth: a.depthOrArrayLayers,
+			byteAlignment: this.byteAlignment
+		}), s = o.bytesPerPixel * a.width;
+		if (a.bytesPerRow = n.bytesPerRow ?? o.bytesPerRow, a.rowsPerImage = n.rowsPerImage ?? a.height, a.bytesPerRow < s) throw Error(`bytesPerRow (${a.bytesPerRow}) must be at least ${s} for ${this.format}`);
+		if (a.rowsPerImage < a.height) throw Error(`rowsPerImage (${a.rowsPerImage}) must be at least ${a.height} for ${this.format}`);
+		let c = this.device.getTextureFormatInfo(this.format).bytesPerPixel;
+		if (c && a.bytesPerRow % c !== 0) throw Error(`bytesPerRow (${a.bytesPerRow}) must be a multiple of bytesPerPixel (${c}) for ${this.format}`);
+		return a;
+	}
+	_getMipLevelSize(e) {
+		return {
+			width: Math.max(1, this.width >> e),
+			height: this.baseDimension === "1d" ? 1 : Math.max(1, this.height >> e),
+			depthOrArrayLayers: this.dimension === "3d" ? Math.max(1, this.depth >> e) : this.depth
+		};
+	}
+	getAllocatedByteLength() {
+		let e = 0;
+		for (let t = 0; t < this.mipLevels; t++) {
+			let { width: n, height: r, depthOrArrayLayers: i } = this._getMipLevelSize(t);
+			e += N.computeMemoryLayout({
+				format: this.format,
+				width: n,
+				height: r,
+				depth: i,
+				byteAlignment: 1
+			}).byteLength;
+		}
+		return e * this.samples;
+	}
+	static _omitUndefined(e) {
+		return Object.fromEntries(Object.entries(e).filter(([, e]) => e !== void 0));
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		data: null,
 		dimension: "2d",
 		format: "rgba8unorm",
-		usage: e.TEXTURE | e.RENDER_ATTACHMENT | e.COPY_DST,
+		usage: e.SAMPLE | e.RENDER | e.COPY_DST,
 		width: void 0,
 		height: void 0,
 		depth: 1,
@@ -1708,6 +2184,10 @@ var Qe = class e extends w {
 		byteOffset: 0,
 		bytesPerRow: void 0,
 		rowsPerImage: void 0,
+		width: void 0,
+		height: void 0,
+		depthOrArrayLayers: void 0,
+		depth: 1,
 		mipLevel: 0,
 		x: 0,
 		y: 0,
@@ -1730,7 +2210,30 @@ var Qe = class e extends w {
 		premultipliedAlpha: !1,
 		flipY: !1
 	};
-}, et = class e extends w {
+	static defaultTextureReadOptions = {
+		x: 0,
+		y: 0,
+		z: 0,
+		width: void 0,
+		height: void 0,
+		depthOrArrayLayers: 1,
+		mipLevel: 0,
+		aspect: "all"
+	};
+	static defaultTextureWriteOptions = {
+		byteOffset: 0,
+		bytesPerRow: void 0,
+		rowsPerImage: void 0,
+		x: 0,
+		y: 0,
+		z: 0,
+		width: void 0,
+		height: void 0,
+		depthOrArrayLayers: 1,
+		mipLevel: 0,
+		aspect: "all"
+	};
+}, Pt = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "TextureView";
 	}
@@ -1738,7 +2241,7 @@ var Qe = class e extends w {
 		super(t, n, e.defaultProps);
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		format: void 0,
 		dimension: void 0,
 		aspect: "all",
@@ -1750,63 +2253,66 @@ var Qe = class e extends w {
 };
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter-utils/format-compiler-log.js
-function tt(e, t, n) {
+function Ft(e, t, n) {
 	let r = "", i = t.split(/\r?\n/), a = e.slice().sort((e, t) => e.lineNum - t.lineNum);
 	switch (n?.showSourceCode || "no") {
 		case "all":
 			let t = 0;
-			for (let e = 1; e <= i.length; e++) for (r += it(i[e - 1], e, n); a.length > t && a[t].lineNum === e;) {
-				let e = a[t++];
-				r += nt(e, i, e.lineNum, {
-					...n,
-					inlineSource: !1
-				});
+			for (let e = 1; e <= i.length; e++) {
+				let o = i[e - 1], s = a[t];
+				for (o && s && (r += Rt(o, e, n)); a.length > t && s.lineNum === e;) {
+					let e = a[t++];
+					e && (r += It(e, i, e.lineNum, {
+						...n,
+						inlineSource: !1
+					}));
+				}
 			}
 			for (; a.length > t;) {
 				let e = a[t++];
-				r += nt(e, [], 0, {
+				e && (r += It(e, [], 0, {
 					...n,
 					inlineSource: !1
-				});
+				}));
 			}
 			return r;
 		case "issues":
 		case "no":
-			for (let t of e) r += nt(t, i, t.lineNum, { inlineSource: n?.showSourceCode !== "no" });
+			for (let t of e) r += It(t, i, t.lineNum, { inlineSource: n?.showSourceCode !== "no" });
 			return r;
 	}
 }
-function nt(e, t, n, r) {
+function It(e, t, n, r) {
 	if (r?.inlineSource) return `
-${rt(t, n)}${e.linePos > 0 ? `${" ".repeat(e.linePos + 5)}^^^\n` : ""}${e.type.toUpperCase()}: ${e.message}
+${Lt(t, n)}${e.linePos > 0 ? `${" ".repeat(e.linePos + 5)}^^^\n` : ""}${e.type.toUpperCase()}: ${e.message}
 
 `;
-	let i = e.type === "error" ? "red" : "#8B4000";
-	return r?.html ? `<div class='luma-compiler-log-error' style="color:${i};"><b> ${e.type.toUpperCase()}: ${e.message}</b></div>` : `${e.type.toUpperCase()}: ${e.message}`;
+	let i = e.type === "error" ? "red" : "orange";
+	return r?.html ? `<div class='luma-compiler-log-${e.type}' style="color:${i};"><b> ${e.type.toUpperCase()}: ${e.message}</b></div>` : `${e.type.toUpperCase()}: ${e.message}`;
 }
-function rt(e, t, n) {
+function Lt(e, t, n) {
 	let r = "";
 	for (let i = t - 2; i <= t; i++) {
 		let a = e[i - 1];
-		a !== void 0 && (r += it(a, t, n));
+		a !== void 0 && (r += Rt(a, t, n));
 	}
 	return r;
 }
-function it(e, t, n) {
-	let r = n?.html ? ot(e) : e;
-	return `${at(String(t), 4)}: ${r}${n?.html ? "<br/>" : "\n"}`;
+function Rt(e, t, n) {
+	let r = n?.html ? Bt(e) : e;
+	return `${zt(String(t), 4)}: ${r}${n?.html ? "<br/>" : "\n"}`;
 }
-function at(e, t) {
+function zt(e, t) {
 	let n = "";
 	for (let r = e.length; r < t; ++r) n += " ";
 	return n + e;
 }
-function ot(e) {
+function Bt(e) {
 	return e.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;").replaceAll("'", "&#039;");
 }
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/resources/shader.js
-var st = class e extends w {
+var Vt = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "Shader";
 	}
@@ -1818,7 +2324,7 @@ var st = class e extends w {
 			...n,
 			debugShaders: n.debugShaders || t.props.debugShaders || "errors"
 		}, super(t, {
-			id: ct(n),
+			id: Ht(n),
 			...n
 		}, e.defaultProps), this.stage = this.props.stage, this.source = this.props.source;
 	}
@@ -1843,23 +2349,24 @@ var st = class e extends w {
 	}
 	_displayShaderLog(e, t) {
 		if (typeof document > "u" || !document?.createElement) return;
-		let n = t, r = `${this.stage} shader "${n}"`, i = tt(e, this.source, {
+		let n = t, r = `${this.stage} shader "${n}"`, i = Ft(e, this.source, {
 			showSourceCode: "all",
 			html: !0
-		}), a = this.getTranslatedSource();
-		a && (i += `<br /><br /><h1>Translated Source</h1><br /><br /><code style="user-select:text;"><pre>${a}</pre></code>`);
-		let o = document.createElement("Button");
-		o.innerHTML = `
-<h1>Compilation error in ${r}</h1><br /><br />
-<code style="user-select:text;"><pre>
-${i}
-</pre></code>`, o.style.top = "10px", o.style.left = "10px", o.style.position = "absolute", o.style.zIndex = "9999", o.style.width = "100%", o.style.textAlign = "left", document.body.appendChild(o), document.getElementsByClassName("luma-compiler-log-error")[0]?.scrollIntoView(), o.onclick = () => {
-			let e = `data:text/plain,${encodeURIComponent(this.source)}`;
-			navigator.clipboard.writeText(e);
+		}), a = this.getTranslatedSource(), o = document.createElement("div");
+		o.innerHTML = `\
+<h1>Compilation error in ${r}</h1>
+<div style="display:flex;position:fixed;top:10px;right:20px;gap:2px;">
+<button id="copy">Copy source</button><br/>
+<button id="close">Close</button>
+</div>
+<code><pre>${i}</pre></code>`, a && (o.innerHTML += `<br /><h1>Translated Source</h1><br /><br /><code><pre>${a}</pre></code>`), o.style.top = "0", o.style.left = "0", o.style.background = "white", o.style.position = "fixed", o.style.zIndex = "9999", o.style.maxWidth = "100vw", o.style.maxHeight = "100vh", o.style.overflowY = "auto", document.body.appendChild(o), o.querySelector(".luma-compiler-log-error")?.scrollIntoView(), o.querySelector("button#close").onclick = () => {
+			o.remove();
+		}, o.querySelector("button#copy").onclick = () => {
+			navigator.clipboard.writeText(this.source);
 		};
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		language: "auto",
 		stage: void 0,
 		source: "",
@@ -1868,16 +2375,15 @@ ${i}
 		debugShaders: void 0
 	};
 };
-function ct(e) {
-	return lt(e.source) || e.id || C(`unnamed ${e.stage}-shader`);
+function Ht(e) {
+	return Ut(e.source) || e.id || ge(`unnamed ${e.stage}-shader`);
 }
-function lt(e, t = "unnamed") {
-	let n = /#define[\s*]SHADER_NAME[\s*]([A-Za-z0-9_-]+)[\s*]/.exec(e);
-	return n ? n[1] : t;
+function Ut(e, t = "unnamed") {
+	return /#define[\s*]SHADER_NAME[\s*]([A-Za-z0-9_-]+)[\s*]/.exec(e)?.[1] ?? t;
 }
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/resources/framebuffer.js
-var ut = class e extends w {
+var Wt = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "Framebuffer";
 	}
@@ -1890,6 +2396,7 @@ var ut = class e extends w {
 		let t = this.colorAttachments.map((t) => t.texture.clone(e)), n = this.depthStencilAttachment && this.depthStencilAttachment.texture.clone(e);
 		return this.device.createFramebuffer({
 			...this.props,
+			...e,
 			colorAttachments: t,
 			depthStencilAttachment: n
 		});
@@ -1909,18 +2416,18 @@ var ut = class e extends w {
 				let n = this.createColorTexture(e, t);
 				return this.attachResource(n), n.view;
 			}
-			return e instanceof N ? e.view : e;
+			return e instanceof P ? e.view : e;
 		});
 		let e = this.props.depthStencilAttachment;
 		if (e) if (typeof e == "string") {
 			let t = this.createDepthStencilTexture(e);
 			this.attachResource(t), this.depthStencilAttachment = t.view;
-		} else e instanceof N ? this.depthStencilAttachment = e.view : this.depthStencilAttachment = e;
+		} else e instanceof P ? this.depthStencilAttachment = e.view : this.depthStencilAttachment = e;
 	}
 	createColorTexture(e, t) {
 		return this.device.createTexture({
 			id: `${this.id}-color-attachment-${t}`,
-			usage: N.RENDER_ATTACHMENT,
+			usage: P.RENDER_ATTACHMENT,
 			format: e,
 			width: this.width,
 			height: this.height,
@@ -1933,21 +2440,20 @@ var ut = class e extends w {
 	createDepthStencilTexture(e) {
 		return this.device.createTexture({
 			id: `${this.id}-depth-stencil-attachment`,
-			usage: N.RENDER_ATTACHMENT,
+			usage: P.RENDER_ATTACHMENT,
 			format: e,
 			width: this.width,
 			height: this.height
 		});
 	}
 	resizeAttachments(e, t) {
-		for (let n = 0; n < this.colorAttachments.length; ++n) if (this.colorAttachments[n]) {
-			let r = this.colorAttachments[n].texture.clone({
+		if (this.colorAttachments.forEach((n, r) => {
+			let i = n.texture.clone({
 				width: e,
 				height: t
 			});
-			this.destroyAttachedResource(this.colorAttachments[n]), this.colorAttachments[n] = r.view, this.attachResource(r.view);
-		}
-		if (this.depthStencilAttachment) {
+			this.destroyAttachedResource(n), this.colorAttachments[r] = i.view, this.attachResource(i.view);
+		}), this.depthStencilAttachment) {
 			let n = this.depthStencilAttachment.texture.clone({
 				width: e,
 				height: t
@@ -1957,13 +2463,13 @@ var ut = class e extends w {
 		this.updateAttachments();
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		width: 1,
 		height: 1,
 		colorAttachments: [],
 		depthStencilAttachment: null
 	};
-}, dt = class e extends w {
+}, Gt = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "RenderPipeline";
 	}
@@ -1971,11 +2477,18 @@ var ut = class e extends w {
 	bufferLayout;
 	linkStatus = "pending";
 	hash = "";
+	sharedRenderPipeline = null;
+	get isPending() {
+		return this.linkStatus === "pending" || this.vs.compilationStatus === "pending" || this.fs?.compilationStatus === "pending";
+	}
+	get isErrored() {
+		return this.linkStatus === "error" || this.vs.compilationStatus === "error" || this.fs?.compilationStatus === "error";
+	}
 	constructor(t, n) {
-		super(t, n, e.defaultProps), this.shaderLayout = this.props.shaderLayout, this.bufferLayout = this.props.bufferLayout || [];
+		super(t, n, e.defaultProps), this.shaderLayout = this.props.shaderLayout, this.bufferLayout = this.props.bufferLayout || [], this.sharedRenderPipeline = this.props._sharedRenderPipeline || null;
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		vs: null,
 		vertexEntryPoint: "vertexMain",
 		vsConstants: {},
@@ -1988,10 +2501,56 @@ var ut = class e extends w {
 		colorAttachmentFormats: void 0,
 		depthStencilAttachmentFormat: void 0,
 		parameters: {},
-		bindings: {},
-		uniforms: {}
+		varyings: void 0,
+		bufferMode: void 0,
+		disableWarnings: !1,
+		_sharedRenderPipeline: void 0,
+		bindings: void 0,
+		bindGroups: void 0
 	};
-}, ft = class e extends w {
+}, Kt = class extends C {
+	get [Symbol.toStringTag]() {
+		return "SharedRenderPipeline";
+	}
+	constructor(e, t) {
+		super(e, t, {
+			...C.defaultProps,
+			handle: void 0,
+			vs: void 0,
+			fs: void 0,
+			varyings: void 0,
+			bufferMode: void 0
+		});
+	}
+};
+//#endregion
+//#region node_modules/@luma.gl/core/dist/adapter-utils/bind-groups.js
+function qt(e, t, n) {
+	let r = e.bindings.find((e) => e.name === t || `${e.name.toLocaleLowerCase()}uniforms` === t.toLocaleLowerCase());
+	return !r && !n?.ignoreWarnings && S.warn(`Binding ${t} not set: Not found in shader layout.`)(), r || null;
+}
+function Jt(e, t) {
+	if (!t) return {};
+	if (Xt(t)) return Object.fromEntries(Object.entries(t).map(([e, t]) => [Number(e), { ...t }]));
+	let n = {};
+	for (let [r, i] of Object.entries(t)) {
+		let t = qt(e, r)?.group ?? 0;
+		n[t] ||= {}, n[t][r] = i;
+	}
+	return n;
+}
+function Yt(e) {
+	let t = {};
+	for (let n of Object.values(e)) Object.assign(t, n);
+	return t;
+}
+function Xt(e) {
+	let t = Object.keys(e);
+	return t.length > 0 && t.every((e) => /^\d+$/.test(e));
+}
+//#endregion
+//#region node_modules/@luma.gl/core/dist/adapter/resources/render-pass.js
+var Zt = class e extends C {
 	static defaultClearColor = [
 		0,
 		0,
@@ -2010,7 +2569,7 @@ var ut = class e extends w {
 		return t;
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		framebuffer: null,
 		parameters: void 0,
 		clearColor: e.defaultClearColor,
@@ -2025,47 +2584,112 @@ var ut = class e extends w {
 		beginTimestampIndex: void 0,
 		endTimestampIndex: void 0
 	};
-}, pt = class e extends w {
+}, Qt = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "CommandEncoder";
 	}
+	_timeProfilingQuerySet = null;
+	_timeProfilingSlotCount = 0;
+	_gpuTimeMs;
 	constructor(t, n) {
-		super(t, n, e.defaultProps);
+		super(t, n, e.defaultProps), this._timeProfilingQuerySet = n.timeProfilingQuerySet ?? null, this._timeProfilingSlotCount = 0, this._gpuTimeMs = void 0;
+	}
+	async resolveTimeProfilingQuerySet() {
+		if (this._gpuTimeMs = void 0, !this._timeProfilingQuerySet) return;
+		let e = Math.floor(this._timeProfilingSlotCount / 2);
+		if (e <= 0) return;
+		let t = e * 2, n = await this._timeProfilingQuerySet.readResults({
+			firstQuery: 0,
+			queryCount: t
+		}), r = 0n;
+		for (let e = 0; e < t; e += 2) r += n[e + 1] - n[e];
+		this._gpuTimeMs = Number(r) / 1e6;
+	}
+	getTimeProfilingSlotCount() {
+		return this._timeProfilingSlotCount;
+	}
+	getTimeProfilingQuerySet() {
+		return this._timeProfilingQuerySet;
+	}
+	_applyTimeProfilingToPassProps(e) {
+		let t = e || {};
+		if (!this._supportsTimestampQueries() || !this._timeProfilingQuerySet || t.timestampQuerySet !== void 0 || t.beginTimestampIndex !== void 0 || t.endTimestampIndex !== void 0) return t;
+		let n = this._timeProfilingSlotCount;
+		return n + 1 >= this._timeProfilingQuerySet.props.count ? t : (this._timeProfilingSlotCount += 2, {
+			...t,
+			timestampQuerySet: this._timeProfilingQuerySet,
+			beginTimestampIndex: n,
+			endTimestampIndex: n + 1
+		});
+	}
+	_supportsTimestampQueries() {
+		return this.device.features.has("timestamp-query");
 	}
 	static defaultProps = {
-		...w.defaultProps,
-		measureExecutionTime: void 0
+		...C.defaultProps,
+		measureExecutionTime: void 0,
+		timeProfilingQuerySet: void 0
 	};
-}, mt = class e extends w {
+}, $t = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "CommandBuffer";
 	}
 	constructor(t, n) {
 		super(t, n, e.defaultProps);
 	}
-	static defaultProps = { ...w.defaultProps };
+	static defaultProps = { ...C.defaultProps };
 };
 //#endregion
-//#region node_modules/@luma.gl/core/dist/shadertypes/data-types/decode-shader-types.js
-function ht(e) {
-	return yt[e];
+//#region node_modules/@luma.gl/core/dist/shadertypes/shader-types/shader-type-decoder.js
+function en(e) {
+	let t = un[on(e)];
+	if (!t) throw Error(`Unsupported variable shader type: ${e}`);
+	return t;
 }
-function gt(e) {
-	let [t, n] = vt[e], r = t === "i32" || t === "u32", i = t !== "u32";
+function tn(e) {
+	let t = ln[an(e)];
+	if (!t) throw Error(`Unsupported attribute shader type: ${e}`);
+	let [n, r] = t, i = n === "i32" || n === "u32", a = n !== "u32";
 	return {
-		primitiveType: t,
-		components: n,
-		byteLength: _t[t] * n,
-		integer: r,
-		signed: i
+		primitiveType: n,
+		components: r,
+		byteLength: cn[n] * r,
+		integer: i,
+		signed: a
 	};
 }
-var _t = {
+var nn = class {
+	getVariableShaderTypeInfo(e) {
+		return en(e);
+	}
+	getAttributeShaderTypeInfo(e) {
+		return tn(e);
+	}
+	makeShaderAttributeType(e, t) {
+		return rn(e, t);
+	}
+	resolveAttributeShaderTypeAlias(e) {
+		return an(e);
+	}
+	resolveVariableShaderTypeAlias(e) {
+		return on(e);
+	}
+};
+function rn(e, t) {
+	return t === 1 ? e : `vec${t}<${e}>`;
+}
+function an(e) {
+	return dn[e] || e;
+}
+function on(e) {
+	return fn[e] || e;
+}
+var sn = new nn(), cn = {
 	f32: 4,
 	f16: 2,
 	i32: 4,
 	u32: 4
-}, vt = {
+}, ln = {
 	f32: ["f32", 1],
 	"vec2<f32>": ["f32", 2],
 	"vec3<f32>": ["f32", 3],
@@ -2082,7 +2706,7 @@ var _t = {
 	"vec2<u32>": ["u32", 2],
 	"vec3<u32>": ["u32", 3],
 	"vec4<u32>": ["u32", 4]
-}, yt = {
+}, un = {
 	f32: {
 		type: "f32",
 		components: 1
@@ -2291,26 +2915,88 @@ var _t = {
 		type: "u32",
 		components: 16
 	}
+}, dn = {
+	vec2i: "vec2<i32>",
+	vec3i: "vec3<i32>",
+	vec4i: "vec4<i32>",
+	vec2u: "vec2<u32>",
+	vec3u: "vec3<u32>",
+	vec4u: "vec4<u32>",
+	vec2f: "vec2<f32>",
+	vec3f: "vec3<f32>",
+	vec4f: "vec4<f32>",
+	vec2h: "vec2<f16>",
+	vec3h: "vec3<f16>",
+	vec4h: "vec4<f16>"
+}, fn = {
+	vec2i: "vec2<i32>",
+	vec3i: "vec3<i32>",
+	vec4i: "vec4<i32>",
+	vec2u: "vec2<u32>",
+	vec3u: "vec3<u32>",
+	vec4u: "vec4<u32>",
+	vec2f: "vec2<f32>",
+	vec3f: "vec3<f32>",
+	vec4f: "vec4<f32>",
+	vec2h: "vec2<f16>",
+	vec3h: "vec3<f16>",
+	vec4h: "vec4<f16>",
+	mat2x2f: "mat2x2<f32>",
+	mat2x3f: "mat2x3<f32>",
+	mat2x4f: "mat2x4<f32>",
+	mat3x2f: "mat3x2<f32>",
+	mat3x3f: "mat3x3<f32>",
+	mat3x4f: "mat3x4<f32>",
+	mat4x2f: "mat4x2<f32>",
+	mat4x3f: "mat4x3<f32>",
+	mat4x4f: "mat4x4<f32>",
+	mat2x2i: "mat2x2<i32>",
+	mat2x3i: "mat2x3<i32>",
+	mat2x4i: "mat2x4<i32>",
+	mat3x2i: "mat3x2<i32>",
+	mat3x3i: "mat3x3<i32>",
+	mat3x4i: "mat3x4<i32>",
+	mat4x2i: "mat4x2<i32>",
+	mat4x3i: "mat4x3<i32>",
+	mat4x4i: "mat4x4<i32>",
+	mat2x2u: "mat2x2<u32>",
+	mat2x3u: "mat2x3<u32>",
+	mat2x4u: "mat2x4<u32>",
+	mat3x2u: "mat3x2<u32>",
+	mat3x3u: "mat3x3<u32>",
+	mat3x4u: "mat3x4<u32>",
+	mat4x2u: "mat4x2<u32>",
+	mat4x3u: "mat4x3<u32>",
+	mat4x4u: "mat4x4<u32>",
+	mat2x2h: "mat2x2<f16>",
+	mat2x3h: "mat2x3<f16>",
+	mat2x4h: "mat2x4<f16>",
+	mat3x2h: "mat3x2<f16>",
+	mat3x3h: "mat3x3<f16>",
+	mat3x4h: "mat3x4<f16>",
+	mat4x2h: "mat4x2<f16>",
+	mat4x3h: "mat4x3<f16>",
+	mat4x4h: "mat4x4<f16>"
 };
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter-utils/get-attribute-from-layouts.js
-function bt(e, t) {
+function pn(e, t) {
 	let n = {};
 	for (let r of e.attributes) {
-		let i = St(e, t, r.name);
+		let i = hn(e, t, r.name);
 		i && (n[r.name] = i);
 	}
 	return n;
 }
-function xt(e, t, n = 16) {
-	let r = bt(e, t), i = Array(n).fill(null);
+function mn(e, t, n = 16) {
+	let r = pn(e, t), i = Array(n).fill(null);
 	for (let e of Object.values(r)) i[e.location] = e;
 	return i;
 }
-function St(e, t, n) {
-	let r = Ct(e, n), i = wt(t, n);
+function hn(e, t, n) {
+	let r = gn(e, n), i = _n(t, n);
 	if (!r) return null;
-	let a = gt(r.type), o = xe(a), s = i?.vertexFormat || o, c = ve(s);
+	let a = sn.getAttributeShaderTypeInfo(r.type), o = O.getCompatibleVertexFormat(a), s = i?.vertexFormat || o, c = O.getVertexFormatInfo(s);
 	return {
 		attributeName: i?.attributeName || r.name,
 		bufferName: i?.bufferName || r.name,
@@ -2328,19 +3014,19 @@ function St(e, t, n) {
 		byteStride: i?.byteStride || 0
 	};
 }
-function Ct(e, t) {
+function gn(e, t) {
 	let n = e.attributes.find((e) => e.name === t);
 	return n || S.warn(`shader layout attribute "${t}" not present in shader`), n || null;
 }
-function wt(e, t) {
-	Tt(e);
-	let n = Et(e, t);
-	return n || (n = Dt(e, t), n) ? n : (S.warn(`layout for attribute "${t}" not present in buffer layout`), null);
+function _n(e, t) {
+	vn(e);
+	let n = yn(e, t);
+	return n || (n = bn(e, t), n) ? n : (S.warn(`layout for attribute "${t}" not present in buffer layout`), null);
 }
-function Tt(e) {
+function vn(e) {
 	for (let t of e) (t.attributes && t.format || !t.attributes && !t.format) && S.warn(`BufferLayout ${name} must have either 'attributes' or 'format' field`);
 }
-function Et(e, t) {
+function yn(e, t) {
 	for (let n of e) if (n.format && n.name === t) return {
 		attributeName: n.name,
 		bufferName: t,
@@ -2351,11 +3037,11 @@ function Et(e, t) {
 	};
 	return null;
 }
-function Dt(e, t) {
+function bn(e, t) {
 	for (let n of e) {
 		let e = n.byteStride;
 		if (typeof n.byteStride != "number") for (let t of n.attributes || []) {
-			let n = ve(t.format);
+			let n = O.getVertexFormatInfo(t.format);
 			e += n.byteLength;
 		}
 		let r = n.attributes?.find((e) => e.attribute === t);
@@ -2372,9 +3058,9 @@ function Dt(e, t) {
 }
 //#endregion
 //#region node_modules/@luma.gl/core/dist/adapter/resources/vertex-array.js
-var Ot = class e extends w {
+var xn = class e extends C {
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		shaderLayout: void 0,
 		bufferLayout: []
 	};
@@ -2386,14 +3072,14 @@ var Ot = class e extends w {
 	indexBuffer = null;
 	attributes;
 	constructor(t, n) {
-		super(t, n, e.defaultProps), this.maxVertexAttributes = t.limits.maxVertexAttributes, this.attributes = Array(this.maxVertexAttributes).fill(null), this.attributeInfos = xt(n.shaderLayout, n.bufferLayout, this.maxVertexAttributes);
+		super(t, n, e.defaultProps), this.maxVertexAttributes = t.limits.maxVertexAttributes, this.attributes = Array(this.maxVertexAttributes).fill(null), this.attributeInfos = mn(n.shaderLayout, n.bufferLayout, this.maxVertexAttributes);
 	}
 	setConstantWebGL(e, t) {
 		this.device.reportError(/* @__PURE__ */ Error("constant attributes not supported"), this)();
 	}
-}, kt = class e extends w {
+}, Sn = class e extends C {
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		layout: void 0,
 		buffers: {}
 	};
@@ -2403,7 +3089,7 @@ var Ot = class e extends w {
 	constructor(t, n) {
 		super(t, n, e.defaultProps);
 	}
-}, At = class e extends w {
+}, Cn = class e extends C {
 	get [Symbol.toStringTag]() {
 		return "QuerySet";
 	}
@@ -2411,26 +3097,133 @@ var Ot = class e extends w {
 		super(t, n, e.defaultProps);
 	}
 	static defaultProps = {
-		...w.defaultProps,
+		...C.defaultProps,
 		type: void 0,
 		count: void 0
 	};
-}, jt;
-function Mt(e) {
-	return (!jt || jt.byteLength < e) && (jt = new ArrayBuffer(e)), jt;
+}, wn = class e extends C {
+	static defaultProps = { ...C.defaultProps };
+	get [Symbol.toStringTag]() {
+		return "Fence";
+	}
+	constructor(t, n = {}) {
+		super(t, n, e.defaultProps);
+	}
+};
+//#endregion
+//#region node_modules/@luma.gl/core/dist/shadertypes/data-types/decode-data-types.js
+function Tn(e, t) {
+	switch (t) {
+		case 1: return e;
+		case 2: return e + e % 2;
+		default: return e + (4 - e % 4) % 4;
+	}
 }
-function Nt(e, t) {
-	return new e(Mt(e.BYTES_PER_ELEMENT * t), 0, t);
+function En(e) {
+	let [, , , , t] = Dn[e];
+	return t;
+}
+var Dn = {
+	uint8: [
+		"uint8",
+		"u32",
+		1,
+		!1,
+		Uint8Array
+	],
+	sint8: [
+		"sint8",
+		"i32",
+		1,
+		!1,
+		Int8Array
+	],
+	unorm8: [
+		"uint8",
+		"f32",
+		1,
+		!0,
+		Uint8Array
+	],
+	snorm8: [
+		"sint8",
+		"f32",
+		1,
+		!0,
+		Int8Array
+	],
+	uint16: [
+		"uint16",
+		"u32",
+		2,
+		!1,
+		Uint16Array
+	],
+	sint16: [
+		"sint16",
+		"i32",
+		2,
+		!1,
+		Int16Array
+	],
+	unorm16: [
+		"uint16",
+		"u32",
+		2,
+		!0,
+		Uint16Array
+	],
+	snorm16: [
+		"sint16",
+		"i32",
+		2,
+		!0,
+		Int16Array
+	],
+	float16: [
+		"float16",
+		"f16",
+		2,
+		!1,
+		Uint16Array
+	],
+	float32: [
+		"float32",
+		"f32",
+		4,
+		!1,
+		Float32Array
+	],
+	uint32: [
+		"uint32",
+		"u32",
+		4,
+		!1,
+		Uint32Array
+	],
+	sint32: [
+		"sint32",
+		"i32",
+		4,
+		!1,
+		Int32Array
+	]
+}, On;
+function kn(e) {
+	return (!On || On.byteLength < e) && (On = new ArrayBuffer(e)), On;
+}
+function An(e, t) {
+	return new e(kn(e.BYTES_PER_ELEMENT * t), 0, t);
 }
 //#endregion
-//#region node_modules/@luma.gl/constants/dist/webgl-constants.js
-var P;
+//#region node_modules/@luma.gl/webgl/dist/constants/webgl-constants.js
+var F;
 (function(e) {
 	e[e.DEPTH_BUFFER_BIT = 256] = "DEPTH_BUFFER_BIT", e[e.STENCIL_BUFFER_BIT = 1024] = "STENCIL_BUFFER_BIT", e[e.COLOR_BUFFER_BIT = 16384] = "COLOR_BUFFER_BIT", e[e.POINTS = 0] = "POINTS", e[e.LINES = 1] = "LINES", e[e.LINE_LOOP = 2] = "LINE_LOOP", e[e.LINE_STRIP = 3] = "LINE_STRIP", e[e.TRIANGLES = 4] = "TRIANGLES", e[e.TRIANGLE_STRIP = 5] = "TRIANGLE_STRIP", e[e.TRIANGLE_FAN = 6] = "TRIANGLE_FAN", e[e.ZERO = 0] = "ZERO", e[e.ONE = 1] = "ONE", e[e.SRC_COLOR = 768] = "SRC_COLOR", e[e.ONE_MINUS_SRC_COLOR = 769] = "ONE_MINUS_SRC_COLOR", e[e.SRC_ALPHA = 770] = "SRC_ALPHA", e[e.ONE_MINUS_SRC_ALPHA = 771] = "ONE_MINUS_SRC_ALPHA", e[e.DST_ALPHA = 772] = "DST_ALPHA", e[e.ONE_MINUS_DST_ALPHA = 773] = "ONE_MINUS_DST_ALPHA", e[e.DST_COLOR = 774] = "DST_COLOR", e[e.ONE_MINUS_DST_COLOR = 775] = "ONE_MINUS_DST_COLOR", e[e.SRC_ALPHA_SATURATE = 776] = "SRC_ALPHA_SATURATE", e[e.CONSTANT_COLOR = 32769] = "CONSTANT_COLOR", e[e.ONE_MINUS_CONSTANT_COLOR = 32770] = "ONE_MINUS_CONSTANT_COLOR", e[e.CONSTANT_ALPHA = 32771] = "CONSTANT_ALPHA", e[e.ONE_MINUS_CONSTANT_ALPHA = 32772] = "ONE_MINUS_CONSTANT_ALPHA", e[e.FUNC_ADD = 32774] = "FUNC_ADD", e[e.FUNC_SUBTRACT = 32778] = "FUNC_SUBTRACT", e[e.FUNC_REVERSE_SUBTRACT = 32779] = "FUNC_REVERSE_SUBTRACT", e[e.BLEND_EQUATION = 32777] = "BLEND_EQUATION", e[e.BLEND_EQUATION_RGB = 32777] = "BLEND_EQUATION_RGB", e[e.BLEND_EQUATION_ALPHA = 34877] = "BLEND_EQUATION_ALPHA", e[e.BLEND_DST_RGB = 32968] = "BLEND_DST_RGB", e[e.BLEND_SRC_RGB = 32969] = "BLEND_SRC_RGB", e[e.BLEND_DST_ALPHA = 32970] = "BLEND_DST_ALPHA", e[e.BLEND_SRC_ALPHA = 32971] = "BLEND_SRC_ALPHA", e[e.BLEND_COLOR = 32773] = "BLEND_COLOR", e[e.ARRAY_BUFFER_BINDING = 34964] = "ARRAY_BUFFER_BINDING", e[e.ELEMENT_ARRAY_BUFFER_BINDING = 34965] = "ELEMENT_ARRAY_BUFFER_BINDING", e[e.LINE_WIDTH = 2849] = "LINE_WIDTH", e[e.ALIASED_POINT_SIZE_RANGE = 33901] = "ALIASED_POINT_SIZE_RANGE", e[e.ALIASED_LINE_WIDTH_RANGE = 33902] = "ALIASED_LINE_WIDTH_RANGE", e[e.CULL_FACE_MODE = 2885] = "CULL_FACE_MODE", e[e.FRONT_FACE = 2886] = "FRONT_FACE", e[e.DEPTH_RANGE = 2928] = "DEPTH_RANGE", e[e.DEPTH_WRITEMASK = 2930] = "DEPTH_WRITEMASK", e[e.DEPTH_CLEAR_VALUE = 2931] = "DEPTH_CLEAR_VALUE", e[e.DEPTH_FUNC = 2932] = "DEPTH_FUNC", e[e.STENCIL_CLEAR_VALUE = 2961] = "STENCIL_CLEAR_VALUE", e[e.STENCIL_FUNC = 2962] = "STENCIL_FUNC", e[e.STENCIL_FAIL = 2964] = "STENCIL_FAIL", e[e.STENCIL_PASS_DEPTH_FAIL = 2965] = "STENCIL_PASS_DEPTH_FAIL", e[e.STENCIL_PASS_DEPTH_PASS = 2966] = "STENCIL_PASS_DEPTH_PASS", e[e.STENCIL_REF = 2967] = "STENCIL_REF", e[e.STENCIL_VALUE_MASK = 2963] = "STENCIL_VALUE_MASK", e[e.STENCIL_WRITEMASK = 2968] = "STENCIL_WRITEMASK", e[e.STENCIL_BACK_FUNC = 34816] = "STENCIL_BACK_FUNC", e[e.STENCIL_BACK_FAIL = 34817] = "STENCIL_BACK_FAIL", e[e.STENCIL_BACK_PASS_DEPTH_FAIL = 34818] = "STENCIL_BACK_PASS_DEPTH_FAIL", e[e.STENCIL_BACK_PASS_DEPTH_PASS = 34819] = "STENCIL_BACK_PASS_DEPTH_PASS", e[e.STENCIL_BACK_REF = 36003] = "STENCIL_BACK_REF", e[e.STENCIL_BACK_VALUE_MASK = 36004] = "STENCIL_BACK_VALUE_MASK", e[e.STENCIL_BACK_WRITEMASK = 36005] = "STENCIL_BACK_WRITEMASK", e[e.VIEWPORT = 2978] = "VIEWPORT", e[e.SCISSOR_BOX = 3088] = "SCISSOR_BOX", e[e.COLOR_CLEAR_VALUE = 3106] = "COLOR_CLEAR_VALUE", e[e.COLOR_WRITEMASK = 3107] = "COLOR_WRITEMASK", e[e.UNPACK_ALIGNMENT = 3317] = "UNPACK_ALIGNMENT", e[e.PACK_ALIGNMENT = 3333] = "PACK_ALIGNMENT", e[e.MAX_TEXTURE_SIZE = 3379] = "MAX_TEXTURE_SIZE", e[e.MAX_VIEWPORT_DIMS = 3386] = "MAX_VIEWPORT_DIMS", e[e.SUBPIXEL_BITS = 3408] = "SUBPIXEL_BITS", e[e.RED_BITS = 3410] = "RED_BITS", e[e.GREEN_BITS = 3411] = "GREEN_BITS", e[e.BLUE_BITS = 3412] = "BLUE_BITS", e[e.ALPHA_BITS = 3413] = "ALPHA_BITS", e[e.DEPTH_BITS = 3414] = "DEPTH_BITS", e[e.STENCIL_BITS = 3415] = "STENCIL_BITS", e[e.POLYGON_OFFSET_UNITS = 10752] = "POLYGON_OFFSET_UNITS", e[e.POLYGON_OFFSET_FACTOR = 32824] = "POLYGON_OFFSET_FACTOR", e[e.TEXTURE_BINDING_2D = 32873] = "TEXTURE_BINDING_2D", e[e.SAMPLE_BUFFERS = 32936] = "SAMPLE_BUFFERS", e[e.SAMPLES = 32937] = "SAMPLES", e[e.SAMPLE_COVERAGE_VALUE = 32938] = "SAMPLE_COVERAGE_VALUE", e[e.SAMPLE_COVERAGE_INVERT = 32939] = "SAMPLE_COVERAGE_INVERT", e[e.COMPRESSED_TEXTURE_FORMATS = 34467] = "COMPRESSED_TEXTURE_FORMATS", e[e.VENDOR = 7936] = "VENDOR", e[e.RENDERER = 7937] = "RENDERER", e[e.VERSION = 7938] = "VERSION", e[e.IMPLEMENTATION_COLOR_READ_TYPE = 35738] = "IMPLEMENTATION_COLOR_READ_TYPE", e[e.IMPLEMENTATION_COLOR_READ_FORMAT = 35739] = "IMPLEMENTATION_COLOR_READ_FORMAT", e[e.BROWSER_DEFAULT_WEBGL = 37444] = "BROWSER_DEFAULT_WEBGL", e[e.STATIC_DRAW = 35044] = "STATIC_DRAW", e[e.STREAM_DRAW = 35040] = "STREAM_DRAW", e[e.DYNAMIC_DRAW = 35048] = "DYNAMIC_DRAW", e[e.ARRAY_BUFFER = 34962] = "ARRAY_BUFFER", e[e.ELEMENT_ARRAY_BUFFER = 34963] = "ELEMENT_ARRAY_BUFFER", e[e.BUFFER_SIZE = 34660] = "BUFFER_SIZE", e[e.BUFFER_USAGE = 34661] = "BUFFER_USAGE", e[e.CURRENT_VERTEX_ATTRIB = 34342] = "CURRENT_VERTEX_ATTRIB", e[e.VERTEX_ATTRIB_ARRAY_ENABLED = 34338] = "VERTEX_ATTRIB_ARRAY_ENABLED", e[e.VERTEX_ATTRIB_ARRAY_SIZE = 34339] = "VERTEX_ATTRIB_ARRAY_SIZE", e[e.VERTEX_ATTRIB_ARRAY_STRIDE = 34340] = "VERTEX_ATTRIB_ARRAY_STRIDE", e[e.VERTEX_ATTRIB_ARRAY_TYPE = 34341] = "VERTEX_ATTRIB_ARRAY_TYPE", e[e.VERTEX_ATTRIB_ARRAY_NORMALIZED = 34922] = "VERTEX_ATTRIB_ARRAY_NORMALIZED", e[e.VERTEX_ATTRIB_ARRAY_POINTER = 34373] = "VERTEX_ATTRIB_ARRAY_POINTER", e[e.VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 34975] = "VERTEX_ATTRIB_ARRAY_BUFFER_BINDING", e[e.CULL_FACE = 2884] = "CULL_FACE", e[e.FRONT = 1028] = "FRONT", e[e.BACK = 1029] = "BACK", e[e.FRONT_AND_BACK = 1032] = "FRONT_AND_BACK", e[e.BLEND = 3042] = "BLEND", e[e.DEPTH_TEST = 2929] = "DEPTH_TEST", e[e.DITHER = 3024] = "DITHER", e[e.POLYGON_OFFSET_FILL = 32823] = "POLYGON_OFFSET_FILL", e[e.SAMPLE_ALPHA_TO_COVERAGE = 32926] = "SAMPLE_ALPHA_TO_COVERAGE", e[e.SAMPLE_COVERAGE = 32928] = "SAMPLE_COVERAGE", e[e.SCISSOR_TEST = 3089] = "SCISSOR_TEST", e[e.STENCIL_TEST = 2960] = "STENCIL_TEST", e[e.NO_ERROR = 0] = "NO_ERROR", e[e.INVALID_ENUM = 1280] = "INVALID_ENUM", e[e.INVALID_VALUE = 1281] = "INVALID_VALUE", e[e.INVALID_OPERATION = 1282] = "INVALID_OPERATION", e[e.OUT_OF_MEMORY = 1285] = "OUT_OF_MEMORY", e[e.CONTEXT_LOST_WEBGL = 37442] = "CONTEXT_LOST_WEBGL", e[e.CW = 2304] = "CW", e[e.CCW = 2305] = "CCW", e[e.DONT_CARE = 4352] = "DONT_CARE", e[e.FASTEST = 4353] = "FASTEST", e[e.NICEST = 4354] = "NICEST", e[e.GENERATE_MIPMAP_HINT = 33170] = "GENERATE_MIPMAP_HINT", e[e.BYTE = 5120] = "BYTE", e[e.UNSIGNED_BYTE = 5121] = "UNSIGNED_BYTE", e[e.SHORT = 5122] = "SHORT", e[e.UNSIGNED_SHORT = 5123] = "UNSIGNED_SHORT", e[e.INT = 5124] = "INT", e[e.UNSIGNED_INT = 5125] = "UNSIGNED_INT", e[e.FLOAT = 5126] = "FLOAT", e[e.DOUBLE = 5130] = "DOUBLE", e[e.DEPTH_COMPONENT = 6402] = "DEPTH_COMPONENT", e[e.ALPHA = 6406] = "ALPHA", e[e.RGB = 6407] = "RGB", e[e.RGBA = 6408] = "RGBA", e[e.LUMINANCE = 6409] = "LUMINANCE", e[e.LUMINANCE_ALPHA = 6410] = "LUMINANCE_ALPHA", e[e.UNSIGNED_SHORT_4_4_4_4 = 32819] = "UNSIGNED_SHORT_4_4_4_4", e[e.UNSIGNED_SHORT_5_5_5_1 = 32820] = "UNSIGNED_SHORT_5_5_5_1", e[e.UNSIGNED_SHORT_5_6_5 = 33635] = "UNSIGNED_SHORT_5_6_5", e[e.FRAGMENT_SHADER = 35632] = "FRAGMENT_SHADER", e[e.VERTEX_SHADER = 35633] = "VERTEX_SHADER", e[e.COMPILE_STATUS = 35713] = "COMPILE_STATUS", e[e.DELETE_STATUS = 35712] = "DELETE_STATUS", e[e.LINK_STATUS = 35714] = "LINK_STATUS", e[e.VALIDATE_STATUS = 35715] = "VALIDATE_STATUS", e[e.ATTACHED_SHADERS = 35717] = "ATTACHED_SHADERS", e[e.ACTIVE_ATTRIBUTES = 35721] = "ACTIVE_ATTRIBUTES", e[e.ACTIVE_UNIFORMS = 35718] = "ACTIVE_UNIFORMS", e[e.MAX_VERTEX_ATTRIBS = 34921] = "MAX_VERTEX_ATTRIBS", e[e.MAX_VERTEX_UNIFORM_VECTORS = 36347] = "MAX_VERTEX_UNIFORM_VECTORS", e[e.MAX_VARYING_VECTORS = 36348] = "MAX_VARYING_VECTORS", e[e.MAX_COMBINED_TEXTURE_IMAGE_UNITS = 35661] = "MAX_COMBINED_TEXTURE_IMAGE_UNITS", e[e.MAX_VERTEX_TEXTURE_IMAGE_UNITS = 35660] = "MAX_VERTEX_TEXTURE_IMAGE_UNITS", e[e.MAX_TEXTURE_IMAGE_UNITS = 34930] = "MAX_TEXTURE_IMAGE_UNITS", e[e.MAX_FRAGMENT_UNIFORM_VECTORS = 36349] = "MAX_FRAGMENT_UNIFORM_VECTORS", e[e.SHADER_TYPE = 35663] = "SHADER_TYPE", e[e.SHADING_LANGUAGE_VERSION = 35724] = "SHADING_LANGUAGE_VERSION", e[e.CURRENT_PROGRAM = 35725] = "CURRENT_PROGRAM", e[e.NEVER = 512] = "NEVER", e[e.LESS = 513] = "LESS", e[e.EQUAL = 514] = "EQUAL", e[e.LEQUAL = 515] = "LEQUAL", e[e.GREATER = 516] = "GREATER", e[e.NOTEQUAL = 517] = "NOTEQUAL", e[e.GEQUAL = 518] = "GEQUAL", e[e.ALWAYS = 519] = "ALWAYS", e[e.KEEP = 7680] = "KEEP", e[e.REPLACE = 7681] = "REPLACE", e[e.INCR = 7682] = "INCR", e[e.DECR = 7683] = "DECR", e[e.INVERT = 5386] = "INVERT", e[e.INCR_WRAP = 34055] = "INCR_WRAP", e[e.DECR_WRAP = 34056] = "DECR_WRAP", e[e.NEAREST = 9728] = "NEAREST", e[e.LINEAR = 9729] = "LINEAR", e[e.NEAREST_MIPMAP_NEAREST = 9984] = "NEAREST_MIPMAP_NEAREST", e[e.LINEAR_MIPMAP_NEAREST = 9985] = "LINEAR_MIPMAP_NEAREST", e[e.NEAREST_MIPMAP_LINEAR = 9986] = "NEAREST_MIPMAP_LINEAR", e[e.LINEAR_MIPMAP_LINEAR = 9987] = "LINEAR_MIPMAP_LINEAR", e[e.TEXTURE_MAG_FILTER = 10240] = "TEXTURE_MAG_FILTER", e[e.TEXTURE_MIN_FILTER = 10241] = "TEXTURE_MIN_FILTER", e[e.TEXTURE_WRAP_S = 10242] = "TEXTURE_WRAP_S", e[e.TEXTURE_WRAP_T = 10243] = "TEXTURE_WRAP_T", e[e.TEXTURE_2D = 3553] = "TEXTURE_2D", e[e.TEXTURE = 5890] = "TEXTURE", e[e.TEXTURE_CUBE_MAP = 34067] = "TEXTURE_CUBE_MAP", e[e.TEXTURE_BINDING_CUBE_MAP = 34068] = "TEXTURE_BINDING_CUBE_MAP", e[e.TEXTURE_CUBE_MAP_POSITIVE_X = 34069] = "TEXTURE_CUBE_MAP_POSITIVE_X", e[e.TEXTURE_CUBE_MAP_NEGATIVE_X = 34070] = "TEXTURE_CUBE_MAP_NEGATIVE_X", e[e.TEXTURE_CUBE_MAP_POSITIVE_Y = 34071] = "TEXTURE_CUBE_MAP_POSITIVE_Y", e[e.TEXTURE_CUBE_MAP_NEGATIVE_Y = 34072] = "TEXTURE_CUBE_MAP_NEGATIVE_Y", e[e.TEXTURE_CUBE_MAP_POSITIVE_Z = 34073] = "TEXTURE_CUBE_MAP_POSITIVE_Z", e[e.TEXTURE_CUBE_MAP_NEGATIVE_Z = 34074] = "TEXTURE_CUBE_MAP_NEGATIVE_Z", e[e.MAX_CUBE_MAP_TEXTURE_SIZE = 34076] = "MAX_CUBE_MAP_TEXTURE_SIZE", e[e.TEXTURE0 = 33984] = "TEXTURE0", e[e.ACTIVE_TEXTURE = 34016] = "ACTIVE_TEXTURE", e[e.REPEAT = 10497] = "REPEAT", e[e.CLAMP_TO_EDGE = 33071] = "CLAMP_TO_EDGE", e[e.MIRRORED_REPEAT = 33648] = "MIRRORED_REPEAT", e[e.TEXTURE_WIDTH = 4096] = "TEXTURE_WIDTH", e[e.TEXTURE_HEIGHT = 4097] = "TEXTURE_HEIGHT", e[e.FLOAT_VEC2 = 35664] = "FLOAT_VEC2", e[e.FLOAT_VEC3 = 35665] = "FLOAT_VEC3", e[e.FLOAT_VEC4 = 35666] = "FLOAT_VEC4", e[e.INT_VEC2 = 35667] = "INT_VEC2", e[e.INT_VEC3 = 35668] = "INT_VEC3", e[e.INT_VEC4 = 35669] = "INT_VEC4", e[e.BOOL = 35670] = "BOOL", e[e.BOOL_VEC2 = 35671] = "BOOL_VEC2", e[e.BOOL_VEC3 = 35672] = "BOOL_VEC3", e[e.BOOL_VEC4 = 35673] = "BOOL_VEC4", e[e.FLOAT_MAT2 = 35674] = "FLOAT_MAT2", e[e.FLOAT_MAT3 = 35675] = "FLOAT_MAT3", e[e.FLOAT_MAT4 = 35676] = "FLOAT_MAT4", e[e.SAMPLER_2D = 35678] = "SAMPLER_2D", e[e.SAMPLER_CUBE = 35680] = "SAMPLER_CUBE", e[e.LOW_FLOAT = 36336] = "LOW_FLOAT", e[e.MEDIUM_FLOAT = 36337] = "MEDIUM_FLOAT", e[e.HIGH_FLOAT = 36338] = "HIGH_FLOAT", e[e.LOW_INT = 36339] = "LOW_INT", e[e.MEDIUM_INT = 36340] = "MEDIUM_INT", e[e.HIGH_INT = 36341] = "HIGH_INT", e[e.FRAMEBUFFER = 36160] = "FRAMEBUFFER", e[e.RENDERBUFFER = 36161] = "RENDERBUFFER", e[e.RGBA4 = 32854] = "RGBA4", e[e.RGB5_A1 = 32855] = "RGB5_A1", e[e.RGB565 = 36194] = "RGB565", e[e.DEPTH_COMPONENT16 = 33189] = "DEPTH_COMPONENT16", e[e.STENCIL_INDEX = 6401] = "STENCIL_INDEX", e[e.STENCIL_INDEX8 = 36168] = "STENCIL_INDEX8", e[e.DEPTH_STENCIL = 34041] = "DEPTH_STENCIL", e[e.RENDERBUFFER_WIDTH = 36162] = "RENDERBUFFER_WIDTH", e[e.RENDERBUFFER_HEIGHT = 36163] = "RENDERBUFFER_HEIGHT", e[e.RENDERBUFFER_INTERNAL_FORMAT = 36164] = "RENDERBUFFER_INTERNAL_FORMAT", e[e.RENDERBUFFER_RED_SIZE = 36176] = "RENDERBUFFER_RED_SIZE", e[e.RENDERBUFFER_GREEN_SIZE = 36177] = "RENDERBUFFER_GREEN_SIZE", e[e.RENDERBUFFER_BLUE_SIZE = 36178] = "RENDERBUFFER_BLUE_SIZE", e[e.RENDERBUFFER_ALPHA_SIZE = 36179] = "RENDERBUFFER_ALPHA_SIZE", e[e.RENDERBUFFER_DEPTH_SIZE = 36180] = "RENDERBUFFER_DEPTH_SIZE", e[e.RENDERBUFFER_STENCIL_SIZE = 36181] = "RENDERBUFFER_STENCIL_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE = 36048] = "FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE", e[e.FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 36049] = "FRAMEBUFFER_ATTACHMENT_OBJECT_NAME", e[e.FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = 36050] = "FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL", e[e.FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 36051] = "FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE", e[e.COLOR_ATTACHMENT0 = 36064] = "COLOR_ATTACHMENT0", e[e.DEPTH_ATTACHMENT = 36096] = "DEPTH_ATTACHMENT", e[e.STENCIL_ATTACHMENT = 36128] = "STENCIL_ATTACHMENT", e[e.DEPTH_STENCIL_ATTACHMENT = 33306] = "DEPTH_STENCIL_ATTACHMENT", e[e.NONE = 0] = "NONE", e[e.FRAMEBUFFER_COMPLETE = 36053] = "FRAMEBUFFER_COMPLETE", e[e.FRAMEBUFFER_INCOMPLETE_ATTACHMENT = 36054] = "FRAMEBUFFER_INCOMPLETE_ATTACHMENT", e[e.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = 36055] = "FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT", e[e.FRAMEBUFFER_INCOMPLETE_DIMENSIONS = 36057] = "FRAMEBUFFER_INCOMPLETE_DIMENSIONS", e[e.FRAMEBUFFER_UNSUPPORTED = 36061] = "FRAMEBUFFER_UNSUPPORTED", e[e.FRAMEBUFFER_BINDING = 36006] = "FRAMEBUFFER_BINDING", e[e.RENDERBUFFER_BINDING = 36007] = "RENDERBUFFER_BINDING", e[e.READ_FRAMEBUFFER = 36008] = "READ_FRAMEBUFFER", e[e.DRAW_FRAMEBUFFER = 36009] = "DRAW_FRAMEBUFFER", e[e.MAX_RENDERBUFFER_SIZE = 34024] = "MAX_RENDERBUFFER_SIZE", e[e.INVALID_FRAMEBUFFER_OPERATION = 1286] = "INVALID_FRAMEBUFFER_OPERATION", e[e.UNPACK_FLIP_Y_WEBGL = 37440] = "UNPACK_FLIP_Y_WEBGL", e[e.UNPACK_PREMULTIPLY_ALPHA_WEBGL = 37441] = "UNPACK_PREMULTIPLY_ALPHA_WEBGL", e[e.UNPACK_COLORSPACE_CONVERSION_WEBGL = 37443] = "UNPACK_COLORSPACE_CONVERSION_WEBGL", e[e.READ_BUFFER = 3074] = "READ_BUFFER", e[e.UNPACK_ROW_LENGTH = 3314] = "UNPACK_ROW_LENGTH", e[e.UNPACK_SKIP_ROWS = 3315] = "UNPACK_SKIP_ROWS", e[e.UNPACK_SKIP_PIXELS = 3316] = "UNPACK_SKIP_PIXELS", e[e.PACK_ROW_LENGTH = 3330] = "PACK_ROW_LENGTH", e[e.PACK_SKIP_ROWS = 3331] = "PACK_SKIP_ROWS", e[e.PACK_SKIP_PIXELS = 3332] = "PACK_SKIP_PIXELS", e[e.TEXTURE_BINDING_3D = 32874] = "TEXTURE_BINDING_3D", e[e.UNPACK_SKIP_IMAGES = 32877] = "UNPACK_SKIP_IMAGES", e[e.UNPACK_IMAGE_HEIGHT = 32878] = "UNPACK_IMAGE_HEIGHT", e[e.MAX_3D_TEXTURE_SIZE = 32883] = "MAX_3D_TEXTURE_SIZE", e[e.MAX_ELEMENTS_VERTICES = 33e3] = "MAX_ELEMENTS_VERTICES", e[e.MAX_ELEMENTS_INDICES = 33001] = "MAX_ELEMENTS_INDICES", e[e.MAX_TEXTURE_LOD_BIAS = 34045] = "MAX_TEXTURE_LOD_BIAS", e[e.MAX_FRAGMENT_UNIFORM_COMPONENTS = 35657] = "MAX_FRAGMENT_UNIFORM_COMPONENTS", e[e.MAX_VERTEX_UNIFORM_COMPONENTS = 35658] = "MAX_VERTEX_UNIFORM_COMPONENTS", e[e.MAX_ARRAY_TEXTURE_LAYERS = 35071] = "MAX_ARRAY_TEXTURE_LAYERS", e[e.MIN_PROGRAM_TEXEL_OFFSET = 35076] = "MIN_PROGRAM_TEXEL_OFFSET", e[e.MAX_PROGRAM_TEXEL_OFFSET = 35077] = "MAX_PROGRAM_TEXEL_OFFSET", e[e.MAX_VARYING_COMPONENTS = 35659] = "MAX_VARYING_COMPONENTS", e[e.FRAGMENT_SHADER_DERIVATIVE_HINT = 35723] = "FRAGMENT_SHADER_DERIVATIVE_HINT", e[e.RASTERIZER_DISCARD = 35977] = "RASTERIZER_DISCARD", e[e.VERTEX_ARRAY_BINDING = 34229] = "VERTEX_ARRAY_BINDING", e[e.MAX_VERTEX_OUTPUT_COMPONENTS = 37154] = "MAX_VERTEX_OUTPUT_COMPONENTS", e[e.MAX_FRAGMENT_INPUT_COMPONENTS = 37157] = "MAX_FRAGMENT_INPUT_COMPONENTS", e[e.MAX_SERVER_WAIT_TIMEOUT = 37137] = "MAX_SERVER_WAIT_TIMEOUT", e[e.MAX_ELEMENT_INDEX = 36203] = "MAX_ELEMENT_INDEX", e[e.RED = 6403] = "RED", e[e.RGB8 = 32849] = "RGB8", e[e.RGBA8 = 32856] = "RGBA8", e[e.RGB10_A2 = 32857] = "RGB10_A2", e[e.TEXTURE_3D = 32879] = "TEXTURE_3D", e[e.TEXTURE_WRAP_R = 32882] = "TEXTURE_WRAP_R", e[e.TEXTURE_MIN_LOD = 33082] = "TEXTURE_MIN_LOD", e[e.TEXTURE_MAX_LOD = 33083] = "TEXTURE_MAX_LOD", e[e.TEXTURE_BASE_LEVEL = 33084] = "TEXTURE_BASE_LEVEL", e[e.TEXTURE_MAX_LEVEL = 33085] = "TEXTURE_MAX_LEVEL", e[e.TEXTURE_COMPARE_MODE = 34892] = "TEXTURE_COMPARE_MODE", e[e.TEXTURE_COMPARE_FUNC = 34893] = "TEXTURE_COMPARE_FUNC", e[e.SRGB = 35904] = "SRGB", e[e.SRGB8 = 35905] = "SRGB8", e[e.SRGB8_ALPHA8 = 35907] = "SRGB8_ALPHA8", e[e.COMPARE_REF_TO_TEXTURE = 34894] = "COMPARE_REF_TO_TEXTURE", e[e.RGBA32F = 34836] = "RGBA32F", e[e.RGB32F = 34837] = "RGB32F", e[e.RGBA16F = 34842] = "RGBA16F", e[e.RGB16F = 34843] = "RGB16F", e[e.TEXTURE_2D_ARRAY = 35866] = "TEXTURE_2D_ARRAY", e[e.TEXTURE_BINDING_2D_ARRAY = 35869] = "TEXTURE_BINDING_2D_ARRAY", e[e.R11F_G11F_B10F = 35898] = "R11F_G11F_B10F", e[e.RGB9_E5 = 35901] = "RGB9_E5", e[e.RGBA32UI = 36208] = "RGBA32UI", e[e.RGB32UI = 36209] = "RGB32UI", e[e.RGBA16UI = 36214] = "RGBA16UI", e[e.RGB16UI = 36215] = "RGB16UI", e[e.RGBA8UI = 36220] = "RGBA8UI", e[e.RGB8UI = 36221] = "RGB8UI", e[e.RGBA32I = 36226] = "RGBA32I", e[e.RGB32I = 36227] = "RGB32I", e[e.RGBA16I = 36232] = "RGBA16I", e[e.RGB16I = 36233] = "RGB16I", e[e.RGBA8I = 36238] = "RGBA8I", e[e.RGB8I = 36239] = "RGB8I", e[e.RED_INTEGER = 36244] = "RED_INTEGER", e[e.RGB_INTEGER = 36248] = "RGB_INTEGER", e[e.RGBA_INTEGER = 36249] = "RGBA_INTEGER", e[e.R8 = 33321] = "R8", e[e.RG8 = 33323] = "RG8", e[e.R16F = 33325] = "R16F", e[e.R32F = 33326] = "R32F", e[e.RG16F = 33327] = "RG16F", e[e.RG32F = 33328] = "RG32F", e[e.R8I = 33329] = "R8I", e[e.R8UI = 33330] = "R8UI", e[e.R16I = 33331] = "R16I", e[e.R16UI = 33332] = "R16UI", e[e.R32I = 33333] = "R32I", e[e.R32UI = 33334] = "R32UI", e[e.RG8I = 33335] = "RG8I", e[e.RG8UI = 33336] = "RG8UI", e[e.RG16I = 33337] = "RG16I", e[e.RG16UI = 33338] = "RG16UI", e[e.RG32I = 33339] = "RG32I", e[e.RG32UI = 33340] = "RG32UI", e[e.R8_SNORM = 36756] = "R8_SNORM", e[e.RG8_SNORM = 36757] = "RG8_SNORM", e[e.RGB8_SNORM = 36758] = "RGB8_SNORM", e[e.RGBA8_SNORM = 36759] = "RGBA8_SNORM", e[e.RGB10_A2UI = 36975] = "RGB10_A2UI", e[e.TEXTURE_IMMUTABLE_FORMAT = 37167] = "TEXTURE_IMMUTABLE_FORMAT", e[e.TEXTURE_IMMUTABLE_LEVELS = 33503] = "TEXTURE_IMMUTABLE_LEVELS", e[e.UNSIGNED_INT_2_10_10_10_REV = 33640] = "UNSIGNED_INT_2_10_10_10_REV", e[e.UNSIGNED_INT_10F_11F_11F_REV = 35899] = "UNSIGNED_INT_10F_11F_11F_REV", e[e.UNSIGNED_INT_5_9_9_9_REV = 35902] = "UNSIGNED_INT_5_9_9_9_REV", e[e.FLOAT_32_UNSIGNED_INT_24_8_REV = 36269] = "FLOAT_32_UNSIGNED_INT_24_8_REV", e[e.UNSIGNED_INT_24_8 = 34042] = "UNSIGNED_INT_24_8", e[e.HALF_FLOAT = 5131] = "HALF_FLOAT", e[e.RG = 33319] = "RG", e[e.RG_INTEGER = 33320] = "RG_INTEGER", e[e.INT_2_10_10_10_REV = 36255] = "INT_2_10_10_10_REV", e[e.CURRENT_QUERY = 34917] = "CURRENT_QUERY", e[e.QUERY_RESULT = 34918] = "QUERY_RESULT", e[e.QUERY_RESULT_AVAILABLE = 34919] = "QUERY_RESULT_AVAILABLE", e[e.ANY_SAMPLES_PASSED = 35887] = "ANY_SAMPLES_PASSED", e[e.ANY_SAMPLES_PASSED_CONSERVATIVE = 36202] = "ANY_SAMPLES_PASSED_CONSERVATIVE", e[e.MAX_DRAW_BUFFERS = 34852] = "MAX_DRAW_BUFFERS", e[e.DRAW_BUFFER0 = 34853] = "DRAW_BUFFER0", e[e.DRAW_BUFFER1 = 34854] = "DRAW_BUFFER1", e[e.DRAW_BUFFER2 = 34855] = "DRAW_BUFFER2", e[e.DRAW_BUFFER3 = 34856] = "DRAW_BUFFER3", e[e.DRAW_BUFFER4 = 34857] = "DRAW_BUFFER4", e[e.DRAW_BUFFER5 = 34858] = "DRAW_BUFFER5", e[e.DRAW_BUFFER6 = 34859] = "DRAW_BUFFER6", e[e.DRAW_BUFFER7 = 34860] = "DRAW_BUFFER7", e[e.DRAW_BUFFER8 = 34861] = "DRAW_BUFFER8", e[e.DRAW_BUFFER9 = 34862] = "DRAW_BUFFER9", e[e.DRAW_BUFFER10 = 34863] = "DRAW_BUFFER10", e[e.DRAW_BUFFER11 = 34864] = "DRAW_BUFFER11", e[e.DRAW_BUFFER12 = 34865] = "DRAW_BUFFER12", e[e.DRAW_BUFFER13 = 34866] = "DRAW_BUFFER13", e[e.DRAW_BUFFER14 = 34867] = "DRAW_BUFFER14", e[e.DRAW_BUFFER15 = 34868] = "DRAW_BUFFER15", e[e.MAX_COLOR_ATTACHMENTS = 36063] = "MAX_COLOR_ATTACHMENTS", e[e.COLOR_ATTACHMENT1 = 36065] = "COLOR_ATTACHMENT1", e[e.COLOR_ATTACHMENT2 = 36066] = "COLOR_ATTACHMENT2", e[e.COLOR_ATTACHMENT3 = 36067] = "COLOR_ATTACHMENT3", e[e.COLOR_ATTACHMENT4 = 36068] = "COLOR_ATTACHMENT4", e[e.COLOR_ATTACHMENT5 = 36069] = "COLOR_ATTACHMENT5", e[e.COLOR_ATTACHMENT6 = 36070] = "COLOR_ATTACHMENT6", e[e.COLOR_ATTACHMENT7 = 36071] = "COLOR_ATTACHMENT7", e[e.COLOR_ATTACHMENT8 = 36072] = "COLOR_ATTACHMENT8", e[e.COLOR_ATTACHMENT9 = 36073] = "COLOR_ATTACHMENT9", e[e.COLOR_ATTACHMENT10 = 36074] = "COLOR_ATTACHMENT10", e[e.COLOR_ATTACHMENT11 = 36075] = "COLOR_ATTACHMENT11", e[e.COLOR_ATTACHMENT12 = 36076] = "COLOR_ATTACHMENT12", e[e.COLOR_ATTACHMENT13 = 36077] = "COLOR_ATTACHMENT13", e[e.COLOR_ATTACHMENT14 = 36078] = "COLOR_ATTACHMENT14", e[e.COLOR_ATTACHMENT15 = 36079] = "COLOR_ATTACHMENT15", e[e.SAMPLER_3D = 35679] = "SAMPLER_3D", e[e.SAMPLER_2D_SHADOW = 35682] = "SAMPLER_2D_SHADOW", e[e.SAMPLER_2D_ARRAY = 36289] = "SAMPLER_2D_ARRAY", e[e.SAMPLER_2D_ARRAY_SHADOW = 36292] = "SAMPLER_2D_ARRAY_SHADOW", e[e.SAMPLER_CUBE_SHADOW = 36293] = "SAMPLER_CUBE_SHADOW", e[e.INT_SAMPLER_2D = 36298] = "INT_SAMPLER_2D", e[e.INT_SAMPLER_3D = 36299] = "INT_SAMPLER_3D", e[e.INT_SAMPLER_CUBE = 36300] = "INT_SAMPLER_CUBE", e[e.INT_SAMPLER_2D_ARRAY = 36303] = "INT_SAMPLER_2D_ARRAY", e[e.UNSIGNED_INT_SAMPLER_2D = 36306] = "UNSIGNED_INT_SAMPLER_2D", e[e.UNSIGNED_INT_SAMPLER_3D = 36307] = "UNSIGNED_INT_SAMPLER_3D", e[e.UNSIGNED_INT_SAMPLER_CUBE = 36308] = "UNSIGNED_INT_SAMPLER_CUBE", e[e.UNSIGNED_INT_SAMPLER_2D_ARRAY = 36311] = "UNSIGNED_INT_SAMPLER_2D_ARRAY", e[e.MAX_SAMPLES = 36183] = "MAX_SAMPLES", e[e.SAMPLER_BINDING = 35097] = "SAMPLER_BINDING", e[e.PIXEL_PACK_BUFFER = 35051] = "PIXEL_PACK_BUFFER", e[e.PIXEL_UNPACK_BUFFER = 35052] = "PIXEL_UNPACK_BUFFER", e[e.PIXEL_PACK_BUFFER_BINDING = 35053] = "PIXEL_PACK_BUFFER_BINDING", e[e.PIXEL_UNPACK_BUFFER_BINDING = 35055] = "PIXEL_UNPACK_BUFFER_BINDING", e[e.COPY_READ_BUFFER = 36662] = "COPY_READ_BUFFER", e[e.COPY_WRITE_BUFFER = 36663] = "COPY_WRITE_BUFFER", e[e.COPY_READ_BUFFER_BINDING = 36662] = "COPY_READ_BUFFER_BINDING", e[e.COPY_WRITE_BUFFER_BINDING = 36663] = "COPY_WRITE_BUFFER_BINDING", e[e.FLOAT_MAT2x3 = 35685] = "FLOAT_MAT2x3", e[e.FLOAT_MAT2x4 = 35686] = "FLOAT_MAT2x4", e[e.FLOAT_MAT3x2 = 35687] = "FLOAT_MAT3x2", e[e.FLOAT_MAT3x4 = 35688] = "FLOAT_MAT3x4", e[e.FLOAT_MAT4x2 = 35689] = "FLOAT_MAT4x2", e[e.FLOAT_MAT4x3 = 35690] = "FLOAT_MAT4x3", e[e.UNSIGNED_INT_VEC2 = 36294] = "UNSIGNED_INT_VEC2", e[e.UNSIGNED_INT_VEC3 = 36295] = "UNSIGNED_INT_VEC3", e[e.UNSIGNED_INT_VEC4 = 36296] = "UNSIGNED_INT_VEC4", e[e.UNSIGNED_NORMALIZED = 35863] = "UNSIGNED_NORMALIZED", e[e.SIGNED_NORMALIZED = 36764] = "SIGNED_NORMALIZED", e[e.VERTEX_ATTRIB_ARRAY_INTEGER = 35069] = "VERTEX_ATTRIB_ARRAY_INTEGER", e[e.VERTEX_ATTRIB_ARRAY_DIVISOR = 35070] = "VERTEX_ATTRIB_ARRAY_DIVISOR", e[e.TRANSFORM_FEEDBACK_BUFFER_MODE = 35967] = "TRANSFORM_FEEDBACK_BUFFER_MODE", e[e.MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS = 35968] = "MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS", e[e.TRANSFORM_FEEDBACK_VARYINGS = 35971] = "TRANSFORM_FEEDBACK_VARYINGS", e[e.TRANSFORM_FEEDBACK_BUFFER_START = 35972] = "TRANSFORM_FEEDBACK_BUFFER_START", e[e.TRANSFORM_FEEDBACK_BUFFER_SIZE = 35973] = "TRANSFORM_FEEDBACK_BUFFER_SIZE", e[e.TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN = 35976] = "TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN", e[e.MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS = 35978] = "MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS", e[e.MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS = 35979] = "MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS", e[e.INTERLEAVED_ATTRIBS = 35980] = "INTERLEAVED_ATTRIBS", e[e.SEPARATE_ATTRIBS = 35981] = "SEPARATE_ATTRIBS", e[e.TRANSFORM_FEEDBACK_BUFFER = 35982] = "TRANSFORM_FEEDBACK_BUFFER", e[e.TRANSFORM_FEEDBACK_BUFFER_BINDING = 35983] = "TRANSFORM_FEEDBACK_BUFFER_BINDING", e[e.TRANSFORM_FEEDBACK = 36386] = "TRANSFORM_FEEDBACK", e[e.TRANSFORM_FEEDBACK_PAUSED = 36387] = "TRANSFORM_FEEDBACK_PAUSED", e[e.TRANSFORM_FEEDBACK_ACTIVE = 36388] = "TRANSFORM_FEEDBACK_ACTIVE", e[e.TRANSFORM_FEEDBACK_BINDING = 36389] = "TRANSFORM_FEEDBACK_BINDING", e[e.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING = 33296] = "FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING", e[e.FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE = 33297] = "FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE", e[e.FRAMEBUFFER_ATTACHMENT_RED_SIZE = 33298] = "FRAMEBUFFER_ATTACHMENT_RED_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_GREEN_SIZE = 33299] = "FRAMEBUFFER_ATTACHMENT_GREEN_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_BLUE_SIZE = 33300] = "FRAMEBUFFER_ATTACHMENT_BLUE_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE = 33301] = "FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE = 33302] = "FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE", e[e.FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE = 33303] = "FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE", e[e.FRAMEBUFFER_DEFAULT = 33304] = "FRAMEBUFFER_DEFAULT", e[e.DEPTH24_STENCIL8 = 35056] = "DEPTH24_STENCIL8", e[e.DRAW_FRAMEBUFFER_BINDING = 36006] = "DRAW_FRAMEBUFFER_BINDING", e[e.READ_FRAMEBUFFER_BINDING = 36010] = "READ_FRAMEBUFFER_BINDING", e[e.RENDERBUFFER_SAMPLES = 36011] = "RENDERBUFFER_SAMPLES", e[e.FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER = 36052] = "FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER", e[e.FRAMEBUFFER_INCOMPLETE_MULTISAMPLE = 36182] = "FRAMEBUFFER_INCOMPLETE_MULTISAMPLE", e[e.UNIFORM_BUFFER = 35345] = "UNIFORM_BUFFER", e[e.UNIFORM_BUFFER_BINDING = 35368] = "UNIFORM_BUFFER_BINDING", e[e.UNIFORM_BUFFER_START = 35369] = "UNIFORM_BUFFER_START", e[e.UNIFORM_BUFFER_SIZE = 35370] = "UNIFORM_BUFFER_SIZE", e[e.MAX_VERTEX_UNIFORM_BLOCKS = 35371] = "MAX_VERTEX_UNIFORM_BLOCKS", e[e.MAX_FRAGMENT_UNIFORM_BLOCKS = 35373] = "MAX_FRAGMENT_UNIFORM_BLOCKS", e[e.MAX_COMBINED_UNIFORM_BLOCKS = 35374] = "MAX_COMBINED_UNIFORM_BLOCKS", e[e.MAX_UNIFORM_BUFFER_BINDINGS = 35375] = "MAX_UNIFORM_BUFFER_BINDINGS", e[e.MAX_UNIFORM_BLOCK_SIZE = 35376] = "MAX_UNIFORM_BLOCK_SIZE", e[e.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS = 35377] = "MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS", e[e.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS = 35379] = "MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS", e[e.UNIFORM_BUFFER_OFFSET_ALIGNMENT = 35380] = "UNIFORM_BUFFER_OFFSET_ALIGNMENT", e[e.ACTIVE_UNIFORM_BLOCKS = 35382] = "ACTIVE_UNIFORM_BLOCKS", e[e.UNIFORM_TYPE = 35383] = "UNIFORM_TYPE", e[e.UNIFORM_SIZE = 35384] = "UNIFORM_SIZE", e[e.UNIFORM_BLOCK_INDEX = 35386] = "UNIFORM_BLOCK_INDEX", e[e.UNIFORM_OFFSET = 35387] = "UNIFORM_OFFSET", e[e.UNIFORM_ARRAY_STRIDE = 35388] = "UNIFORM_ARRAY_STRIDE", e[e.UNIFORM_MATRIX_STRIDE = 35389] = "UNIFORM_MATRIX_STRIDE", e[e.UNIFORM_IS_ROW_MAJOR = 35390] = "UNIFORM_IS_ROW_MAJOR", e[e.UNIFORM_BLOCK_BINDING = 35391] = "UNIFORM_BLOCK_BINDING", e[e.UNIFORM_BLOCK_DATA_SIZE = 35392] = "UNIFORM_BLOCK_DATA_SIZE", e[e.UNIFORM_BLOCK_ACTIVE_UNIFORMS = 35394] = "UNIFORM_BLOCK_ACTIVE_UNIFORMS", e[e.UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 35395] = "UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES", e[e.UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 35396] = "UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER", e[e.UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 35398] = "UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER", e[e.OBJECT_TYPE = 37138] = "OBJECT_TYPE", e[e.SYNC_CONDITION = 37139] = "SYNC_CONDITION", e[e.SYNC_STATUS = 37140] = "SYNC_STATUS", e[e.SYNC_FLAGS = 37141] = "SYNC_FLAGS", e[e.SYNC_FENCE = 37142] = "SYNC_FENCE", e[e.SYNC_GPU_COMMANDS_COMPLETE = 37143] = "SYNC_GPU_COMMANDS_COMPLETE", e[e.UNSIGNALED = 37144] = "UNSIGNALED", e[e.SIGNALED = 37145] = "SIGNALED", e[e.ALREADY_SIGNALED = 37146] = "ALREADY_SIGNALED", e[e.TIMEOUT_EXPIRED = 37147] = "TIMEOUT_EXPIRED", e[e.CONDITION_SATISFIED = 37148] = "CONDITION_SATISFIED", e[e.WAIT_FAILED = 37149] = "WAIT_FAILED", e[e.SYNC_FLUSH_COMMANDS_BIT = 1] = "SYNC_FLUSH_COMMANDS_BIT", e[e.COLOR = 6144] = "COLOR", e[e.DEPTH = 6145] = "DEPTH", e[e.STENCIL = 6146] = "STENCIL", e[e.MIN = 32775] = "MIN", e[e.MAX = 32776] = "MAX", e[e.DEPTH_COMPONENT24 = 33190] = "DEPTH_COMPONENT24", e[e.STREAM_READ = 35041] = "STREAM_READ", e[e.STREAM_COPY = 35042] = "STREAM_COPY", e[e.STATIC_READ = 35045] = "STATIC_READ", e[e.STATIC_COPY = 35046] = "STATIC_COPY", e[e.DYNAMIC_READ = 35049] = "DYNAMIC_READ", e[e.DYNAMIC_COPY = 35050] = "DYNAMIC_COPY", e[e.DEPTH_COMPONENT32F = 36012] = "DEPTH_COMPONENT32F", e[e.DEPTH32F_STENCIL8 = 36013] = "DEPTH32F_STENCIL8", e[e.INVALID_INDEX = 4294967295] = "INVALID_INDEX", e[e.TIMEOUT_IGNORED = -1] = "TIMEOUT_IGNORED", e[e.MAX_CLIENT_WAIT_TIMEOUT_WEBGL = 37447] = "MAX_CLIENT_WAIT_TIMEOUT_WEBGL", e[e.UNMASKED_VENDOR_WEBGL = 37445] = "UNMASKED_VENDOR_WEBGL", e[e.UNMASKED_RENDERER_WEBGL = 37446] = "UNMASKED_RENDERER_WEBGL", e[e.MAX_TEXTURE_MAX_ANISOTROPY_EXT = 34047] = "MAX_TEXTURE_MAX_ANISOTROPY_EXT", e[e.TEXTURE_MAX_ANISOTROPY_EXT = 34046] = "TEXTURE_MAX_ANISOTROPY_EXT", e[e.R16_EXT = 33322] = "R16_EXT", e[e.RG16_EXT = 33324] = "RG16_EXT", e[e.RGB16_EXT = 32852] = "RGB16_EXT", e[e.RGBA16_EXT = 32859] = "RGBA16_EXT", e[e.R16_SNORM_EXT = 36760] = "R16_SNORM_EXT", e[e.RG16_SNORM_EXT = 36761] = "RG16_SNORM_EXT", e[e.RGB16_SNORM_EXT = 36762] = "RGB16_SNORM_EXT", e[e.RGBA16_SNORM_EXT = 36763] = "RGBA16_SNORM_EXT", e[e.COMPRESSED_RGB_S3TC_DXT1_EXT = 33776] = "COMPRESSED_RGB_S3TC_DXT1_EXT", e[e.COMPRESSED_RGBA_S3TC_DXT1_EXT = 33777] = "COMPRESSED_RGBA_S3TC_DXT1_EXT", e[e.COMPRESSED_RGBA_S3TC_DXT3_EXT = 33778] = "COMPRESSED_RGBA_S3TC_DXT3_EXT", e[e.COMPRESSED_RGBA_S3TC_DXT5_EXT = 33779] = "COMPRESSED_RGBA_S3TC_DXT5_EXT", e[e.COMPRESSED_SRGB_S3TC_DXT1_EXT = 35916] = "COMPRESSED_SRGB_S3TC_DXT1_EXT", e[e.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT = 35917] = "COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT", e[e.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT = 35918] = "COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT", e[e.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT = 35919] = "COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT", e[e.COMPRESSED_RED_RGTC1_EXT = 36283] = "COMPRESSED_RED_RGTC1_EXT", e[e.COMPRESSED_SIGNED_RED_RGTC1_EXT = 36284] = "COMPRESSED_SIGNED_RED_RGTC1_EXT", e[e.COMPRESSED_RED_GREEN_RGTC2_EXT = 36285] = "COMPRESSED_RED_GREEN_RGTC2_EXT", e[e.COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT = 36286] = "COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT", e[e.COMPRESSED_RGBA_BPTC_UNORM_EXT = 36492] = "COMPRESSED_RGBA_BPTC_UNORM_EXT", e[e.COMPRESSED_SRGB_ALPHA_BPTC_UNORM_EXT = 36493] = "COMPRESSED_SRGB_ALPHA_BPTC_UNORM_EXT", e[e.COMPRESSED_RGB_BPTC_SIGNED_FLOAT_EXT = 36494] = "COMPRESSED_RGB_BPTC_SIGNED_FLOAT_EXT", e[e.COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_EXT = 36495] = "COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_EXT", e[e.COMPRESSED_R11_EAC = 37488] = "COMPRESSED_R11_EAC", e[e.COMPRESSED_SIGNED_R11_EAC = 37489] = "COMPRESSED_SIGNED_R11_EAC", e[e.COMPRESSED_RG11_EAC = 37490] = "COMPRESSED_RG11_EAC", e[e.COMPRESSED_SIGNED_RG11_EAC = 37491] = "COMPRESSED_SIGNED_RG11_EAC", e[e.COMPRESSED_RGB8_ETC2 = 37492] = "COMPRESSED_RGB8_ETC2", e[e.COMPRESSED_RGBA8_ETC2_EAC = 37493] = "COMPRESSED_RGBA8_ETC2_EAC", e[e.COMPRESSED_SRGB8_ETC2 = 37494] = "COMPRESSED_SRGB8_ETC2", e[e.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC = 37495] = "COMPRESSED_SRGB8_ALPHA8_ETC2_EAC", e[e.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2 = 37496] = "COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2", e[e.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2 = 37497] = "COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2", e[e.COMPRESSED_RGB_PVRTC_4BPPV1_IMG = 35840] = "COMPRESSED_RGB_PVRTC_4BPPV1_IMG", e[e.COMPRESSED_RGBA_PVRTC_4BPPV1_IMG = 35842] = "COMPRESSED_RGBA_PVRTC_4BPPV1_IMG", e[e.COMPRESSED_RGB_PVRTC_2BPPV1_IMG = 35841] = "COMPRESSED_RGB_PVRTC_2BPPV1_IMG", e[e.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG = 35843] = "COMPRESSED_RGBA_PVRTC_2BPPV1_IMG", e[e.COMPRESSED_RGB_ETC1_WEBGL = 36196] = "COMPRESSED_RGB_ETC1_WEBGL", e[e.COMPRESSED_RGB_ATC_WEBGL = 35986] = "COMPRESSED_RGB_ATC_WEBGL", e[e.COMPRESSED_RGBA_ATC_EXPLICIT_ALPHA_WEBGL = 35986] = "COMPRESSED_RGBA_ATC_EXPLICIT_ALPHA_WEBGL", e[e.COMPRESSED_RGBA_ATC_INTERPOLATED_ALPHA_WEBGL = 34798] = "COMPRESSED_RGBA_ATC_INTERPOLATED_ALPHA_WEBGL", e[e.COMPRESSED_RGBA_ASTC_4x4_KHR = 37808] = "COMPRESSED_RGBA_ASTC_4x4_KHR", e[e.COMPRESSED_RGBA_ASTC_5x4_KHR = 37809] = "COMPRESSED_RGBA_ASTC_5x4_KHR", e[e.COMPRESSED_RGBA_ASTC_5x5_KHR = 37810] = "COMPRESSED_RGBA_ASTC_5x5_KHR", e[e.COMPRESSED_RGBA_ASTC_6x5_KHR = 37811] = "COMPRESSED_RGBA_ASTC_6x5_KHR", e[e.COMPRESSED_RGBA_ASTC_6x6_KHR = 37812] = "COMPRESSED_RGBA_ASTC_6x6_KHR", e[e.COMPRESSED_RGBA_ASTC_8x5_KHR = 37813] = "COMPRESSED_RGBA_ASTC_8x5_KHR", e[e.COMPRESSED_RGBA_ASTC_8x6_KHR = 37814] = "COMPRESSED_RGBA_ASTC_8x6_KHR", e[e.COMPRESSED_RGBA_ASTC_8x8_KHR = 37815] = "COMPRESSED_RGBA_ASTC_8x8_KHR", e[e.COMPRESSED_RGBA_ASTC_10x5_KHR = 37816] = "COMPRESSED_RGBA_ASTC_10x5_KHR", e[e.COMPRESSED_RGBA_ASTC_10x6_KHR = 37817] = "COMPRESSED_RGBA_ASTC_10x6_KHR", e[e.COMPRESSED_RGBA_ASTC_10x8_KHR = 37818] = "COMPRESSED_RGBA_ASTC_10x8_KHR", e[e.COMPRESSED_RGBA_ASTC_10x10_KHR = 37819] = "COMPRESSED_RGBA_ASTC_10x10_KHR", e[e.COMPRESSED_RGBA_ASTC_12x10_KHR = 37820] = "COMPRESSED_RGBA_ASTC_12x10_KHR", e[e.COMPRESSED_RGBA_ASTC_12x12_KHR = 37821] = "COMPRESSED_RGBA_ASTC_12x12_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR = 37840] = "COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR = 37841] = "COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR = 37842] = "COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR = 37843] = "COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR = 37844] = "COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR = 37845] = "COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR = 37846] = "COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR = 37847] = "COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR = 37848] = "COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR = 37849] = "COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR = 37850] = "COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR = 37851] = "COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR = 37852] = "COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR", e[e.COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR = 37853] = "COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR", e[e.QUERY_COUNTER_BITS_EXT = 34916] = "QUERY_COUNTER_BITS_EXT", e[e.CURRENT_QUERY_EXT = 34917] = "CURRENT_QUERY_EXT", e[e.QUERY_RESULT_EXT = 34918] = "QUERY_RESULT_EXT", e[e.QUERY_RESULT_AVAILABLE_EXT = 34919] = "QUERY_RESULT_AVAILABLE_EXT", e[e.TIME_ELAPSED_EXT = 35007] = "TIME_ELAPSED_EXT", e[e.TIMESTAMP_EXT = 36392] = "TIMESTAMP_EXT", e[e.GPU_DISJOINT_EXT = 36795] = "GPU_DISJOINT_EXT", e[e.COMPLETION_STATUS_KHR = 37297] = "COMPLETION_STATUS_KHR", e[e.DEPTH_CLAMP_EXT = 34383] = "DEPTH_CLAMP_EXT", e[e.FIRST_VERTEX_CONVENTION_WEBGL = 36429] = "FIRST_VERTEX_CONVENTION_WEBGL", e[e.LAST_VERTEX_CONVENTION_WEBGL = 36430] = "LAST_VERTEX_CONVENTION_WEBGL", e[e.PROVOKING_VERTEX_WEBL = 36431] = "PROVOKING_VERTEX_WEBL", e[e.POLYGON_MODE_WEBGL = 2880] = "POLYGON_MODE_WEBGL", e[e.POLYGON_OFFSET_LINE_WEBGL = 10754] = "POLYGON_OFFSET_LINE_WEBGL", e[e.LINE_WEBGL = 6913] = "LINE_WEBGL", e[e.FILL_WEBGL = 6914] = "FILL_WEBGL", e[e.MAX_CLIP_DISTANCES_WEBGL = 3378] = "MAX_CLIP_DISTANCES_WEBGL", e[e.MAX_CULL_DISTANCES_WEBGL = 33529] = "MAX_CULL_DISTANCES_WEBGL", e[e.MAX_COMBINED_CLIP_AND_CULL_DISTANCES_WEBGL = 33530] = "MAX_COMBINED_CLIP_AND_CULL_DISTANCES_WEBGL", e[e.CLIP_DISTANCE0_WEBGL = 12288] = "CLIP_DISTANCE0_WEBGL", e[e.CLIP_DISTANCE1_WEBGL = 12289] = "CLIP_DISTANCE1_WEBGL", e[e.CLIP_DISTANCE2_WEBGL = 12290] = "CLIP_DISTANCE2_WEBGL", e[e.CLIP_DISTANCE3_WEBGL = 12291] = "CLIP_DISTANCE3_WEBGL", e[e.CLIP_DISTANCE4_WEBGL = 12292] = "CLIP_DISTANCE4_WEBGL", e[e.CLIP_DISTANCE5_WEBGL = 12293] = "CLIP_DISTANCE5_WEBGL", e[e.CLIP_DISTANCE6_WEBGL = 12294] = "CLIP_DISTANCE6_WEBGL", e[e.CLIP_DISTANCE7_WEBGL = 12295] = "CLIP_DISTANCE7_WEBGL", e[e.POLYGON_OFFSET_CLAMP_EXT = 36379] = "POLYGON_OFFSET_CLAMP_EXT", e[e.LOWER_LEFT_EXT = 36001] = "LOWER_LEFT_EXT", e[e.UPPER_LEFT_EXT = 36002] = "UPPER_LEFT_EXT", e[e.NEGATIVE_ONE_TO_ONE_EXT = 37726] = "NEGATIVE_ONE_TO_ONE_EXT", e[e.ZERO_TO_ONE_EXT = 37727] = "ZERO_TO_ONE_EXT", e[e.CLIP_ORIGIN_EXT = 37724] = "CLIP_ORIGIN_EXT", e[e.CLIP_DEPTH_MODE_EXT = 37725] = "CLIP_DEPTH_MODE_EXT", e[e.SRC1_COLOR_WEBGL = 35065] = "SRC1_COLOR_WEBGL", e[e.SRC1_ALPHA_WEBGL = 34185] = "SRC1_ALPHA_WEBGL", e[e.ONE_MINUS_SRC1_COLOR_WEBGL = 35066] = "ONE_MINUS_SRC1_COLOR_WEBGL", e[e.ONE_MINUS_SRC1_ALPHA_WEBGL = 35067] = "ONE_MINUS_SRC1_ALPHA_WEBGL", e[e.MAX_DUAL_SOURCE_DRAW_BUFFERS_WEBGL = 35068] = "MAX_DUAL_SOURCE_DRAW_BUFFERS_WEBGL", e[e.MIRROR_CLAMP_TO_EDGE_EXT = 34627] = "MIRROR_CLAMP_TO_EDGE_EXT";
-})(P ||= {});
+})(F ||= {});
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/utils/load-script.js
-async function Pt(e, t) {
+async function jn(e, t) {
 	let n = document.getElementsByTagName("head")[0];
 	if (!n) throw Error("loadScript");
 	let r = document.createElement("script");
@@ -2439,89 +3232,99 @@ async function Pt(e, t) {
 	});
 }
 //#endregion
+//#region node_modules/@luma.gl/webgl/dist/context/helpers/webgl-context-data.js
+function Mn(e) {
+	let t = e.luma || {
+		_polyfilled: !1,
+		extensions: {},
+		softwareRenderer: !1
+	};
+	return t._polyfilled ??= !1, t.extensions ||= {}, e.luma = t, t;
+}
+//#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/debug/spector.js
-var Ft = 1, F = null, It = !1, Lt = {
+var Nn = 1, I = null, Pn = !1, Fn = {
 	debugSpectorJS: S.get("debug-spectorjs"),
 	debugSpectorJSUrl: "https://cdn.jsdelivr.net/npm/spectorjs@0.9.30/dist/spector.bundle.js",
 	gl: void 0
 };
-async function Rt(e) {
+async function In(e) {
 	if (!globalThis.SPECTOR) try {
-		await Pt(e.debugSpectorJSUrl || Lt.debugSpectorJSUrl);
+		await jn(e.debugSpectorJSUrl || Fn.debugSpectorJSUrl);
 	} catch (e) {
 		S.warn(String(e));
 	}
 }
-function zt(e) {
+function Ln(e) {
 	if (e = {
-		...Lt,
+		...Fn,
 		...e
 	}, !e.debugSpectorJS) return null;
-	if (!F && globalThis.SPECTOR && !globalThis.luma?.spector) {
-		S.probe(Ft, "SPECTOR found and initialized. Start with `luma.spector.displayUI()`")();
+	if (!I && globalThis.SPECTOR && !globalThis.luma?.spector) {
+		S.probe(Nn, "SPECTOR found and initialized. Start with `luma.spector.displayUI()`")();
 		let { Spector: e } = globalThis.SPECTOR;
-		F = new e(), globalThis.luma && (globalThis.luma.spector = F);
+		I = new e(), globalThis.luma && (globalThis.luma.spector = I);
 	}
-	if (!F) return null;
-	if (It || (It = !0, F.spyCanvases(), F?.onCaptureStarted.add((e) => S.info("Spector capture started:", e)()), F?.onCapture.add((e) => {
-		S.info("Spector capture complete:", e)(), F?.getResultUI(), F?.resultView.display(), F?.resultView.addCapture(e);
+	if (!I) return null;
+	if (Pn || (Pn = !0, I.spyCanvases(), I?.onCaptureStarted.add((e) => S.info("Spector capture started:", e)()), I?.onCapture.add((e) => {
+		S.info("Spector capture complete:", e)(), I?.getResultUI(), I?.resultView.display(), I?.resultView.addCapture(e);
 	})), e.gl) {
-		let t = e.gl, n = t.device;
-		F?.startCapture(e.gl, 500), t.device = n, new Promise((e) => setTimeout(e, 2e3)).then((e) => {
-			S.info("Spector capture stopped after 2 seconds")(), F?.stopCapture();
+		let t = e.gl, n = Mn(t), r = n.device;
+		I?.startCapture(e.gl, 500), n.device = r, new Promise((e) => setTimeout(e, 2e3)).then((e) => {
+			S.info("Spector capture stopped after 2 seconds")(), I?.stopCapture();
 		});
 	}
-	return F;
+	return I;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/debug/webgl-developer-tools.js
-var Bt = "https://unpkg.com/webgl-debug@2.0.1/index.js";
-function Vt(e) {
+var Rn = "https://unpkg.com/webgl-debug@2.0.1/index.js";
+function zn(e) {
 	return e.luma = e.luma || {}, e.luma;
 }
-async function Ht() {
-	i() && !globalThis.WebGLDebugUtils && (globalThis.global = globalThis.global || globalThis, globalThis.global.module = {}, await Pt(Bt));
+async function Bn() {
+	i() && !globalThis.WebGLDebugUtils && (globalThis.global = globalThis.global || globalThis, globalThis.global.module = {}, await jn(Rn));
 }
-function Ut(e, t = {}) {
-	return t.debugWebGL || t.traceWebGL ? Gt(e, t) : Wt(e);
+function Vn(e, t = {}) {
+	return t.debugWebGL || t.traceWebGL ? Un(e, t) : Hn(e);
 }
-function Wt(e) {
-	let t = Vt(e);
+function Hn(e) {
+	let t = zn(e);
 	return t.realContext ? t.realContext : e;
 }
-function Gt(e, t) {
+function Un(e, t) {
 	if (!globalThis.WebGLDebugUtils) return S.warn("webgl-debug not loaded")(), e;
-	let n = Vt(e);
+	let n = zn(e);
 	if (n.debugContext) return n.debugContext;
 	globalThis.WebGLDebugUtils.init({
-		...P,
+		...F,
 		...e
 	});
-	let r = globalThis.WebGLDebugUtils.makeDebugContext(e, qt.bind(null, t), Jt.bind(null, t));
-	for (let e in P) !(e in r) && typeof P[e] == "number" && (r[e] = P[e]);
+	let r = globalThis.WebGLDebugUtils.makeDebugContext(e, Gn.bind(null, t), Kn.bind(null, t));
+	for (let e in F) !(e in r) && typeof F[e] == "number" && (r[e] = F[e]);
 	class i {}
 	Object.setPrototypeOf(r, Object.getPrototypeOf(e)), Object.setPrototypeOf(i, r);
 	let a = Object.create(i);
-	return n.realContext = e, n.debugContext = a, a.debug = !0, a;
+	return n.realContext = e, n.debugContext = a, a.luma = n, a.debug = !0, a;
 }
-function Kt(e, t) {
+function Wn(e, t) {
 	t = Array.from(t).map((e) => e === void 0 ? "undefined" : e);
 	let n = globalThis.WebGLDebugUtils.glFunctionArgsToString(e, t);
 	return n = `${n.slice(0, 100)}${n.length > 100 ? "..." : ""}`, `gl.${e}(${n})`;
 }
-function qt(e, t, n, r) {
+function Gn(e, t, n, r) {
 	r = Array.from(r).map((e) => e === void 0 ? "undefined" : e);
 	let i = `${globalThis.WebGLDebugUtils.glEnumToString(t)} in gl.${n}(${globalThis.WebGLDebugUtils.glFunctionArgsToString(n, r)})`;
-	S.error(i)();
+	throw S.error("%cWebGL", "color: white; background: red; padding: 2px 6px; border-radius: 3px;", i)(), Error(i);
 }
-function Jt(e, t, n) {
+function Kn(e, t, n) {
 	let r = "";
-	S.level >= 1 && (r = Kt(t, n), e.traceWebGL && S.log(1, r)());
-	for (let e of n) e === void 0 && (r ||= Kt(t, n));
+	e.traceWebGL && S.level >= 1 && (r = Wn(t, n), S.info(1, "%cWebGL", "color: white; background: blue; padding: 2px 6px; border-radius: 3px;", r)());
+	for (let e of n) e === void 0 && (r ||= Wn(t, n));
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/parameters/webgl-parameter-tables.js
-var Yt = {
+var qn = {
 	3042: !1,
 	32773: new Float32Array([
 		0,
@@ -2620,10 +3423,10 @@ var Yt = {
 	3316: 0,
 	3315: 0,
 	32877: 0
-}, I = (e, t, n) => t ? e.enable(n) : e.disable(n), Xt = (e, t, n) => e.hint(n, t), L = (e, t, n) => e.pixelStorei(n, t), Zt = (e, t, n) => {
+}, L = (e, t, n) => t ? e.enable(n) : e.disable(n), Jn = (e, t, n) => e.hint(n, t), R = (e, t, n) => e.pixelStorei(n, t), Yn = (e, t, n) => {
 	let r = n === 36006 ? 36009 : 36008;
 	return e.bindFramebuffer(r, t);
-}, R = (e, t, n) => {
+}, z = (e, t, n) => {
 	let r = {
 		34964: 34962,
 		36662: 36662,
@@ -2633,11 +3436,11 @@ var Yt = {
 	}[n];
 	e.bindBuffer(r, t);
 };
-function Qt(e) {
+function Xn(e) {
 	return Array.isArray(e) || ArrayBuffer.isView(e) && !(e instanceof DataView);
 }
-var $t = {
-	3042: I,
+var Zn = {
+	3042: L,
 	32773: (e, t) => e.blendColor(...t),
 	32777: "blendEquation",
 	34877: "blendEquation",
@@ -2647,40 +3450,40 @@ var $t = {
 	32970: "blendFunc",
 	3106: (e, t) => e.clearColor(...t),
 	3107: (e, t) => e.colorMask(...t),
-	2884: I,
+	2884: L,
 	2885: (e, t) => e.cullFace(t),
-	2929: I,
+	2929: L,
 	2931: (e, t) => e.clearDepth(t),
 	2932: (e, t) => e.depthFunc(t),
 	2928: (e, t) => e.depthRange(...t),
 	2930: (e, t) => e.depthMask(t),
-	3024: I,
-	35723: Xt,
+	3024: L,
+	35723: Jn,
 	35725: (e, t) => e.useProgram(t),
 	36007: (e, t) => e.bindRenderbuffer(36161, t),
 	36389: (e, t) => e.bindTransformFeedback?.(36386, t),
 	34229: (e, t) => e.bindVertexArray(t),
-	36006: Zt,
-	36010: Zt,
-	34964: R,
-	36662: R,
-	36663: R,
-	35053: R,
-	35055: R,
+	36006: Yn,
+	36010: Yn,
+	34964: z,
+	36662: z,
+	36663: z,
+	35053: z,
+	35055: z,
 	2886: (e, t) => e.frontFace(t),
-	33170: Xt,
+	33170: Jn,
 	2849: (e, t) => e.lineWidth(t),
-	32823: I,
+	32823: L,
 	32824: "polygonOffset",
 	10752: "polygonOffset",
-	35977: I,
-	32926: I,
-	32928: I,
+	35977: L,
+	32926: L,
+	32928: L,
 	32938: "sampleCoverage",
 	32939: "sampleCoverage",
-	3089: I,
+	3089: L,
 	3088: (e, t) => e.scissor(...t),
-	2960: I,
+	2960: L,
 	2961: (e, t) => e.clearStencil(t),
 	2968: (e, t) => e.stencilMaskSeparate(1028, t),
 	36005: (e, t) => e.stencilMaskSeparate(1029, t),
@@ -2697,29 +3500,29 @@ var $t = {
 	34818: "stencilOpBack",
 	34819: "stencilOpBack",
 	2978: (e, t) => e.viewport(...t),
-	34383: I,
-	10754: I,
-	12288: I,
-	12289: I,
-	12290: I,
-	12291: I,
-	12292: I,
-	12293: I,
-	12294: I,
-	12295: I,
-	3333: L,
-	3317: L,
-	37440: L,
-	37441: L,
-	37443: L,
-	3330: L,
-	3332: L,
-	3331: L,
-	3314: L,
-	32878: L,
-	3316: L,
-	3315: L,
-	32877: L,
+	34383: L,
+	10754: L,
+	12288: L,
+	12289: L,
+	12290: L,
+	12291: L,
+	12292: L,
+	12293: L,
+	12294: L,
+	12295: L,
+	3333: R,
+	3317: R,
+	37440: R,
+	37441: R,
+	37443: R,
+	3330: R,
+	3332: R,
+	3331: R,
+	3314: R,
+	32878: R,
+	3316: R,
+	3315: R,
+	32877: R,
 	framebuffer: (e, t) => {
 		let n = t && "handle" in t ? t.handle : t;
 		return e.bindFramebuffer(36160, n);
@@ -2758,35 +3561,35 @@ var $t = {
 	scissor: (e, t) => e.scissor(...t),
 	stencilTest: (e, t) => t ? e.enable(2960) : e.disable(2960),
 	stencilMask: (e, t) => {
-		t = Qt(t) ? t : [t, t];
+		t = Xn(t) ? t : [t, t];
 		let [n, r] = t;
 		e.stencilMaskSeparate(1028, n), e.stencilMaskSeparate(1029, r);
 	},
 	stencilFunc: (e, t) => {
-		t = Qt(t) && t.length === 3 ? [...t, ...t] : t;
+		t = Xn(t) && t.length === 3 ? [...t, ...t] : t;
 		let [n, r, i, a, o, s] = t;
 		e.stencilFuncSeparate(1028, n, r, i), e.stencilFuncSeparate(1029, a, o, s);
 	},
 	stencilOp: (e, t) => {
-		t = Qt(t) && t.length === 3 ? [...t, ...t] : t;
+		t = Xn(t) && t.length === 3 ? [...t, ...t] : t;
 		let [n, r, i, a, o, s] = t;
 		e.stencilOpSeparate(1028, n, r, i), e.stencilOpSeparate(1029, a, o, s);
 	},
 	viewport: (e, t) => e.viewport(...t)
 };
-function z(e, t, n) {
+function B(e, t, n) {
 	return t[e] === void 0 ? n[e] : t[e];
 }
-var en = {
-	blendEquation: (e, t, n) => e.blendEquationSeparate(z(32777, t, n), z(34877, t, n)),
-	blendFunc: (e, t, n) => e.blendFuncSeparate(z(32969, t, n), z(32968, t, n), z(32971, t, n), z(32970, t, n)),
-	polygonOffset: (e, t, n) => e.polygonOffset(z(32824, t, n), z(10752, t, n)),
-	sampleCoverage: (e, t, n) => e.sampleCoverage(z(32938, t, n), z(32939, t, n)),
-	stencilFuncFront: (e, t, n) => e.stencilFuncSeparate(1028, z(2962, t, n), z(2967, t, n), z(2963, t, n)),
-	stencilFuncBack: (e, t, n) => e.stencilFuncSeparate(1029, z(34816, t, n), z(36003, t, n), z(36004, t, n)),
-	stencilOpFront: (e, t, n) => e.stencilOpSeparate(1028, z(2964, t, n), z(2965, t, n), z(2966, t, n)),
-	stencilOpBack: (e, t, n) => e.stencilOpSeparate(1029, z(34817, t, n), z(34818, t, n), z(34819, t, n))
-}, tn = {
+var Qn = {
+	blendEquation: (e, t, n) => e.blendEquationSeparate(B(32777, t, n), B(34877, t, n)),
+	blendFunc: (e, t, n) => e.blendFuncSeparate(B(32969, t, n), B(32968, t, n), B(32971, t, n), B(32970, t, n)),
+	polygonOffset: (e, t, n) => e.polygonOffset(B(32824, t, n), B(10752, t, n)),
+	sampleCoverage: (e, t, n) => e.sampleCoverage(B(32938, t, n), B(32939, t, n)),
+	stencilFuncFront: (e, t, n) => e.stencilFuncSeparate(1028, B(2962, t, n), B(2967, t, n), B(2963, t, n)),
+	stencilFuncBack: (e, t, n) => e.stencilFuncSeparate(1029, B(34816, t, n), B(36003, t, n), B(36004, t, n)),
+	stencilOpFront: (e, t, n) => e.stencilOpSeparate(1028, B(2964, t, n), B(2965, t, n), B(2966, t, n)),
+	stencilOpBack: (e, t, n) => e.stencilOpSeparate(1029, B(34817, t, n), B(34818, t, n), B(34819, t, n))
+}, $n = {
 	enable: (e, t) => e({ [t]: !0 }),
 	disable: (e, t) => e({ [t]: !1 }),
 	pixelStorei: (e, t, n) => e({ [t]: n }),
@@ -2913,18 +3716,18 @@ var en = {
 		r,
 		i
 	] })
-}, B = (e, t) => e.isEnabled(t), nn = {
-	3042: B,
-	2884: B,
-	2929: B,
-	3024: B,
-	32823: B,
-	32926: B,
-	32928: B,
-	3089: B,
-	2960: B,
-	35977: B
-}, rn = new Set([
+}, V = (e, t) => e.isEnabled(t), er = {
+	3042: V,
+	2884: V,
+	2929: V,
+	3024: V,
+	32823: V,
+	32926: V,
+	32928: V,
+	3089: V,
+	2960: V,
+	35977: V
+}, tr = new Set([
 	34016,
 	36388,
 	36387,
@@ -2958,56 +3761,56 @@ var en = {
 ]);
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/parameters/unified-parameter-api.js
-function V(e, t) {
-	if (sn(t)) return;
+function H(e, t) {
+	if (ir(t)) return;
 	let n = {};
 	for (let r in t) {
-		let i = Number(r), a = $t[r];
+		let i = Number(r), a = Zn[r];
 		a && (typeof a == "string" ? n[a] = !0 : a(e, t[r], i));
 	}
-	let r = e.state && e.state.cache;
+	let r = e.lumaState?.cache;
 	if (r) for (let i in n) {
-		let n = en[i];
+		let n = Qn[i];
 		n(e, t, r);
 	}
 }
-function an(e, t = Yt) {
+function nr(e, t = qn) {
 	if (typeof t == "number") {
-		let n = t, r = nn[n];
+		let n = t, r = er[n];
 		return r ? r(e, n) : e.getParameter(n);
 	}
 	let n = Array.isArray(t) ? t : Object.keys(t), r = {};
 	for (let t of n) {
-		let n = nn[t];
+		let n = er[t];
 		r[t] = n ? n(e, Number(t)) : e.getParameter(Number(t));
 	}
 	return r;
 }
-function on(e) {
-	V(e, Yt);
+function rr(e) {
+	H(e, qn);
 }
-function sn(e) {
+function ir(e) {
 	for (let t in e) return !1;
 	return !0;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/state-tracker/deep-array-equal.js
-function cn(e, t) {
+function ar(e, t) {
 	if (e === t) return !0;
-	if (ln(e) && ln(t) && e.length === t.length) {
+	if (or(e) && or(t) && e.length === t.length) {
 		for (let n = 0; n < e.length; ++n) if (e[n] !== t[n]) return !1;
 		return !0;
 	}
 	return !1;
 }
-function ln(e) {
+function or(e) {
 	return Array.isArray(e) || ArrayBuffer.isView(e);
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/state-tracker/webgl-state-tracker.js
-var H = class {
+var U = class {
 	static get(e) {
-		return e.state;
+		return e.lumaState;
 	}
 	gl;
 	program = null;
@@ -3024,22 +3827,22 @@ var H = class {
 	}
 	pop() {
 		let e = this.stateStack[this.stateStack.length - 1];
-		V(this.gl, e), this.stateStack.pop();
+		H(this.gl, e), this.stateStack.pop();
 	}
 	trackState(e, t) {
-		if (this.cache = t?.copyState ? an(e) : Object.assign({}, Yt), this.initialized) throw Error("WebGLStateTracker");
-		this.initialized = !0, this.gl.state = this, fn(e);
-		for (let t in tn) {
-			let n = tn[t];
-			dn(e, t, n);
+		if (this.cache = t?.copyState ? nr(e) : Object.assign({}, qn), this.initialized) throw Error("WebGLStateTracker");
+		this.initialized = !0, this.gl.lumaState = this, lr(e);
+		for (let t in $n) {
+			let n = $n[t];
+			cr(e, t, n);
 		}
-		un(e, "getParameter"), un(e, "isEnabled");
+		sr(e, "getParameter"), sr(e, "isEnabled");
 	}
 	_updateCache(e) {
 		let t = !1, n, r = this.stateStack.length > 0 ? this.stateStack[this.stateStack.length - 1] : null;
 		for (let i in e) {
 			let a = e[i], o = this.cache[i];
-			cn(a, o) || (t = !0, n = o, r && !(i in r) && (r[i] = o), this.cache[i] = a);
+			ar(a, o) || (t = !0, n = o, r && !(i in r) && (r[i] = o), this.cache[i] = a);
 		}
 		return {
 			valueChanged: t,
@@ -3047,61 +3850,75 @@ var H = class {
 		};
 	}
 };
-function un(e, t) {
+function sr(e, t) {
 	let n = e[t].bind(e);
 	e[t] = function(t) {
-		if (t === void 0 || rn.has(t)) return n(t);
-		let r = H.get(e);
+		if (t === void 0 || tr.has(t)) return n(t);
+		let r = U.get(e);
 		return t in r.cache || (r.cache[t] = n(t)), r.enable ? r.cache[t] : n(t);
 	}, Object.defineProperty(e[t], "name", {
 		value: `${t}-from-cache`,
 		configurable: !1
 	});
 }
-function dn(e, t, n) {
+function cr(e, t, n) {
 	if (!e[t]) return;
 	let r = e[t].bind(e);
 	e[t] = function(...t) {
-		let { valueChanged: i, oldValue: a } = n(H.get(e)._updateCache, ...t);
+		let { valueChanged: i, oldValue: a } = n(U.get(e)._updateCache, ...t);
 		return i && r(...t), a;
 	}, Object.defineProperty(e[t], "name", {
 		value: `${t}-to-cache`,
 		configurable: !1
 	});
 }
-function fn(e) {
+function lr(e) {
 	let t = e.useProgram.bind(e);
 	e.useProgram = function(n) {
-		let r = H.get(e);
+		let r = U.get(e);
 		r.program !== n && (t(n), r.program = n);
 	};
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/helpers/create-browser-context.js
-function pn(e, t, n) {
-	let r = "", i = {
+function ur(e, t, n) {
+	let r = "", i = (e) => {
+		let t = e.statusMessage;
+		t && (r ||= t);
+	};
+	e.addEventListener("webglcontextcreationerror", i, !1);
+	let a = n.failIfMajorPerformanceCaveat !== !0, o = {
 		preserveDrawingBuffer: !0,
-		...n
-	}, a = null;
-	if (a ||= e.getContext("webgl2", i), i.failIfMajorPerformanceCaveat && (r ||= "Only software GPU is available. Set `failIfMajorPerformanceCaveat: false` to allow."), !a && !n.failIfMajorPerformanceCaveat && (i.failIfMajorPerformanceCaveat = !1, a = e.getContext("webgl2", i), a.luma ||= {}, a.luma.softwareRenderer = !0), a || (a = e.getContext("webgl", {}), a && (a = null, r ||= "Your browser only supports WebGL1")), !a) throw r ||= "Your browser does not support WebGL", Error(`Failed to create WebGL context: ${r}`);
-	let { onContextLost: o, onContextRestored: s } = t;
-	return e.addEventListener("webglcontextlost", (e) => o(e), !1), e.addEventListener("webglcontextrestored", (e) => s(e), !1), a.luma ||= {}, a;
+		...n,
+		failIfMajorPerformanceCaveat: !0
+	}, s = null;
+	try {
+		s ||= e.getContext("webgl2", o), !s && o.failIfMajorPerformanceCaveat && (r ||= "Only software GPU is available. Set `failIfMajorPerformanceCaveat: false` to allow.");
+		let n = !1;
+		if (!s && a && (o.failIfMajorPerformanceCaveat = !1, s = e.getContext("webgl2", o), n = !0), s || (s = e.getContext("webgl", {}), s && (s = null, r ||= "Your browser only supports WebGL1")), !s) throw r ||= "Your browser does not support WebGL", Error(`Failed to create WebGL context: ${r}`);
+		let i = Mn(s);
+		i.softwareRenderer = n;
+		let { onContextLost: c, onContextRestored: l } = t;
+		return e.addEventListener("webglcontextlost", (e) => c(e), !1), e.addEventListener("webglcontextrestored", (e) => l(e), !1), s;
+	} finally {
+		e.removeEventListener("webglcontextcreationerror", i, !1);
+	}
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/helpers/webgl-extensions.js
-function U(e, t, n) {
+function W(e, t, n) {
 	return n[t] === void 0 && (n[t] = e.getExtension(t) || null), n[t];
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/device-helpers/webgl-device-info.js
-function mn(e, t) {
+function dr(e, t) {
 	let n = e.getParameter(7936), r = e.getParameter(7937);
-	U(e, "WEBGL_debug_renderer_info", t);
-	let i = t.WEBGL_debug_renderer_info, a = e.getParameter(i ? i.UNMASKED_VENDOR_WEBGL : 7936), o = e.getParameter(i ? i.UNMASKED_RENDERER_WEBGL : 7937), s = a || n, c = o || r, l = e.getParameter(7938), u = hn(s, c), d = gn(s, c);
+	W(e, "WEBGL_debug_renderer_info", t);
+	let i = t.WEBGL_debug_renderer_info, a = e.getParameter(i ? i.UNMASKED_VENDOR_WEBGL : 7936), o = e.getParameter(i ? i.UNMASKED_RENDERER_WEBGL : 7937), s = a || n, c = o || r, l = e.getParameter(7938), u = fr(s, c), d = pr(s, c);
 	return {
 		type: "webgl",
 		gpu: u,
-		gpuType: _n(s, c),
+		gpuType: mr(s, c),
 		gpuBackend: d,
 		vendor: s,
 		renderer: c,
@@ -3110,24 +3927,28 @@ function mn(e, t) {
 		shadingLanguageVersion: 300
 	};
 }
-function hn(e, t) {
+function fr(e, t) {
 	return /NVIDIA/i.exec(e) || /NVIDIA/i.exec(t) ? "nvidia" : /INTEL/i.exec(e) || /INTEL/i.exec(t) ? "intel" : /Apple/i.exec(e) || /Apple/i.exec(t) ? "apple" : /AMD/i.exec(e) || /AMD/i.exec(t) || /ATI/i.exec(e) || /ATI/i.exec(t) ? "amd" : /SwiftShader/i.exec(e) || /SwiftShader/i.exec(t) ? "software" : "unknown";
 }
-function gn(e, t) {
+function pr(e, t) {
 	return /Metal/i.exec(e) || /Metal/i.exec(t) ? "metal" : /ANGLE/i.exec(e) || /ANGLE/i.exec(t) ? "opengl" : "unknown";
 }
-function _n(e, t) {
+function mr(e, t) {
 	if (/SwiftShader/i.exec(e) || /SwiftShader/i.exec(t)) return "cpu";
-	switch (hn(e, t)) {
+	switch (fr(e, t)) {
+		case "apple": return hr(e, t) ? "integrated" : "unknown";
 		case "intel": return "integrated";
 		case "software": return "cpu";
 		case "unknown": return "unknown";
 		default: return "discrete";
 	}
 }
+function hr(e, t) {
+	return /Apple (M\d|A\d|GPU)/i.test(`${e} ${t}`);
+}
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/converters/webgl-vertex-formats.js
-function vn(e) {
+function gr(e) {
 	switch (e) {
 		case "uint8": return 5121;
 		case "sint8": return 5120;
@@ -3146,43 +3967,57 @@ function vn(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/converters/webgl-texture-table.js
-var W = "WEBGL_compressed_texture_s3tc", G = "WEBGL_compressed_texture_s3tc_srgb", K = "EXT_texture_compression_rgtc", q = "EXT_texture_compression_bptc", yn = "WEBGL_compressed_texture_etc", bn = "WEBGL_compressed_texture_astc", xn = "WEBGL_compressed_texture_etc1", Sn = "WEBGL_compressed_texture_pvrtc", Cn = "WEBGL_compressed_texture_atc", wn = "EXT_texture_norm16", Tn = "EXT_render_snorm", En = "EXT_color_buffer_float", Dn = {
-	"float32-renderable-webgl": ["EXT_color_buffer_float"],
-	"float16-renderable-webgl": ["EXT_color_buffer_half_float"],
-	"rgb9e5ufloat-renderable-webgl": ["WEBGL_render_shared_exponent"],
-	"snorm8-renderable-webgl": [Tn],
-	"norm16-renderable-webgl": [wn],
-	"snorm16-renderable-webgl": [wn, Tn],
-	"float32-filterable": ["OES_texture_float_linear"],
-	"float16-filterable-webgl": ["OES_texture_half_float_linear"],
-	"texture-filterable-anisotropic-webgl": ["EXT_texture_filter_anisotropic"],
-	"texture-blend-float-webgl": ["EXT_float_blend"],
-	"texture-compression-bc": [
-		W,
+var G = "WEBGL_compressed_texture_s3tc", K = "WEBGL_compressed_texture_s3tc_srgb", q = "EXT_texture_compression_rgtc", J = "EXT_texture_compression_bptc", _r = "WEBGL_compressed_texture_etc", vr = "WEBGL_compressed_texture_astc", yr = "WEBGL_compressed_texture_etc1", br = "WEBGL_compressed_texture_pvrtc", xr = "WEBGL_compressed_texture_atc", Sr = "EXT_texture_norm16", Cr = "EXT_render_snorm", wr = "EXT_color_buffer_float", Tr = "snorm8-renderable-webgl", Er = "norm16-renderable-webgl", Dr = "snorm16-renderable-webgl", Or = "float16-renderable-webgl", kr = "float32-renderable-webgl", Ar = "rgb9e5ufloat-renderable-webgl", jr = {
+	"float32-renderable-webgl": { extensions: [wr] },
+	"float16-renderable-webgl": { extensions: ["EXT_color_buffer_half_float"] },
+	"rgb9e5ufloat-renderable-webgl": { extensions: ["WEBGL_render_shared_exponent"] },
+	"snorm8-renderable-webgl": { extensions: [Cr] },
+	"norm16-webgl": { extensions: [Sr] },
+	"norm16-renderable-webgl": { features: ["norm16-webgl"] },
+	"snorm16-renderable-webgl": {
+		features: ["norm16-webgl"],
+		extensions: [Cr]
+	},
+	"float32-filterable": { extensions: ["OES_texture_float_linear"] },
+	"float16-filterable-webgl": { extensions: ["OES_texture_half_float_linear"] },
+	"texture-filterable-anisotropic-webgl": { extensions: ["EXT_texture_filter_anisotropic"] },
+	"texture-blend-float-webgl": { extensions: ["EXT_float_blend"] },
+	"texture-compression-bc": { extensions: [
 		G,
 		K,
-		q
-	],
-	"texture-compression-bc5-webgl": [K],
-	"texture-compression-bc7-webgl": [q],
-	"texture-compression-etc2": [yn],
-	"texture-compression-astc": [bn],
-	"texture-compression-etc1-webgl": [xn],
-	"texture-compression-pvrtc-webgl": [Sn],
-	"texture-compression-atc-webgl": [Cn]
+		q,
+		J
+	] },
+	"texture-compression-bc5-webgl": { extensions: [q] },
+	"texture-compression-bc7-webgl": { extensions: [J] },
+	"texture-compression-etc2": { extensions: [_r] },
+	"texture-compression-astc": { extensions: [vr] },
+	"texture-compression-etc1-webgl": { extensions: [yr] },
+	"texture-compression-pvrtc-webgl": { extensions: [br] },
+	"texture-compression-atc-webgl": { extensions: [xr] }
 };
-function On(e) {
-	return e in Dn;
+function Mr(e) {
+	return e in jr;
 }
-function kn(e, t, n) {
-	return (Dn[t] || []).every((t) => U(e, t, n));
+function Nr(e, t, n) {
+	return Pr(e, t, n, /* @__PURE__ */ new Set());
 }
-var An = {
+function Pr(e, t, n, r) {
+	let i = jr[t];
+	if (!i || r.has(t)) return !1;
+	r.add(t);
+	let a = (i.features || []).every((t) => Pr(e, t, n, r));
+	return r.delete(t), a ? (i.extensions || []).every((t) => !!W(e, t, n)) : !1;
+}
+var Fr = {
 	r8unorm: {
 		gl: 33321,
 		rb: !0
 	},
-	r8snorm: { gl: 36756 },
+	r8snorm: {
+		gl: 36756,
+		r: Tr
+	},
 	r8uint: {
 		gl: 33330,
 		rb: !0
@@ -3195,7 +4030,10 @@ var An = {
 		gl: 33323,
 		rb: !0
 	},
-	rg8snorm: { gl: 36757 },
+	rg8snorm: {
+		gl: 36757,
+		r: Tr
+	},
 	rg8uint: {
 		gl: 33336,
 		rb: !0
@@ -3214,13 +4052,18 @@ var An = {
 	},
 	r16float: {
 		gl: 33325,
-		rb: !0
+		rb: !0,
+		r: Or
 	},
 	r16unorm: {
 		gl: 33322,
-		rb: !0
+		rb: !0,
+		r: Er
 	},
-	r16snorm: { gl: 36760 },
+	r16snorm: {
+		gl: 36760,
+		r: Dr
+	},
 	"rgba4unorm-webgl": {
 		gl: 32854,
 		rb: !0
@@ -3237,7 +4080,10 @@ var An = {
 	"rgb8snorm-webgl": { gl: 36758 },
 	rgba8unorm: { gl: 32856 },
 	"rgba8unorm-srgb": { gl: 35907 },
-	rgba8snorm: { gl: 36759 },
+	rgba8snorm: {
+		gl: 36759,
+		r: Tr
+	},
 	rgba8uint: { gl: 36220 },
 	rgba8sint: { gl: 36238 },
 	bgra8unorm: {},
@@ -3246,10 +4092,17 @@ var An = {
 	rg16sint: { gl: 33337 },
 	rg16float: {
 		gl: 33327,
-		rb: !0
+		rb: !0,
+		r: Or
 	},
-	rg16unorm: { gl: 33324 },
-	rg16snorm: { gl: 36761 },
+	rg16unorm: {
+		gl: 33324,
+		r: Er
+	},
+	rg16snorm: {
+		gl: 36761,
+		r: Dr
+	},
 	r32uint: {
 		gl: 33334,
 		rb: !0
@@ -3258,8 +4111,14 @@ var An = {
 		gl: 33333,
 		rb: !0
 	},
-	r32float: { gl: 33326 },
-	rgb9e5ufloat: { gl: 35901 },
+	r32float: {
+		gl: 33326,
+		r: kr
+	},
+	rgb9e5ufloat: {
+		gl: 35901,
+		r: Ar
+	},
 	rg11b10ufloat: {
 		gl: 35898,
 		rb: !0
@@ -3272,8 +4131,14 @@ var An = {
 		gl: 36975,
 		rb: !0
 	},
-	"rgb16unorm-webgl": { gl: 32852 },
-	"rgb16snorm-webgl": { gl: 36762 },
+	"rgb16unorm-webgl": {
+		gl: 32852,
+		r: !1
+	},
+	"rgb16snorm-webgl": {
+		gl: 36762,
+		r: !1
+	},
 	rg32uint: {
 		gl: 33340,
 		rb: !0
@@ -3284,7 +4149,8 @@ var An = {
 	},
 	rg32float: {
 		gl: 33328,
-		rb: !0
+		rb: !0,
+		r: kr
 	},
 	rgba16uint: {
 		gl: 36214,
@@ -3294,15 +4160,23 @@ var An = {
 		gl: 36232,
 		rb: !0
 	},
-	rgba16float: { gl: 34842 },
+	rgba16float: {
+		gl: 34842,
+		r: Or
+	},
 	rgba16unorm: {
 		gl: 32859,
-		rb: !0
+		rb: !0,
+		r: Er
 	},
-	rgba16snorm: { gl: 36763 },
+	rgba16snorm: {
+		gl: 36763,
+		r: Dr
+	},
 	"rgb32float-webgl": {
 		gl: 34837,
-		x: En,
+		x: wr,
+		r: kr,
 		dataFormat: 6407,
 		types: [5126]
 	},
@@ -3316,7 +4190,8 @@ var An = {
 	},
 	rgba32float: {
 		gl: 34836,
-		rb: !0
+		rb: !0,
+		r: kr
 	},
 	stencil8: {
 		gl: 36168,
@@ -3354,67 +4229,67 @@ var An = {
 	},
 	"bc1-rgb-unorm-webgl": {
 		gl: 33776,
-		x: W
+		x: G
 	},
 	"bc1-rgb-unorm-srgb-webgl": {
 		gl: 35916,
-		x: G
+		x: K
 	},
 	"bc1-rgba-unorm": {
 		gl: 33777,
-		x: W
+		x: G
 	},
 	"bc1-rgba-unorm-srgb": {
 		gl: 35916,
-		x: G
+		x: K
 	},
 	"bc2-rgba-unorm": {
 		gl: 33778,
-		x: W
+		x: G
 	},
 	"bc2-rgba-unorm-srgb": {
 		gl: 35918,
-		x: G
+		x: K
 	},
 	"bc3-rgba-unorm": {
 		gl: 33779,
-		x: W
+		x: G
 	},
 	"bc3-rgba-unorm-srgb": {
 		gl: 35919,
-		x: G
+		x: K
 	},
 	"bc4-r-unorm": {
 		gl: 36283,
-		x: K
+		x: q
 	},
 	"bc4-r-snorm": {
 		gl: 36284,
-		x: K
+		x: q
 	},
 	"bc5-rg-unorm": {
 		gl: 36285,
-		x: K
+		x: q
 	},
 	"bc5-rg-snorm": {
 		gl: 36286,
-		x: K
+		x: q
 	},
 	"bc6h-rgb-ufloat": {
 		gl: 36495,
-		x: q
+		x: J
 	},
 	"bc6h-rgb-float": {
 		gl: 36494,
-		x: q
+		x: J
 	},
 	"bc7-rgba-unorm": {
 		gl: 36492,
-		x: q
+		x: J
 	},
 	"bc7-rgba-unorm-srgb": {
 		gl: 36493,
-		x: q
+		x: J
 	},
 	"etc2-rgb8unorm": { gl: 37492 },
 	"etc2-rgb8unorm-srgb": { gl: 37494 },
@@ -3442,8 +4317,8 @@ var An = {
 	"astc-8x6-unorm-srgb": { gl: 37846 },
 	"astc-8x8-unorm": { gl: 37815 },
 	"astc-8x8-unorm-srgb": { gl: 37847 },
-	"astc-10x5-unorm": { gl: 37819 },
-	"astc-10x5-unorm-srgb": { gl: 37851 },
+	"astc-10x5-unorm": { gl: 37816 },
+	"astc-10x5-unorm-srgb": { gl: 37848 },
 	"astc-10x6-unorm": { gl: 37817 },
 	"astc-10x6-unorm-srgb": { gl: 37849 },
 	"astc-10x8-unorm": { gl: 37818 },
@@ -3456,42 +4331,60 @@ var An = {
 	"astc-12x12-unorm-srgb": { gl: 37853 },
 	"pvrtc-rgb4unorm-webgl": { gl: 35840 },
 	"pvrtc-rgba4unorm-webgl": { gl: 35842 },
-	"pvrtc-rbg2unorm-webgl": { gl: 35841 },
+	"pvrtc-rgb2unorm-webgl": { gl: 35841 },
 	"pvrtc-rgba2unorm-webgl": { gl: 35843 },
 	"etc1-rbg-unorm-webgl": { gl: 36196 },
 	"atc-rgb-unorm-webgl": { gl: 35986 },
 	"atc-rgba-unorm-webgl": { gl: 35986 },
 	"atc-rgbai-unorm-webgl": { gl: 34798 }
 };
-function jn(e, t, n) {
-	let r = t.create, i = An[t.format];
-	return i?.gl === void 0 && (r = !1), i?.x && (r &&= !!U(e, i.x, n)), {
+function Ir(e, t, n) {
+	let r = t.create, i = Fr[t.format];
+	i?.gl === void 0 && (r = !1), i?.x && (r &&= !!W(e, i.x, n)), t.format === "stencil8" && (r = !1);
+	let a = i?.r === !1 ? !1 : i?.r === void 0 || Nr(e, i.r, n), o = r && t.render && a && Lr(e, t.format, n);
+	return {
 		format: t.format,
 		create: r && t.create,
-		render: r && t.render,
+		render: o,
 		filter: r && t.filter,
 		blend: r && t.blend,
 		store: r && t.store
 	};
 }
-function Mn(e) {
-	let t = An[e], n = Fn(e), r = M.getInfo(e);
+function Lr(e, t, n) {
+	let r = Fr[t], i = r?.gl;
+	if (i === void 0 || r?.x && !W(e, r.x, n)) return !1;
+	let a = e.getParameter(32873), o = e.getParameter(36006), s = e.createTexture(), c = e.createFramebuffer();
+	if (!s || !c) return !1;
+	let l = Number(e.getError());
+	for (; l !== 0;) l = e.getError();
+	let u = !1;
+	try {
+		if (e.bindTexture(3553, s), e.texStorage2D(3553, 1, i, 1, 1), Number(e.getError()) !== 0) return !1;
+		e.bindFramebuffer(36160, c), e.framebufferTexture2D(36160, 36064, 3553, s, 0), u = Number(e.checkFramebufferStatus(36160)) === 36053 && Number(e.getError()) === 0;
+	} finally {
+		e.bindFramebuffer(36160, o), e.deleteFramebuffer(c), e.bindTexture(3553, a), e.deleteTexture(s);
+	}
+	return u;
+}
+function Rr(e) {
+	let t = Fr[e], n = Vr(e), r = N.getInfo(e);
 	return r.compressed && (t.dataFormat = n), {
 		internalFormat: n,
-		format: t?.dataFormat || Pn(r.channels, r.integer, r.normalized, n),
-		type: r.dataType ? vn(r.dataType) : t?.types?.[0] || 5121,
+		format: t?.dataFormat || Br(r.channels, r.integer, r.normalized, n),
+		type: r.dataType ? gr(r.dataType) : t?.types?.[0] || 5121,
 		compressed: r.compressed || !1
 	};
 }
-function Nn(e) {
-	switch (M.getInfo(e).attachment) {
+function zr(e) {
+	switch (N.getInfo(e).attachment) {
 		case "depth": return 36096;
 		case "stencil": return 36128;
 		case "depth-stencil": return 33306;
 		default: throw Error(`Not a depth stencil format: ${e}`);
 	}
 }
-function Pn(e, t, n, r) {
+function Br(e, t, n, r) {
 	if (r === 6408 || r === 6407) return r;
 	switch (e) {
 		case "r": return t && !n ? 36244 : 6403;
@@ -3502,28 +4395,28 @@ function Pn(e, t, n, r) {
 		default: return 6408;
 	}
 }
-function Fn(e) {
-	let t = An[e]?.gl;
+function Vr(e) {
+	let t = Fr[e]?.gl;
 	if (t === void 0) throw Error(`Unsupported texture format ${e}`);
 	return t;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/device-helpers/webgl-device-features.js
-var In = {
+var Hr = {
 	"depth-clip-control": "EXT_depth_clamp",
-	"timer-query-webgl": "EXT_disjoint_timer_query_webgl2",
+	"timestamp-query": "EXT_disjoint_timer_query_webgl2",
 	"compilation-status-async-webgl": "KHR_parallel_shader_compile",
 	"polygon-mode-webgl": "WEBGL_polygon_mode",
 	"provoking-vertex-webgl": "WEBGL_provoking_vertex",
 	"shader-clip-cull-distance-webgl": "WEBGL_clip_cull_distance",
 	"shader-noperspective-interpolation-webgl": "NV_shader_noperspective_interpolation",
 	"shader-conservative-depth-webgl": "EXT_conservative_depth"
-}, Ln = class extends He {
+}, Ur = class extends mt {
 	gl;
 	extensions;
 	testedFeatures = /* @__PURE__ */ new Set();
 	constructor(e, t, n) {
-		super([], n), this.gl = e, this.extensions = t, U(e, "EXT_color_buffer_float", t);
+		super([], n), this.gl = e, this.extensions = t, W(e, "EXT_color_buffer_float", t);
 	}
 	*[Symbol.iterator]() {
 		let e = this.getFeatures();
@@ -3531,20 +4424,20 @@ var In = {
 		return [];
 	}
 	has(e) {
-		return this.disabledFeatures?.[e] ? !1 : (this.testedFeatures.has(e) || (this.testedFeatures.add(e), On(e) && kn(this.gl, e, this.extensions) && this.features.add(e), this.getWebGLFeature(e) && this.features.add(e)), this.features.has(e));
+		return this.disabledFeatures?.[e] ? !1 : (this.testedFeatures.has(e) || (this.testedFeatures.add(e), Mr(e) && Nr(this.gl, e, this.extensions) && this.features.add(e), this.getWebGLFeature(e) && this.features.add(e)), this.features.has(e));
 	}
 	initializeFeatures() {
 		let e = this.getFeatures().filter((e) => e !== "polygon-mode-webgl");
 		for (let t of e) this.has(t);
 	}
 	getFeatures() {
-		return [...Object.keys(In), ...Object.keys(Dn)];
+		return [...Object.keys(Hr), ...Object.keys(jr)];
 	}
 	getWebGLFeature(e) {
-		let t = In[e];
-		return typeof t == "string" ? !!U(this.gl, t, this.extensions) : !!t;
+		let t = Hr[e];
+		return typeof t == "string" ? !!W(this.gl, t, this.extensions) : !!t;
 	}
-}, Rn = class extends Ve {
+}, Wr = class extends ct {
 	get maxTextureDimension1D() {
 		return 0;
 	}
@@ -3631,7 +4524,7 @@ var In = {
 	getParameter(e) {
 		return this.limits[e] === void 0 && (this.limits[e] = this.gl.getParameter(e)), this.limits[e] || 0;
 	}
-}, J = class extends ut {
+}, Y = class extends Wt {
 	device;
 	gl;
 	handle;
@@ -3655,12 +4548,12 @@ var In = {
 			}
 		}
 		if (this.depthStencilAttachment) {
-			let e = Nn(this.depthStencilAttachment.props.format);
+			let e = zr(this.depthStencilAttachment.props.format);
 			this._attachTextureView(e, this.depthStencilAttachment);
 		}
 		if (this.device.props.debug) {
 			let e = this.gl.checkFramebufferStatus(36160);
-			if (e !== 36053) throw Error(`Framebuffer ${Bn(e)}`);
+			if (e !== 36053) throw Error(`Framebuffer ${Kr(e)}`);
 		}
 		this.gl.bindFramebuffer(36160, e);
 	}
@@ -3672,7 +4565,7 @@ var In = {
 				n.framebufferTextureLayer(36160, e, r.handle, i, a);
 				break;
 			case 34067:
-				let t = zn(a);
+				let t = Gr(a);
 				n.framebufferTexture2D(36160, e, t, r.handle, i);
 				break;
 			case 3553:
@@ -3682,11 +4575,18 @@ var In = {
 		}
 		n.bindTexture(r.glTarget, null);
 	}
+	resizeAttachments(e, t) {
+		if (this.handle === null) {
+			this.width = e, this.height = t;
+			return;
+		}
+		super.resizeAttachments(e, t);
+	}
 };
-function zn(e) {
+function Gr(e) {
 	return e < 34069 ? e + 34069 : e;
 }
-function Bn(e) {
+function Kr(e) {
 	switch (e) {
 		case 36053: return "success";
 		case 36054: return "Mismatched attachments";
@@ -3699,7 +4599,7 @@ function Bn(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/webgl-canvas-context.js
-var Vn = class extends Ge {
+var qr = class extends At {
 	device;
 	handle = null;
 	_framebuffer = null;
@@ -3707,19 +4607,54 @@ var Vn = class extends Ge {
 		return "WebGLCanvasContext";
 	}
 	constructor(e, t) {
-		super(t), this.device = e, this._setAutoCreatedCanvasId(`${this.device.id}-canvas`), this._updateDevice();
+		super(t), this.device = e, this._setAutoCreatedCanvasId(`${this.device.id}-canvas`), this._configureDevice();
 	}
-	getCurrentFramebuffer() {
-		return this._framebuffer = this._framebuffer || new J(this.device, { handle: null }), this._framebuffer;
+	_configureDevice() {
+		(this.drawingBufferWidth !== this._framebuffer?.width || this.drawingBufferHeight !== this._framebuffer?.height) && this._framebuffer?.resize([this.drawingBufferWidth, this.drawingBufferHeight]);
 	}
-	_updateDevice() {}
-}, Hn = {};
-function Un(e = "id") {
-	return Hn[e] = Hn[e] || 1, `${e}-${Hn[e]++}`;
+	_getCurrentFramebuffer() {
+		return this._framebuffer ||= new Y(this.device, {
+			id: "canvas-context-framebuffer",
+			handle: null,
+			width: this.drawingBufferWidth,
+			height: this.drawingBufferHeight
+		}), this._framebuffer;
+	}
+}, Jr = class extends jt {
+	device;
+	handle = null;
+	context2d;
+	get [Symbol.toStringTag]() {
+		return "WebGLPresentationContext";
+	}
+	constructor(e, t = {}) {
+		super(t), this.device = e;
+		let n = `${this[Symbol.toStringTag]}(${this.id})`;
+		if (!this.device.getDefaultCanvasContext().offscreenCanvas) throw Error(`${n}: WebGL PresentationContext requires the default CanvasContext canvas to be an OffscreenCanvas`);
+		let r = this.canvas.getContext("2d");
+		if (!r) throw Error(`${n}: Failed to create 2d presentation context`);
+		this.context2d = r, this._setAutoCreatedCanvasId(`${this.device.id}-presentation-canvas`), this._configureDevice(), this._startObservers();
+	}
+	present() {
+		this._resizeDrawingBufferIfNeeded(), this.device.submit();
+		let e = this.device.getDefaultCanvasContext(), [t, n] = e.getDrawingBufferSize();
+		if (!(this.drawingBufferWidth === 0 || this.drawingBufferHeight === 0 || t === 0 || n === 0 || e.canvas.width === 0 || e.canvas.height === 0)) {
+			if (t !== this.drawingBufferWidth || n !== this.drawingBufferHeight || e.canvas.width !== this.drawingBufferWidth || e.canvas.height !== this.drawingBufferHeight) throw Error(`${this[Symbol.toStringTag]}(${this.id}): Default canvas context size ${t}x${n} does not match presentation size ${this.drawingBufferWidth}x${this.drawingBufferHeight}`);
+			this.context2d.clearRect(0, 0, this.drawingBufferWidth, this.drawingBufferHeight), this.context2d.drawImage(e.canvas, 0, 0);
+		}
+	}
+	_configureDevice() {}
+	_getCurrentFramebuffer(e) {
+		let t = this.device.getDefaultCanvasContext();
+		return t.setDrawingBufferSize(this.drawingBufferWidth, this.drawingBufferHeight), t.getCurrentFramebuffer(e);
+	}
+}, Yr = {};
+function Xr(e = "id") {
+	return Yr[e] = Yr[e] || 1, `${e}-${Yr[e]++}`;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-buffer.js
-var Y = class extends T {
+var X = class extends E {
 	device;
 	gl;
 	handle;
@@ -3732,20 +4667,20 @@ var Y = class extends T {
 		super(e, t), this.device = e, this.gl = this.device.gl, this.handle = (typeof t == "object" ? t.handle : void 0) || this.gl.createBuffer(), e._setWebGLDebugMetadata(this.handle, this, { spector: {
 			...this.props,
 			data: typeof this.props.data
-		} }), this.glTarget = Wn(this.props.usage), this.glUsage = Gn(this.props.usage), this.glIndexType = this.props.indexType === "uint32" ? 5125 : 5123, t.data ? this._initWithData(t.data, t.byteOffset, t.byteLength) : this._initWithByteLength(t.byteLength || 0);
+		} }), this.glTarget = Zr(this.props.usage), this.glUsage = Qr(this.props.usage), this.glIndexType = this.props.indexType === "uint32" ? 5125 : 5123, t.data ? this._initWithData(t.data, t.byteOffset, t.byteLength) : this._initWithByteLength(t.byteLength || 0);
 	}
 	destroy() {
-		!this.destroyed && this.handle && (this.removeStats(), this.trackDeallocatedMemory(), this.gl.deleteBuffer(this.handle), this.destroyed = !0, this.handle = null);
+		!this.destroyed && this.handle && (this.removeStats(), this.props.handle ? this.trackDeallocatedReferencedMemory("Buffer") : (this.trackDeallocatedMemory(), this.gl.deleteBuffer(this.handle)), this.destroyed = !0, this.handle = null);
 	}
 	_initWithData(e, t = 0, n = e.byteLength + t) {
 		let r = this.glTarget;
-		this.gl.bindBuffer(r, this.handle), this.gl.bufferData(r, n, this.glUsage), this.gl.bufferSubData(r, t, e), this.gl.bindBuffer(r, null), this.bytesUsed = n, this.byteLength = n, this._setDebugData(e, t, n), this.trackAllocatedMemory(n);
+		this.gl.bindBuffer(r, this.handle), this.gl.bufferData(r, n, this.glUsage), this.gl.bufferSubData(r, t, e), this.gl.bindBuffer(r, null), this.bytesUsed = n, this.byteLength = n, this._setDebugData(e, t, n), this.props.handle ? this.trackReferencedMemory(n, "Buffer") : this.trackAllocatedMemory(n);
 	}
 	_initWithByteLength(e) {
 		let t = e;
 		e === 0 && (t = new Float32Array());
 		let n = this.glTarget;
-		return this.gl.bindBuffer(n, this.handle), this.gl.bufferData(n, t, this.glUsage), this.gl.bindBuffer(n, null), this.bytesUsed = e, this.byteLength = e, this._setDebugData(null, 0, e), this.trackAllocatedMemory(e), this;
+		return this.gl.bindBuffer(n, this.handle), this.gl.bufferData(n, t, this.glUsage), this.gl.bindBuffer(n, null), this.bytesUsed = e, this.byteLength = e, this._setDebugData(null, 0, e), this.props.handle ? this.trackReferencedMemory(e, "Buffer") : this.trackAllocatedMemory(e), this;
 	}
 	write(e, t = 0) {
 		let n = ArrayBuffer.isView(e) ? e : new Uint8Array(e), r = 36663;
@@ -3767,42 +4702,61 @@ var Y = class extends T {
 		return this.gl.bindBuffer(36662, this.handle), this.gl.getBufferSubData(36662, e, n, 0, t), this.gl.bindBuffer(36662, null), this._setDebugData(n, e, t), n;
 	}
 };
-function Wn(e) {
-	return e & T.INDEX ? 34963 : e & T.VERTEX ? 34962 : e & T.UNIFORM ? 35345 : 34962;
+function Zr(e) {
+	return e & E.INDEX ? 34963 : e & E.VERTEX ? 34962 : e & E.UNIFORM ? 35345 : 34962;
 }
-function Gn(e) {
-	return e & T.INDEX || e & T.VERTEX ? 35044 : e & T.UNIFORM ? 35048 : 35044;
+function Qr(e) {
+	return e & E.INDEX || e & E.VERTEX ? 35044 : e & E.UNIFORM ? 35048 : 35044;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/helpers/parse-shader-compiler-log.js
-function Kn(e) {
+function $r(e) {
 	let t = e.split(/\r?\n/), n = [];
 	for (let e of t) {
 		if (e.length <= 1) continue;
-		let t = e.split(":");
-		if (t.length === 2) {
-			let [e, r] = t;
+		let t = e.trim(), r = e.split(":"), i = r[0]?.trim();
+		if (r.length === 2) {
+			let [e, a] = r;
+			if (!e || !a) {
+				n.push({
+					message: t,
+					type: ei(i || "info"),
+					lineNum: 0,
+					linePos: 0
+				});
+				continue;
+			}
 			n.push({
-				message: r.trim(),
-				type: qn(e),
+				message: a.trim(),
+				type: ei(e),
 				lineNum: 0,
 				linePos: 0
 			});
 			continue;
 		}
-		let [r, i, a, ...o] = t, s = parseInt(a, 10);
-		isNaN(s) && (s = 0);
-		let c = parseInt(i, 10);
-		isNaN(c) && (c = 0), n.push({
-			message: o.join(":").trim(),
-			type: qn(r),
-			lineNum: s,
-			linePos: c
+		let [a, o, s, ...c] = r;
+		if (!a || !o || !s) {
+			n.push({
+				message: r.slice(1).join(":").trim() || t,
+				type: ei(i || "info"),
+				lineNum: 0,
+				linePos: 0
+			});
+			continue;
+		}
+		let l = parseInt(s, 10);
+		Number.isNaN(l) && (l = 0);
+		let u = parseInt(o, 10);
+		Number.isNaN(u) && (u = 0), n.push({
+			message: c.join(":").trim(),
+			type: ei(a),
+			lineNum: l,
+			linePos: u
 		});
 	}
 	return n;
 }
-function qn(e) {
+function ei(e) {
 	let t = [
 		"warning",
 		"error",
@@ -3812,7 +4766,7 @@ function qn(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-shader.js
-var Jn = class extends st {
+var ti = class extends Vt {
 	device;
 	handle;
 	constructor(e, t) {
@@ -3825,7 +4779,11 @@ var Jn = class extends st {
 				break;
 			default: throw Error(this.props.stage);
 		}
-		e._setWebGLDebugMetadata(this.handle, this, { spector: this.props }), this._compile(this.source);
+		e._setWebGLDebugMetadata(this.handle, this, { spector: this.props });
+		let n = this._compile(this.source);
+		n && typeof n.catch == "function" && n.catch(() => {
+			this.compilationStatus = "error";
+		});
 	}
 	destroy() {
 		this.handle && (this.removeStats(), this.device.gl.deleteShader(this.handle), this.destroyed = !0, this.handle.destroyed = !0);
@@ -3838,12 +4796,12 @@ var Jn = class extends st {
 	}
 	getCompilationInfoSync() {
 		let e = this.device.gl.getShaderInfoLog(this.handle);
-		return e ? Kn(e) : [];
+		return e ? $r(e) : [];
 	}
 	getTranslatedSource() {
 		return this.device.getExtension("WEBGL_debug_shaders").WEBGL_debug_shaders?.getTranslatedShaderSource(this.handle) || null;
 	}
-	async _compile(e) {
+	_compile(e) {
 		e = e.startsWith("#version ") ? e : `#version 300 es\n${e}`;
 		let { gl: t } = this.device;
 		if (t.shaderSource(this.handle, e), t.compileShader(this.handle), !this.device.props.debug) {
@@ -3854,7 +4812,9 @@ var Jn = class extends st {
 			if (this._getCompilationStatus(), this.debugShader(), this.compilationStatus === "error") throw Error(`GLSL compilation errors in ${this.props.stage} shader ${this.props.id}`);
 			return;
 		}
-		S.once(1, "Shader compilation is asynchronous")(), await this._waitForCompilationComplete(), S.info(2, `Shader ${this.id} - async compilation complete: ${this.compilationStatus}`)(), this._getCompilationStatus(), this.debugShader();
+		return S.once(1, "Shader compilation is asynchronous")(), this._waitForCompilationComplete().then(() => {
+			S.info(2, `Shader ${this.id} - async compilation complete: ${this.compilationStatus}`)(), this._getCompilationStatus(), this.debugShader();
+		});
 	}
 	async _waitForCompilationComplete() {
 		let e = async (e) => await new Promise((t) => setTimeout(t, e));
@@ -3874,17 +4834,17 @@ var Jn = class extends st {
 };
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/converters/device-parameters.js
-function Yn(e, t, n, r) {
-	if (rr(t)) return r(e);
+function ni(e, t, n, r) {
+	if (ui(t)) return r(e);
 	let i = e;
 	i.pushState();
 	try {
-		return Xn(e, t), V(i.gl, n), r(e);
+		return ri(e, t), H(i.gl, n), r(e);
 	} finally {
 		i.popState();
 	}
 }
-function Xn(e, t) {
+function ri(e, t) {
 	let n = e, { gl: r } = n;
 	if (t.cullMode) switch (t.cullMode) {
 		case "none":
@@ -3897,11 +4857,11 @@ function Xn(e, t) {
 			r.enable(2884), r.cullFace(1029);
 			break;
 	}
-	if (t.frontFace && r.frontFace(X("frontFace", t.frontFace, {
+	if (t.frontFace && r.frontFace(Z("frontFace", t.frontFace, {
 		ccw: 2305,
 		cw: 2304
 	})), t.unclippedDepth && e.features.has("depth-clip-control") && r.enable(34383), t.depthBias !== void 0 && (r.enable(32823), r.polygonOffset(t.depthBias, t.depthBiasSlopeScale || 0)), t.provokingVertex && e.features.has("provoking-vertex-webgl")) {
-		let e = n.getExtension("WEBGL_provoking_vertex").WEBGL_provoking_vertex, r = X("provokingVertex", t.provokingVertex, {
+		let e = n.getExtension("WEBGL_provoking_vertex").WEBGL_provoking_vertex, r = Z("provokingVertex", t.provokingVertex, {
 			first: 36429,
 			last: 36430
 		});
@@ -3909,7 +4869,7 @@ function Xn(e, t) {
 	}
 	if ((t.polygonMode || t.polygonOffsetLine) && e.features.has("polygon-mode-webgl")) {
 		if (t.polygonMode) {
-			let e = n.getExtension("WEBGL_polygon_mode").WEBGL_polygon_mode, r = X("polygonMode", t.polygonMode, {
+			let e = n.getExtension("WEBGL_polygon_mode").WEBGL_polygon_mode, r = Z("polygonMode", t.polygonMode, {
 				fill: 6914,
 				line: 6913
 			});
@@ -3917,16 +4877,16 @@ function Xn(e, t) {
 		}
 		t.polygonOffsetLine && r.enable(10754);
 	}
-	if (e.features.has("shader-clip-cull-distance-webgl") && (t.clipDistance0 && r.enable(12288), t.clipDistance1 && r.enable(12289), t.clipDistance2 && r.enable(12290), t.clipDistance3 && r.enable(12291), t.clipDistance4 && r.enable(12292), t.clipDistance5 && r.enable(12293), t.clipDistance6 && r.enable(12294), t.clipDistance7 && r.enable(12295)), t.depthWriteEnabled !== void 0 && r.depthMask(nr("depthWriteEnabled", t.depthWriteEnabled)), t.depthCompare && (t.depthCompare === "always" ? r.disable(2929) : r.enable(2929), r.depthFunc(Zn("depthCompare", t.depthCompare))), t.stencilWriteMask) {
+	if (e.features.has("shader-clip-cull-distance-webgl") && (t.clipDistance0 && r.enable(12288), t.clipDistance1 && r.enable(12289), t.clipDistance2 && r.enable(12290), t.clipDistance3 && r.enable(12291), t.clipDistance4 && r.enable(12292), t.clipDistance5 && r.enable(12293), t.clipDistance6 && r.enable(12294), t.clipDistance7 && r.enable(12295)), t.depthWriteEnabled !== void 0 && r.depthMask(li("depthWriteEnabled", t.depthWriteEnabled)), t.depthCompare && (t.depthCompare === "always" ? r.disable(2929) : r.enable(2929), r.depthFunc(ii("depthCompare", t.depthCompare))), t.clearDepth !== void 0 && r.clearDepth(t.clearDepth), t.stencilWriteMask) {
 		let e = t.stencilWriteMask;
 		r.stencilMaskSeparate(1028, e), r.stencilMaskSeparate(1029, e);
 	}
 	if (t.stencilReadMask && S.warn("stencilReadMask not supported under WebGL"), t.stencilCompare) {
-		let e = t.stencilReadMask || 4294967295, n = Zn("depthCompare", t.stencilCompare);
+		let e = t.stencilReadMask || 4294967295, n = ii("depthCompare", t.stencilCompare);
 		t.stencilCompare === "always" ? r.disable(2960) : r.enable(2960), r.stencilFuncSeparate(1028, n, 0, e), r.stencilFuncSeparate(1029, n, 0, e);
 	}
 	if (t.stencilPassOperation && t.stencilFailOperation && t.stencilDepthFailOperation) {
-		let e = Qn("stencilPassOperation", t.stencilPassOperation), n = Qn("stencilFailOperation", t.stencilFailOperation), i = Qn("stencilDepthFailOperation", t.stencilDepthFailOperation);
+		let e = ai("stencilPassOperation", t.stencilPassOperation), n = ai("stencilFailOperation", t.stencilFailOperation), i = ai("stencilDepthFailOperation", t.stencilDepthFailOperation);
 		r.stencilOpSeparate(1028, n, i, e), r.stencilOpSeparate(1029, n, i, e);
 	}
 	switch (t.blend) {
@@ -3939,14 +4899,14 @@ function Xn(e, t) {
 		default:
 	}
 	if (t.blendColorOperation || t.blendAlphaOperation) {
-		let e = $n("blendColorOperation", t.blendColorOperation || "add"), n = $n("blendAlphaOperation", t.blendAlphaOperation || "add");
+		let e = oi("blendColorOperation", t.blendColorOperation || "add"), n = oi("blendAlphaOperation", t.blendAlphaOperation || "add");
 		r.blendEquationSeparate(e, n);
-		let i = er("blendColorSrcFactor", t.blendColorSrcFactor || "one"), a = er("blendColorDstFactor", t.blendColorDstFactor || "zero"), o = er("blendAlphaSrcFactor", t.blendAlphaSrcFactor || "one"), s = er("blendAlphaDstFactor", t.blendAlphaDstFactor || "zero");
+		let i = si("blendColorSrcFactor", t.blendColorSrcFactor || "one"), a = si("blendColorDstFactor", t.blendColorDstFactor || "zero"), o = si("blendAlphaSrcFactor", t.blendAlphaSrcFactor || "one"), s = si("blendAlphaDstFactor", t.blendAlphaDstFactor || "zero");
 		r.blendFuncSeparate(i, a, o, s);
 	}
 }
-function Zn(e, t) {
-	return X(e, t, {
+function ii(e, t) {
+	return Z(e, t, {
 		never: 512,
 		less: 513,
 		equal: 514,
@@ -3957,8 +4917,8 @@ function Zn(e, t) {
 		always: 519
 	});
 }
-function Qn(e, t) {
-	return X(e, t, {
+function ai(e, t) {
+	return Z(e, t, {
 		keep: 7680,
 		zero: 0,
 		replace: 7681,
@@ -3969,8 +4929,8 @@ function Qn(e, t) {
 		"decrement-wrap": 34056
 	});
 }
-function $n(e, t) {
-	return X(e, t, {
+function oi(e, t) {
+	return Z(e, t, {
 		add: 32774,
 		subtract: 32778,
 		"reverse-subtract": 32779,
@@ -3978,8 +4938,8 @@ function $n(e, t) {
 		max: 32776
 	});
 }
-function er(e, t, n = "color") {
-	return X(e, t, {
+function si(e, t, n = "color") {
+	return Z(e, t, {
 		one: 1,
 		zero: 0,
 		src: 768,
@@ -3999,17 +4959,17 @@ function er(e, t, n = "color") {
 		"one-minus-src1-alpha": 771
 	});
 }
-function tr(e, t) {
+function ci(e, t) {
 	return `Illegal parameter ${t} for ${e}`;
 }
-function X(e, t, n) {
-	if (!(t in n)) throw Error(tr(e, t));
+function Z(e, t, n) {
+	if (!(t in n)) throw Error(ci(e, t));
 	return n[t];
 }
-function nr(e, t) {
+function li(e, t) {
 	return t;
 }
-function rr(e) {
+function ui(e) {
 	let t = !0;
 	for (let n in e) {
 		t = !1;
@@ -4019,27 +4979,27 @@ function rr(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/converters/sampler-parameters.js
-function ir(e) {
+function di(e) {
 	let t = {};
-	return e.addressModeU && (t[10242] = ar(e.addressModeU)), e.addressModeV && (t[10243] = ar(e.addressModeV)), e.addressModeW && (t[32882] = ar(e.addressModeW)), e.magFilter && (t[10240] = or(e.magFilter)), (e.minFilter || e.mipmapFilter) && (t[10241] = sr(e.minFilter || "linear", e.mipmapFilter)), e.lodMinClamp !== void 0 && (t[33082] = e.lodMinClamp), e.lodMaxClamp !== void 0 && (t[33083] = e.lodMaxClamp), e.type === "comparison-sampler" && (t[34892] = 34894), e.compare && (t[34893] = Zn("compare", e.compare)), e.maxAnisotropy && (t[34046] = e.maxAnisotropy), t;
+	return e.addressModeU && (t[10242] = fi(e.addressModeU)), e.addressModeV && (t[10243] = fi(e.addressModeV)), e.addressModeW && (t[32882] = fi(e.addressModeW)), e.magFilter && (t[10240] = pi(e.magFilter)), (e.minFilter || e.mipmapFilter) && (t[10241] = mi(e.minFilter || "linear", e.mipmapFilter)), e.lodMinClamp !== void 0 && (t[33082] = e.lodMinClamp), e.lodMaxClamp !== void 0 && (t[33083] = e.lodMaxClamp), e.type === "comparison-sampler" && (t[34892] = 34894), e.compare && (t[34893] = ii("compare", e.compare)), e.maxAnisotropy && (t[34046] = e.maxAnisotropy), t;
 }
-function ar(e) {
+function fi(e) {
 	switch (e) {
 		case "clamp-to-edge": return 33071;
 		case "repeat": return 10497;
 		case "mirror-repeat": return 33648;
 	}
 }
-function or(e) {
+function pi(e) {
 	switch (e) {
 		case "nearest": return 9728;
 		case "linear": return 9729;
 	}
 }
-function sr(e, t = "none") {
-	if (!t) return or(e);
+function mi(e, t = "none") {
+	if (!t) return pi(e);
 	switch (t) {
-		case "none": return or(e);
+		case "none": return pi(e);
 		case "nearest":
 			switch (e) {
 				case "nearest": return 9984;
@@ -4054,12 +5014,12 @@ function sr(e, t = "none") {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-sampler.js
-var cr = class extends Qe {
+var hi = class extends Mt {
 	device;
 	handle;
 	parameters;
 	constructor(e, t) {
-		super(e, t), this.device = e, this.parameters = ir(t), this.handle = t.handle || this.device.gl.createSampler(), this._setSamplerParameters(this.parameters);
+		super(e, t), this.device = e, this.parameters = di(t), this.handle = t.handle || this.device.gl.createSampler(), this._setSamplerParameters(this.parameters);
 	}
 	destroy() {
 		this.handle &&= (this.device.gl.deleteSampler(this.handle), void 0);
@@ -4084,10 +5044,10 @@ var cr = class extends Qe {
 };
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/context/state-tracker/with-parameters.js
-function Z(e, t, n) {
-	if (lr(t)) return n(e);
-	let { nocatch: r = !0 } = t, i = H.get(e);
-	i.push(), V(e, t);
+function Q(e, t, n) {
+	if (gi(t)) return n(e);
+	let { nocatch: r = !0 } = t, i = U.get(e);
+	i.push(), H(e, t);
 	let a;
 	if (r) a = n(e), i.pop();
 	else try {
@@ -4097,24 +5057,47 @@ function Z(e, t, n) {
 	}
 	return a;
 }
-function lr(e) {
+function gi(e) {
 	for (let t in e) return !1;
 	return !0;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-texture-view.js
-var Q = class extends et {
+var $ = class extends Pt {
 	device;
 	gl;
 	handle;
 	texture;
 	constructor(e, t) {
 		super(e, {
-			...N.defaultProps,
+			...P.defaultProps,
 			...t
 		}), this.device = e, this.gl = this.device.gl, this.handle = null, this.texture = t.texture;
 	}
-}, $ = class extends N {
+};
+//#endregion
+//#region node_modules/@luma.gl/webgl/dist/adapter/converters/shader-formats.js
+function _i(e) {
+	return vi[e];
+}
+var vi = {
+	5124: "sint32",
+	5125: "uint32",
+	5122: "sint16",
+	5123: "uint16",
+	5120: "sint8",
+	5121: "uint8",
+	5126: "float32",
+	5131: "float16",
+	33635: "uint16",
+	32819: "uint16",
+	32820: "uint16",
+	33640: "uint32",
+	35899: "uint32",
+	35902: "uint32",
+	34042: "uint32",
+	36269: "uint32"
+}, yi = class extends P {
 	device;
 	gl;
 	handle;
@@ -4126,12 +5109,14 @@ var Q = class extends et {
 	glInternalFormat;
 	compressed;
 	_textureUnit = 0;
+	_framebuffer = null;
+	_framebufferAttachmentKey = null;
 	constructor(e, t) {
-		super(e, t), this.device = e, this.gl = this.device.gl;
-		let n = Mn(this.props.format);
-		this.glTarget = ur(this.props.dimension), this.glInternalFormat = n.internalFormat, this.glFormat = n.format, this.glType = n.type, this.compressed = n.compressed, this.handle = this.props.handle || this.gl.createTexture(), this.device._setWebGLDebugMetadata(this.handle, this, { spector: this.props }), this.gl.bindTexture(this.glTarget, this.handle);
+		super(e, t, { byteAlignment: 1 }), this.device = e, this.gl = this.device.gl;
+		let n = Rr(this.props.format);
+		this.glTarget = Si(this.props.dimension), this.glInternalFormat = n.internalFormat, this.glFormat = n.format, this.glType = n.type, this.compressed = n.compressed, this.handle = this.props.handle || this.gl.createTexture(), this.device._setWebGLDebugMetadata(this.handle, this, { spector: this.props }), this.gl.bindTexture(this.glTarget, this.handle);
 		let { dimension: r, width: i, height: a, depth: o, mipLevels: s, glTarget: c, glInternalFormat: l } = this;
-		switch (r) {
+		if (!this.compressed) switch (r) {
 			case "2d":
 			case "cube":
 				this.gl.texStorage2D(c, s, l, i, a);
@@ -4142,57 +5127,30 @@ var Q = class extends et {
 				break;
 			default: throw Error(r);
 		}
-		this.gl.bindTexture(this.glTarget, null), this._initializeData(t.data), this.setSampler(this.props.sampler), this.view = new Q(this.device, {
+		this.gl.bindTexture(this.glTarget, null), this._initializeData(t.data), this.props.handle ? this.trackReferencedMemory(this.getAllocatedByteLength(), "Texture") : this.trackAllocatedMemory(this.getAllocatedByteLength(), "Texture"), this.setSampler(this.props.sampler), this.view = new $(this.device, {
 			...this.props,
 			texture: this
 		}), Object.seal(this);
 	}
 	destroy() {
-		this.handle && (this.gl.deleteTexture(this.handle), this.removeStats(), this.trackDeallocatedMemory("Texture"), this.destroyed = !0);
+		this.handle && (this._framebuffer?.destroy(), this._framebuffer = null, this._framebufferAttachmentKey = null, this.removeStats(), this.props.handle ? this.trackDeallocatedReferencedMemory("Texture") : (this.gl.deleteTexture(this.handle), this.trackDeallocatedMemory("Texture")), this.destroyed = !0);
 	}
 	createView(e) {
-		return new Q(this.device, {
+		return new $(this.device, {
 			...e,
 			texture: this
 		});
 	}
 	setSampler(e = {}) {
 		super.setSampler(e);
-		let t = ir(this.sampler.props);
+		let t = di(this.sampler.props);
 		this._setSamplerParameters(t);
-	}
-	copyImageData(e) {
-		let t = this._normalizeCopyImageDataOptions(e), n = t.data, { width: r, height: i, depth: a } = this, { mipLevel: o = 0, byteOffset: s = 0, x: c = 0, y: l = 0, z: u = 0 } = t, { glFormat: d, glType: f, compressed: p } = this, m = dr(this.glTarget, this.dimension, u), h;
-		if (!this.compressed) {
-			let { bytesPerPixel: e } = this.device.getTextureFormatInfo(this.format);
-			if (e) {
-				if (t.bytesPerRow % e !== 0) throw Error(`bytesPerRow (${t.bytesPerRow}) must be a multiple of bytesPerPixel (${e}) for ${this.format}`);
-				h = t.bytesPerRow / e;
-			}
-		}
-		let g = this.compressed ? {} : {
-			...h === void 0 ? {} : { 3314: h },
-			32878: t.rowsPerImage
-		};
-		this.gl.bindTexture(m, this.handle), Z(this.gl, g, () => {
-			switch (this.dimension) {
-				case "2d":
-				case "cube":
-					p ? this.gl.compressedTexSubImage2D(m, o, c, l, r, i, d, n, s) : this.gl.texSubImage2D(m, o, c, l, r, i, d, f, n, s);
-					break;
-				case "2d-array":
-				case "3d":
-					p ? this.gl.compressedTexSubImage3D(m, o, c, l, u, r, i, a, d, n, s) : this.gl.texSubImage3D(m, o, c, l, u, r, i, a, d, f, n, s);
-					break;
-				default:
-			}
-		}), this.gl.bindTexture(m, null);
 	}
 	copyExternalImage(e) {
 		let t = this._normalizeCopyExternalImageOptions(e);
 		if (t.sourceX || t.sourceY) throw Error("WebGL does not support sourceX/sourceY)");
-		let { glFormat: n, glType: r } = this, { image: i, depth: a, mipLevel: o, x: s, y: c, z: l, width: u, height: d } = t, f = dr(this.glTarget, this.dimension, a), p = t.flipY ? { 37440: !0 } : {};
-		return this.gl.bindTexture(this.glTarget, this.handle), Z(this.gl, p, () => {
+		let { glFormat: n, glType: r } = this, { image: i, depth: a, mipLevel: o, x: s, y: c, z: l, width: u, height: d } = t, f = Ci(this.glTarget, this.dimension, l), p = t.flipY ? { 37440: !0 } : {};
+		return this.gl.bindTexture(this.glTarget, this.handle), Q(this.gl, p, () => {
 			switch (this.dimension) {
 				case "2d":
 				case "cube":
@@ -4208,6 +5166,128 @@ var Q = class extends et {
 			width: t.width,
 			height: t.height
 		};
+	}
+	copyImageData(e) {
+		super.copyImageData(e);
+	}
+	readBuffer(e = {}, t) {
+		if (!t) throw Error(`${this} readBuffer requires a destination buffer`);
+		let n = this._getSupportedColorReadOptions(e), r = e.byteOffset ?? 0, i = this.computeMemoryLayout(n);
+		if (t.byteLength < r + i.byteLength) throw Error(`${this} readBuffer target is too small (${t.byteLength} < ${r + i.byteLength})`);
+		let a = t;
+		this.gl.bindBuffer(35051, a.handle);
+		try {
+			this._readColorTextureLayers(n, i, (e) => {
+				this.gl.readPixels(n.x, n.y, n.width, n.height, this.glFormat, this.glType, r + e);
+			});
+		} finally {
+			this.gl.bindBuffer(35051, null);
+		}
+		return t;
+	}
+	async readDataAsync(e = {}) {
+		throw Error(`${this} readDataAsync is deprecated; use readBuffer() with an explicit destination buffer or DynamicTexture.readAsync()`);
+	}
+	writeBuffer(e, t = {}) {
+		let n = this._normalizeTextureWriteOptions(t), { width: r, height: i, depthOrArrayLayers: a, mipLevel: o, byteOffset: s, x: c, y: l, z: u } = n, { glFormat: d, glType: f, compressed: p } = this, m = Ci(this.glTarget, this.dimension, u);
+		if (p) throw Error("writeBuffer for compressed textures is not implemented in WebGL");
+		let { bytesPerPixel: h } = this.device.getTextureFormatInfo(this.format), g = h ? n.bytesPerRow / h : void 0, _ = {
+			3317: this.byteAlignment,
+			...g === void 0 ? {} : { 3314: g },
+			32878: n.rowsPerImage
+		};
+		this.gl.bindTexture(this.glTarget, this.handle), this.gl.bindBuffer(35052, e.handle), Q(this.gl, _, () => {
+			switch (this.dimension) {
+				case "2d":
+				case "cube":
+					this.gl.texSubImage2D(m, o, c, l, r, i, d, f, s);
+					break;
+				case "2d-array":
+				case "3d":
+					this.gl.texSubImage3D(m, o, c, l, u, r, i, a, d, f, s);
+					break;
+				default:
+			}
+		}), this.gl.bindBuffer(35052, null), this.gl.bindTexture(this.glTarget, null);
+	}
+	writeData(e, t = {}) {
+		let n = this._normalizeTextureWriteOptions(t), r = ArrayBuffer.isView(e) ? e : new Uint8Array(e), { width: i, height: a, depthOrArrayLayers: o, mipLevel: s, x: c, y: l, z: u, byteOffset: d } = n, { glFormat: f, glType: p, compressed: m } = this, h = Ci(this.glTarget, this.dimension, u), g;
+		if (!m) {
+			let { bytesPerPixel: e } = this.device.getTextureFormatInfo(this.format);
+			e && (g = n.bytesPerRow / e);
+		}
+		let _ = this.compressed ? {} : {
+			3317: this.byteAlignment,
+			...g === void 0 ? {} : { 3314: g },
+			32878: n.rowsPerImage
+		}, v = xi(r, d), y = m ? bi(r, d) : r, ee = this._getMipLevelSize(s), b = c === 0 && l === 0 && u === 0 && i === ee.width && a === ee.height && o === ee.depthOrArrayLayers;
+		this.gl.bindTexture(this.glTarget, this.handle), this.gl.bindBuffer(35052, null), Q(this.gl, _, () => {
+			switch (this.dimension) {
+				case "2d":
+				case "cube":
+					m ? b ? this.gl.compressedTexImage2D(h, s, f, i, a, 0, y) : this.gl.compressedTexSubImage2D(h, s, c, l, i, a, f, y) : this.gl.texSubImage2D(h, s, c, l, i, a, f, p, r, v);
+					break;
+				case "2d-array":
+				case "3d":
+					m ? b ? this.gl.compressedTexImage3D(h, s, f, i, a, o, 0, y) : this.gl.compressedTexSubImage3D(h, s, c, l, u, i, a, o, f, y) : this.gl.texSubImage3D(h, s, c, l, u, i, a, o, f, p, r, v);
+					break;
+				default:
+			}
+		}), this.gl.bindTexture(this.glTarget, null);
+	}
+	_getRowByteAlignment(e, t) {
+		return 1;
+	}
+	_getFramebuffer() {
+		return this._framebuffer ||= this.device.createFramebuffer({
+			id: `framebuffer-for-${this.id}`,
+			width: this.width,
+			height: this.height,
+			colorAttachments: [this]
+		}), this._framebuffer;
+	}
+	readDataSyncWebGL(e = {}) {
+		let t = this._getSupportedColorReadOptions(e), n = this.computeMemoryLayout(t), r = En(_i(this.glType)), i = new r(n.byteLength / r.BYTES_PER_ELEMENT);
+		return this._readColorTextureLayers(t, n, (e) => {
+			let a = new r(i.buffer, i.byteOffset + e, n.bytesPerImage / r.BYTES_PER_ELEMENT);
+			this.gl.readPixels(t.x, t.y, t.width, t.height, this.glFormat, this.glType, a);
+		}), i.buffer;
+	}
+	_readColorTextureLayers(e, t, n) {
+		let r = this._getFramebuffer(), i = t.bytesPerRow / t.bytesPerPixel, a = {
+			3333: this.byteAlignment,
+			...i === e.width ? {} : { 3330: i }
+		}, o = this.gl.getParameter(3074), s = this.gl.bindFramebuffer(36160, r.handle);
+		try {
+			this.gl.readBuffer(36064), Q(this.gl, a, () => {
+				for (let i = 0; i < e.depthOrArrayLayers; i++) this._attachReadSubresource(r, e.mipLevel, e.z + i), n(i * t.bytesPerImage);
+			});
+		} finally {
+			this.gl.bindFramebuffer(36160, s || null), this.gl.readBuffer(o);
+		}
+	}
+	_attachReadSubresource(e, t, n) {
+		let r = `${t}:${n}`;
+		if (this._framebufferAttachmentKey !== r) {
+			switch (this.dimension) {
+				case "2d":
+					this.gl.framebufferTexture2D(36160, 36064, 3553, this.handle, t);
+					break;
+				case "cube":
+					this.gl.framebufferTexture2D(36160, 36064, Ci(this.glTarget, this.dimension, n), this.handle, t);
+					break;
+				case "2d-array":
+				case "3d":
+					this.gl.framebufferTextureLayer(36160, 36064, this.handle, t, n);
+					break;
+				default: throw Error(`${this} color readback does not support ${this.dimension} textures`);
+			}
+			if (this.device.props.debug) {
+				let t = Number(this.gl.checkFramebufferStatus(36160));
+				if (t !== 36053) throw Error(`${e} incomplete for ${this} readback (${t})`);
+			}
+			this._framebufferAttachmentKey = r;
+		}
 	}
 	generateMipmapsWebGL(e) {
 		if (!(!(this.device.isTextureFormatRenderable(this.props.format) && this.device.isTextureFormatFilterable(this.props.format)) && (S.warn(`${this} is not renderable or filterable, may not be able to generate mipmaps`)(), !e?.force))) try {
@@ -4259,7 +5339,14 @@ var Q = class extends et {
 		return e !== void 0 && (this._textureUnit = e, t.activeTexture(33984 + e)), t.bindTexture(this.glTarget, null), e;
 	}
 };
-function ur(e) {
+function bi(e, t = 0) {
+	return t ? new e.constructor(e.buffer, e.byteOffset + t, (e.byteLength - t) / e.BYTES_PER_ELEMENT) : e;
+}
+function xi(e, t) {
+	if (t % e.BYTES_PER_ELEMENT !== 0) throw Error(`Texture byteOffset ${t} must align to typed array element size ${e.BYTES_PER_ELEMENT}`);
+	return t / e.BYTES_PER_ELEMENT;
+}
+function Si(e) {
 	switch (e) {
 		case "1d": break;
 		case "2d": return 3553;
@@ -4270,24 +5357,232 @@ function ur(e) {
 	}
 	throw Error(e);
 }
-function dr(e, t, n) {
+function Ci(e, t, n) {
 	return t === "cube" ? 34069 + n : e;
 }
 //#endregion
+//#region node_modules/@luma.gl/webgl/dist/adapter/helpers/set-uniform.js
+function wi(e, t, n, r) {
+	let i = e, a = r;
+	a === !0 && (a = 1), a === !1 && (a = 0);
+	let o = typeof a == "number" ? [a] : a;
+	switch (n) {
+		case 35678:
+		case 35680:
+		case 35679:
+		case 35682:
+		case 36289:
+		case 36292:
+		case 36293:
+		case 36298:
+		case 36299:
+		case 36300:
+		case 36303:
+		case 36306:
+		case 36307:
+		case 36308:
+		case 36311:
+			if (typeof r != "number") throw Error("samplers must be set to integers");
+			return e.uniform1i(t, r);
+		case 5126: return e.uniform1fv(t, o);
+		case 35664: return e.uniform2fv(t, o);
+		case 35665: return e.uniform3fv(t, o);
+		case 35666: return e.uniform4fv(t, o);
+		case 5124: return e.uniform1iv(t, o);
+		case 35667: return e.uniform2iv(t, o);
+		case 35668: return e.uniform3iv(t, o);
+		case 35669: return e.uniform4iv(t, o);
+		case 35670: return e.uniform1iv(t, o);
+		case 35671: return e.uniform2iv(t, o);
+		case 35672: return e.uniform3iv(t, o);
+		case 35673: return e.uniform4iv(t, o);
+		case 5125: return i.uniform1uiv(t, o, 1);
+		case 36294: return i.uniform2uiv(t, o, 2);
+		case 36295: return i.uniform3uiv(t, o, 3);
+		case 36296: return i.uniform4uiv(t, o, 4);
+		case 35674: return e.uniformMatrix2fv(t, !1, o);
+		case 35675: return e.uniformMatrix3fv(t, !1, o);
+		case 35676: return e.uniformMatrix4fv(t, !1, o);
+		case 35685: return i.uniformMatrix2x3fv(t, !1, o);
+		case 35686: return i.uniformMatrix2x4fv(t, !1, o);
+		case 35687: return i.uniformMatrix3x2fv(t, !1, o);
+		case 35688: return i.uniformMatrix3x4fv(t, !1, o);
+		case 35689: return i.uniformMatrix4x2fv(t, !1, o);
+		case 35690: return i.uniformMatrix4x3fv(t, !1, o);
+	}
+	throw Error("Illegal uniform");
+}
+//#endregion
+//#region node_modules/@luma.gl/webgl/dist/adapter/helpers/webgl-topology-utils.js
+function Ti(e) {
+	switch (e) {
+		case "point-list": return 0;
+		case "line-list": return 1;
+		case "line-strip": return 3;
+		case "triangle-list": return 4;
+		case "triangle-strip": return 5;
+		default: throw Error(e);
+	}
+}
+function Ei(e) {
+	switch (e) {
+		case "point-list": return 0;
+		case "line-list": return 1;
+		case "line-strip": return 1;
+		case "triangle-list": return 4;
+		case "triangle-strip": return 4;
+		default: throw Error(e);
+	}
+}
+//#endregion
+//#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-render-pipeline.js
+var Di = class extends Gt {
+	device;
+	handle;
+	vs;
+	fs;
+	introspectedLayout;
+	bindings = {};
+	uniforms = {};
+	varyings = null;
+	_uniformCount = 0;
+	_uniformSetters = {};
+	get [Symbol.toStringTag]() {
+		return "WEBGLRenderPipeline";
+	}
+	constructor(e, t) {
+		super(e, t), this.device = e;
+		let n = this.sharedRenderPipeline || this.device._createSharedRenderPipelineWebGL(t);
+		this.sharedRenderPipeline = n, this.handle = n.handle, this.vs = n.vs, this.fs = n.fs, this.linkStatus = n.linkStatus, this.introspectedLayout = n.introspectedLayout, this.device._setWebGLDebugMetadata(this.handle, this, { spector: { id: this.props.id } }), this.shaderLayout = t.shaderLayout ? Oi(this.introspectedLayout, t.shaderLayout) : this.introspectedLayout;
+	}
+	destroy() {
+		this.destroyed || (this.sharedRenderPipeline && !this.props._sharedRenderPipeline && this.sharedRenderPipeline.destroy(), this.destroyResource());
+	}
+	setBindings(e, t) {
+		let n = Yt(Jt(this.shaderLayout, e));
+		for (let [e, r] of Object.entries(n)) {
+			let n = ki(this.shaderLayout, e);
+			if (n) {
+				switch (r || S.warn(`Unsetting binding "${e}" in render pipeline "${this.id}"`)(), n.type) {
+					case "uniform":
+						if (!(r instanceof X) && !(r.buffer instanceof X)) throw Error("buffer value");
+						break;
+					case "texture":
+						if (!(r instanceof $ || r instanceof yi || r instanceof Y)) throw Error(`${this} Bad texture binding for ${e}`);
+						break;
+					case "sampler":
+						S.warn(`Ignoring sampler ${e}`)();
+						break;
+					default: throw Error(n.type);
+				}
+				this.bindings[e] = r;
+			} else {
+				let n = this.shaderLayout.bindings.map((e) => `"${e.name}"`).join(", ");
+				t?.disableWarnings || S.warn(`No binding "${e}" in render pipeline "${this.id}", expected one of ${n}`, r)();
+			}
+		}
+	}
+	draw(e) {
+		this._syncLinkStatus();
+		let t = e.bindGroups ? Yt(e.bindGroups) : e.bindings || this.bindings, { renderPass: n, parameters: r = this.props.parameters, topology: i = this.props.topology, vertexArray: a, vertexCount: o, instanceCount: s, isInstanced: c = !1, firstVertex: l = 0, transformFeedback: u, uniforms: d = this.uniforms } = e, f = Ti(i), p = !!a.indexBuffer, m = a.indexBuffer?.glIndexType;
+		if (this.linkStatus !== "success") return S.info(2, `RenderPipeline:${this.id}.draw() aborted - waiting for shader linking`)(), !1;
+		if (!this._areTexturesRenderable(t)) return S.info(2, `RenderPipeline:${this.id}.draw() aborted - textures not yet loaded`)(), !1;
+		this.device.gl.useProgram(this.handle), a.bindBeforeRender(n), u && u.begin(this.props.topology), this._applyBindings(t, { disableWarnings: this.props.disableWarnings }), this._applyUniforms(d);
+		let h = n;
+		return ni(this.device, r, h.glParameters, () => {
+			p && c ? this.device.gl.drawElementsInstanced(f, o || 0, m, l, s || 0) : p ? this.device.gl.drawElements(f, o || 0, m, l) : c ? this.device.gl.drawArraysInstanced(f, l, o || 0, s || 0) : this.device.gl.drawArrays(f, l, o || 0), u && u.end();
+		}), a.unbindAfterRender(n), !0;
+	}
+	_areTexturesRenderable(e) {
+		let t = !0;
+		for (let n of this.shaderLayout.bindings) Ai(e, n.name) || (S.warn(`Binding ${n.name} not found in ${this.id}`)(), t = !1);
+		return t;
+	}
+	_applyBindings(e, t) {
+		if (this._syncLinkStatus(), this.linkStatus !== "success") return;
+		let { gl: n } = this.device;
+		n.useProgram(this.handle);
+		let r = 0, i = 0;
+		for (let t of this.shaderLayout.bindings) {
+			let a = Ai(e, t.name);
+			if (!a) throw Error(`No value for binding ${t.name} in ${this.id}`);
+			switch (t.type) {
+				case "uniform":
+					let { name: e } = t, o = n.getUniformBlockIndex(this.handle, e);
+					if (o === 4294967295) throw Error(`Invalid uniform block name ${e}`);
+					if (n.uniformBlockBinding(this.handle, o, i), a instanceof X) n.bindBufferBase(35345, i, a.handle);
+					else {
+						let e = a;
+						n.bindBufferRange(35345, i, e.buffer.handle, e.offset || 0, e.size || e.buffer.byteLength - (e.offset || 0));
+					}
+					i += 1;
+					break;
+				case "texture":
+					if (!(a instanceof $ || a instanceof yi || a instanceof Y)) throw Error("texture");
+					let s;
+					if (a instanceof $) s = a.texture;
+					else if (a instanceof yi) s = a;
+					else if (a instanceof Y && a.colorAttachments[0] instanceof $) S.warn("Passing framebuffer in texture binding may be deprecated. Use fbo.colorAttachments[0] instead")(), s = a.colorAttachments[0].texture;
+					else throw Error("No texture");
+					n.activeTexture(33984 + r), n.bindTexture(s.glTarget, s.handle), r += 1;
+					break;
+				case "sampler": break;
+				case "storage":
+				case "read-only-storage": throw Error(`binding type '${t.type}' not supported in WebGL`);
+			}
+		}
+	}
+	_applyUniforms(e) {
+		for (let t of this.shaderLayout.uniforms || []) {
+			let { name: n, location: r, type: i, textureUnit: a } = t, o = e[n] ?? a;
+			o !== void 0 && wi(this.device.gl, r, i, o);
+		}
+	}
+	_syncLinkStatus() {
+		this.linkStatus = this.sharedRenderPipeline.linkStatus;
+	}
+};
+function Oi(e, t) {
+	let n = {
+		...e,
+		attributes: e.attributes.map((e) => ({ ...e })),
+		bindings: e.bindings.map((e) => ({ ...e }))
+	};
+	for (let e of t?.attributes || []) {
+		let t = n.attributes.find((t) => t.name === e.name);
+		t ? (t.type = e.type || t.type, t.stepMode = e.stepMode || t.stepMode) : S.warn(`shader layout attribute ${e.name} not present in shader`);
+	}
+	for (let e of t?.bindings || []) {
+		let t = ki(n, e.name);
+		if (!t) {
+			S.warn(`shader layout binding ${e.name} not present in shader`);
+			continue;
+		}
+		Object.assign(t, e);
+	}
+	return n;
+}
+function ki(e, t) {
+	return e.bindings.find((e) => e.name === t || e.name === `${t}Uniforms` || `${e.name}Uniforms` === t);
+}
+function Ai(e, t) {
+	return e[t] || e[`${t}Uniforms`] || e[t.replace(/Uniforms$/, "")];
+}
+//#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/converters/webgl-shadertypes.js
-function fr(e) {
-	return vr[e];
+function ji(e) {
+	return Li[e];
 }
-function pr(e) {
-	return gr[e];
+function Mi(e) {
+	return Fi[e];
 }
-function mr(e) {
-	return !!_r[e];
+function Ni(e) {
+	return !!Ii[e];
 }
-function hr(e) {
-	return _r[e];
+function Pi(e) {
+	return Ii[e];
 }
-var gr = {
+var Fi = {
 	5126: "f32",
 	35664: "vec2<f32>",
 	35665: "vec3<f32>",
@@ -4313,7 +5608,7 @@ var gr = {
 	35689: "mat4x2<f32>",
 	35690: "mat4x3<f32>",
 	35676: "mat4x4<f32>"
-}, _r = {
+}, Ii = {
 	35678: {
 		viewDimension: "2d",
 		sampleType: "float"
@@ -4374,7 +5669,7 @@ var gr = {
 		viewDimension: "2d-array",
 		sampleType: "uint"
 	}
-}, vr = {
+}, Li = {
 	uint8: 5121,
 	sint8: 5120,
 	unorm8: 5121,
@@ -4390,13 +5685,13 @@ var gr = {
 };
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/helpers/get-shader-layout-from-glsl.js
-function yr(e, t) {
+function Ri(e, t) {
 	let n = {
 		attributes: [],
 		bindings: []
 	};
-	n.attributes = br(e, t);
-	let r = Cr(e, t);
+	n.attributes = zi(e, t);
+	let r = Hi(e, t);
 	for (let e of r) {
 		let t = e.uniforms.map((e) => ({
 			name: e.name,
@@ -4410,14 +5705,14 @@ function yr(e, t) {
 			name: e.name,
 			group: 0,
 			location: e.location,
-			visibility: (e.vertex ? 1 : 0) & (e.fragment ? 2 : 0),
+			visibility: !!e.vertex & (e.fragment ? 2 : 0),
 			minBindingSize: e.byteLength,
 			uniforms: t
 		});
 	}
-	let i = Sr(e, t), a = 0;
-	for (let e of i) if (mr(e.type)) {
-		let { viewDimension: t, sampleType: r } = hr(e.type);
+	let i = Vi(e, t), a = 0;
+	for (let e of i) if (Ni(e.type)) {
+		let { viewDimension: t, sampleType: r } = Pi(e.type);
 		n.bindings.push({
 			type: "texture",
 			name: e.name,
@@ -4428,17 +5723,17 @@ function yr(e, t) {
 		}), e.textureUnit = a, a += 1;
 	}
 	i.length && (n.uniforms = i);
-	let o = xr(e, t);
+	let o = Bi(e, t);
 	return o?.length && (n.varyings = o), n;
 }
-function br(e, t) {
+function zi(e, t) {
 	let n = [], r = e.getProgramParameter(t, 35721);
 	for (let i = 0; i < r; i++) {
 		let r = e.getActiveAttrib(t, i);
 		if (!r) throw Error("activeInfo");
 		let { name: a, type: o } = r, s = e.getAttribLocation(t, a);
 		if (s >= 0) {
-			let e = pr(o), t = /instance/i.test(a) ? "instance" : "vertex";
+			let e = Mi(o), t = /instance/i.test(a) ? "instance" : "vertex";
 			n.push({
 				name: a,
 				location: s,
@@ -4449,12 +5744,12 @@ function br(e, t) {
 	}
 	return n.sort((e, t) => e.location - t.location), n;
 }
-function xr(e, t) {
+function Bi(e, t) {
 	let n = [], r = e.getProgramParameter(t, 35971);
 	for (let i = 0; i < r; i++) {
 		let r = e.getTransformFeedbackVarying(t, i);
 		if (!r) throw Error("activeInfo");
-		let { name: a, type: o, size: s } = r, { type: c, components: l } = ht(pr(o));
+		let { name: a, type: o, size: s } = r, { type: c, components: l } = en(Mi(o));
 		n.push({
 			location: i,
 			name: a,
@@ -4464,12 +5759,12 @@ function xr(e, t) {
 	}
 	return n.sort((e, t) => e.location - t.location), n;
 }
-function Sr(e, t) {
+function Vi(e, t) {
 	let n = [], r = e.getProgramParameter(t, 35718);
 	for (let i = 0; i < r; i++) {
 		let r = e.getActiveUniform(t, i);
 		if (!r) throw Error("activeInfo");
-		let { name: a, size: o, type: s } = r, { name: c, isArray: l } = wr(a), u = e.getUniformLocation(t, c), d = {
+		let { name: a, size: o, type: s } = r, { name: c, isArray: l } = Ui(a), u = e.getUniformLocation(t, c), d = {
 			location: u,
 			name: c,
 			size: o,
@@ -4489,7 +5784,7 @@ function Sr(e, t) {
 	}
 	return n;
 }
-function Cr(e, t) {
+function Hi(e, t) {
 	let n = (n, r) => e.getActiveUniformBlockParameter(t, n, r), r = [], i = e.getProgramParameter(t, 35382);
 	for (let a = 0; a < i; a++) {
 		let i = {
@@ -4502,170 +5797,65 @@ function Cr(e, t) {
 			uniforms: []
 		}, o = n(a, 35395) || [], s = e.getActiveUniforms(t, o, 35383), c = e.getActiveUniforms(t, o, 35384), l = e.getActiveUniforms(t, o, 35387), u = e.getActiveUniforms(t, o, 35388);
 		for (let n = 0; n < i.uniformCount; ++n) {
-			let r = e.getActiveUniform(t, o[n]);
-			if (!r) throw Error("activeInfo");
-			let a = pr(s[n]);
-			i.uniforms.push({
-				name: r.name,
-				format: a,
-				type: s[n],
-				arrayLength: c[n],
-				byteOffset: l[n],
-				byteStride: u[n]
-			});
+			let r = o[n];
+			if (r !== void 0) {
+				let a = e.getActiveUniform(t, r);
+				if (!a) throw Error("activeInfo");
+				let o = Mi(s[n]);
+				i.uniforms.push({
+					name: a.name,
+					format: o,
+					type: s[n],
+					arrayLength: c[n],
+					byteOffset: l[n],
+					byteStride: u[n]
+				});
+			}
+		}
+		let d = new Set(i.uniforms.map((e) => e.name.split(".")[0]).filter((e) => !!e)), f = i.name.replace(/Uniforms$/, "");
+		if (d.size === 1 && !d.has(i.name) && !d.has(f)) {
+			let [e] = d;
+			S.warn(`Uniform block "${i.name}" uses GLSL instance "${e}". luma.gl binds uniform buffers by block name ("${i.name}") and alias ("${f}"). Prefer matching the instance name to one of those to avoid confusing silent mismatches.`)();
 		}
 		r.push(i);
 	}
 	return r.sort((e, t) => e.location - t.location), r;
 }
-function wr(e) {
+function Ui(e) {
 	if (e[e.length - 1] !== "]") return {
 		name: e,
 		length: 1,
 		isArray: !1
 	};
 	let t = /([^[]*)(\[[0-9]+\])?/.exec(e);
-	if (!t || t.length < 2) throw Error(`Failed to parse GLSL uniform name ${e}`);
 	return {
-		name: t[1],
-		length: t[2] ? 1 : 0,
-		isArray: !!t[2]
+		name: St(t?.[1], `Failed to parse GLSL uniform name ${e}`),
+		length: +!!t?.[2],
+		isArray: !!t?.[2]
 	};
 }
 //#endregion
-//#region node_modules/@luma.gl/webgl/dist/adapter/helpers/set-uniform.js
-function Tr(e, t, n, r) {
-	let i = e, a = r;
-	a === !0 && (a = 1), a === !1 && (a = 0);
-	let o = typeof a == "number" ? [a] : a;
-	switch (n) {
-		case 35678:
-		case 35680:
-		case 35679:
-		case 35682:
-		case 36289:
-		case 36292:
-		case 36293:
-		case 36298:
-		case 36299:
-		case 36300:
-		case 36303:
-		case 36306:
-		case 36307:
-		case 36308:
-		case 36311:
-			if (typeof r != "number") throw Error("samplers must be set to integers");
-			return e.uniform1i(t, r);
-		case 5126: return e.uniform1fv(t, o);
-		case 35664: return e.uniform2fv(t, o);
-		case 35665: return e.uniform3fv(t, o);
-		case 35666: return e.uniform4fv(t, o);
-		case 5124: return e.uniform1iv(t, o);
-		case 35667: return e.uniform2iv(t, o);
-		case 35668: return e.uniform3iv(t, o);
-		case 35669: return e.uniform4iv(t, o);
-		case 35670: return e.uniform1iv(t, o);
-		case 35671: return e.uniform2iv(t, o);
-		case 35672: return e.uniform3iv(t, o);
-		case 35673: return e.uniform4iv(t, o);
-		case 5125: return i.uniform1uiv(t, o, 1);
-		case 36294: return i.uniform2uiv(t, o, 2);
-		case 36295: return i.uniform3uiv(t, o, 3);
-		case 36296: return i.uniform4uiv(t, o, 4);
-		case 35674: return e.uniformMatrix2fv(t, !1, o);
-		case 35675: return e.uniformMatrix3fv(t, !1, o);
-		case 35676: return e.uniformMatrix4fv(t, !1, o);
-		case 35685: return i.uniformMatrix2x3fv(t, !1, o);
-		case 35686: return i.uniformMatrix2x4fv(t, !1, o);
-		case 35687: return i.uniformMatrix3x2fv(t, !1, o);
-		case 35688: return i.uniformMatrix3x4fv(t, !1, o);
-		case 35689: return i.uniformMatrix4x2fv(t, !1, o);
-		case 35690: return i.uniformMatrix4x3fv(t, !1, o);
-	}
-	throw Error("Illegal uniform");
-}
-//#endregion
-//#region node_modules/@luma.gl/webgl/dist/adapter/helpers/webgl-topology-utils.js
-function Er(e) {
-	switch (e) {
-		case "point-list": return 0;
-		case "line-list": return 1;
-		case "line-strip": return 3;
-		case "triangle-list": return 4;
-		case "triangle-strip": return 5;
-		default: throw Error(e);
-	}
-}
-function Dr(e) {
-	switch (e) {
-		case "point-list": return 0;
-		case "line-list": return 1;
-		case "line-strip": return 1;
-		case "triangle-list": return 4;
-		case "triangle-strip": return 4;
-		default: throw Error(e);
-	}
-}
-//#endregion
-//#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-render-pipeline.js
-var Or = 4, kr = class extends dt {
+//#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-shared-render-pipeline.js
+var Wi = 4, Gi = class extends Kt {
 	device;
 	handle;
 	vs;
 	fs;
-	introspectedLayout;
-	uniforms = {};
-	bindings = {};
-	varyings = null;
-	_uniformCount = 0;
-	_uniformSetters = {};
-	get [Symbol.toStringTag]() {
-		return "WEBGLRenderPipeline";
-	}
+	introspectedLayout = {
+		attributes: [],
+		bindings: [],
+		uniforms: []
+	};
+	linkStatus = "pending";
 	constructor(e, t) {
-		super(e, t), this.device = e, this.handle = this.props.handle || this.device.gl.createProgram(), this.device._setWebGLDebugMetadata(this.handle, this, { spector: { id: this.props.id } }), this.vs = t.vs, this.fs = t.fs;
-		let { varyings: n, bufferMode: r = 35981 } = t;
-		n && n.length > 0 && (this.varyings = n, this.device.gl.transformFeedbackVaryings(this.handle, n, r)), this._linkShaders(), S.time(3, `RenderPipeline ${this.id} - shaderLayout introspection`)(), this.introspectedLayout = yr(this.device.gl, this.handle), S.timeEnd(3, `RenderPipeline ${this.id} - shaderLayout introspection`)(), this.shaderLayout = t.shaderLayout ? Ar(this.introspectedLayout, t.shaderLayout) : this.introspectedLayout;
+		super(e, t), this.device = e, this.handle = t.handle || this.device.gl.createProgram(), this.vs = t.vs, this.fs = t.fs, t.varyings && t.varyings.length > 0 && this.device.gl.transformFeedbackVaryings(this.handle, t.varyings, t.bufferMode || 35981), this._linkShaders(), S.time(3, `RenderPipeline ${this.id} - shaderLayout introspection`)(), this.introspectedLayout = Ri(this.device.gl, this.handle), S.timeEnd(3, `RenderPipeline ${this.id} - shaderLayout introspection`)();
 	}
 	destroy() {
-		this.handle &&= (this.device.gl.useProgram(null), this.device.gl.deleteProgram(this.handle), this.destroyed = !0, this.handle.destroyed = !0, null);
-	}
-	setBindings(e, t) {
-		for (let [n, r] of Object.entries(e)) {
-			let e = this.shaderLayout.bindings.find((e) => e.name === n) || this.shaderLayout.bindings.find((e) => e.name === `${n}Uniforms`);
-			if (!e) {
-				let e = this.shaderLayout.bindings.map((e) => `"${e.name}"`).join(", ");
-				t?.disableWarnings || S.warn(`No binding "${n}" in render pipeline "${this.id}", expected one of ${e}`, r)();
-				continue;
-			}
-			switch (r || S.warn(`Unsetting binding "${n}" in render pipeline "${this.id}"`)(), e.type) {
-				case "uniform":
-					if (!(r instanceof Y) && !(r.buffer instanceof Y)) throw Error("buffer value");
-					break;
-				case "texture":
-					if (!(r instanceof Q || r instanceof $ || r instanceof J)) throw Error(`${this} Bad texture binding for ${n}`);
-					break;
-				case "sampler":
-					S.warn(`Ignoring sampler ${n}`)();
-					break;
-				default: throw Error(e.type);
-			}
-			this.bindings[n] = r;
-		}
-	}
-	draw(e) {
-		let { renderPass: t, parameters: n = this.props.parameters, topology: r = this.props.topology, vertexArray: i, vertexCount: a, instanceCount: o, isInstanced: s = !1, firstVertex: c = 0, transformFeedback: l } = e, u = Er(r), d = !!i.indexBuffer, f = i.indexBuffer?.glIndexType;
-		if (this.linkStatus !== "success") return S.info(2, `RenderPipeline:${this.id}.draw() aborted - waiting for shader linking`)(), !1;
-		if (!this._areTexturesRenderable()) return S.info(2, `RenderPipeline:${this.id}.draw() aborted - textures not yet loaded`)(), !1;
-		this.device.gl.useProgram(this.handle), i.bindBeforeRender(t), l && l.begin(this.props.topology), this._applyBindings(), this._applyUniforms();
-		let p = t;
-		return Yn(this.device, n, p.glParameters, () => {
-			d && s ? this.device.gl.drawElementsInstanced(u, a || 0, f, c, o || 0) : d ? this.device.gl.drawElements(u, a || 0, f, c) : s ? this.device.gl.drawArraysInstanced(u, c, a || 0, o || 0) : this.device.gl.drawArrays(u, c, a || 0), l && l.end();
-		}), i.unbindAfterRender(t), !0;
+		this.destroyed || (this.device.gl.useProgram(null), this.device.gl.deleteProgram(this.handle), this.handle.destroyed = !0, this.destroyResource());
 	}
 	async _linkShaders() {
 		let { gl: e } = this.device;
-		if (e.attachShader(this.handle, this.vs.handle), e.attachShader(this.handle, this.fs.handle), S.time(Or, `linkProgram for ${this.id}`)(), e.linkProgram(this.handle), S.timeEnd(Or, `linkProgram for ${this.id}`)(), S.level, !this.device.features.has("compilation-status-async-webgl")) {
+		if (e.attachShader(this.handle, this.vs.handle), e.attachShader(this.handle, this.fs.handle), S.time(Wi, `linkProgram for ${this.id}`)(), e.linkProgram(this.handle), S.timeEnd(Wi, `linkProgram for ${this.id}`)(), !this.device.features.has("compilation-status-async-webgl")) {
 			let e = this._getLinkStatus();
 			this._reportLinkStatus(e);
 			return;
@@ -4699,7 +5889,27 @@ var Or = 4, kr = class extends dt {
 	}
 	_getLinkStatus() {
 		let { gl: e } = this.device;
-		return e.getProgramParameter(this.handle, 35714) ? (e.validateProgram(this.handle), e.getProgramParameter(this.handle, 35715) ? (this.linkStatus = "success", "success") : (this.linkStatus = "error", "validation-error")) : (this.linkStatus = "error", "link-error");
+		return e.getProgramParameter(this.handle, 35714) ? (this._initializeSamplerUniforms(), e.validateProgram(this.handle), e.getProgramParameter(this.handle, 35715) ? (this.linkStatus = "success", "success") : (this.linkStatus = "error", "validation-error")) : (this.linkStatus = "error", "link-error");
+	}
+	_initializeSamplerUniforms() {
+		let { gl: e } = this.device;
+		e.useProgram(this.handle);
+		let t = 0, n = e.getProgramParameter(this.handle, 35718);
+		for (let r = 0; r < n; r++) {
+			let n = e.getActiveUniform(this.handle, r);
+			if (n && Ni(n.type)) {
+				let r = n.name.endsWith("[0]"), i = r ? n.name.slice(0, -3) : n.name, a = e.getUniformLocation(this.handle, i);
+				a !== null && (t = this._assignSamplerUniform(a, n, r, t));
+			}
+		}
+	}
+	_assignSamplerUniform(e, t, n, r) {
+		let { gl: i } = this.device;
+		if (n && t.size > 1) {
+			let n = Int32Array.from({ length: t.size }, (e, t) => r + t);
+			return i.uniform1iv(e, n), r + t.size;
+		}
+		return i.uniform1i(e, r), r + 1;
 	}
 	async _waitForLinkComplete() {
 		let e = async (e) => await new Promise((t) => setTimeout(t, e));
@@ -4713,107 +5923,75 @@ var Or = 4, kr = class extends dt {
 			await e(10);
 		}
 	}
-	_areTexturesRenderable() {
-		let e = !0;
-		for (let t of this.shaderLayout.bindings) !this.bindings[t.name] && !this.bindings[t.name.replace(/Uniforms$/, "")] && (S.warn(`Binding ${t.name} not found in ${this.id}`)(), e = !1);
-		return e;
-	}
-	_applyBindings() {
-		if (this.linkStatus !== "success") return;
-		let { gl: e } = this.device;
-		e.useProgram(this.handle);
-		let t = 0, n = 0;
-		for (let r of this.shaderLayout.bindings) {
-			let i = this.bindings[r.name] || this.bindings[r.name.replace(/Uniforms$/, "")];
-			if (!i) throw Error(`No value for binding ${r.name} in ${this.id}`);
-			switch (r.type) {
-				case "uniform":
-					let { name: a } = r, o = e.getUniformBlockIndex(this.handle, a);
-					if (o === 4294967295) throw Error(`Invalid uniform block name ${a}`);
-					e.uniformBlockBinding(this.handle, n, o), i instanceof Y ? e.bindBufferBase(35345, n, i.handle) : e.bindBufferRange(35345, n, i.buffer.handle, i.offset || 0, i.size || i.buffer.byteLength - i.offset), n += 1;
-					break;
-				case "texture":
-					if (!(i instanceof Q || i instanceof $ || i instanceof J)) throw Error("texture");
-					let s;
-					if (i instanceof Q) s = i.texture;
-					else if (i instanceof $) s = i;
-					else if (i instanceof J && i.colorAttachments[0] instanceof Q) S.warn("Passing framebuffer in texture binding may be deprecated. Use fbo.colorAttachments[0] instead")(), s = i.colorAttachments[0].texture;
-					else throw Error("No texture");
-					e.activeTexture(33984 + t), e.bindTexture(s.glTarget, s.handle), t += 1;
-					break;
-				case "sampler": break;
-				case "storage":
-				case "read-only-storage": throw Error(`binding type '${r.type}' not supported in WebGL`);
-			}
-		}
-	}
-	_applyUniforms() {
-		for (let e of this.shaderLayout.uniforms || []) {
-			let { name: t, location: n, type: r, textureUnit: i } = e, a = this.uniforms[t] ?? i;
-			a !== void 0 && Tr(this.device.gl, n, r, a);
-		}
-	}
-};
-function Ar(e, t) {
-	let n = {
-		...e,
-		attributes: e.attributes.map((e) => ({ ...e }))
-	};
-	for (let e of t?.attributes || []) {
-		let t = n.attributes.find((t) => t.name === e.name);
-		t ? (t.type = e.type || t.type, t.stepMode = e.stepMode || t.stepMode) : S.warn(`shader layout attribute ${e.name} not present in shader`);
-	}
-	return n;
-}
-//#endregion
-//#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-command-buffer.js
-var jr = class extends mt {
+}, Ki = class extends $t {
 	device;
 	handle = null;
 	commands = [];
-	constructor(e) {
-		super(e, {}), this.device = e;
+	constructor(e, t = {}) {
+		super(e, t), this.device = e;
 	}
 	_executeCommands(e = this.commands) {
 		for (let t of e) switch (t.name) {
 			case "copy-buffer-to-buffer":
-				Mr(this.device, t.options);
+				qi(this.device, t.options);
 				break;
 			case "copy-buffer-to-texture":
-				Nr(this.device, t.options);
+				Ji(this.device, t.options);
 				break;
 			case "copy-texture-to-buffer":
-				Pr(this.device, t.options);
+				Yi(this.device, t.options);
 				break;
 			case "copy-texture-to-texture":
-				Fr(this.device, t.options);
+				Xi(this.device, t.options);
 				break;
 			default: throw Error(t.name);
 		}
 	}
 };
-function Mr(e, t) {
+function qi(e, t) {
 	let n = t.sourceBuffer, r = t.destinationBuffer;
 	e.gl.bindBuffer(36662, n.handle), e.gl.bindBuffer(36663, r.handle), e.gl.copyBufferSubData(36662, 36663, t.sourceOffset ?? 0, t.destinationOffset ?? 0, t.size), e.gl.bindBuffer(36662, null), e.gl.bindBuffer(36663, null);
 }
-function Nr(e, t) {
-	throw Error("Not implemented");
+function Ji(e, t) {
+	throw Error("copyBufferToTexture is not supported in WebGL");
 }
-function Pr(e, t) {
-	let { sourceTexture: n, mipLevel: r = 0, aspect: i = "all", width: a = t.sourceTexture.width, height: o = t.sourceTexture.height, depthOrArrayLayers: s = 0, origin: c = [0, 0], destinationBuffer: l, byteOffset: u = 0, bytesPerRow: d, rowsPerImage: f } = t;
+function Yi(e, t) {
+	let { sourceTexture: n, mipLevel: r = 0, aspect: i = "all", width: a = t.sourceTexture.width, height: o = t.sourceTexture.height, depthOrArrayLayers: s, origin: c = [
+		0,
+		0,
+		0
+	], destinationBuffer: l, byteOffset: u = 0, bytesPerRow: d, rowsPerImage: f } = t;
+	if (n instanceof P) {
+		n.readBuffer({
+			x: c[0] ?? 0,
+			y: c[1] ?? 0,
+			z: c[2] ?? 0,
+			width: a,
+			height: o,
+			depthOrArrayLayers: s,
+			mipLevel: r,
+			aspect: i,
+			byteOffset: u
+		}, l);
+		return;
+	}
 	if (i !== "all") throw Error("aspect not supported in WebGL");
-	if (r !== 0 || s !== 0 || d || f) throw Error("not implemented");
-	let { framebuffer: p, destroyFramebuffer: m } = Ir(n), h;
+	if (r !== 0 || s !== void 0 || d || f) throw Error("not implemented");
+	let { framebuffer: p, destroyFramebuffer: m } = Zi(n), h;
 	try {
-		let t = l, n = a || p.width, r = o || p.height, i = Mn(p.colorAttachments[0].texture.props.format), s = i.format, d = i.type;
+		let t = l, n = a || p.width, r = o || p.height, i = Rr(St(p.colorAttachments[0]).texture.props.format), s = i.format, d = i.type;
 		e.gl.bindBuffer(35051, t.handle), h = e.gl.bindFramebuffer(36160, p.handle), e.gl.readPixels(c[0], c[1], n, r, s, d, u);
 	} finally {
 		e.gl.bindBuffer(35051, null), h !== void 0 && e.gl.bindFramebuffer(36160, h), m && p.destroy();
 	}
 }
-function Fr(e, t) {
-	let { sourceTexture: n, destinationMipLevel: r = 0, origin: i = [0, 0], destinationOrigin: a = [0, 0], destinationTexture: o } = t, { width: s = t.destinationTexture.width, height: c = t.destinationTexture.height } = t, { framebuffer: l, destroyFramebuffer: u } = Ir(n), [d, f] = i, [p, m, h] = a, g = e.gl.bindFramebuffer(36160, l.handle), _, v;
-	if (o instanceof $) _ = o, s = Number.isFinite(s) ? s : _.width, c = Number.isFinite(c) ? c : _.height, _._bind(0), v = _.glTarget;
+function Xi(e, t) {
+	let { sourceTexture: n, destinationMipLevel: r = 0, origin: i = [0, 0], destinationOrigin: a = [
+		0,
+		0,
+		0
+	], destinationTexture: o } = t, { width: s = t.destinationTexture.width, height: c = t.destinationTexture.height } = t, { framebuffer: l, destroyFramebuffer: u } = Zi(n), [d = 0, f = 0] = i, [p, m, h] = a, g = e.gl.bindFramebuffer(36160, l.handle), _, v;
+	if (o instanceof yi) _ = o, s = Number.isFinite(s) ? s : _.width, c = Number.isFinite(c) ? c : _.height, _._bind(0), v = _.glTarget;
 	else throw Error("invalid destination");
 	switch (v) {
 		case 3553:
@@ -4828,8 +6006,8 @@ function Fr(e, t) {
 	}
 	_ && _._unbind(), e.gl.bindFramebuffer(36160, g), u && l.destroy();
 }
-function Ir(e) {
-	if (e instanceof N) {
+function Zi(e) {
+	if (e instanceof P) {
 		let { width: t, height: n, id: r } = e;
 		return {
 			framebuffer: e.device.createFramebuffer({
@@ -4848,55 +6026,56 @@ function Ir(e) {
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-render-pass.js
-var Lr = [
+var Qi = [
 	1,
 	2,
 	4,
 	8
-], Rr = class extends ft {
+], $i = class extends Zt {
 	device;
 	handle = null;
 	glParameters = {};
 	constructor(e, t) {
 		super(e, t), this.device = e;
-		let n;
-		if (!t?.parameters?.viewport) if (t?.framebuffer) {
-			let { width: e, height: r } = t.framebuffer;
-			n = [
-				0,
-				0,
-				e,
-				r
-			];
-		} else {
-			let [t, r] = e.getDefaultCanvasContext().getDrawingBufferSize();
-			n = [
+		let n = this.props.framebuffer, r = !n || n.handle === null;
+		r && e.getDefaultCanvasContext()._resizeDrawingBufferIfNeeded();
+		let i;
+		if (!t?.parameters?.viewport) if (r) {
+			let [t, n] = e.getDefaultCanvasContext().getDrawingBufferSize();
+			i = [
 				0,
 				0,
 				t,
-				r
+				n
+			];
+		} else {
+			let { width: e, height: t } = n;
+			i = [
+				0,
+				0,
+				e,
+				t
 			];
 		}
-		this.device.pushState(), this.setParameters({
-			viewport: n,
+		if (this.device.pushState(), this.setParameters({
+			viewport: i,
 			...this.props.parameters
-		});
-		let r = this.props.framebuffer;
-		if (this.props.framebuffer && r?.handle) {
-			let e = this.props.framebuffer.colorAttachments.map((e, t) => 36064 + t);
+		}), r) this.device.gl.drawBuffers([1029]);
+		else {
+			let e = n.colorAttachments.map((e, t) => 36064 + t);
 			this.device.gl.drawBuffers(e);
-		} else this.device.gl.drawBuffers([1029]);
-		this.clear();
+		}
+		this.clear(), this.props.timestampQuerySet && this.props.beginTimestampIndex !== void 0 && this.props.timestampQuerySet.writeTimestamp(this.props.beginTimestampIndex);
 	}
 	end() {
-		this.device.popState();
+		this.destroyed || (this.props.timestampQuerySet && this.props.endTimestampIndex !== void 0 && this.props.timestampQuerySet.writeTimestamp(this.props.endTimestampIndex), this.device.popState(), this.destroy());
 	}
 	pushDebugGroup(e) {}
 	popDebugGroup() {}
 	insertDebugMarker(e) {}
 	setParameters(e = {}) {
 		let t = { ...this.glParameters };
-		t.framebuffer = this.props.framebuffer || null, this.props.depthReadOnly && (t.depthMask = !this.props.depthReadOnly), t.stencilMask = this.props.stencilReadOnly ? 0 : 1, t[35977] = this.props.discard, e.viewport && (e.viewport.length >= 6 ? (t.viewport = e.viewport.slice(0, 4), t.depthRange = [e.viewport[4], e.viewport[5]]) : t.viewport = e.viewport), e.scissorRect && (t.scissorTest = !0, t.scissor = e.scissorRect), e.blendConstant && (t.blendColor = e.blendConstant), e.stencilReference && (console.warn("RenderPassParameters.stencilReference not yet implemented in WebGL"), t[2967] = e.stencilReference), "colorMask" in e && (t.colorMask = Lr.map((t) => !!(t & e.colorMask))), this.glParameters = t, V(this.device.gl, t);
+		t.framebuffer = this.props.framebuffer || null, this.props.depthReadOnly && (t.depthMask = !this.props.depthReadOnly), t.stencilMask = +!this.props.stencilReadOnly, t[35977] = this.props.discard, e.viewport && (e.viewport.length >= 6 ? (t.viewport = e.viewport.slice(0, 4), t.depthRange = [e.viewport[4], e.viewport[5]]) : t.viewport = e.viewport), e.scissorRect && (t.scissorTest = !0, t.scissor = e.scissorRect), e.blendConstant && (t.blendColor = e.blendConstant), e.stencilReference !== void 0 && (t[2967] = e.stencilReference, t[36003] = e.stencilReference), "colorMask" in e && (t.colorMask = Qi.map((t) => !!(t & e.colorMask))), this.glParameters = t, H(this.device.gl, t);
 	}
 	beginOcclusionQuery(e) {
 		this.props.occlusionQuerySet?.beginOcclusionQuery();
@@ -4908,7 +6087,7 @@ var Lr = [
 		let e = { ...this.glParameters }, t = 0;
 		this.props.clearColors && this.props.clearColors.forEach((e, t) => {
 			e && this.clearColorBuffer(t, e);
-		}), this.props.clearColor !== !1 && this.props.clearColors === void 0 && (t |= 16384, e.clearColor = this.props.clearColor), this.props.clearDepth !== !1 && (t |= 256, e.clearDepth = this.props.clearDepth), this.props.clearStencil !== !1 && (t |= 1024, e.clearStencil = this.props.clearStencil), t !== 0 && Z(this.device.gl, e, () => {
+		}), this.props.clearColor !== !1 && this.props.clearColors === void 0 && (t |= 16384, e.clearColor = this.props.clearColor), this.props.clearDepth !== !1 && (t |= 256, e.clearDepth = this.props.clearDepth), this.props.clearStencil !== !1 && (t |= 1024, e.clearStencil = this.props.clearStencil), t !== 0 && Q(this.device.gl, e, () => {
 			this.device.gl.clear(t);
 		});
 	}
@@ -4918,7 +6097,7 @@ var Lr = [
 		0,
 		0
 	]) {
-		Z(this.device.gl, { framebuffer: this.props.framebuffer }, () => {
+		Q(this.device.gl, { framebuffer: this.props.framebuffer }, () => {
 			switch (t.constructor) {
 				case Int8Array:
 				case Int16Array:
@@ -4938,21 +6117,23 @@ var Lr = [
 			}
 		});
 	}
-}, zr = class extends pt {
+}, ea = class extends Qt {
 	device;
 	handle = null;
 	commandBuffer;
 	constructor(e, t) {
-		super(e, t), this.device = e, this.commandBuffer = new jr(e);
+		super(e, t), this.device = e, this.commandBuffer = new Ki(e, { id: `${this.props.id}-command-buffer` });
 	}
-	destroy() {}
-	finish() {
-		return this.commandBuffer;
+	destroy() {
+		this.destroyResource();
 	}
-	beginRenderPass(e) {
-		return new Rr(this.device, e);
+	finish(e) {
+		return e?.id && this.commandBuffer.id !== e.id && (this.commandBuffer.id = e.id, this.commandBuffer.props.id = e.id), this.destroy(), this.commandBuffer;
 	}
-	beginComputePass(e) {
+	beginRenderPass(e = {}) {
+		return new $i(this.device, this._applyTimeProfilingToPassProps(e));
+	}
+	beginComputePass(e = {}) {
 		throw Error("ComputePass not supported in WebGL");
 	}
 	copyBufferToBuffer(e) {
@@ -4982,19 +6163,24 @@ var Lr = [
 	pushDebugGroup(e) {}
 	popDebugGroup() {}
 	insertDebugMarker(e) {}
-	resolveQuerySet(e, t, n) {}
+	resolveQuerySet(e, t, n) {
+		throw Error("resolveQuerySet is not supported in WebGL");
+	}
+	writeTimestamp(e, t) {
+		e.writeTimestamp(t);
+	}
 };
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/utils/fill-array.js
-function Br(e) {
+function ta(e) {
 	let { target: t, source: n, start: r = 0, count: i = 1 } = e, a = n.length, o = i * a, s = 0;
-	for (let e = r; s < a; s++) t[e++] = n[s];
+	for (let e = r; s < a; s++) t[e++] = n[s] ?? 0;
 	for (; s < o;) s < o - s ? (t.copyWithin(r + s, r, r + s), s *= 2) : (t.copyWithin(r + s, r, r + o - s), s = o);
 	return e.target;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-vertex-array.js
-var Vr = class e extends Ot {
+var na = class e extends xn {
 	get [Symbol.toStringTag]() {
 		return "VertexArray";
 	}
@@ -5040,7 +6226,7 @@ var Vr = class e extends Ot {
 	_getAccessor(e) {
 		let t = this.attributeInfos[e];
 		if (!t) throw Error(`Unknown attribute location ${e}`);
-		let n = vn(t.bufferDataType);
+		let n = gr(t.bufferDataType);
 		return {
 			size: t.bufferComponents,
 			type: n,
@@ -5048,7 +6234,7 @@ var Vr = class e extends Ot {
 			offset: t.byteOffset,
 			normalized: t.normalized,
 			integer: t.integer,
-			divisor: t.stepMode === "instance" ? 1 : 0
+			divisor: +(t.stepMode === "instance")
 		};
 	}
 	_enable(t, n = !0) {
@@ -5056,12 +6242,12 @@ var Vr = class e extends Ot {
 		(n || r) && (t = Number(t), this.device.gl.bindVertexArray(this.handle), n ? this.device.gl.enableVertexAttribArray(t) : this.device.gl.disableVertexAttribArray(t), this.device.gl.bindVertexArray(null));
 	}
 	getConstantBuffer(e, t) {
-		let n = Hr(t), r = n.byteLength * e, i = n.length * e;
+		let n = ra(t), r = n.byteLength * e, i = n.length * e;
 		if (this.buffer && r !== this.buffer.byteLength) throw Error(`Buffer size is immutable, byte length ${r} !== ${this.buffer.byteLength}.`);
 		let a = !this.buffer;
-		if (this.buffer = this.buffer || this.device.createBuffer({ byteLength: r }), a ||= !Ur(n, this.bufferValue), a) {
-			let e = Nt(t.constructor, i);
-			Br({
+		if (this.buffer = this.buffer || this.device.createBuffer({ byteLength: r }), a ||= !ia(n, this.bufferValue), a) {
+			let e = An(t.constructor, i);
+			ta({
 				target: e,
 				source: n,
 				start: 0,
@@ -5071,17 +6257,17 @@ var Vr = class e extends Ot {
 		return this.buffer;
 	}
 };
-function Hr(e) {
+function ra(e) {
 	return Array.isArray(e) ? new Float32Array(e) : e;
 }
-function Ur(e, t) {
+function ia(e, t) {
 	if (!e || !t || e.length !== t.length || e.constructor !== t.constructor) return !1;
 	for (let n = 0; n < e.length; ++n) if (e[n] !== t[n]) return !1;
 	return !0;
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-transform-feedback.js
-var Wr = class extends kt {
+var aa = class extends Sn {
 	device;
 	gl;
 	handle;
@@ -5097,14 +6283,14 @@ var Wr = class extends kt {
 		this.gl.deleteTransformFeedback(this.handle), super.destroy();
 	}
 	begin(e = "point-list") {
-		this.gl.bindTransformFeedback(36386, this.handle), this.bindOnUse && this._bindBuffers(), this.gl.beginTransformFeedback(Dr(e));
+		this.gl.bindTransformFeedback(36386, this.handle), this.bindOnUse && this._bindBuffers(), this.gl.beginTransformFeedback(Ei(e));
 	}
 	end() {
 		this.gl.endTransformFeedback(), this.bindOnUse && this._unbindBuffers(), this.gl.bindTransformFeedback(36386, null);
 	}
 	setBuffers(e) {
 		this.buffers = {}, this.unusedBuffers = {}, this.bind(() => {
-			for (let t in e) this.setBuffer(t, e[t]);
+			for (let [t, n] of Object.entries(e)) this.setBuffer(t, n);
 		});
 	}
 	setBuffer(e, t) {
@@ -5120,9 +6306,9 @@ var Wr = class extends kt {
 		}, this.bindOnUse || this._bindBuffer(n, r, a, i);
 	}
 	getBuffer(e) {
-		if (Gr(e)) return this.buffers[e] || null;
+		if (oa(e)) return this.buffers[e] || null;
 		let t = this._getVaryingIndex(e);
-		return t >= 0 ? this.buffers[t] : null;
+		return this.buffers[t] ?? null;
 	}
 	bind(e = this.handle) {
 		if (typeof e != "function") return this.gl.bindTransformFeedback(36386, e), this;
@@ -5133,7 +6319,7 @@ var Wr = class extends kt {
 		this.bind(null);
 	}
 	_getBufferRange(e) {
-		if (e instanceof Y) return {
+		if (e instanceof X) return {
 			buffer: e,
 			byteOffset: 0,
 			byteLength: e.byteLength
@@ -5146,14 +6332,14 @@ var Wr = class extends kt {
 		};
 	}
 	_getVaryingIndex(e) {
-		if (Gr(e)) return Number(e);
+		if (oa(e)) return Number(e);
 		for (let t of this.layout.varyings || []) if (e === t.name) return t.location;
 		return -1;
 	}
 	_bindBuffers() {
-		for (let e in this.buffers) {
-			let { buffer: t, byteLength: n, byteOffset: r } = this._getBufferRange(this.buffers[e]);
-			this._bindBuffer(Number(e), t, r, n);
+		for (let [e, t] of Object.entries(this.buffers)) {
+			let { buffer: n, byteLength: r, byteOffset: i } = this._getBufferRange(t);
+			this._bindBuffer(Number(e), n, i, r);
 		}
 	}
 	_unbindBuffers() {
@@ -5164,84 +6350,198 @@ var Wr = class extends kt {
 		!i || r === void 0 ? this.gl.bindBufferBase(35982, e, i) : this.gl.bindBufferRange(35982, e, i, n, r);
 	}
 };
-function Gr(e) {
+function oa(e) {
 	return typeof e == "number" ? Number.isInteger(e) : /^\d+$/.test(e);
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/resources/webgl-query-set.js
-var Kr = class extends At {
+var sa = class extends Cn {
 	device;
 	handle;
-	target = null;
-	_queryPending = !1;
-	_pollingPromise = null;
+	_timestampPairs = [];
+	_pendingReads = /* @__PURE__ */ new Set();
+	_occlusionQuery = null;
+	_occlusionActive = !1;
 	get [Symbol.toStringTag]() {
-		return "Query";
+		return "QuerySet";
 	}
 	constructor(e, t) {
-		if (super(e, t), this.device = e, t.count > 1) throw Error("WebGL QuerySet can only have one value");
-		let n = this.device.gl.createQuery();
-		if (!n) throw Error("WebGL query not supported");
-		this.handle = n, Object.seal(this);
+		if (super(e, t), this.device = e, t.type === "timestamp") {
+			if (t.count < 2) throw Error("Timestamp QuerySet requires at least two query slots");
+			this._timestampPairs = Array(Math.ceil(t.count / 2)).fill(null).map(() => ({
+				activeQuery: null,
+				completedQueries: []
+			})), this.handle = null;
+		} else {
+			if (t.count > 1) throw Error("WebGL occlusion QuerySet can only have one value");
+			let e = this.device.gl.createQuery();
+			if (!e) throw Error("WebGL query not supported");
+			this.handle = e;
+		}
+		Object.seal(this);
 	}
 	destroy() {
-		this.device.gl.deleteQuery(this.handle);
+		if (!this.destroyed) {
+			this.handle && this.device.gl.deleteQuery(this.handle);
+			for (let e of this._timestampPairs) {
+				e.activeQuery && (this._cancelPendingQuery(e.activeQuery), this.device.gl.deleteQuery(e.activeQuery.handle));
+				for (let t of e.completedQueries) this._cancelPendingQuery(t), this.device.gl.deleteQuery(t.handle);
+			}
+			this._occlusionQuery && (this._cancelPendingQuery(this._occlusionQuery), this.device.gl.deleteQuery(this._occlusionQuery.handle));
+			for (let e of Array.from(this._pendingReads)) this._cancelPendingQuery(e);
+			this.destroyResource();
+		}
 	}
-	beginTimestampQuery() {
-		return this._begin(35007);
+	isResultAvailable(e) {
+		return this.props.type === "timestamp" ? e === void 0 ? this._timestampPairs.some((e, t) => this._isTimestampPairAvailable(t)) : this._isTimestampPairAvailable(this._getTimestampPairIndex(e)) : this._occlusionQuery ? this._pollQueryAvailability(this._occlusionQuery) : !1;
 	}
-	endTimestampQuery() {
-		this._end();
+	async readResults(e) {
+		let t = e?.firstQuery || 0, n = e?.queryCount || this.props.count - t;
+		if (this._validateRange(t, n), this.props.type === "timestamp") {
+			let e = Array(n).fill(0n), r = Math.floor(t / 2), i = Math.floor((t + n - 1) / 2);
+			for (let a = r; a <= i; a++) {
+				let r = await this._consumeTimestampPairResult(a), i = a * 2, o = i + 1;
+				i >= t && i < t + n && (e[i - t] = 0n), o >= t && o < t + n && (e[o - t] = r);
+			}
+			return e;
+		}
+		if (!this._occlusionQuery) throw Error("Occlusion query has not been started");
+		return [await this._consumeQueryResult(this._occlusionQuery)];
 	}
-	beginOcclusionQuery(e) {
-		return this._begin(e?.conservative ? 36202 : 35887);
+	async readTimestampDuration(e, t) {
+		if (this.props.type !== "timestamp") throw Error("Timestamp durations require a timestamp QuerySet");
+		if (e < 0 || t >= this.props.count || t <= e) throw Error("Timestamp duration range is out of bounds");
+		if (e % 2 != 0 || t !== e + 1) throw Error("WebGL timestamp durations require adjacent even/odd query indices");
+		let n = await this._consumeTimestampPairResult(this._getTimestampPairIndex(e));
+		return Number(n) / 1e6;
+	}
+	beginOcclusionQuery() {
+		if (this.props.type !== "occlusion") throw Error("Occlusion queries require an occlusion QuerySet");
+		if (!this.handle) throw Error("WebGL occlusion query is not available");
+		if (this._occlusionActive) throw Error("Occlusion query is already active");
+		this.device.gl.beginQuery(35887, this.handle), this._occlusionQuery = {
+			handle: this.handle,
+			promise: null,
+			result: null,
+			disjoint: !1,
+			cancelled: !1,
+			pollRequestId: null,
+			resolve: null,
+			reject: null
+		}, this._occlusionActive = !0;
 	}
 	endOcclusionQuery() {
-		this._end();
+		if (!this._occlusionActive) throw Error("Occlusion query is not active");
+		this.device.gl.endQuery(35887), this._occlusionActive = !1;
 	}
-	beginTransformFeedbackQuery() {
-		return this._begin(35976);
-	}
-	endTransformFeedbackQuery() {
-		this._end();
-	}
-	async resolveQuery() {
-		return [await this.pollQuery()];
-	}
-	_begin(e) {
-		this._queryPending || (this.target = e, this.device.gl.beginQuery(this.target, this.handle));
-	}
-	_end() {
-		this._queryPending || this.target && (this.device.gl.endQuery(this.target), this.target = null, this._queryPending = !0);
-	}
-	isResultAvailable() {
-		if (!this._queryPending) return !1;
-		let e = this.device.gl.getQueryParameter(this.handle, 34919);
-		return e && (this._queryPending = !1), e;
-	}
-	isTimerDisjoint() {
-		return this.device.gl.getParameter(36795);
-	}
-	getResult() {
-		return this.device.gl.getQueryParameter(this.handle, 34918);
-	}
-	getTimerMilliseconds() {
-		return this.getResult() / 1e6;
-	}
-	pollQuery(e = Infinity) {
-		if (this._pollingPromise) return this._pollingPromise;
-		let t = 0;
-		return this._pollingPromise = new Promise((n, r) => {
-			let i = () => {
-				this.isResultAvailable() ? (n(this.getResult()), this._pollingPromise = null) : t++ > e ? (r("Timed out"), this._pollingPromise = null) : requestAnimationFrame(i);
+	writeTimestamp(e) {
+		if (this.props.type !== "timestamp") throw Error("Timestamp writes require a timestamp QuerySet");
+		let t = this._getTimestampPairIndex(e), n = this._timestampPairs[t];
+		if (e % 2 == 0) {
+			if (n.activeQuery) throw Error("Timestamp query pair is already active");
+			let e = this.device.gl.createQuery();
+			if (!e) throw Error("WebGL query not supported");
+			let t = {
+				handle: e,
+				promise: null,
+				result: null,
+				disjoint: !1,
+				cancelled: !1,
+				pollRequestId: null,
+				resolve: null,
+				reject: null
 			};
-			requestAnimationFrame(i);
-		}), this._pollingPromise;
+			this.device.gl.beginQuery(35007, e), n.activeQuery = t;
+			return;
+		}
+		if (!n.activeQuery) throw Error("Timestamp query pair was ended before it was started");
+		this.device.gl.endQuery(35007), n.completedQueries.push(n.activeQuery), n.activeQuery = null;
+	}
+	_validateRange(e, t) {
+		if (e < 0 || t < 0 || e + t > this.props.count) throw Error("Query read range is out of bounds");
+	}
+	_getTimestampPairIndex(e) {
+		if (e < 0 || e >= this.props.count) throw Error("Query index is out of bounds");
+		return Math.floor(e / 2);
+	}
+	_isTimestampPairAvailable(e) {
+		let t = this._timestampPairs[e];
+		return !t || t.completedQueries.length === 0 ? !1 : this._pollQueryAvailability(t.completedQueries[0]);
+	}
+	_pollQueryAvailability(e) {
+		if (e.cancelled || this.destroyed) return e.result = 0n, !0;
+		if (e.result !== null || e.disjoint) return !0;
+		if (!this.device.gl.getQueryParameter(e.handle, 34919)) return !1;
+		let t = !!this.device.gl.getParameter(36795);
+		return e.disjoint = t, e.result = t ? 0n : BigInt(this.device.gl.getQueryParameter(e.handle, 34918)), !0;
+	}
+	async _consumeTimestampPairResult(e) {
+		let t = this._timestampPairs[e];
+		if (!t || t.completedQueries.length === 0) throw Error("Timestamp query pair has no completed result");
+		let n = t.completedQueries.shift();
+		try {
+			return await this._consumeQueryResult(n);
+		} finally {
+			this.device.gl.deleteQuery(n.handle);
+		}
+	}
+	_consumeQueryResult(e) {
+		return e.promise ? e.promise : (this._pendingReads.add(e), e.promise = new Promise((t, n) => {
+			e.resolve = t, e.reject = n;
+			let r = () => {
+				if (e.pollRequestId = null, e.cancelled || this.destroyed) {
+					this._pendingReads.delete(e), e.promise = null, e.resolve = null, e.reject = null, t(0n);
+					return;
+				}
+				if (!this._pollQueryAvailability(e)) {
+					e.pollRequestId = this._requestAnimationFrame(r);
+					return;
+				}
+				this._pendingReads.delete(e), e.promise = null, e.resolve = null, e.reject = null, e.disjoint ? n(/* @__PURE__ */ Error("GPU timestamp query was invalidated by a disjoint event")) : t(e.result || 0n);
+			};
+			r();
+		}), e.promise);
+	}
+	_cancelPendingQuery(e) {
+		if (this._pendingReads.delete(e), e.cancelled = !0, e.pollRequestId !== null && (this._cancelAnimationFrame(e.pollRequestId), e.pollRequestId = null), e.resolve) {
+			let t = e.resolve;
+			e.promise = null, e.resolve = null, e.reject = null, t(0n);
+		}
+	}
+	_requestAnimationFrame(e) {
+		return requestAnimationFrame(e);
+	}
+	_cancelAnimationFrame(e) {
+		cancelAnimationFrame(e);
+	}
+}, ca = class extends wn {
+	device;
+	gl;
+	handle;
+	signaled;
+	_signaled = !1;
+	constructor(e, t = {}) {
+		super(e, {}), this.device = e, this.gl = e.gl;
+		let n = this.props.handle || this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+		if (!n) throw Error("Failed to create WebGL fence");
+		this.handle = n, this.signaled = new Promise((e) => {
+			let t = () => {
+				let n = this.gl.clientWaitSync(this.handle, 0, 0);
+				n === this.gl.ALREADY_SIGNALED || n === this.gl.CONDITION_SATISFIED ? (this._signaled = !0, e()) : setTimeout(t, 1);
+			};
+			t();
+		});
+	}
+	isSignaled() {
+		return this._signaled ? !0 : (this._signaled = this.gl.getSyncParameter(this.handle, this.gl.SYNC_STATUS) === this.gl.SIGNALED, this._signaled);
+	}
+	destroy() {
+		this.destroyed || this.gl.deleteSync(this.handle);
 	}
 };
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/helpers/format-utils.js
-function qr(e) {
+function la(e) {
 	switch (e) {
 		case 6406:
 		case 33326:
@@ -5261,7 +6561,7 @@ function qr(e) {
 		default: return 0;
 	}
 }
-function Jr(e) {
+function ua(e) {
 	switch (e) {
 		case 5121: return 1;
 		case 33635:
@@ -5272,49 +6572,26 @@ function Jr(e) {
 	}
 }
 //#endregion
-//#region node_modules/@luma.gl/webgl/dist/adapter/converters/shader-formats.js
-function Yr(e) {
-	return Xr[e];
-}
-var Xr = {
-	5124: "sint32",
-	5125: "uint32",
-	5122: "sint16",
-	5123: "uint16",
-	5120: "sint8",
-	5121: "uint8",
-	5126: "float32",
-	5131: "float16",
-	33635: "uint16",
-	32819: "uint16",
-	32820: "uint16",
-	33640: "uint32",
-	35899: "uint32",
-	35902: "uint32",
-	34042: "uint32",
-	36269: "uint32"
-};
-//#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/helpers/webgl-texture-utils.js
-function Zr(e, t) {
-	let { sourceX: n = 0, sourceY: r = 0, sourceAttachment: i = 0 } = t || {}, { target: a = null, sourceWidth: o, sourceHeight: s, sourceDepth: c, sourceFormat: l, sourceType: u } = t || {}, { framebuffer: d, deleteFramebuffer: f } = $r(e), { gl: p, handle: m } = d;
+function da(e, t) {
+	let { sourceX: n = 0, sourceY: r = 0, sourceAttachment: i = 0 } = t || {}, { target: a = null, sourceWidth: o, sourceHeight: s, sourceDepth: c, sourceFormat: l, sourceType: u } = t || {}, { framebuffer: d, deleteFramebuffer: f } = pa(e), { gl: p, handle: m } = d;
 	o ||= d.width, s ||= d.height;
 	let h = d.colorAttachments[i]?.texture;
 	if (!h) throw Error(`Invalid framebuffer attachment ${i}`);
-	c = h?.depth || 1, l ||= h?.glFormat || 6408, u ||= h?.glType || 5121, a = ti(a, u, l, o, s, c);
-	let g = he(a);
-	u ||= fr(g);
+	c = h?.depth || 1, l ||= h?.glFormat || 6408, u ||= h?.glType || 5121, a = ha(a, u, l, o, s, c);
+	let g = D.getDataType(a);
+	u ||= ji(g);
 	let _ = p.bindFramebuffer(36160, m);
 	return p.readBuffer(36064 + i), p.readPixels(n, r, o, s, l, u, a), p.readBuffer(36064), p.bindFramebuffer(36160, _ || null), f && d.destroy(), a;
 }
-function Qr(e, t) {
-	let { target: n, sourceX: r = 0, sourceY: i = 0, sourceFormat: a = 6408, targetByteOffset: o = 0 } = t || {}, { sourceWidth: s, sourceHeight: c, sourceType: l } = t || {}, { framebuffer: u, deleteFramebuffer: d } = $r(e);
+function fa(e, t) {
+	let { target: n, sourceX: r = 0, sourceY: i = 0, sourceFormat: a = 6408, targetByteOffset: o = 0 } = t || {}, { sourceWidth: s, sourceHeight: c, sourceType: l } = t || {}, { framebuffer: u, deleteFramebuffer: d } = pa(e);
 	s ||= u.width, c ||= u.height;
 	let f = u;
 	l ||= 5121;
 	let p = n;
 	if (!p) {
-		let e = qr(a), t = Jr(l), n = o + s * c * e * t;
+		let e = la(a), t = ua(l), n = o + s * c * e * t;
 		p = f.device.createBuffer({ byteLength: n });
 	}
 	let m = e.device.createCommandEncoder();
@@ -5327,16 +6604,16 @@ function Qr(e, t) {
 		byteOffset: o
 	}), m.destroy(), d && u.destroy(), p;
 }
-function $r(e) {
-	return e instanceof ut ? {
+function pa(e) {
+	return e instanceof Wt ? {
 		framebuffer: e,
 		deleteFramebuffer: !1
 	} : {
-		framebuffer: ei(e),
+		framebuffer: ma(e),
 		deleteFramebuffer: !0
 	};
 }
-function ei(e, t) {
+function ma(e, t) {
 	let { device: n, width: r, height: i, id: a } = e;
 	return n.createFramebuffer({
 		...t,
@@ -5346,15 +6623,18 @@ function ei(e, t) {
 		colorAttachments: [e]
 	});
 }
-function ti(e, t, n, r, i, a) {
+function ha(e, t, n, r, i, a) {
 	if (e) return e;
 	t ||= 5121;
-	let o = ge(Yr(t)), s = qr(n);
-	return new o(r * i * s);
+	let o = _i(t), s = D.getTypedArrayConstructor(o), c = la(n);
+	return new s(r * i * c);
 }
 //#endregion
 //#region node_modules/@luma.gl/webgl/dist/adapter/webgl-device.js
-var ni = class extends Ue {
+var ga = class e extends ht {
+	static getDeviceFromContext(e) {
+		return e ? e.luma?.device ?? null : null;
+	}
 	type = "webgl";
 	handle;
 	features;
@@ -5368,7 +6648,7 @@ var ni = class extends Ue {
 	_resolveContextLost;
 	gl;
 	_constants;
-	_extensions = {};
+	extensions;
 	_polyfilled = !1;
 	spectorJS;
 	get [Symbol.toStringTag]() {
@@ -5383,114 +6663,141 @@ var ni = class extends Ue {
 			default: return !0;
 		}
 	}
-	constructor(e) {
+	constructor(t) {
 		super({
-			...e,
-			id: e.id || Un("webgl-device")
+			...t,
+			id: t.id || Xr("webgl-device")
 		});
-		let t = Ue._getCanvasContextProps(e);
-		if (!t) throw Error("WebGLDevice requires props.createCanvasContext to be set");
-		let n = t.canvas?.gl?.device;
-		if (n) throw Error(`WebGL context already attached to device ${n.id}`);
-		this.canvasContext = new Vn(this, t), this.lost = new Promise((e) => {
+		let n = ht._getCanvasContextProps(t);
+		if (!n) throw Error("WebGLDevice requires props.createCanvasContext to be set");
+		let r = n.canvas?.gl ?? null, i = e.getDeviceFromContext(r);
+		if (i) throw Error(`WebGL context already attached to device ${i.id}`);
+		this.canvasContext = new qr(this, n), this.lost = new Promise((e) => {
 			this._resolveContextLost = e;
 		});
-		let r = { ...e.webgl };
-		t.alphaMode === "premultiplied" && (r.premultipliedAlpha = !0), e.powerPreference !== void 0 && (r.powerPreference = e.powerPreference);
-		let i = this.props._handle || pn(this.canvasContext.canvas, {
+		let a = { ...t.webgl };
+		n.alphaMode === "premultiplied" && (a.premultipliedAlpha = !0), t.powerPreference !== void 0 && (a.powerPreference = t.powerPreference), t.failIfMajorPerformanceCaveat !== void 0 && (a.failIfMajorPerformanceCaveat = t.failIfMajorPerformanceCaveat);
+		let o = this.props._handle || ur(this.canvasContext.canvas, {
 			onContextLost: (e) => this._resolveContextLost?.({
 				reason: "destroyed",
 				message: "Entered sleep mode, or too many apps or browser tabs are using the GPU."
 			}),
 			onContextRestored: (e) => console.log("WebGL context restored")
-		}, r);
-		if (!i) throw Error("WebGL context creation failed");
-		if (n = i.device, n) {
-			if (e._reuseDevices) return S.log(1, `Not creating a new Device, instead returning a reference to Device ${n.id} already attached to WebGL context`, n)(), n._reused = !0, n;
-			throw Error(`WebGL context already attached to device ${n.id}`);
+		}, a);
+		if (!o) throw Error("WebGL context creation failed");
+		if (i = e.getDeviceFromContext(o), i) {
+			if (t._reuseDevices) return S.log(1, `Not creating a new Device, instead returning a reference to Device ${i.id} already attached to WebGL context`, i)(), this.canvasContext.destroy(), i._reused = !0, i;
+			throw Error(`WebGL context already attached to device ${i.id}`);
 		}
-		this.handle = i, this.gl = i, this.spectorJS = zt({
+		this.handle = o, this.gl = o, this.spectorJS = Ln({
 			...this.props,
 			gl: this.handle
-		}), this.gl.device = this, this.gl._version = 2, this.info = mn(this.gl, this._extensions), this.limits = new Rn(this.gl), this.features = new Ln(this.gl, this._extensions, this.props._disabledFeatures), this.props._initializeFeatures && this.features.initializeFeatures(), new H(this.gl, { log: (...e) => S.log(1, ...e)() }).trackState(this.gl, { copyState: !1 });
-		let a = e.debugWebGL || e.debug, o = e.debugWebGL;
-		a && (this.gl = Ut(this.gl, {
-			debugWebGL: a,
-			traceWebGL: o
-		}), S.warn("WebGL debug mode activated. Performance reduced.")(), e.debugWebGL && (S.level = Math.max(S.level, 1))), this.commandEncoder = new zr(this, { id: `${this}-command-encoder` });
+		});
+		let s = Mn(this.handle);
+		s.device = this, s.extensions ||= {}, this.extensions = s.extensions, this.info = dr(this.gl, this.extensions), this.limits = new Wr(this.gl), this.features = new Ur(this.gl, this.extensions, this.props._disabledFeatures), this.props._initializeFeatures && this.features.initializeFeatures(), new U(this.gl, { log: (...e) => S.log(1, ...e)() }).trackState(this.gl, { copyState: !1 }), (t.debug || t.debugWebGL) && (this.gl = Vn(this.gl, {
+			debugWebGL: !0,
+			traceWebGL: t.debugWebGL
+		}), S.warn("WebGL debug mode activated. Performance reduced.")()), t.debugWebGL && (S.level = Math.max(S.level, 1)), this.commandEncoder = new ea(this, { id: `${this}-command-encoder` }), this.canvasContext._startObservers();
 	}
 	destroy() {
-		!this.props._reuseDevices && !this._reused && delete this.gl.device;
+		if (this.commandEncoder?.destroy(), !this.props._reuseDevices && !this._reused) {
+			let e = Mn(this.handle);
+			e.device = null;
+		}
 	}
 	get isLost() {
 		return this.gl.isContextLost();
 	}
-	getTextureByteAlignment() {
-		return 4;
-	}
 	createCanvasContext(e) {
 		throw Error("WebGL only supports a single canvas");
 	}
+	createPresentationContext(e) {
+		return new Jr(this, e || {});
+	}
 	createBuffer(e) {
 		let t = this._normalizeBufferProps(e);
-		return new Y(this, t);
+		return new X(this, t);
 	}
 	createTexture(e) {
-		return new $(this, e);
+		return new yi(this, e);
 	}
 	createExternalTexture(e) {
 		throw Error("createExternalTexture() not implemented");
 	}
 	createSampler(e) {
-		return new cr(this, e);
+		return new hi(this, e);
 	}
 	createShader(e) {
-		return new Jn(this, e);
+		return new ti(this, e);
 	}
 	createFramebuffer(e) {
-		return new J(this, e);
+		return new Y(this, e);
 	}
 	createVertexArray(e) {
-		return new Vr(this, e);
+		return new na(this, e);
 	}
 	createTransformFeedback(e) {
-		return new Wr(this, e);
+		return new aa(this, e);
 	}
 	createQuerySet(e) {
-		return new Kr(this, e);
+		return new sa(this, e);
+	}
+	createFence() {
+		return new ca(this);
 	}
 	createRenderPipeline(e) {
-		return new kr(this, e);
+		return new Di(this, e);
+	}
+	_createSharedRenderPipelineWebGL(e) {
+		return new Gi(this, e);
 	}
 	createComputePipeline(e) {
 		throw Error("ComputePipeline not supported in WebGL");
 	}
 	createCommandEncoder(e = {}) {
-		return new zr(this, e);
+		return new ea(this, e);
 	}
 	submit(e) {
-		e || (e = this.commandEncoder.finish(), this.commandEncoder.destroy(), this.commandEncoder = this.createCommandEncoder({ id: `${this.id}-default-encoder` })), e._executeCommands();
+		let t = null;
+		e || ({submittedCommandEncoder: t, commandBuffer: e} = this._finalizeDefaultCommandEncoderForSubmit());
+		try {
+			e._executeCommands(), t && t.resolveTimeProfilingQuerySet().then(() => {
+				this.commandEncoder._gpuTimeMs = t._gpuTimeMs;
+			}).catch(() => {});
+		} finally {
+			e.destroy();
+		}
+	}
+	_finalizeDefaultCommandEncoderForSubmit() {
+		let e = this.commandEncoder, t = e.finish();
+		return this.commandEncoder.destroy(), this.commandEncoder = this.createCommandEncoder({
+			id: e.props.id,
+			timeProfilingQuerySet: e.getTimeProfilingQuerySet()
+		}), {
+			submittedCommandEncoder: e,
+			commandBuffer: t
+		};
 	}
 	readPixelsToArrayWebGL(e, t) {
-		return Zr(e, t);
+		return da(e, t);
 	}
 	readPixelsToBufferWebGL(e, t) {
-		return Qr(e, t);
+		return fa(e, t);
 	}
 	setParametersWebGL(e) {
-		V(this.gl, e);
+		H(this.gl, e);
 	}
 	getParametersWebGL(e) {
-		return an(this.gl, e);
+		return nr(this.gl, e);
 	}
 	withParametersWebGL(e, t) {
-		return Z(this.gl, e, t);
+		return Q(this.gl, e, t);
 	}
 	resetWebGL() {
-		S.warn("WebGLDevice.resetWebGL is deprecated, use only for debugging")(), on(this.gl);
+		S.warn("WebGLDevice.resetWebGL is deprecated, use only for debugging")(), rr(this.gl);
 	}
 	_getDeviceSpecificTextureFormatCapabilities(e) {
-		return jn(this.gl, e, this._extensions);
+		return Ir(this.gl, e, this.extensions);
 	}
 	loseDevice() {
 		let e = !1, t = this.getExtension("WEBGL_lose_context").WEBGL_lose_context;
@@ -5500,10 +6807,10 @@ var ni = class extends Ue {
 		}), e;
 	}
 	pushState() {
-		H.get(this.gl).push();
+		U.get(this.gl).push();
 	}
 	popState() {
-		H.get(this.gl).pop();
+		U.get(this.gl).pop();
 	}
 	getGLKey(e, t) {
 		let n = Number(e);
@@ -5518,21 +6825,21 @@ var ni = class extends Ue {
 		let n = this.limits.maxVertexAttributes;
 		this._constants = this._constants || Array(n).fill(null);
 		let r = this._constants[e];
-		switch (r && oi(r, t) && S.info(1, `setConstantAttributeWebGL(${e}) could have been skipped, value unchanged`)(), this._constants[e] = t, t.constructor) {
+		switch (r && ba(r, t) && S.info(1, `setConstantAttributeWebGL(${e}) could have been skipped, value unchanged`)(), this._constants[e] = t, t.constructor) {
 			case Float32Array:
-				ri(this, e, t);
+				_a(this, e, t);
 				break;
 			case Int32Array:
-				ii(this, e, t);
+				va(this, e, t);
 				break;
 			case Uint32Array:
-				ai(this, e, t);
+				ya(this, e, t);
 				break;
 			default: throw Error("constant");
 		}
 	}
 	getExtension(e) {
-		return U(this.gl, e, this._extensions), this._extensions;
+		return W(this.gl, e, this.extensions), this.extensions;
 	}
 	_setWebGLDebugMetadata(e, t, n) {
 		e.luma = t, e.__SPECTOR_Metadata = {
@@ -5541,7 +6848,7 @@ var ni = class extends Ue {
 		};
 	}
 };
-function ri(e, t, n) {
+function _a(e, t, n) {
 	switch (n.length) {
 		case 1:
 			e.gl.vertexAttrib1fv(t, n);
@@ -5558,16 +6865,16 @@ function ri(e, t, n) {
 		default:
 	}
 }
-function ii(e, t, n) {
+function va(e, t, n) {
 	e.gl.vertexAttribI4iv(t, n);
 }
-function ai(e, t, n) {
+function ya(e, t, n) {
 	e.gl.vertexAttribI4uiv(t, n);
 }
-function oi(e, t) {
+function ba(e, t) {
 	if (!e || !t || e.length !== t.length || e.constructor !== t.constructor) return !1;
 	for (let n = 0; n < e.length; ++n) if (e[n] !== t[n]) return !1;
 	return !0;
 }
 //#endregion
-export { ae as C, ce as S, i as T, ge as _, Mt as a, S as b, dt as c, N as d, Qe as f, he as g, me as h, Rt as i, st as l, be as m, Ht as n, bt as o, Ue as p, Lt as r, ht as s, ni as t, et as u, T as v, x as w, le as x, w as y };
+export { ne as A, E as C, pe as D, S as E, ce as O, D as S, ge as T, ht as _, kn as a, N as b, pn as c, Jt as d, Gt as f, Mt as g, P as h, In as i, i as j, ae as k, en as l, Pt as m, Bn as n, Tn as o, Vt as p, Fn as r, En as s, ga as t, on as u, st as v, C as w, O as x, ot as y };

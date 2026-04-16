@@ -20,9 +20,33 @@ export default class CompareMaps {
 
     setTimeout(function () {
       _this.mapCompare = new Compare(map1.map, map2.map, container, {});
+      
+      // Collapse attribution controls on both maps
+      _this.collapseAttribution(map1.map);
+      _this.collapseAttribution(map2.map);
     }, 1000);
 
     //this.mapCompare=new Compare(map1.map,map2.map, container,{});
     //console.info( this.mapCompare);
+  }
+
+  /**
+   * Collapses the attribution control on a map.
+   * @function collapseAttribution
+   * @param {Object} map - The map object to collapse attribution on.
+   */
+  collapseAttribution(map) {
+    const tryCollapse = () => {
+      const container = map.getContainer();
+      const button = container.querySelector('.maplibregl-ctrl-attrib-button');
+      
+      if (button) {
+        button.click();
+      } else {
+        requestAnimationFrame(tryCollapse);
+      }
+    };
+    
+    tryCollapse();
   }
 }
