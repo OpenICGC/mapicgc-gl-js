@@ -3149,16 +3149,40 @@ export default class Map {
    */
   addTerrainICGC(url, controlPosition) {
     try {
-      let op;
-      for (const key in Terrains) {
-        if (Terrains.hasOwnProperty(key)) {
-          const objeto = Terrains[key];
-          if (objeto === url) {
-            op = objeto;
-          }
-        }
+      const terrainConfigsRaw = defaultOptions?.urlTerrainICGC || [];
+      const terrainConfigs = Array.isArray(terrainConfigsRaw)
+        ? terrainConfigsRaw
+        : Object.values(terrainConfigsRaw);
+      let terrainConfig = null;
+      const requestedTerrain = typeof url === "string" ? url.trim() : "";
+      const requestedTerrainLower = requestedTerrain.toLowerCase();
+
+      // Accept both terrain key (e.g. "WORLD30M") and full URL.
+      if (requestedTerrain) {
+        terrainConfig =
+          terrainConfigs.find(
+            (terrain) => terrain?.name?.toLowerCase?.() === requestedTerrainLower
+          ) ||
+          terrainConfigs.find((terrain) => terrain?.url === requestedTerrain);
       }
-      let urlTerrainICGC = op;
+
+      let urlTerrainICGC = terrainConfig?.url;
+      if (!urlTerrainICGC && requestedTerrain) {
+        // Backward compatibility with Terrains dictionary values/keys.
+        const terrainEntryByKey = Object.entries(Terrains || {}).find(
+          ([key]) => key.toLowerCase() === requestedTerrainLower
+        );
+        const terrainEntryByUrl = Object.entries(Terrains || {}).find(
+          ([, value]) => value === requestedTerrain
+        );
+        urlTerrainICGC =
+          terrainEntryByKey?.[1] || terrainEntryByUrl?.[1] || requestedTerrain;
+      }
+
+      if (!urlTerrainICGC) {
+        throw new Error("Terrain URL not found in configuration");
+      }
+
       if (this.getSource("terrainICGC") !== undefined) {
         let lyrs = this.getStyle().layers;
         lyrs.forEach((element) => {
@@ -3169,23 +3193,55 @@ export default class Map {
         this.removeSource("terrainICGC");
       }
       if (this.getSource("terrainICGC") === undefined) {
-        if (url.includes("terrarium")) {
-          this.map.addSource("terrainICGC", {
-            type: "raster-dem",
-            tiles: [urlTerrainICGC],
-            tileSize: 512,
-            encoding: "terrarium",
-            maxzoom: 16,
-          });
-        } else {
-          this.map.addSource("terrainICGC", {
-            type: "raster-dem",
-            tiles: [urlTerrainICGC],
-            tileSize: 256,
-            maxzoom: 14,
-            minzoom: 7,
-          });
+        const terrainName =
+          terrainConfig?.name?.toLowerCase?.() || requestedTerrainLower;
+        const sourceConfig = {
+          type: "raster-dem",
+          tiles: [urlTerrainICGC],
+        };
+
+        if (terrainConfig?.encoding) {
+          sourceConfig.encoding = terrainConfig.encoding;
         }
+        if (terrainConfig?.attribution) {
+          sourceConfig.attribution = terrainConfig.attribution;
+        }
+        if (typeof terrainConfig?.tileSize === "number") {
+          sourceConfig.tileSize = terrainConfig.tileSize;
+        }
+        if (typeof terrainConfig?.maxzoom === "number") {
+          sourceConfig.maxzoom = terrainConfig.maxzoom;
+        }
+        if (typeof terrainConfig?.minzoom === "number") {
+          sourceConfig.minzoom = terrainConfig.minzoom;
+        }
+
+        if (!sourceConfig.tileSize) {
+          if (terrainName === "world30m") {
+            sourceConfig.tileSize = 512;
+          } else if (terrainName === "icgc5m") {
+            sourceConfig.tileSize = 256;
+          } else {
+            sourceConfig.tileSize =
+              sourceConfig.encoding === "terrarium" ? 512 : 256;
+          }
+        }
+        if (typeof sourceConfig.maxzoom !== "number") {
+          if (terrainName === "world30m") {
+            sourceConfig.maxzoom = 16;
+          } else {
+            sourceConfig.maxzoom =
+              sourceConfig.encoding === "terrarium" ? 16 : 14;
+          }
+        }
+        if (
+          sourceConfig.encoding !== "terrarium" &&
+          typeof sourceConfig.minzoom !== "number"
+        ) {
+          sourceConfig.minzoom = 7;
+        }
+
+        this.map.addSource("terrainICGC", sourceConfig);
       }
       this.map.setTerrain({
         source: "terrainICGC",
