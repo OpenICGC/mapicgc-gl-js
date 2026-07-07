@@ -1,13 +1,13 @@
 
 const Styles = {
-  TOPO: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_topografic.json",
-  ORTO: "https://geoserveis.icgc.cat/styles/icgc_orto_estandard.json",
+  TOPO: "https://geoserveis.icgc.cat/styles/mapa-base-topografic.json",
+  ORTO: "https://geoserveis.icgc.cat/styles/mapa-base-orto.json",
   ORTO3D: "https://eines.icgc.cat/recursos//styles/icgc_orto_3d.json",
-  ORTOHYBRID: "https://geoserveis.icgc.cat/styles/icgc_orto_hibrida.json",
-  ADMIN: "https://geoserveis.icgc.cat/styles/icgc_limits_administratius_gris.json",
+  ORTOHYBRID: "https://geoserveis.icgc.cat/styles/mapa-base-orto-hibrida.json",
+  ADMIN: "https://geoserveis.icgc.cat/styles/mapa-base-administratiu.json",
   DARK: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_fosc.json",
-  LIGHT: "https://geoserveis.icgc.cat/styles/icgc_mapa_base_gris.json",
-  GEOLOGY: "https://geoserveis.icgc.cat/styles/icgc_geologic_informacio.json",
+  LIGHT: "https://geoserveis.icgc.cat/styles/mapa-base-estandard-gris.json",
+  GEOLOGY: "https://geoserveis.icgc.cat/styles/mapa-base-geologic.json",
   RASTER: {
     TOPO: {
       url: "https://geoserveis.icgc.cat/servei/catalunya/mapa-base/wmts/topografic/MON3857NW/{z}/{x}/{y}.png",
