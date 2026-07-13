@@ -71,6 +71,7 @@
     "@watergis/maplibre-gl-export": "^4.1.2",
     "flatgeobuf": "^4.4.0",
     "maplibre-gl": "^5.23.0",
+    "proj4": "^2.20.9",
     "utm-latlng": "^1.0.8"
   }
 }

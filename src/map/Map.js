@@ -18,6 +18,8 @@ import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import LegendControl from "../controls/LegendControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
+import ApiTerritorialControl from "../controls/ApiTerritorialControl.js";
+import mostraPanellInfo from "../territorial/mostraPanellInfo.js";
 import Config from "../constants/ConfigICGC.js";
 import Legends from "../constants/Legends.js";
 import mapicgcConfig from "../mapicgc-config.json";
@@ -272,6 +274,51 @@ export default class Map {
     }
   }
   //geocoder ends
+
+  /**
+   * Adds the territorial click lookup control from the Map API.
+   * @param {Object} [options={}] - Configuration for the territorial lookup.
+   * @param {boolean} [options.infoPanel=true] - Whether to show the docked info panel.
+    * @param {Function} [options.onResult] - Called with (resultat, lngLat) after each click. If it returns a value, that value is returned by the callback chain.
+    * @param {Array|string} [options.collections] - Collection ids to query. Defaults to the territorial API default collections when omitted.
+    * @param {Object|Array|string} [options.fields] - Optional field selector. Use an array for all collections, a comma-separated string, or an object keyed by collection id to filter the returned info.
+    * @param {Array|string} [options.fields.default] - Optional default field list when `options.fields` is an object.
+    * @param {boolean} [options.IconButton=true] - Shows/hides the territorial icon button. If false, click query stays active without rendering a button.
+    * @param {string|Object} [options.icon] - Button icon as text, inline SVG string, image URL/data URI, or object `{ src, alt }`.
+    * @param {Object} [options.customPosition] - Optional free position inside map container.
+    * @param {number|string} [options.customPosition.top] - CSS top value.
+    * @param {number|string} [options.customPosition.right] - CSS right value.
+    * @param {number|string} [options.customPosition.bottom] - CSS bottom value.
+    * @param {number|string} [options.customPosition.left] - CSS left value.
+    * @param {number|string} [options.customPosition.zIndex] - CSS z-index value.
+   * @param {string} [position='top-right'] - Control position.
+    * @returns {ApiTerritorialControl|undefined} - The created control instance, or undefined if the control could not be added.
+   */
+  addApiTerritorialICGC(options = {}, position = "top-right") {
+    try {
+      const { infoPanel = true, onResult, ...controlOptions } = options || {};
+
+      const control = new ApiTerritorialControl({
+        ...controlOptions,
+        onResult: (resultat, lngLat) => {
+          if (infoPanel) {
+            mostraPanellInfo.call(this, resultat, lngLat);
+          }
+
+          if (typeof onResult === "function") {
+            return onResult.call(this, resultat, lngLat);
+          }
+
+          return resultat;
+        },
+      });
+
+      this.map.addControl(control, position);
+      return control;
+    } catch (error) {
+      console.error(`Error adding territorial control: ${error.message}`);
+    }
+  }
 
   async loadImage(urlImage) {
     try {
