@@ -1,4 +1,5 @@
-import maplibregl from "maplibre-gl";
+//import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import Compare from "@maplibre/maplibre-gl-compare";
 
 /**

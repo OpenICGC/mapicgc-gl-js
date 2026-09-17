@@ -1,6 +1,6 @@
-import { n as e, t } from "./chunk-efA98nb6-Dfm7IivL.mjs";
-import { t as n } from "./typeof-CTd55yxz-BxqQpTq1.mjs";
-//#region node_modules/@watergis/maplibre-gl-export/dist/index.es-D_FsJY9H.js
+import { n as e, t } from "./rolldown-runtime-3b4jIN3o-CmciV3xi.mjs";
+import { t as n } from "./typeof-C3azmBUr-9LkZMuan.mjs";
+//#region node_modules/@watergis/maplibre-gl-export/dist/index.es-lgdlL0gw.js
 var r = /* @__PURE__ */ e((e, t) => {
 	var n = function(e) {
 		return e && e.Math === Math && e;
@@ -863,7 +863,7 @@ var r = /* @__PURE__ */ e((e, t) => {
 		});
 	}, pe.prototype = c(R, "then", function(e, t) {
 		var r = P(this), i = re(v(this, L));
-		return r.parent = !0, i.ok = p(e) ? e : !0, i.fail = p(t) && t, i.domain = n ? ne.domain : void 0, r.state === se ? r.reactions.add(i) : b(function() {
+		return r.parent = !0, i.ok = !p(e) || e, i.fail = p(t) && t, i.domain = n ? ne.domain : void 0, r.state === se ? r.reactions.add(i) : b(function() {
 			_e(i, r);
 		}), i.promise;
 	}), me = function() {
@@ -1494,16 +1494,18 @@ var bt = /* @__PURE__ */ e((e, t) => {
 		}, O = t + " Iterator", k = !1, A = e.prototype, j = A[S] || A["@@iterator"] || m && A[m], M = !x && j || D(m), N = t === "Array" && A.entries || j, P, F, I;
 		if (N && (P = l(N.call(new e())), P !== Object.prototype && P.next && (!i && l(P) !== b && (u ? u(P, b) : o(P[S]) || p(P, S, E)), d(P, O, !0, !0), i && (h[O] = E))), v && m === w && j && j.name !== w && (!i && y ? f(A, "name", w) : (k = !0, M = function() {
 			return r(j, this);
-		})), m) if (F = {
-			values: D(w),
-			keys: g ? M : D(C),
-			entries: D(T)
-		}, _) for (I in F) (x || k || !(I in A)) && p(A, I, F[I]);
-		else n({
-			target: t,
-			proto: !0,
-			forced: x || k
-		}, F);
+		})), m) {
+			if (F = {
+				values: D(w),
+				keys: g ? M : D(C),
+				entries: D(T)
+			}, _) for (I in F) (x || k || !(I in A)) && p(A, I, F[I]);
+			else n({
+				target: t,
+				proto: !0,
+				forced: x || k
+			}, F);
+		}
 		return (!i || _) && A[S] !== M && p(A, S, M, { name: m }), h[t] = M, F;
 	};
 }), Yt = /* @__PURE__ */ e((e, t) => {
@@ -2177,10 +2179,12 @@ function Pn(e, t, n, r, i) {
 			}
 			i.type & K.HORIZ_LINE_TO && t !== 0 && (i.type = K.LINE_TO, i.y = i.relative ? 0 : c), i.type & K.VERT_LINE_TO && n !== 0 && (i.type = K.LINE_TO, i.x = i.relative ? 0 : s), i.x !== void 0 && (i.x = i.x * e + m * n + (f ? 0 : a)), i.y !== void 0 && (i.y = p * t + i.y * r + (f ? 0 : o)), i.x1 !== void 0 && (i.x1 = i.x1 * e + i.y1 * n + (f ? 0 : a)), i.y1 !== void 0 && (i.y1 = u * t + i.y1 * r + (f ? 0 : o)), i.x2 !== void 0 && (i.x2 = i.x2 * e + i.y2 * n + (f ? 0 : a)), i.y2 !== void 0 && (i.y2 = d * t + i.y2 * r + (f ? 0 : o));
 			var g = e * r - t * n;
-			if (i.xRot !== void 0 && (e !== 1 || t !== 0 || n !== 0 || r !== 1)) if (g === 0) delete i.rX, delete i.rY, delete i.xRot, delete i.lArcFlag, delete i.sweepFlag, i.type = K.LINE_TO;
-			else {
-				var _ = i.xRot * Math.PI / 180, v = Math.sin(_), y = Math.cos(_), b = 1 / h(i.rX), x = 1 / h(i.rY), S = h(y) * b + h(v) * x, C = 2 * v * y * (b - x), w = h(v) * b + h(y) * x, T = S * r * r - C * t * r + w * t * t, E = C * (e * r + t * n) - 2 * (S * n * r + w * e * t), D = S * n * n - C * e * n + w * e * e, O = (Math.atan2(E, T - D) + Math.PI) % Math.PI / 2, k = Math.sin(O), A = Math.cos(O);
-				i.rX = Math.abs(g) / Math.sqrt(T * h(A) + E * k * A + D * h(k)), i.rY = Math.abs(g) / Math.sqrt(T * h(k) - E * k * A + D * h(A)), i.xRot = 180 * O / Math.PI;
+			if (i.xRot !== void 0 && (e !== 1 || t !== 0 || n !== 0 || r !== 1)) {
+				if (g === 0) delete i.rX, delete i.rY, delete i.xRot, delete i.lArcFlag, delete i.sweepFlag, i.type = K.LINE_TO;
+				else {
+					var _ = i.xRot * Math.PI / 180, v = Math.sin(_), y = Math.cos(_), b = 1 / h(i.rX), x = 1 / h(i.rY), S = h(y) * b + h(v) * x, C = 2 * v * y * (b - x), w = h(v) * b + h(y) * x, T = S * r * r - C * t * r + w * t * t, E = C * (e * r + t * n) - 2 * (S * n * r + w * e * t), D = S * n * n - C * e * n + w * e * e, O = (Math.atan2(E, T - D) + Math.PI) % Math.PI / 2, k = Math.sin(O), A = Math.cos(O);
+					i.rX = Math.abs(g) / Math.sqrt(T * h(A) + E * k * A + D * h(k)), i.rY = Math.abs(g) / Math.sqrt(T * h(k) - E * k * A + D * h(A)), i.xRot = 180 * O / Math.PI;
+				}
 			}
 			return i.sweepFlag !== void 0 && 0 > g && (i.sweepFlag = +!i.sweepFlag), i;
 		});
@@ -2351,87 +2355,94 @@ var Fn, In = function() {
 			t.push(e), n.curArgs.length = 0, n.canParseCommandOrComma = !0;
 		}, i = 0; i < e.length; i++) {
 			var a = e[i], o = !(this.curCommandType !== K.ARC || this.curArgs.length !== 3 && this.curArgs.length !== 4 || this.curNumber.length !== 1 || this.curNumber !== "0" && this.curNumber !== "1"), s = Rn(a) && (this.curNumber === "0" && a === "0" || o);
-			if (!Rn(a) || s) if (a !== "e" && a !== "E") if (a !== "-" && a !== "+" || !this.curNumberHasExp || this.curNumberHasExpDigits) if (a !== "." || this.curNumberHasExp || this.curNumberHasDecimal || o) {
-				if (this.curNumber && this.curCommandType !== -1) {
-					var c = Number(this.curNumber);
-					if (isNaN(c)) throw SyntaxError("Invalid number ending at " + i);
-					if (this.curCommandType === K.ARC) {
-						if (this.curArgs.length === 0 || this.curArgs.length === 1) {
-							if (0 > c) throw SyntaxError("Expected positive number, got \"" + c + "\" at index \"" + i + "\"");
-						} else if ((this.curArgs.length === 3 || this.curArgs.length === 4) && this.curNumber !== "0" && this.curNumber !== "1") throw SyntaxError("Expected a flag, got \"" + this.curNumber + "\" at index \"" + i + "\"");
-					}
-					this.curArgs.push(c), this.curArgs.length === Bn[this.curCommandType] && (K.HORIZ_LINE_TO === this.curCommandType ? r({
-						type: K.HORIZ_LINE_TO,
-						relative: this.curCommandRelative,
-						x: c
-					}) : K.VERT_LINE_TO === this.curCommandType ? r({
-						type: K.VERT_LINE_TO,
-						relative: this.curCommandRelative,
-						y: c
-					}) : this.curCommandType === K.MOVE_TO || this.curCommandType === K.LINE_TO || this.curCommandType === K.SMOOTH_QUAD_TO ? (r({
-						type: this.curCommandType,
-						relative: this.curCommandRelative,
-						x: this.curArgs[0],
-						y: this.curArgs[1]
-					}), K.MOVE_TO === this.curCommandType && (this.curCommandType = K.LINE_TO)) : this.curCommandType === K.CURVE_TO ? r({
-						type: K.CURVE_TO,
-						relative: this.curCommandRelative,
-						x1: this.curArgs[0],
-						y1: this.curArgs[1],
-						x2: this.curArgs[2],
-						y2: this.curArgs[3],
-						x: this.curArgs[4],
-						y: this.curArgs[5]
-					}) : this.curCommandType === K.SMOOTH_CURVE_TO ? r({
-						type: K.SMOOTH_CURVE_TO,
-						relative: this.curCommandRelative,
-						x2: this.curArgs[0],
-						y2: this.curArgs[1],
-						x: this.curArgs[2],
-						y: this.curArgs[3]
-					}) : this.curCommandType === K.QUAD_TO ? r({
-						type: K.QUAD_TO,
-						relative: this.curCommandRelative,
-						x1: this.curArgs[0],
-						y1: this.curArgs[1],
-						x: this.curArgs[2],
-						y: this.curArgs[3]
-					}) : this.curCommandType === K.ARC && r({
-						type: K.ARC,
-						relative: this.curCommandRelative,
-						rX: this.curArgs[0],
-						rY: this.curArgs[1],
-						xRot: this.curArgs[2],
-						lArcFlag: this.curArgs[3],
-						sweepFlag: this.curArgs[4],
-						x: this.curArgs[5],
-						y: this.curArgs[6]
-					})), this.curNumber = "", this.curNumberHasExpDigits = !1, this.curNumberHasExp = !1, this.curNumberHasDecimal = !1, this.canParseCommandOrComma = !0;
-				}
-				if (!Ln(a)) if (a === "," && this.canParseCommandOrComma) this.canParseCommandOrComma = !1;
-				else if (a !== "+" && a !== "-" && a !== ".") if (s) this.curNumber = a, this.curNumberHasDecimal = !1;
-				else {
-					if (this.curArgs.length !== 0) throw SyntaxError("Unterminated command at index " + i + ".");
-					if (!this.canParseCommandOrComma) throw SyntaxError("Unexpected character \"" + a + "\" at index " + i + ". Command cannot follow comma");
-					if (this.canParseCommandOrComma = !1, a !== "z" && a !== "Z") if (a === "h" || a === "H") this.curCommandType = K.HORIZ_LINE_TO, this.curCommandRelative = a === "h";
-					else if (a === "v" || a === "V") this.curCommandType = K.VERT_LINE_TO, this.curCommandRelative = a === "v";
-					else if (a === "m" || a === "M") this.curCommandType = K.MOVE_TO, this.curCommandRelative = a === "m";
-					else if (a === "l" || a === "L") this.curCommandType = K.LINE_TO, this.curCommandRelative = a === "l";
-					else if (a === "c" || a === "C") this.curCommandType = K.CURVE_TO, this.curCommandRelative = a === "c";
-					else if (a === "s" || a === "S") this.curCommandType = K.SMOOTH_CURVE_TO, this.curCommandRelative = a === "s";
-					else if (a === "q" || a === "Q") this.curCommandType = K.QUAD_TO, this.curCommandRelative = a === "q";
-					else if (a === "t" || a === "T") this.curCommandType = K.SMOOTH_QUAD_TO, this.curCommandRelative = a === "t";
-					else {
-						if (a !== "a" && a !== "A") throw SyntaxError("Unexpected character \"" + a + "\" at index " + i + ".");
-						this.curCommandType = K.ARC, this.curCommandRelative = a === "a";
-					}
-					else t.push({ type: K.CLOSE_PATH }), this.canParseCommandOrComma = !0, this.curCommandType = -1;
-				}
-				else this.curNumber = a, this.curNumberHasDecimal = a === ".";
-			} else this.curNumber += a, this.curNumberHasDecimal = !0;
-			else this.curNumber += a;
-			else this.curNumber += a, this.curNumberHasExp = !0;
-			else this.curNumber += a, this.curNumberHasExpDigits = this.curNumberHasExp;
+			if (!Rn(a) || s) {
+				if (a !== "e" && a !== "E") {
+					if (a !== "-" && a !== "+" || !this.curNumberHasExp || this.curNumberHasExpDigits) {
+						if (a !== "." || this.curNumberHasExp || this.curNumberHasDecimal || o) {
+							if (this.curNumber && this.curCommandType !== -1) {
+								var c = Number(this.curNumber);
+								if (isNaN(c)) throw SyntaxError("Invalid number ending at " + i);
+								if (this.curCommandType === K.ARC) {
+									if (this.curArgs.length === 0 || this.curArgs.length === 1) {
+										if (0 > c) throw SyntaxError("Expected positive number, got \"" + c + "\" at index \"" + i + "\"");
+									} else if ((this.curArgs.length === 3 || this.curArgs.length === 4) && this.curNumber !== "0" && this.curNumber !== "1") throw SyntaxError("Expected a flag, got \"" + this.curNumber + "\" at index \"" + i + "\"");
+								}
+								this.curArgs.push(c), this.curArgs.length === Bn[this.curCommandType] && (K.HORIZ_LINE_TO === this.curCommandType ? r({
+									type: K.HORIZ_LINE_TO,
+									relative: this.curCommandRelative,
+									x: c
+								}) : K.VERT_LINE_TO === this.curCommandType ? r({
+									type: K.VERT_LINE_TO,
+									relative: this.curCommandRelative,
+									y: c
+								}) : this.curCommandType === K.MOVE_TO || this.curCommandType === K.LINE_TO || this.curCommandType === K.SMOOTH_QUAD_TO ? (r({
+									type: this.curCommandType,
+									relative: this.curCommandRelative,
+									x: this.curArgs[0],
+									y: this.curArgs[1]
+								}), K.MOVE_TO === this.curCommandType && (this.curCommandType = K.LINE_TO)) : this.curCommandType === K.CURVE_TO ? r({
+									type: K.CURVE_TO,
+									relative: this.curCommandRelative,
+									x1: this.curArgs[0],
+									y1: this.curArgs[1],
+									x2: this.curArgs[2],
+									y2: this.curArgs[3],
+									x: this.curArgs[4],
+									y: this.curArgs[5]
+								}) : this.curCommandType === K.SMOOTH_CURVE_TO ? r({
+									type: K.SMOOTH_CURVE_TO,
+									relative: this.curCommandRelative,
+									x2: this.curArgs[0],
+									y2: this.curArgs[1],
+									x: this.curArgs[2],
+									y: this.curArgs[3]
+								}) : this.curCommandType === K.QUAD_TO ? r({
+									type: K.QUAD_TO,
+									relative: this.curCommandRelative,
+									x1: this.curArgs[0],
+									y1: this.curArgs[1],
+									x: this.curArgs[2],
+									y: this.curArgs[3]
+								}) : this.curCommandType === K.ARC && r({
+									type: K.ARC,
+									relative: this.curCommandRelative,
+									rX: this.curArgs[0],
+									rY: this.curArgs[1],
+									xRot: this.curArgs[2],
+									lArcFlag: this.curArgs[3],
+									sweepFlag: this.curArgs[4],
+									x: this.curArgs[5],
+									y: this.curArgs[6]
+								})), this.curNumber = "", this.curNumberHasExpDigits = !1, this.curNumberHasExp = !1, this.curNumberHasDecimal = !1, this.canParseCommandOrComma = !0;
+							}
+							if (!Ln(a)) {
+								if (a === "," && this.canParseCommandOrComma) this.canParseCommandOrComma = !1;
+								else if (a !== "+" && a !== "-" && a !== ".") {
+									if (s) this.curNumber = a, this.curNumberHasDecimal = !1;
+									else {
+										if (this.curArgs.length !== 0) throw SyntaxError("Unterminated command at index " + i + ".");
+										if (!this.canParseCommandOrComma) throw SyntaxError("Unexpected character \"" + a + "\" at index " + i + ". Command cannot follow comma");
+										if (this.canParseCommandOrComma = !1, a !== "z" && a !== "Z") {
+											if (a === "h" || a === "H") this.curCommandType = K.HORIZ_LINE_TO, this.curCommandRelative = a === "h";
+											else if (a === "v" || a === "V") this.curCommandType = K.VERT_LINE_TO, this.curCommandRelative = a === "v";
+											else if (a === "m" || a === "M") this.curCommandType = K.MOVE_TO, this.curCommandRelative = a === "m";
+											else if (a === "l" || a === "L") this.curCommandType = K.LINE_TO, this.curCommandRelative = a === "l";
+											else if (a === "c" || a === "C") this.curCommandType = K.CURVE_TO, this.curCommandRelative = a === "c";
+											else if (a === "s" || a === "S") this.curCommandType = K.SMOOTH_CURVE_TO, this.curCommandRelative = a === "s";
+											else if (a === "q" || a === "Q") this.curCommandType = K.QUAD_TO, this.curCommandRelative = a === "q";
+											else if (a === "t" || a === "T") this.curCommandType = K.SMOOTH_QUAD_TO, this.curCommandRelative = a === "t";
+											else {
+												if (a !== "a" && a !== "A") throw SyntaxError("Unexpected character \"" + a + "\" at index " + i + ".");
+												this.curCommandType = K.ARC, this.curCommandRelative = a === "a";
+											}
+										} else t.push({ type: K.CLOSE_PATH }), this.canParseCommandOrComma = !0, this.curCommandType = -1;
+									}
+								} else this.curNumber = a, this.curNumberHasDecimal = a === ".";
+							}
+						} else this.curNumber += a, this.curNumberHasDecimal = !0;
+					} else this.curNumber += a;
+				} else this.curNumber += a, this.curNumberHasExp = !0;
+			} else this.curNumber += a, this.curNumberHasExpDigits = this.curNumberHasExp;
 		}
 		return t;
 	}, t.prototype.transform = function(e) {
@@ -3095,7 +3106,7 @@ function Xn(e) {
 		createImage: n.loadImage
 	};
 }
-var Zn = /* @__PURE__ */ Object.freeze({
+var Zn = /*#__PURE__*/ Object.freeze({
 	__proto__: null,
 	offscreen: Yn,
 	node: Xn
@@ -3231,7 +3242,7 @@ var J = class e {
 		return this.getString().replace(/[0-9.-]/g, "");
 	}
 	getPixels(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1;
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1];
 		if (!this.hasValue()) return 0;
 		var [n, r] = typeof e == "boolean" ? [void 0, e] : [e], { viewPort: i } = this.document.screen;
 		switch (!0) {
@@ -3392,7 +3403,7 @@ var Tr = class {
 		}
 	}
 	checkPath(e, t) {
-		if (!(!this.working || !t)) {
+		if (this.working && t) {
 			var { events: n, eventElements: r } = this;
 			n.forEach((n, i) => {
 				var { x: a, y: o } = n;
@@ -3401,7 +3412,7 @@ var Tr = class {
 		}
 	}
 	checkBoundingBox(e, t) {
-		if (!(!this.working || !t)) {
+		if (this.working && t) {
 			var { events: n, eventElements: r } = this;
 			n.forEach((n, i) => {
 				var { x: a, y: o } = n;
@@ -3473,9 +3484,7 @@ var Tr = class {
 			case v === "meet":
 				n.scale(x, x);
 				break;
-			case v === "slice":
-				n.scale(S, S);
-				break;
+			case v === "slice": n.scale(S, S);
 		}
 		n.translate(-c, -l);
 	}
@@ -3724,8 +3733,8 @@ Hr.transformTypes = {
 };
 var X = class e {
 	constructor(e, t) {
-		var n = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : !1;
-		if (this.document = e, this.node = t, this.captureTextNodes = n, this.attributes = Object.create(null), this.styles = Object.create(null), this.stylesSpecificity = Object.create(null), this.animationFrozen = !1, this.animationFrozenValue = "", this.parent = null, this.children = [], !(!t || t.nodeType !== 1)) {
+		var n = arguments.length > 2 && arguments[2] !== void 0 && arguments[2];
+		if (this.document = e, this.node = t, this.captureTextNodes = n, this.attributes = Object.create(null), this.styles = Object.create(null), this.stylesSpecificity = Object.create(null), this.animationFrozen = !1, this.animationFrozenValue = "", this.parent = null, this.children = [], t && t.nodeType === 1) {
 			Array.from(t.attributes).forEach((t) => {
 				var n = nr(t.nodeName);
 				this.attributes[n] = new J(e, n, t.value);
@@ -3746,7 +3755,7 @@ var X = class e {
 		}
 	}
 	getAttribute(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1, n = this.attributes[e];
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1], n = this.attributes[e];
 		if (!n && t) {
 			var r = new J(this.document, e, "");
 			return this.attributes[e] = r, r;
@@ -3758,7 +3767,7 @@ var X = class e {
 		return J.empty(this.document);
 	}
 	getStyle(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1, n = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : !1, r = this.styles[e];
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1], n = arguments.length > 2 && arguments[2] !== void 0 && arguments[2], r = this.styles[e];
 		if (r) return r;
 		var i = this.getAttribute(e);
 		if (i != null && i.hasValue()) return this.styles[e] = i, i;
@@ -3776,7 +3785,7 @@ var X = class e {
 		return r || J.empty(this.document);
 	}
 	render(e) {
-		if (!(this.getStyle("display").getString() === "none" || this.getStyle("visibility").getString() === "hidden")) {
+		if (this.getStyle("display").getString() !== "none" && this.getStyle("visibility").getString() !== "hidden") {
 			if (e.save(), this.getStyle("mask").hasValue()) {
 				var t = this.getStyle("mask").getDefinition();
 				t && (this.applyEffects(e), t.apply(e, this));
@@ -4055,7 +4064,7 @@ var Yr = class {
 		return e;
 	}
 	setContext(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1;
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1];
 		if (!t) {
 			var n = this.getStyle("fill"), r = this.getStyle("fill-opacity"), i = this.getStyle("stroke"), a = this.getStyle("stroke-opacity");
 			if (n.isUrlDefinition()) {
@@ -4080,7 +4089,7 @@ var Yr = class {
 			var d = this.getStyle("stroke-linecap"), f = this.getStyle("stroke-linejoin"), p = this.getStyle("stroke-miterlimit"), m = this.getStyle("stroke-dasharray"), h = this.getStyle("stroke-dashoffset");
 			if (d.hasValue() && (e.lineCap = d.getString()), f.hasValue() && (e.lineJoin = f.getString()), p.hasValue() && (e.miterLimit = p.getNumber()), m.hasValue() && m.getString() !== "none") {
 				var g = q(m.getString());
-				e.setLineDash === void 0 ? e.webkitLineDash === void 0 ? e.mozDash !== void 0 && !(g.length === 1 && g[0] === 0) && (e.mozDash = g) : e.webkitLineDash = g : e.setLineDash(g);
+				e.setLineDash === void 0 ? e.webkitLineDash === void 0 ? e.mozDash !== void 0 && (g.length !== 1 || g[0] !== 0) && (e.mozDash = g) : e.webkitLineDash = g : e.setLineDash(g);
 				var _ = h.getPixels();
 				e.lineDashOffset === void 0 ? e.webkitLineDashOffset === void 0 ? e.mozDashOffset !== void 0 && (e.mozDashOffset = _) : e.webkitLineDashOffset = _ : e.lineDashOffset = _;
 			}
@@ -4128,9 +4137,7 @@ var Yr = class {
 			case Z.ARC:
 				this.pathA(e, n);
 				break;
-			case Z.CLOSE_PATH:
-				this.pathZ(e, n);
-				break;
+			case Z.CLOSE_PATH: this.pathZ(e, n);
 		}
 		return n;
 	}
@@ -4289,10 +4296,10 @@ var Yr = class {
 	}
 }, Qr = class e extends Xr {
 	constructor(t, n, r) {
-		super(t, n, new.target === e ? !0 : r), this.type = "text", this.x = 0, this.y = 0, this.measureCache = -1;
+		super(t, n, new.target === e || r), this.type = "text", this.x = 0, this.y = 0, this.measureCache = -1;
 	}
 	setContext(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1;
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1];
 		super.setContext(e, t);
 		var n = this.getStyle("dominant-baseline").getTextBaseline() || this.getStyle("alignment-baseline").getTextBaseline();
 		n && (e.textBaseline = n);
@@ -4362,9 +4369,9 @@ var Yr = class {
 	}
 	applyAnchoring() {
 		if (!(this.textChunkStart >= this.leafTexts.length)) {
-			var e = this.leafTexts[this.textChunkStart], t = e.getStyle("text-anchor").getString("start"), n = !1, r = 0;
-			r = t === "start" && !n || t === "end" && n ? e.x - this.minX : t === "end" && !n || t === "start" && n ? e.x - this.maxX : e.x - (this.minX + this.maxX) / 2;
-			for (var i = this.textChunkStart; i < this.leafTexts.length; i++) this.leafTexts[i].x += r;
+			var e = this.leafTexts[this.textChunkStart], t = e.getStyle("text-anchor").getString("start"), n = 0;
+			n = t === "start" ? e.x - this.minX : t === "end" ? e.x - this.maxX : e.x - (this.minX + this.maxX) / 2;
+			for (var r = this.textChunkStart; r < this.leafTexts.length; r++) this.leafTexts[r].x += n;
 			this.minX = Infinity, this.maxX = -Infinity, this.textChunkStart = this.leafTexts.length;
 		}
 	}
@@ -4434,7 +4441,7 @@ var Yr = class {
 	}
 }, $r = class e extends Qr {
 	constructor(t, n, r) {
-		super(t, n, new.target === e ? !0 : r), this.type = "tspan", this.text = this.children.length > 0 ? "" : this.getTextFromNode();
+		super(t, n, new.target === e || r), this.type = "tspan", this.text = this.children.length > 0 ? "" : this.getTextFromNode();
 	}
 	getText() {
 		return this.text;
@@ -4478,11 +4485,13 @@ var Yr = class {
 		super.clearContext(e), this.document.screen.viewPort.removeCurrent();
 	}
 	resize(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : e, n = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : !1, r = this.getAttribute("width", !0), i = this.getAttribute("height", !0), a = this.getAttribute("viewBox"), o = this.getAttribute("style"), s = r.getNumber(0), c = i.getNumber(0);
-		if (n) if (typeof n == "string") this.getAttribute("preserveAspectRatio", !0).setValue(n);
-		else {
-			var l = this.getAttribute("preserveAspectRatio");
-			l.hasValue() && l.setValue(l.getString().replace(/^\s*(\S.*\S)\s*$/, "$1"));
+		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : e, n = arguments.length > 2 && arguments[2] !== void 0 && arguments[2], r = this.getAttribute("width", !0), i = this.getAttribute("height", !0), a = this.getAttribute("viewBox"), o = this.getAttribute("style"), s = r.getNumber(0), c = i.getNumber(0);
+		if (n) {
+			if (typeof n == "string") this.getAttribute("preserveAspectRatio", !0).setValue(n);
+			else {
+				var l = this.getAttribute("preserveAspectRatio");
+				l.hasValue() && l.setValue(l.getString().replace(/^\s*(\S.*\S)\s*$/, "$1"));
+			}
 		}
 		if (r.setValue(e), i.setValue(t), a.hasValue() || a.setValue(`0 0 ${s || e} ${c || t}`), o.hasValue()) {
 			var u = this.getStyle("width"), d = this.getStyle("height");
@@ -4748,7 +4757,6 @@ var Yr = class {
 			case "glyph":
 				var s = a;
 				s.arabicForm ? (this.isRTL = !0, this.isArabic = !0, this.glyphs[s.unicode] === void 0 && (this.glyphs[s.unicode] = Object.create(null)), this.glyphs[s.unicode][s.arabicForm] = s) : this.glyphs[s.unicode] = s;
-				break;
 		}
 	}
 	render() {}
@@ -4823,7 +4831,7 @@ function Ti(e) {
 }
 var Ei = class extends Qr {
 	constructor(e, t, n) {
-		super(e, t, n), this.type = "textPath", this.textWidth = 0, this.textHeight = 0, this.pathLength = -1, this.glyphInfo = null, this.letterSpacingCache = [], this.measuresCache = new Map([["", 0]]);
+		super(e, t, n), this.type = "textPath", this.textWidth = 0, this.textHeight = 0, this.pathLength = -1, this.glyphInfo = null, this.letterSpacingCache = [], this.measuresCache = /* @__PURE__ */ new Map([["", 0]]);
 		var r = this.getHrefAttribute().getDefinition();
 		this.text = this.getTextFromNode(), this.dataArray = this.parsePathData(r);
 	}
@@ -4851,9 +4859,7 @@ var Ei = class extends Qr {
 					var [i, a, o, s, c, l, u, d] = r, f = o > s ? o : s, p = o > s ? 1 : o / s, m = o > s ? s / o : 1;
 					e && (e.translate(i, a), e.rotate(u), e.scale(p, m), e.arc(0, 0, f, c, c + l, !!(1 - d)), e.scale(1 / p, 1 / m), e.rotate(-u), e.translate(-i, -a));
 					break;
-				case Z.CLOSE_PATH:
-					e && e.closePath();
-					break;
+				case Z.CLOSE_PATH: e && e.closePath();
 			}
 		});
 	}
@@ -4910,7 +4916,7 @@ var Ei = class extends Qr {
 			var g = this.getPathLength(), _ = this.getStyle("startOffset").getNumber(0) * g, v = 0;
 			(o === "middle" || o === "center") && (v = -h / 2), (o === "end" || o === "right") && (v = -h), v += _, n.forEach((t, i) => {
 				var { offset: s, segment: c, rotation: l } = this.findSegmentToFitChar(e, o, h, g, r, v, a, t, i);
-				v = s, !(!c.p0 || !c.p1) && this.glyphInfo.push({
+				v = s, c.p0 && c.p1 && this.glyphInfo.push({
 					text: n[i],
 					p0: c.p0,
 					p1: c.p1,
@@ -4952,9 +4958,7 @@ var Ei = class extends Qr {
 				case Z.ARC:
 					c = this.pathA(n);
 					break;
-				case Z.CLOSE_PATH:
-					Q.pathZ(n);
-					break;
+				case Z.CLOSE_PATH: Q.pathZ(n);
 			}
 			o.type === Z.CLOSE_PATH ? t.push({
 				type: Z.CLOSE_PATH,
@@ -5083,9 +5087,7 @@ var Ei = class extends Qr {
 				case Z.CURVE_TO:
 					s = o / a.pathLength, s > 1 && (s = 1), r = this.getPointOnCubicBezier(s, a.start.x, a.start.y, a.points[0], a.points[1], a.points[2], a.points[3], a.points[4], a.points[5]);
 					break;
-				case Z.QUAD_TO:
-					s = o / a.pathLength, s > 1 && (s = 1), r = this.getPointOnQuadraticBezier(s, a.start.x, a.start.y, a.points[0], a.points[1], a.points[2], a.points[3]);
-					break;
+				case Z.QUAD_TO: s = o / a.pathLength, s > 1 && (s = 1), r = this.getPointOnQuadraticBezier(s, a.start.x, a.start.y, a.points[0], a.points[1], a.points[2], a.points[3]);
 			}
 			if (r) return r;
 			break;
@@ -5169,7 +5171,7 @@ var Ei = class extends Qr {
 			var n = Di.exec(e);
 			if (n) {
 				var r = n[5];
-				n[4] === "base64" ? t.image = atob(r) : t.image = decodeURIComponent(r);
+				t.image = n[4] === "base64" ? atob(r) : decodeURIComponent(r);
 			} else try {
 				t.image = yield (yield t.document.fetch(e)).text();
 			} catch (t) {
@@ -5180,7 +5182,7 @@ var Ei = class extends Qr {
 	}
 	renderChildren(e) {
 		var { document: t, image: n, loaded: r } = this, i = this.getAttribute("x").getPixels("x"), a = this.getAttribute("y").getPixels("y"), o = this.getStyle("width").getPixels("x"), s = this.getStyle("height").getPixels("y");
-		if (!(!r || !n || !o || !s)) {
+		if (r && n && o && s) {
 			if (e.save(), e.translate(i, a), this.isSvg) {
 				var c = t.canvg.forkString(e, this.image, {
 					ignoreMouse: !0,
@@ -5378,35 +5380,33 @@ var Ii = class extends X {
 					1
 				];
 				break;
-			case "luminanceToAlpha":
-				r = [
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					.2125,
-					.7154,
-					.0721,
-					0,
-					0,
-					0,
-					0,
-					0,
-					0,
-					1
-				];
-				break;
+			case "luminanceToAlpha": r = [
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				.2125,
+				.7154,
+				.0721,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1
+			];
 		}
 		this.matrix = r, this.includeOpacity = this.getAttribute("includeOpacity").hasValue();
 	}
@@ -5597,7 +5597,7 @@ function Zi(e) {
 }
 function Qi() {
 	return Qi = yt(function* (e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : !1, n = document.createElement("img");
+		var t = arguments.length > 1 && arguments[1] !== void 0 && arguments[1], n = document.createElement("img");
 		return t && (n.crossOrigin = "Anonymous"), new Promise((t, r) => {
 			n.onload = () => {
 				t(n);
@@ -5692,13 +5692,13 @@ var na = class e {
 	static from(t, n) {
 		var r = arguments;
 		return yt(function* () {
-			var i = r.length > 2 && r[2] !== void 0 ? r[2] : {};
-			return new e(t, yield new Mr(i).parse(n), i);
+			var i = r.length > 2 && r[2] !== void 0 ? r[2] : {}, a = yield new Mr(i).parse(n);
+			return new e(t, a, i);
 		})();
 	}
 	static fromString(t, n) {
-		var r = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-		return new e(t, new Mr(r).parseFromString(n), r);
+		var r = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {}, i = new Mr(r).parseFromString(n);
+		return new e(t, i, r);
 	}
 	fork(t, n) {
 		var r = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
@@ -5733,7 +5733,7 @@ var na = class e {
 		this.screen.stop();
 	}
 	resize(e) {
-		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : e, n = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : !1;
+		var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : e, n = arguments.length > 2 && arguments[2] !== void 0 && arguments[2];
 		this.documentElement.resize(e, t, n);
 	}
 };
