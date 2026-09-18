@@ -61,7 +61,7 @@
             };
             map.on("load", () => {
                 map.fetchData(
-                    data.Layers.FGBAdmin.comarquesVigent,
+                    'https://api.icgc.cat/territorial/collections/agrupacions-censals/items?f=geojson',
                     "Comarques", paintOptionsfgb);
                 map.fetchData(
                     "https://analisi.transparenciacatalunya.cat/resource/pzaa-n72w.geojson",

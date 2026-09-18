@@ -50,46 +50,17 @@
             <path d="M12 5.7c-1.8 0-3.2 1.4-3.2 3.2 0 2.2 3.2 5.4 3.2 5.4s3.2-3.2 3.2-5.4c0-1.8-1.4-3.2-3.2-3.2z" fill="#ff7d62" stroke="#2e4a63" stroke-width="0.9"></path>
             <circle cx="12" cy="8.9" r="1.1" fill="#e9f0f8" stroke="#2e4a63" stroke-width="0.7"></circle>
           </svg>`;
-
-        // També pots fer servir una icona d'imatge (png/svg), per exemple la que has compartit:
-        // const targetIconImage = {
-        //   src: "./icons/territorial-pin-map.png",
-        //   alt: "Consulta territorial"
-        // };
-
-        // Exemple complet del control territorial.
-        //
-        // infoPanel: true
-        //   Mostra el panell lateral amb les dades trobades.
-        //   Si es posa false, només s'executa onResult amb la resposta.
-        //
-        // IconButton: true/false
-        //   true: mostra el botó d'activació.
-        //   false: consulta activa directament sense botó.
-        //
-        // collections:
-        //   Col·leccions a consultar. Si no es defineix, s'usen les per defecte.
-        //   Es pot passar un array o una cadena.
-        //
-        // fields:
-        //   Camp(s) que vols conservar de la resposta.
-        //   - array: aplica els mateixos camps a totes les col·leccions
-        //   - string: llista separada per comes
-        //   - objecte: camps per col·lecció
-        //   Si no es defineix, es retorna tota la propietat trobada.
-        //
-        // position:
-        //   Posició del control a la interfície de MapLibre.
-        map.addApiTerritorialICGC({
+        const mapPinIconImage = "https://uxwing.com/wp-content/themes/uxwing/download/location-travel-map/unknown-map-location-icon.png"
+          map.addApiTerritorialICGC({
           // Mostra o amaga el panell lateral automàtic.
-          infoPanel: false,
+          infoPanel: true,
 
           // true: botó visible. false: consulta activa sense botó.
-          IconButton: false,
+          IconButton: true,
 
           // Icona del botó: text, SVG inline, URL d'imatge o objecte { src, alt }.
           icon: mapPinIconSvg,
-          // icon: targetIconImage,
+          // icon: mapPinIconImage,
 
           // Posició lliure dins del contenidor del mapa.
           // (Si ho treus, usarà la posició MapLibre de l'argument "top-right").
@@ -127,17 +98,7 @@
           // Es pot fer servir per logs, destacar elements o disparar altres accions.
           onResult(resultat, lngLat) {
             console.log("Resultat territorial (complet):", resultat);
-            console.log("Coordenades clic (lngLat):", lngLat);
-            console.log("Coordenades retornades:", {
-              lng: resultat?.lng,
-              lat: resultat?.lat,
-              bbox: resultat?.bbox,
-            });
-            console.log("Propietats filtrades (resultats):", resultat?.resultats);
-            console.log("Primera feature per col·lecció:", resultat?.firstFeature);
-            console.log("Totes les features per col·lecció:", resultat?.features);
-            console.log("Resposta GeoJSON crua per col·lecció:", resultat?.raw);
-
+            
             // Exemple: retornar la dada perquè la pugui usar qui crida el mètode.
             return resultat;
           },
