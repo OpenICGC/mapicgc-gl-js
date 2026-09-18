@@ -13,6 +13,7 @@ export default class ApiTerritorialControl {
       position: "top-right",
       collections: undefined,
       onResult: undefined,
+      skipGeometry: true,
       title: "Informació territorial",
       icon: DEFAULT_ICON_SVG,
       customPosition: undefined,
@@ -210,6 +211,7 @@ export default class ApiTerritorialControl {
       {
         collections: this.options.collections,
         fields: this.options.fields,
+        skipGeometry: this.options.skipGeometry,
       }
     );
 

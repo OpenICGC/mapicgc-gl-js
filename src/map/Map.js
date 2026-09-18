@@ -283,6 +283,7 @@ export default class Map {
     * @param {Array|string} [options.collections] - Collection ids to query. Defaults to the territorial API default collections when omitted.
     * @param {Object|Array|string} [options.fields] - Optional field selector. Use an array for all collections, a comma-separated string, or an object keyed by collection id to filter the returned info.
     * @param {Array|string} [options.fields.default] - Optional default field list when `options.fields` is an object.
+      * @param {boolean} [options.skipGeometry=true] - Omits geometries from the territorial API response during click lookups.
     * @param {boolean} [options.IconButton=true] - Shows/hides the territorial icon button. If false, click query stays active without rendering a button.
     * @param {string|Object} [options.icon] - Button icon as text, inline SVG string, image URL/data URI, or object `{ src, alt }`.
     * @param {Object} [options.customPosition] - Optional free position inside map container.
@@ -442,139 +443,116 @@ export default class Map {
    */
   async fetchData(url, idLayer, options) {
     try {
-      if (!options || options === undefined) {
-        let opt = {
-          type: "line",
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            "line-color": "grey",
-            "line-width": 2,
-          },
-          layerPosition: "top", // select: 'top', 'lines' or 'labels'
-        };
+      const mergedOptions = {
+        type: "auto",
+        layout: {
+          visibility: "visible",
+        },
+        paint: null,
+        layerPosition: "top", // select: 'top', 'lines' or 'labels'
+        polygonAsLine: true,
+        ...(options || {}),
+      };
 
-        options = opt;
-      }
-      let layerPosition = options.layerPosition;
+      let layerPosition = mergedOptions.layerPosition;
       if (url.includes(".fgb")) {
-        this.addFGBLayerICGC(url, idLayer, options);
+        this.addFGBLayerICGC(url, idLayer, mergedOptions);
       } else {
         const response = await fetch(url);
         const geojson = await response.json();
         let nameUser = idLayer;
         let keyLayer = this._dealOrderLayer(layerPosition);
-        let type = geojson.features[0].geometry.type;
-        if (type.includes("ine")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout || {},
-                paint: options.paint || {},
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "line-color": "black",
-                  "line-width": 2,
-                  "line-opacity": 1,
-                },
-              },
-              keyLayer
-            );
+        const firstGeometryType =
+          geojson?.features?.find((feature) => feature?.geometry?.type)?.geometry
+            ?.type || "";
+
+        const requestedType = String(mergedOptions.type || "auto").toLowerCase();
+        const inputPaint =
+          mergedOptions.paint && typeof mergedOptions.paint === "object"
+            ? mergedOptions.paint
+            : {};
+
+        const hasLinePaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("line-")
+        );
+        const hasFillPaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("fill-")
+        );
+        const hasCirclePaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("circle-")
+        );
+
+        let resolvedType = firstGeometryType.includes("Point")
+          ? "circle"
+          : firstGeometryType.includes("Line")
+            ? "line"
+            : firstGeometryType.includes("Polygon")
+              ? mergedOptions.polygonAsLine
+                ? "line"
+                : "fill"
+              : "line";
+
+        if (requestedType !== "auto") {
+          if (requestedType.includes("point") || requestedType === "circle") {
+            resolvedType = "circle";
+          } else if (requestedType.includes("line")) {
+            resolvedType = "line";
+          } else if (
+            requestedType.includes("polygon") ||
+            requestedType.includes("fill")
+          ) {
+            resolvedType = "fill";
+          }
+        } else if (firstGeometryType.includes("Polygon")) {
+          if (hasLinePaint && !hasFillPaint) {
+            resolvedType = "line";
+          } else if (hasFillPaint && !hasLinePaint) {
+            resolvedType = "fill";
           }
         }
-        if (type.includes("olygon")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout,
-                paint: options.paint,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "fill-color": "blue",
-                  "fill-opacity": 0.6,
-                },
-              },
-              keyLayer
-            );
+
+        const fallbackLinePaint = {
+          "line-color": "black",
+          "line-width": 2,
+          "line-opacity": 1,
+        };
+        const fallbackFillPaint = {
+          "fill-color": "blue",
+          "fill-opacity": 0.6,
+        };
+        const fallbackCirclePaint = {
+          "circle-color": "red",
+          "circle-opacity": 0.85,
+        };
+
+        let resolvedPaint = inputPaint;
+        if (resolvedType === "line") {
+          if (!hasLinePaint) {
+            resolvedPaint = fallbackLinePaint;
+          }
+        } else if (resolvedType === "fill") {
+          if (!hasFillPaint) {
+            resolvedPaint = fallbackFillPaint;
+          }
+        } else if (resolvedType === "circle") {
+          if (!hasCirclePaint) {
+            resolvedPaint = fallbackCirclePaint;
           }
         }
-        if (type.includes("oint")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout,
-                paint: options.paint,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "circle-color": "red",
-                  "circle-opacity": 0.85,
-                },
-              },
-              keyLayer
-            );
-          }
-        }
+
+        this.map.addLayer(
+          {
+            id: nameUser,
+            type: resolvedType,
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: mergedOptions.layout || {},
+            paint: resolvedPaint,
+          },
+          keyLayer
+        );
       }
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
@@ -3111,22 +3089,26 @@ export default class Map {
    * @function addFGBLayerICGC
    * @param {string} url - The url of the FGB layer.
    * @param {string} idLayer - Id for the layer.
-   * @param {object} options - Paint option for the layer
+  * @param {object} options - Options for the layer.
+  * @param {string} [options.type="auto"] - Layer type override (`auto`, `line`, `fill`, `circle`).
+  * @param {object} [options.layout] - MapLibre layout options.
+  * @param {object} [options.paint] - MapLibre paint options.
+  * @param {string} [options.layerPosition="labels"] - Position of the layer (`top`, `lines`, `labels`).
+  * @param {boolean} [options.polygonAsLine=true] - When `auto`, renders polygon datasets as outline lines.
    *
    */
   async addFGBLayerICGC(url, idLayer, options) {
     try {
-      if (!options) {
-        (options.layout = { visibility: true }),
-          (options.paint = {
-            "line-color": "#4832a8",
-            "line-opacity": 1,
-            "line-width": 1,
-          }),
-          (options.type = "lines"),
-          (options.layerPosition = "labels");
-      }
-      let keyLayer = this._dealOrderLayer(options.layerPosition);
+      const mergedOptions = {
+        type: "auto",
+        layerPosition: "labels",
+        layout: { visibility: "visible" },
+        paint: null,
+        polygonAsLine: true,
+        ...(options || {}),
+      };
+
+      let keyLayer = this._dealOrderLayer(mergedOptions.layerPosition);
 
       const response = await fetch(url);
       const fc = { type: "FeatureCollection", features: [] };
@@ -3156,7 +3138,7 @@ export default class Map {
               "text-field": ["get", "NOM_AC"],
               "text-transform": "none",
               "text-max-width": 25,
-              visibility: options.layout.visibility,
+              visibility: mergedOptions.layout.visibility,
               "text-justify": "right",
               "text-anchor": "top",
               "text-allow-overlap": false,
@@ -3173,13 +3155,64 @@ export default class Map {
           keyLayer
         );
       } else {
+        const firstGeometryType =
+          fc.features.find((feature) => feature?.geometry?.type)?.geometry?.type || "";
+        const requestedType = String(mergedOptions.type || "auto").toLowerCase();
+
+        const typeFromGeometry = firstGeometryType.includes("Point")
+          ? "circle"
+          : firstGeometryType.includes("Line")
+            ? "line"
+            : firstGeometryType.includes("Polygon")
+              ? mergedOptions.polygonAsLine
+                ? "line"
+                : "fill"
+              : "line";
+
+        let resolvedType = typeFromGeometry;
+
+        if (requestedType !== "auto") {
+          if (requestedType.includes("point") || requestedType === "circle") {
+            resolvedType = "circle";
+          } else if (requestedType.includes("line")) {
+            resolvedType = "line";
+          } else if (
+            requestedType.includes("polygon") ||
+            requestedType.includes("fill")
+          ) {
+            resolvedType = "fill";
+          }
+        }
+
+        let resolvedPaint = mergedOptions.paint;
+        if (!resolvedPaint) {
+          if (resolvedType === "circle") {
+            resolvedPaint = {
+              "circle-color": "red",
+              "circle-opacity": 0.85,
+              "circle-radius": 4,
+            };
+          } else if (resolvedType === "fill") {
+            resolvedPaint = {
+              "fill-color": "#0000FF",
+              "fill-opacity": 0,
+            };
+          } else {
+            resolvedPaint = {
+              "line-color": "#4832a8",
+              "line-opacity": 1,
+              "line-width": 1,
+            };
+          }
+        }
+
         this.map.addLayer(
           {
             id: idLayer,
-            type: options.type,
+            type: resolvedType,
             source: src,
-            layout: options.layout,
-            paint: options.paint,
+            layout: mergedOptions.layout,
+            paint: resolvedPaint,
           },
           keyLayer
         );

@@ -46,6 +46,7 @@ function normalizeTerritorialOptions(collectionsOrOptions) {
     return {
       collections: DEFAULT_COLLECTIONS,
       fields: null,
+      skipGeometry: false,
     };
   }
 
@@ -53,22 +54,26 @@ function normalizeTerritorialOptions(collectionsOrOptions) {
     return {
       collections: collectionsOrOptions,
       fields: null,
+      skipGeometry: false,
     };
   }
 
   if (typeof collectionsOrOptions === "object") {
     const collections = collectionsOrOptions.collections || DEFAULT_COLLECTIONS;
     const fields = collectionsOrOptions.fields || null;
+    const skipGeometry = collectionsOrOptions.skipGeometry === true;
 
     return {
       collections,
       fields,
+      skipGeometry,
     };
   }
 
   return {
     collections: DEFAULT_COLLECTIONS,
     fields: null,
+    skipGeometry: false,
   };
 }
 
@@ -102,8 +107,17 @@ function normalizeCollections(collections) {
     .filter(Boolean);
 }
 
-async function searchTerritorialCollection(collectionId, bbox) {
-  const url = `${TERRITORIAL_BASE_URL}/collections/${collectionId}/items?bbox=${bbox.join(",")}&f=geojson`;
+async function searchTerritorialCollection(collectionId, bbox, options = {}) {
+  const params = new URLSearchParams({
+    bbox: bbox.join(","),
+    f: "geojson",
+  });
+
+  if (options.skipGeometry) {
+    params.set("skipgeometry", "true");
+  }
+
+  const url = `${TERRITORIAL_BASE_URL}/collections/${collectionId}/items?${params.toString()}`;
 
   try {
     const response = await fetch(url, {
@@ -182,7 +196,7 @@ export async function searchApiTerritorialICGC(
   lat,
   collectionsOrOptions = DEFAULT_COLLECTIONS
 ) {
-  const { collections, fields } = normalizeTerritorialOptions(collectionsOrOptions);
+  const { collections, fields, skipGeometry } = normalizeTerritorialOptions(collectionsOrOptions);
   const requestedCollections = normalizeCollections(collections);
   const delta = 0.00005;
   const bbox = [lng - delta, lat - delta, lng + delta, lat + delta];
@@ -190,7 +204,7 @@ export async function searchApiTerritorialICGC(
   const collectionResults = await Promise.all(
     requestedCollections.map(async (collectionId) => [
       collectionId,
-      await searchTerritorialCollection(collectionId, bbox),
+      await searchTerritorialCollection(collectionId, bbox, { skipGeometry }),
     ])
   );
 
