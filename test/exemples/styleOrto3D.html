@@ -4,7 +4,7 @@
     <meta charset='utf-8' />
     <title>styleOrto3D</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="../../dist/mapicgc-gl.js"></script>
+   
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
     <style>
         body {
@@ -52,10 +52,14 @@
         <label for='DARK'>DARK</label>
     </div>
     <div id="map" class="map"></div>
-    <script>
+  <script type="module">
+        // Import ES module del vostre propi build (ex.: dist/mapicgc-gl.mjs,
+        // segons com l'anomeneu al vite.config). Ja no cal carregar
+        // maplibre-gl per separat: la llibreria en reexporta el namespace.
+        import { Map, Config} from "../../dist/mapicgc-gl.mjs";
         async function initMap() {
-            const data = await mapicgcgl.Config.getConfigICGC();;
-            const map = new mapicgcgl.Map({
+            const data = await Config.getConfigICGC();;
+            const map = new Map({
                 container: 'map',
                 style: data.Styles.ORTO3D,
                 center: [2.3090, 41.9800],

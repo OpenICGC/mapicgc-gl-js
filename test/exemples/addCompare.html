@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <title>Exemple mapicgc-gl-js: Afegir comparador</title>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <script src="../../dist/mapicgc-gl.js"></script>
   <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
 
   <style>
@@ -37,10 +36,12 @@
     <div id="after" class="map"></div>
   </div>
 
-  <script>
+  <script type="module">
+    import { Map, Config, CompareMaps } from "../../dist/mapicgc-gl.mjs";
+
     async function initMap() {
-      const data = await mapicgcgl.Config.getConfigICGC();;
-      const map1 = new mapicgcgl.Map({
+      const data = await Config.getConfigICGC();
+      const map1 = new Map({
         container: "before",
         style: data.Styles.ORTO,
         center: [1.1464, 41.706],
@@ -50,7 +51,7 @@
         pitch: 0,
       });
 
-      const map2 = new mapicgcgl.Map({
+      const map2 = new Map({
         container: "after",
         style: data.Styles.TOPO,
         center: [1.1464, 41.706],
@@ -62,7 +63,7 @@
 
       const container = "#comparison-container";
 
-      const map = new mapicgcgl.CompareMaps(map1, map2, container, {});
+      const map = new CompareMaps(map1, map2, container, {});
     }
 
     initMap();

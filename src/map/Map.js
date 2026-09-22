@@ -1,9 +1,11 @@
-import maplibregl from "maplibre-gl";
+
+import * as maplibregl from "maplibre-gl";
 import "../../public/mapicgc-gl.css";
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import { deserialize } from "flatgeobuf/lib/mjs/geojson.js";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
-import { MapboxOverlay } from "@deck.gl/mapbox";
+
+import { MapLibreOverlay } from "@deck.gl/maplibre";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
 import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
 import { AmbientLight, LightingEffect } from "@deck.gl/core";
@@ -178,7 +180,18 @@ export default class Map {
       // Inicializar mapa con estilo JSON como de costumbre
       this.map = new maplibregl.Map(options);
     }
-  
+    // this.map ja existeix: enganxem ara qualsevol listener que s'hagi
+    // registrat amb map.on(...) mentre encara esperàvem la configuració ICGC.
+    if (this._pendingOn) {
+      this._pendingOn.forEach(([type, func]) => {
+        try {
+          this.map.on(type, func);
+        } catch (error) {
+          console.error(`Error adding event ON listener: ${error.message}`);
+        }
+      });
+      this._pendingOn = [];
+    }
     this.map.on("load", () => {
       this.addAttributionControl()
          setTimeout(() => {
@@ -1002,13 +1015,20 @@ export default class Map {
    * @param {Function} func - The callback function to be executed when the event occurs.
    */
   on(type, func) {
-    setTimeout(() => {
+      if (this.map) {
       try {
         return this.map.on(type, func);
       } catch (error) {
         console.error(`Error adding event ON listener: ${error.message}`);
       }
-    }, 100);
+    // }, 100);
+     } else {
+      // this.map encara no existeix (fetch de Config.getConfigICGC() en curs).
+      // Encuem el listener i el pengem de debò quan initTheMap() creï this.map,
+      // en lloc d'endevinar un setTimeout fix que pot fallar amb xarxa lenta.
+      if (!this._pendingOn) this._pendingOn = [];
+      this._pendingOn.push([type, func]);
+    }
   }
 
   /**
@@ -3521,7 +3541,8 @@ export default class Map {
 
       
 
-        citiesMapboxLayer = new MapboxOverlay({
+        // citiesMapboxLayer = new import { MapLibreOverlay } from "@deck.gl/maplibre";({
+           citiesMapboxLayer = new MapLibreOverlay({
           interleaved: true,
           layers: [this._createCitiesMapboxLayer(false)], // Inicialment invisible
           effects: [lightingEffect],
@@ -3679,7 +3700,7 @@ export default class Map {
         pickable: false,
       });
     } catch (error) {
-      console.error(`Error adding MapboxOverlay: ${error.message}`);
+      console.error(`Error adding MapLibreOverlay: ${error.message}`);
       return null;
     }
   }
