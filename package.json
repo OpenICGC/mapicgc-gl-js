@@ -1,7 +1,7 @@
 {
   "name": "mapicgc-gl-js",
   "homepage": "https://openicgc.github.io/mapicgc-doc/",
-  "version": "1.0.8-beta.0",
+  "version": "1.0.8",
   "description": "mapicgc-gl-js library",
   "author": "Institut Cartogràfic i Geològic de Catalunya",
   "license": "BSD-3-Clause",
@@ -41,7 +41,7 @@
     "build-all": "npm-run-all build && node nodeDeploy.js",
     "build": "vite build",
     "preview": "vite preview",
-    "publish": "npm publish --access public",
+    "publish": "npm publish --access public --tag latest",
     "setConfig": "node nodeSetConfig.js",
     "publishBeta": "npm publish --tag beta --access public",
     "test": "vitest"
