@@ -1,11 +1,15 @@
 const SftpClient = require("ssh2-sftp-client");
 const dotenv = require("dotenv");
 const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
 const inFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS_UMD}`;
 const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
+// Fitxers com el worker de maplibre-gl es generen com a chunk separat i cal pujar-los també.
+const assetsLocalPath = path.join(process.env.FTP_LOCA_PATH, 'assets');
+const assetsRemotePath = `${process.env.FTP_REMOTE_PATH}assets/`;
 
  function rename(){
   fs.copyFile(inFilePath, renamedFilePath, (err) => {
@@ -45,6 +49,9 @@ async function deploy(hostFTP) {
         overwrite: true,
       }
     );
+    if (fs.existsSync(assetsLocalPath)) {
+      await sftp.uploadDir(assetsLocalPath, assetsRemotePath);
+    }
     console.log("Deploy OK");
   } catch (err) {
     console.error(`Deploy Error: ${err.message}`);

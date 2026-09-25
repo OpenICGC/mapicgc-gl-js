@@ -16,7 +16,7 @@
 # MapICGC GL JS
 
 
-> 🌠 __Based on MapLibre GL JS version:__ 5.23.0 
+> 🌠 __Based on MapLibre GL JS version:__ 6.10.0 
 
 The MapICGC GL JS library builds upon the  open-source library [**MapLibre GL JS**](https://github.com/maplibre/maplibre-gl-js), exposing its existing capabilities while introducing new features specific to the MapICGC ecosystem. This library is tailored to seamlessly integrate with the MapICGC Cloud service, offering a comprehensive set of data to enhance web mapping experiences, including vector tiles, satellite raster tiles, DEM with Terrain RGB, and customizable styles with an editor.
 
@@ -50,9 +50,7 @@ Check out the features through <a href="https://codepen.io/collection/mrvVZd" ta
     ```html
     <script>
      import { Map, Config } from "mapicgc-gl-js";
-    //import * as mapicgcgl from  "mapicgc-gl-js";
-   
- 
+     
       async function initMap() {
           const data = await Config.getConfigICGC(); //load config
           const map = new Map({

@@ -1,9 +1,11 @@
-import maplibregl from "maplibre-gl";
+
+import * as maplibregl from "maplibre-gl";
 import "../../public/mapicgc-gl.css";
 import "@watergis/maplibre-gl-export/dist/maplibre-gl-export.css";
 import { deserialize } from "flatgeobuf/lib/mjs/geojson.js";
 import Pitch3DToggleControl from "../controls/Toggle3DControl.js";
-import { MapboxOverlay } from "@deck.gl/mapbox";
+
+import { MapLibreOverlay } from "@deck.gl/maplibre";
 import { Tile3DLayer } from "@deck.gl/geo-layers";
 import { Tiles3DLoader } from "@loaders.gl/3d-tiles";
 import { AmbientLight, LightingEffect } from "@deck.gl/core";
@@ -18,6 +20,8 @@ import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
 import LogoControl from "../controls/LogoControl.js";
 import LegendControl from "../controls/LegendControl.js";
 import MouseCoordinatesControl from "../controls/MouseCoordinatesControl.js";
+import ApiTerritorialControl from "../controls/ApiTerritorialControl.js";
+import mostraPanellInfo from "../territorial/mostraPanellInfo.js";
 import Config from "../constants/ConfigICGC.js";
 import Legends from "../constants/Legends.js";
 import mapicgcConfig from "../mapicgc-config.json";
@@ -176,7 +180,18 @@ export default class Map {
       // Inicializar mapa con estilo JSON como de costumbre
       this.map = new maplibregl.Map(options);
     }
-  
+    // this.map ja existeix: enganxem ara qualsevol listener que s'hagi
+    // registrat amb map.on(...) mentre encara esperàvem la configuració ICGC.
+    if (this._pendingOn) {
+      this._pendingOn.forEach(([type, func]) => {
+        try {
+          this.map.on(type, func);
+        } catch (error) {
+          console.error(`Error adding event ON listener: ${error.message}`);
+        }
+      });
+      this._pendingOn = [];
+    }
     this.map.on("load", () => {
       this.addAttributionControl()
          setTimeout(() => {
@@ -272,6 +287,52 @@ export default class Map {
     }
   }
   //geocoder ends
+
+  /**
+   * Adds the territorial click lookup control from the Map API.
+   * @param {Object} [options={}] - Configuration for the territorial lookup.
+   * @param {boolean} [options.infoPanel=true] - Whether to show the docked info panel.
+    * @param {Function} [options.onResult] - Called with (resultat, lngLat) after each click. If it returns a value, that value is returned by the callback chain.
+    * @param {Array|string} [options.collections] - Collection ids to query. Defaults to the territorial API default collections when omitted.
+    * @param {Object|Array|string} [options.fields] - Optional field selector. Use an array for all collections, a comma-separated string, or an object keyed by collection id to filter the returned info.
+    * @param {Array|string} [options.fields.default] - Optional default field list when `options.fields` is an object.
+      * @param {boolean} [options.skipGeometry=true] - Omits geometries from the territorial API response during click lookups.
+    * @param {boolean} [options.IconButton=true] - Shows/hides the territorial icon button. If false, click query stays active without rendering a button.
+    * @param {string|Object} [options.icon] - Button icon as text, inline SVG string, image URL/data URI, or object `{ src, alt }`.
+    * @param {Object} [options.customPosition] - Optional free position inside map container.
+    * @param {number|string} [options.customPosition.top] - CSS top value.
+    * @param {number|string} [options.customPosition.right] - CSS right value.
+    * @param {number|string} [options.customPosition.bottom] - CSS bottom value.
+    * @param {number|string} [options.customPosition.left] - CSS left value.
+    * @param {number|string} [options.customPosition.zIndex] - CSS z-index value.
+   * @param {string} [position='top-right'] - Control position.
+    * @returns {ApiTerritorialControl|undefined} - The created control instance, or undefined if the control could not be added.
+   */
+  addApiTerritorialICGC(options = {}, position = "top-right") {
+    try {
+      const { infoPanel = true, onResult, ...controlOptions } = options || {};
+
+      const control = new ApiTerritorialControl({
+        ...controlOptions,
+        onResult: (resultat, lngLat) => {
+          if (infoPanel) {
+            mostraPanellInfo.call(this, resultat, lngLat);
+          }
+
+          if (typeof onResult === "function") {
+            return onResult.call(this, resultat, lngLat);
+          }
+
+          return resultat;
+        },
+      });
+
+      this.map.addControl(control, position);
+      return control;
+    } catch (error) {
+      console.error(`Error adding territorial control: ${error.message}`);
+    }
+  }
 
   async loadImage(urlImage) {
     try {
@@ -395,139 +456,116 @@ export default class Map {
    */
   async fetchData(url, idLayer, options) {
     try {
-      if (!options || options === undefined) {
-        let opt = {
-          type: "line",
-          layout: {
-            visibility: "visible",
-          },
-          paint: {
-            "line-color": "grey",
-            "line-width": 2,
-          },
-          layerPosition: "top", // select: 'top', 'lines' or 'labels'
-        };
+      const mergedOptions = {
+        type: "auto",
+        layout: {
+          visibility: "visible",
+        },
+        paint: null,
+        layerPosition: "top", // select: 'top', 'lines' or 'labels'
+        polygonAsLine: true,
+        ...(options || {}),
+      };
 
-        options = opt;
-      }
-      let layerPosition = options.layerPosition;
+      let layerPosition = mergedOptions.layerPosition;
       if (url.includes(".fgb")) {
-        this.addFGBLayerICGC(url, idLayer, options);
+        this.addFGBLayerICGC(url, idLayer, mergedOptions);
       } else {
         const response = await fetch(url);
         const geojson = await response.json();
         let nameUser = idLayer;
         let keyLayer = this._dealOrderLayer(layerPosition);
-        let type = geojson.features[0].geometry.type;
-        if (type.includes("ine")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout || {},
-                paint: options.paint || {},
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "line",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "line-color": "black",
-                  "line-width": 2,
-                  "line-opacity": 1,
-                },
-              },
-              keyLayer
-            );
+        const firstGeometryType =
+          geojson?.features?.find((feature) => feature?.geometry?.type)?.geometry
+            ?.type || "";
+
+        const requestedType = String(mergedOptions.type || "auto").toLowerCase();
+        const inputPaint =
+          mergedOptions.paint && typeof mergedOptions.paint === "object"
+            ? mergedOptions.paint
+            : {};
+
+        const hasLinePaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("line-")
+        );
+        const hasFillPaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("fill-")
+        );
+        const hasCirclePaint = Object.keys(inputPaint).some((key) =>
+          key.startsWith("circle-")
+        );
+
+        let resolvedType = firstGeometryType.includes("Point")
+          ? "circle"
+          : firstGeometryType.includes("Line")
+            ? "line"
+            : firstGeometryType.includes("Polygon")
+              ? mergedOptions.polygonAsLine
+                ? "line"
+                : "fill"
+              : "line";
+
+        if (requestedType !== "auto") {
+          if (requestedType.includes("point") || requestedType === "circle") {
+            resolvedType = "circle";
+          } else if (requestedType.includes("line")) {
+            resolvedType = "line";
+          } else if (
+            requestedType.includes("polygon") ||
+            requestedType.includes("fill")
+          ) {
+            resolvedType = "fill";
+          }
+        } else if (firstGeometryType.includes("Polygon")) {
+          if (hasLinePaint && !hasFillPaint) {
+            resolvedType = "line";
+          } else if (hasFillPaint && !hasLinePaint) {
+            resolvedType = "fill";
           }
         }
-        if (type.includes("olygon")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout,
-                paint: options.paint,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "fill",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "fill-color": "blue",
-                  "fill-opacity": 0.6,
-                },
-              },
-              keyLayer
-            );
+
+        const fallbackLinePaint = {
+          "line-color": "black",
+          "line-width": 2,
+          "line-opacity": 1,
+        };
+        const fallbackFillPaint = {
+          "fill-color": "blue",
+          "fill-opacity": 0.6,
+        };
+        const fallbackCirclePaint = {
+          "circle-color": "red",
+          "circle-opacity": 0.85,
+        };
+
+        let resolvedPaint = inputPaint;
+        if (resolvedType === "line") {
+          if (!hasLinePaint) {
+            resolvedPaint = fallbackLinePaint;
+          }
+        } else if (resolvedType === "fill") {
+          if (!hasFillPaint) {
+            resolvedPaint = fallbackFillPaint;
+          }
+        } else if (resolvedType === "circle") {
+          if (!hasCirclePaint) {
+            resolvedPaint = fallbackCirclePaint;
           }
         }
-        if (type.includes("oint")) {
-          if (options !== undefined) {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: options.layout,
-                paint: options.paint,
-              },
-              keyLayer
-            );
-          } else {
-            this.map.addLayer(
-              {
-                id: nameUser,
-                type: "circle",
-                source: {
-                  type: "geojson",
-                  data: geojson,
-                },
-                layout: {
-                  visibility: "visible",
-                },
-                paint: {
-                  "circle-color": "red",
-                  "circle-opacity": 0.85,
-                },
-              },
-              keyLayer
-            );
-          }
-        }
+
+        this.map.addLayer(
+          {
+            id: nameUser,
+            type: resolvedType,
+            source: {
+              type: "geojson",
+              data: geojson,
+            },
+            layout: mergedOptions.layout || {},
+            paint: resolvedPaint,
+          },
+          keyLayer
+        );
       }
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
@@ -977,13 +1015,20 @@ export default class Map {
    * @param {Function} func - The callback function to be executed when the event occurs.
    */
   on(type, func) {
-    setTimeout(() => {
+      if (this.map) {
       try {
         return this.map.on(type, func);
       } catch (error) {
         console.error(`Error adding event ON listener: ${error.message}`);
       }
-    }, 100);
+    // }, 100);
+     } else {
+      // this.map encara no existeix (fetch de Config.getConfigICGC() en curs).
+      // Encuem el listener i el pengem de debò quan initTheMap() creï this.map,
+      // en lloc d'endevinar un setTimeout fix que pot fallar amb xarxa lenta.
+      if (!this._pendingOn) this._pendingOn = [];
+      this._pendingOn.push([type, func]);
+    }
   }
 
   /**
@@ -3064,22 +3109,26 @@ export default class Map {
    * @function addFGBLayerICGC
    * @param {string} url - The url of the FGB layer.
    * @param {string} idLayer - Id for the layer.
-   * @param {object} options - Paint option for the layer
+  * @param {object} options - Options for the layer.
+  * @param {string} [options.type="auto"] - Layer type override (`auto`, `line`, `fill`, `circle`).
+  * @param {object} [options.layout] - MapLibre layout options.
+  * @param {object} [options.paint] - MapLibre paint options.
+  * @param {string} [options.layerPosition="labels"] - Position of the layer (`top`, `lines`, `labels`).
+  * @param {boolean} [options.polygonAsLine=true] - When `auto`, renders polygon datasets as outline lines.
    *
    */
   async addFGBLayerICGC(url, idLayer, options) {
     try {
-      if (!options) {
-        (options.layout = { visibility: true }),
-          (options.paint = {
-            "line-color": "#4832a8",
-            "line-opacity": 1,
-            "line-width": 1,
-          }),
-          (options.type = "lines"),
-          (options.layerPosition = "labels");
-      }
-      let keyLayer = this._dealOrderLayer(options.layerPosition);
+      const mergedOptions = {
+        type: "auto",
+        layerPosition: "labels",
+        layout: { visibility: "visible" },
+        paint: null,
+        polygonAsLine: true,
+        ...(options || {}),
+      };
+
+      let keyLayer = this._dealOrderLayer(mergedOptions.layerPosition);
 
       const response = await fetch(url);
       const fc = { type: "FeatureCollection", features: [] };
@@ -3109,7 +3158,7 @@ export default class Map {
               "text-field": ["get", "NOM_AC"],
               "text-transform": "none",
               "text-max-width": 25,
-              visibility: options.layout.visibility,
+              visibility: mergedOptions.layout.visibility,
               "text-justify": "right",
               "text-anchor": "top",
               "text-allow-overlap": false,
@@ -3126,13 +3175,64 @@ export default class Map {
           keyLayer
         );
       } else {
+        const firstGeometryType =
+          fc.features.find((feature) => feature?.geometry?.type)?.geometry?.type || "";
+        const requestedType = String(mergedOptions.type || "auto").toLowerCase();
+
+        const typeFromGeometry = firstGeometryType.includes("Point")
+          ? "circle"
+          : firstGeometryType.includes("Line")
+            ? "line"
+            : firstGeometryType.includes("Polygon")
+              ? mergedOptions.polygonAsLine
+                ? "line"
+                : "fill"
+              : "line";
+
+        let resolvedType = typeFromGeometry;
+
+        if (requestedType !== "auto") {
+          if (requestedType.includes("point") || requestedType === "circle") {
+            resolvedType = "circle";
+          } else if (requestedType.includes("line")) {
+            resolvedType = "line";
+          } else if (
+            requestedType.includes("polygon") ||
+            requestedType.includes("fill")
+          ) {
+            resolvedType = "fill";
+          }
+        }
+
+        let resolvedPaint = mergedOptions.paint;
+        if (!resolvedPaint) {
+          if (resolvedType === "circle") {
+            resolvedPaint = {
+              "circle-color": "red",
+              "circle-opacity": 0.85,
+              "circle-radius": 4,
+            };
+          } else if (resolvedType === "fill") {
+            resolvedPaint = {
+              "fill-color": "#0000FF",
+              "fill-opacity": 0,
+            };
+          } else {
+            resolvedPaint = {
+              "line-color": "#4832a8",
+              "line-opacity": 1,
+              "line-width": 1,
+            };
+          }
+        }
+
         this.map.addLayer(
           {
             id: idLayer,
-            type: options.type,
+            type: resolvedType,
             source: src,
-            layout: options.layout,
-            paint: options.paint,
+            layout: mergedOptions.layout,
+            paint: resolvedPaint,
           },
           keyLayer
         );
@@ -3441,7 +3541,8 @@ export default class Map {
 
       
 
-        citiesMapboxLayer = new MapboxOverlay({
+        // citiesMapboxLayer = new import { MapLibreOverlay } from "@deck.gl/maplibre";({
+           citiesMapboxLayer = new MapLibreOverlay({
           interleaved: true,
           layers: [this._createCitiesMapboxLayer(false)], // Inicialment invisible
           effects: [lightingEffect],
@@ -3599,7 +3700,7 @@ export default class Map {
         pickable: false,
       });
     } catch (error) {
-      console.error(`Error adding MapboxOverlay: ${error.message}`);
+      console.error(`Error adding MapLibreOverlay: ${error.message}`);
       return null;
     }
   }

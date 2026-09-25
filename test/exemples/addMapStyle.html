@@ -4,7 +4,6 @@
     <meta charset='utf-8' />
     <title>addMapStyle</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src="../../dist/mapicgc-gl.js"></script>
     <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
     <style>
         body {
@@ -24,11 +23,13 @@
 
 <body>
     <div id="map" class="map"></div>
-    <script>
-        async function initMap() {
-            const data = await mapicgcgl.Config.getConfigICGC();
+    <script type="module">
+        import { Map, Config } from "../../dist/mapicgc-gl.mjs";
 
-            const map = new mapicgcgl.Map({
+        async function initMap() {
+            const data = await Config.getConfigICGC();
+
+            const map = new Map({
                 container: 'map',
                 style: data.Styles.ORTO,
                 center: [1.1464, 41.706],

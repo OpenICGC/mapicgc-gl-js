@@ -3,7 +3,6 @@
   <meta charset='utf-8' />
   <title>addLogo</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src="../../dist/mapicgc-gl.js"></script>
   <link href="../../dist/mapicgc-gl.css" rel="stylesheet" />
   <style>
     body {
@@ -52,6 +51,9 @@
       });
     }
     initMap();
-  </script>
+  <script type="module">
+    import { Map, Config } from "../../dist/mapicgc-gl.mjs";
+
 </body>
-</html>
+      const data = await Config.getConfigICGC();
+      const map = new Map({
