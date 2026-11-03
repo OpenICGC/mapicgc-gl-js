@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Font del servidor MCP: compilat i empaquetat des del package.json arrel (npm run build:mcp). Aquest fitxer només marca el subarbre com a mòdul ESM per a tsc/vitest; no s'instal·la ni es publica per separat."
+}
+

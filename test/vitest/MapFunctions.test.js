@@ -38,6 +38,7 @@ const mockMapInstance = {
   getSource: vi.fn(),
   getSprite: vi.fn(() => []),
   getStyle: vi.fn(() => ({ name: 'ICGC mapa base gris', id: 'icgc_mapa_base_gris' })),
+  getTerrain: vi.fn(() => null),
   getZoom: vi.fn(() => 7.5),
   hasControl: vi.fn(() => true),
   hasImage: vi.fn(() => false),
@@ -104,18 +105,19 @@ vi.mock('maplibre-gl', () => {
     this.setHTML = vi.fn().mockReturnValue(this);
     this.addTo = vi.fn().mockReturnValue(this);
   });
-  return {
-    default: {
-      Map: MapCtor,
-      Marker: MarkerCtor,
-      Popup: PopupCtor,
-      AttributionControl: vi.fn(function (opts) { this._options = opts; this.type = 'AttributionControl'; }),
-      NavigationControl: vi.fn(function (opts) { this._options = opts; this.type = 'NavigationControl'; }),
-      ScaleControl: vi.fn(function (opts) { this._options = opts; this.type = 'ScaleControl'; }),
-      GeolocateControl: vi.fn(function (opts) { this._options = opts; this.type = 'GeolocateControl'; }),
-      FullscreenControl: vi.fn(function (opts) { this._options = opts; this.type = 'FullscreenControl'; }),
-    },
+  const exports = {
+    Map: MapCtor,
+    Marker: MarkerCtor,
+    Popup: PopupCtor,
+    AttributionControl: vi.fn(function (opts) { this._options = opts; this.type = 'AttributionControl'; }),
+    NavigationControl: vi.fn(function (opts) { this._options = opts; this.type = 'NavigationControl'; }),
+    ScaleControl: vi.fn(function (opts) { this._options = opts; this.type = 'ScaleControl'; }),
+    GeolocateControl: vi.fn(function (opts) { this._options = opts; this.type = 'GeolocateControl'; }),
+    FullscreenControl: vi.fn(function (opts) { this._options = opts; this.type = 'FullscreenControl'; }),
   };
+  // Exposed both as named exports (for `import * as maplibregl`, used by src/map/Map.js)
+  // and under `default` (for `import maplibregl from`, used by this test file).
+  return { ...exports, default: exports };
 });
 
 // ─── Mock other dependencies ─────────────────────────────────────────

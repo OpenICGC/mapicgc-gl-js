@@ -22,7 +22,7 @@ The MapICGC GL JS library builds upon the  open-source library [**MapLibre GL JS
 
  Our goal is to simplify the development process for MapICGC developers! With MapICGC GL JS, you won't need to load external plugins for basic functionalities, deal with complex data source URLs, or search for syntax to enable 3D terrain every time you embark on a project. All these features are either built-in, loaded dynamically when necessary, or accessible through straightforward functions. 
 
-Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper functions for MapICGC Cloud API services, including geocoding, static maps, geolocation, and a coordinate reference system search engine for transforming coordinates between different CRSs.
+Moreover, MapICGC GL JS provides well-documented and user-friendly wrapper functions for MapICGC Cloud API services, including geocoding, geolocation, exporting the current map view to an image or PDF, and territorial lookup by clicking on the map.
 
 
 
@@ -140,6 +140,146 @@ or directly with Vitest:
 
 ```bash
 npx vitest run
+```
+
+---
+
+## MCP Server
+
+This package also ships an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/)
+server that teaches AI assistants (opencode, Claude, Cursor, GitHub Copilot...)
+how to correctly use this library: install snippets, API reference, code
+examples, available styles/layers and the changelog, served as MCP tools.
+
+> The MCP server only serves documentation/data about this library; it does
+> not run or render any map itself.
+
+### Quick start
+
+- **Already added `mapicgc-gl-js` to your project?** The MCP server ships
+  bundled inside the same package — nothing extra to install:
+  ```bash
+  npx mapicgc-mcp
+  ```
+  (npx finds the `mapicgc-mcp` bin in your project's own `node_modules/.bin`.)
+
+- **Haven't installed it yet, or just want an AI assistant to use it?**
+  No manual install needed either — point your MCP client at:
+  ```bash
+  npx -y -p mapicgc-gl-js mapicgc-mcp
+  ```
+  See [Client configuration](#client-configuration) below for ready-to-paste
+  configs (opencode, Claude Desktop, VS Code, Cursor).
+
+### Running it
+
+The server's `bin` name (`mapicgc-mcp`) is different from the package name
+(`mapicgc-gl-js`), so `npx` needs the `-p` flag to know what to install:
+
+```bash
+npx -y -p mapicgc-gl-js mapicgc-mcp
+```
+
+This runs the server in stdio mode, the mode expected by MCP clients below.
+
+### Client configuration
+
+**opencode** (`opencode.json`):
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "mapicgc": {
+      "type": "local",
+      "command": ["npx", "-y", "-p", "mapicgc-gl-js", "mapicgc-mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Claude Desktop** (`claude_desktop_config.json`) / **Claude Code**:
+
+```json
+{
+  "mcpServers": {
+    "mapicgc": {
+      "command": "npx",
+      "args": ["-y", "-p", "mapicgc-gl-js", "mapicgc-mcp"]
+    }
+  }
+}
+```
+
+**VS Code (GitHub Copilot)** (`.vscode/mcp.json`):
+
+```json
+{
+  "servers": {
+    "mapicgc": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "-p", "mapicgc-gl-js", "mapicgc-mcp"]
+    }
+  }
+}
+```
+
+**Cursor** uses the same `command`/`args` shape as Claude Desktop.
+
+### How it works
+
+You don't install or run anything yourself — you just paste one of the
+configs above into your MCP client's config file. From there, the client
+takes care of everything:
+
+1. It reads the `command`/`args` and launches it as a subprocess, exactly as
+   if you'd typed it in a terminal.
+2. `npx` resolves `mapicgc-gl-js` (downloading it from the npm registry the
+   first time, if it isn't cached yet) and runs its `mapicgc-mcp` binary.
+3. The server starts in stdio mode, and the client talks to it over that
+   subprocess's stdin/stdout using the MCP (JSON-RPC) protocol — listing
+   tools, calling them, reading resources, etc.
+4. The client stops the subprocess once it no longer needs it.
+
+Requirements: `node`/`npm` (and therefore `npx`) available on `PATH`, and
+network access the first time the package is fetched (npm caches it for
+later runs).
+
+> A Streamable HTTP entry point exists in the MCP source
+> (`mcp/src/http.ts`) but is **not wired into the current build** yet
+> (`npm run build:mcp` only bundles the stdio entry point), so a
+> `{ "type": "remote", "url": "..." }` config is not supported yet.
+
+### Tools
+
+| Tool | Description |
+| --- | --- |
+| `get_started` | Installation (NPM and CDN) and a minimal working map example. |
+| `search_docs(query, limit?)` | Keyword search across all bundled documentation. |
+| `get_api(name)` | Detailed docs for a specific method/class (e.g. `Map.addMarker`). |
+| `get_example(topic)` | A complete code example for a topic (3D terrain, markers, geocoder...). |
+| `list_styles` | Available styles, terrains and layer groups (live, with a local fallback). |
+| `get_changelog(version?)` | Full changelog, or just one version's entries. |
+
+It also registers the `mapicgc://readme` and `mapicgc://changelog` **resources**,
+and the `crear_mapa(estil, ubicacio)` **prompt**.
+
+### Local development
+
+```bash
+npm install
+npm run build:content   # downloads this library's docs/changelog into mcp/content/
+npm run build:mcp       # type-checks mcp/src and bundles it into dist-mcp/index.js
+node dist-mcp/index.js  # runs the server in stdio mode
+```
+
+To sanity-check the server end-to-end (connects a real MCP client over
+stdio and calls every tool):
+
+```bash
+node mcp/scripts/smoke-test.js
 ```
 
 ---
