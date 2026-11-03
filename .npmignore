@@ -1,0 +1,33 @@
+npm-debug.log*
+*.tgz
+node_modules
+.vscode
+
+/docs/**/*
+.env
+*.js.map
+.sublime-*
+coverage
+flow-coverage
+.DS_Store
+.nyc_output
+.eslintcache
+.editorconfig
+.eslintrc
+.github
+.git
+
+# MCP server: ship only the bundle (dist-mcp/) built by `npm run build:mcp`
+# and the synced docs (mcp/content/) built by `npm run build:content`.
+# Never publish the MCP's own TypeScript sources, tests, dev-only package
+# marker or deployment config.
+mcp/src
+mcp/test
+mcp/scripts
+mcp/package.json
+mcp/tsconfig.json
+mcp/Dockerfile
+mcp/.dockerignore
+mcp/PROMPTS.md
+mcp/LICENSE
+mcp/README.md
