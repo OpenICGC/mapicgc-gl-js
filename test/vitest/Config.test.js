@@ -122,6 +122,15 @@ describe('mapicgc-config.json structure', () => {
     expect(mapicgcConfig.Terrains).toBeDefined();
   });
 
+  test('should resolve ICGC5M tiles to the current terrain WMTS service', () => {
+    const tileUrl = mapicgcConfig.Terrains.ICGC5M
+      .replace('{z}', '9')
+      .replace('{x}', '259')
+      .replace('{y}', '190');
+
+    expect(tileUrl).toBe('https://geoserveis.icgc.cat/servei/catalunya/contextmaps-terreny-5m-rgb/wmts/9/259/190.png');
+  });
+
   test('should have geocoder config with pelias URLs', () => {
     const geocoder = mapicgcConfig.defaultOptions.geocoder;
     expect(geocoder).toBeDefined();

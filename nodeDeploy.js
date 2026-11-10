@@ -5,23 +5,32 @@ const path = require('path');
 
 dotenv.config();
 
-const inFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS_UMD}`;
-const renamedFilePath = `${process.env.FTP_LOCA_PATH}${process.env.FILE_JS}`;
+// Vite genera el bundle UMD directament amb aquest nom.
+const inFilePath = path.join(process.env.FTP_LOCA_PATH, 'mapicgc-gl.js');
+const renamedFilePath = path.join(process.env.FTP_LOCA_PATH, process.env.FILE_JS);
 // Fitxers com el worker de maplibre-gl es generen com a chunk separat i cal pujar-los també.
 const assetsLocalPath = path.join(process.env.FTP_LOCA_PATH, 'assets');
 const assetsRemotePath = `${process.env.FTP_REMOTE_PATH}assets/`;
+// Config.getConfigICGC() prioritza aquest JSON remot sobre el del bundle.
+const configLocalPath = path.join(__dirname, 'src', 'mapicgc-config.json');
+const configRemotePath = `${process.env.FTP_REMOTE_PATH}mapicgc-config.json`;
 
- function rename(){
-  fs.copyFile(inFilePath, renamedFilePath, (err) => {
-    if (err) {
-      console.error('Error copying file:', err);
-    } else {
+async function rename() {
+  try {
+    await fs.promises.access(inFilePath);
+    JSON.parse(await fs.promises.readFile(configLocalPath, 'utf8'));
+    if (path.resolve(inFilePath) !== path.resolve(renamedFilePath)) {
+      await fs.promises.copyFile(inFilePath, renamedFilePath);
       console.log('File copied and renamed successfully.');
-     deploy(process.env.FTP_HOST1)
-      deploy(process.env.FTP_HOST2)
     }
-  });
-
+    await Promise.all([
+      deploy(process.env.FTP_HOST1),
+      deploy(process.env.FTP_HOST2),
+    ]);
+  } catch (err) {
+    console.error('Error preparing deployment:', err);
+    process.exitCode = 1;
+  }
 }
 
 async function deploy(hostFTP) {
@@ -52,9 +61,11 @@ async function deploy(hostFTP) {
     if (fs.existsSync(assetsLocalPath)) {
       await sftp.uploadDir(assetsLocalPath, assetsRemotePath);
     }
+    await sftp.fastPut(configLocalPath, configRemotePath, { overwrite: true });
     console.log("Deploy OK");
   } catch (err) {
     console.error(`Deploy Error: ${err.message}`);
+    process.exitCode = 1;
   } finally {
     console.info("End process deploy");
     sftp.end();

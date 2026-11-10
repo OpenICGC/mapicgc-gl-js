@@ -2,7 +2,7 @@
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {
-limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
+limitsUrl: "https://eines.icgc.cat/recursos/tilejson/limits-tilejsonV3.json",
 geocoder: {
   peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
   peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
@@ -22,15 +22,15 @@ mapOptions: {
   maxPitch: 85,
 },
 logoIcgcOptions: {
-  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_color.png",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/icgc_logo_blanc.svg",
+  logoUrlColor: "https://eines.icgc.cat/recursos/logos/icgc_logo_color.png",
+  logoUrlWhite: "https://eines.icgc.cat/recursos/logos/icgc_logo_blanc.svg",
   logoLink: "https://www.icgc.cat",
   logoTitle: "Institut Cartogràfic i Geològic de Catalunya",
   logoWidth: 100,
 },
 logoGencatOptions: {
-  logoUrlColor: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_color.png",
-  logoUrlWhite: "https://tilemaps.icgc.cat/cdn/logos/gencat_logo_blanc.png",
+  logoUrlColor: "https://eines.icgc.cat/recursos/logos/gencat_logo_color.png",
+  logoUrlWhite: "https://eines.icgc.cat/recursos/logos/gencat_logo_blanc.png",
   logoLink: "https://web.gencat.cat/",
   logoTitle: "Generalitat de Catalunya",
   logoWidth: 100,
@@ -41,14 +41,14 @@ map3dOptions: {
   zfactor: 48,
   minZoomRange: 15.5,
   maxZoomRange: 22,
-  urlTilesetCities: "https://tilemaps.icgc.cat/vector/3dtiles/ciutats/v1/tilesetV1.0.json",
+  urlTilesetCities: "https://geoserveis.icgc.cat/servei/catalunya/ciutats/3dtiles/v1/tilesetV1.0.json",
   layerIdOrder: "place-isolated",
   sourceLayerFilterId: "place",
   minZoomFilter: 14,
   layerId3d: "edificisMapboxLayer",
   terrainSource: "ICGC5M",
   style3dName: "orto3d",
-  imageIcon: "https://tilemaps.icgc.cat/cdn/images/stick.png",
+  imageIcon: "https://eines.icgc.cat/recursos/images/stick.png",
 },
 baseStyles: {
   0: {
@@ -63,7 +63,7 @@ baseStyles: {
   },
   2: {
     key: "ORTO3D",
-    url: "https://tilemaps.icgc.cat/cdn/styles/icgc_orto_3d.json",
+    url: "https://eines.icgc.cat/recursos/styles/icgc_orto_3d.json",
     image: "https://visors.icgc.cat/contextmaps/imatges_estil/icgc_orto_hibrida.png",
   },
   3: {
@@ -95,7 +95,7 @@ baseStyles: {
 urlTerrainICGC: {
   0: {
     name: "ICGC5M",
-    url: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
+    url: "https://geoserveis.icgc.cat/servei/catalunya/contextmaps-terreny-5m-rgb/wmts/{z}/{x}/{y}.png",
   },
   1: {
     name: "WORLD30M",
@@ -796,7 +796,7 @@ vectorLayers: {
   0: {
     key: "cobertes2018",
     url: "https://tilemaps.icgc.cat/tileserver/cobertes_tilejson.json",
-    legend: "https://tilemaps.icgc.cat/cdn/images/llegendaCobertesSol2018.jpg",
+    legend: "https://eines.icgc.cat/recursos/images/llegendaCobertesSol2018.jpg",
   },
 },
 wmsLayers: {

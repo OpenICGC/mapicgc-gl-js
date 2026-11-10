@@ -17,6 +17,10 @@ flow-coverage
 .github
 .git
 
+# AI agent configuration (repo-only, not part of the published package)
+.opencode
+AGENTS.md
+
 # MCP server: ship only the bundle (dist-mcp/) built by `npm run build:mcp`
 # and the synced docs (mcp/content/) built by `npm run build:content`.
 # Never publish the MCP's own TypeScript sources, tests, dev-only package
