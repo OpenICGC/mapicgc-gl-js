@@ -300,6 +300,7 @@ package (see `.npmignore`). They are separate from the published
 | `.opencode/skills/mcp-server/SKILL.md` | Workflow for `mcp/`: tools, resources, content sync, build and smoke test. |
 | `.opencode/skills/release/SKILL.md` | Release preparation: semver, changelog and pre-publish validation. |
 | `.opencode/commands/` | Slash commands: `/test`, `/build`, `/mcp-check`, `/review`, `/release`. |
+| `.agents/skills/` | Vendored MapLibre GL JS skills (cartography, glyphs, sprites, sources, tiles, terrain, v6 migration) from [`maplibre/maplibre-agent-skills`](https://github.com/maplibre/maplibre-agent-skills), MIT. |
 
 Example usage:
 

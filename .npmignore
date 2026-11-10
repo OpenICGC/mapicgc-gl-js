@@ -19,6 +19,7 @@ flow-coverage
 
 # AI agent configuration (repo-only, not part of the published package)
 .opencode
+.agents
 AGENTS.md
 
 # MCP server: ship only the bundle (dist-mcp/) built by `npm run build:mcp`

@@ -64,6 +64,16 @@ mcp/
 test/vitest/            library tests
 ```
 
+## Agent resources
+
+- `.opencode/skills/` — project workflows implemented in this repo:
+  `library-dev`, `mcp-server` and `release`.
+- `.opencode/commands/` — slash commands: `/test`, `/build`, `/mcp-check`,
+  `/review` and `/release`.
+- `.agents/skills/` — vendored MapLibre GL JS skills from
+  [`maplibre/maplibre-agent-skills`](https://github.com/maplibre/maplibre-agent-skills)
+  (MIT). See `.agents/README.md` for the list, provenance and update steps.
+
 ## Conventions
 
 - 2-space indentation, double quotes, semicolons.
