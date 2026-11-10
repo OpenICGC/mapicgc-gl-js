@@ -283,6 +283,39 @@ node mcp/scripts/smoke-test.js
 ```
 
 ---
+
+## AI agent resources (repository)
+
+This repository is configured for [OpenCode](https://opencode.ai) so AI
+assistants can work on the library consistently. These files are for
+contributors working **on** `mapicgc-gl-js` and are **not** shipped in the npm
+package (see `.npmignore`). They are separate from the published
+[`mapicgc-mcp` server](#mcp-server) described above, which is for consumers
+**using** the library.
+
+| Path | What it provides |
+| --- | --- |
+| [`AGENTS.md`](./AGENTS.md) | Project rules: layout, commands, conventions, generated files and gotchas. |
+| `.opencode/skills/library-dev/SKILL.md` | Workflow for changes in `src/` (Map API, controls, config) with tests and docs. |
+| `.opencode/skills/mcp-server/SKILL.md` | Workflow for `mcp/`: tools, resources, content sync, build and smoke test. |
+| `.opencode/skills/release/SKILL.md` | Release preparation: semver, changelog and pre-publish validation. |
+| `.opencode/commands/` | Slash commands: `/test`, `/build`, `/mcp-check`, `/review`, `/release`. |
+
+Example usage:
+
+```text
+/test test/vitest/MapFunctions.test.js
+/build all
+/mcp-check
+/review
+/release 1.2.0
+```
+
+Skills are loaded automatically when relevant, or explicitly with
+`@library-dev`, `@mcp-server` or `@release`. No restart is needed: OpenCode
+reloads these files when they are saved (`/reload` forces a full reload).
+
+---
 ## Developed by:
 
 
