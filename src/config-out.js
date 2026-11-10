@@ -2,7 +2,7 @@
 const urlImages = "https://visors.icgc.cat/contextmaps/imatges_estil/";
 const urlStyles = "https://geoserveis.icgc.cat/contextmaps/"; 
 const defaultOptions = {
-limitsUrl: "https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json",
+limitsUrl: "https://eines.icgc.cat/recursos/tilejson/limits-tilejsonV3.json",
 geocoder: {
   peliasUrl1: "https://eines.icgc.cat/geocodificador/autocompletar?text=",
   peliasUrl2: "&layers=topo1%2Ctopo2%2Caddress&size=5",
@@ -97,7 +97,7 @@ baseStyles: {
 urlTerrainICGC: {
   0: {
     name: "ICGC5M",
-    url: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png",
+    url: "https://geoserveis.icgc.cat/servei/catalunya/contextmaps-terreny-5m-rgb/wmts/{z}/{x}/{y}.png",
   },
   1: {
     name: "WORLD30M",

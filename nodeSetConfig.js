@@ -50,7 +50,7 @@ function camelize(str) {
 
 async function getVectorLimitsLayers() {
     try {
-        const response = await axios.get('https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json');
+        const response = await axios.get('https://eines.icgc.cat/recursos/tilejson/limits-tilejsonV3.json');
         const tileJson = response.data;
     
    
@@ -74,7 +74,7 @@ async function getVectorLimitsLayers() {
   }
   async function getFGBLimitsLayers() {
     try {
-        const response = await axios.get('https://tilemaps.icgc.cat/vt/limits-tilejsonV3.json');
+        const response = await axios.get('https://eines.icgc.cat/recursos/tilejson/limits-tilejsonV3.json');
         const tileJson = response.data;
     
    
@@ -253,7 +253,7 @@ async function getVectorLimitsLayers() {
     try {
        
           let test= [
-            {name: "ICGC5M", url: "https://tilemaps.icgc.cat/tileserver/tileserver/terreny-5m-30m-rgb-extent/{z}/{x}/{y}.png"},
+            {name: "ICGC5M", url: "https://geoserveis.icgc.cat/servei/catalunya/contextmaps-terreny-5m-rgb/wmts/{z}/{x}/{y}.png"},
             {name: "WORLD30M",  url: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png", encoding: "terrarium",}
  
           ]
